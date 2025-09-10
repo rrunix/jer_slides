@@ -20,8 +20,6 @@ authors:
 
 # Profesorado
 
----
-
 Rubén Rodríguez Fernández
 
 - E-mail: `ruben.rodriguez@urjc.es`. (Escribir por aula virtual).
