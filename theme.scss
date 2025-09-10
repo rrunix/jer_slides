@@ -39,6 +39,9 @@ $selection-bg: rgba($primary-red, 0.2) !default;
 .reveal .slides {
   text-align: left;
 }
+section.level1 {
+  top: 0px !important;
+}
 
 // Title slide
 #title-slide {

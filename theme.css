@@ -19,6 +19,10 @@
     outline-width: 1px;
     outline-color: #000;
   }
+
+  section.level1 {
+      top: 0px !important;
+  }
   
   .reveal h1,
   .reveal h2,
