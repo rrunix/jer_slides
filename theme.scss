@@ -1,0 +1,272 @@
+/*-- scss:defaults --*/
+
+// URJC Games in Computer Networks Theme - Simplified
+// Only visual styling, no behavioral CSS
+
+// Color Palette
+$urjc-blue: #003366;           // Main university blue
+$urjc-light-blue: #0066CC;    // Lighter university blue
+$network-teal: #008080;        // Network/connectivity color
+$gaming-orange: #FF6B35;       // Gaming accent
+$tech-green: #2E8B57;          // Technology green
+$dark-text: #2C3E50;           // Dark readable text
+$light-gray: #F8F9FA;          // Light background
+$medium-gray: #6C757D;         // Medium text
+$accent-red: #DC3545;          // Alert/error color
+
+// Typography
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+$font-family-sans-serif: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !default;
+$font-family-monospace: "JetBrains Mono", "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, monospace !default;
+$presentation-heading-font: "Inter", sans-serif !default;
+
+// Theme Variables
+$presentation-heading-color: $urjc-blue !default;
+$presentation-heading-font-weight: 600;
+$presentation-font-size-root: 32px;
+$presentation-line-height: 1.4;
+
+// Colors
+$body-bg: $light-gray !default;
+$body-color: $dark-text !default;
+$link-color: $network-teal !default;
+$selection-bg: rgba($urjc-blue, 0.2) !default;
+
+/*-- scss:rules --*/
+
+// Base slide styling
+.reveal {
+  font-family: $font-family-sans-serif;
+  color: $body-color;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.reveal .slides {
+  text-align: left;
+}
+
+// Title slide
+#title-slide {
+  text-align: center;
+  padding: 2rem;
+
+  .title {
+    color: $urjc-blue;
+    font-size: 2.2em;
+    font-weight: 700;
+    margin-bottom: 0.5em;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+  }
+
+  .subtitle {
+    font-size: 1.3em;
+    color: $network-teal;
+    font-weight: 400;
+    margin-bottom: 1.5em;
+  }
+
+  .author {
+    font-size: 1.1em;
+    font-weight: 500;
+    margin-bottom: 0.5em;
+    color: $dark-text;
+  }
+
+  .date {
+    font-size: 1em;
+    color: $medium-gray;
+    font-weight: 300;
+  }
+
+  .institute {
+    font-size: 0.9em;
+    color: $medium-gray;
+    font-style: italic;
+    margin-top: 1em;
+  }
+}
+
+// Headings
+.reveal h1 {
+  color: $urjc-blue;
+  font-weight: 700;
+  font-size: 1.8em;
+  margin-bottom: 0.8em;
+  border-bottom: 3px solid $network-teal;
+  padding-bottom: 0.3em;
+}
+
+.reveal h2 {
+  color: $network-teal;
+  font-weight: 600;
+  font-size: 1.4em;
+  margin-top: 1.5em;
+  margin-bottom: 0.8em;
+}
+
+.reveal h3 {
+  color: $gaming-orange;
+  font-weight: 500;
+  font-size: 1.1em;
+  margin-top: 1.2em;
+  margin-bottom: 0.6em;
+}
+
+.reveal h4 {
+  color: $tech-green;
+  font-weight: 500;
+  font-size: 1em;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+// Text and paragraphs
+.reveal p {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+  line-height: 1.5;
+}
+
+.reveal strong {
+  color: $urjc-blue;
+  font-weight: 600;
+}
+
+.reveal em {
+  color: $network-teal;
+  font-style: italic;
+}
+
+// Code styling
+.reveal code {
+  background-color: rgba($tech-green, 0.1);
+  color: $tech-green;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-family: $font-family-monospace;
+  font-size: 0.85em;
+}
+
+.reveal pre code {
+  background-color: $dark-text;
+  color: #f8f8f2;
+  padding: 1em;
+  border-radius: 8px;
+  border-left: 4px solid $network-teal;
+  font-size: 0.75em;
+  line-height: 1.4;
+}
+
+// Lists
+.reveal ul {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+
+  li {
+    margin-bottom: 0.5em;
+    
+    &::marker {
+      color: $network-teal;
+    }
+  }
+}
+
+.reveal ol {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+
+  li {
+    margin-bottom: 0.5em;
+    
+    &::marker {
+      color: $gaming-orange;
+      font-weight: 600;
+    }
+  }
+}
+
+// Nested lists
+.reveal ul ul {
+  list-style-type: disc;
+  
+  li::marker {
+    color: $network-teal;
+  }
+}
+
+// Links
+.reveal a {
+  color: $network-teal;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: $urjc-blue;
+    border-bottom-color: $urjc-blue;
+  }
+}
+
+// Tables
+.reveal table {
+  margin: 1em auto;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  overflow: hidden;
+
+  th {
+    background-color: $urjc-blue;
+    color: white;
+    font-weight: 600;
+    padding: 0.8em 1em;
+    text-align: left;
+  }
+
+  td {
+    padding: 0.6em 1em;
+    border-bottom: 1px solid #e9ecef;
+  }
+
+  tr:nth-child(even) {
+    background-color: rgba($light-gray, 0.5);
+  }
+
+  tr:hover {
+    background-color: rgba($network-teal, 0.1);
+  }
+}
+
+// Blockquotes
+.reveal blockquote {
+  background-color: rgba($network-teal, 0.1);
+  border-left: 5px solid $network-teal;
+  padding: 1em 1.5em;
+  margin: 1.5em 0;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+}
+
+// Image styling
+.reveal img {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+// Logo styling
+.slide-logo {
+  bottom: 10px !important;
+  right: 20px !important;
+  left: auto !important;
+  max-height: 40px !important;
+  filter: brightness(0) invert(1);
+  z-index: 9999 !important;
+  position: fixed !important;
+}

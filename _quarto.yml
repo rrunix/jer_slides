@@ -1,0 +1,37 @@
+project:
+  type: default
+  output-dir: docs
+
+format:
+  revealjs:
+    theme: [default, theme.scss]
+    html-math-method: mathml
+    margin-left: '3rem'
+    slide-number: true
+    chalkboard: 
+      buttons: true
+    preview-links: auto    
+    show-notes: false
+    pdf-max-pages-per-slide: 1
+    progress: true
+    menu:
+      openButton: true
+      openSlideNumber: false
+      openOnInit: false
+      keyboard: false
+      markers: false
+      titleSelector: ""
+      side: left
+      width: third
+    logo: theme_images/URJClogo.png
+
+  # beamer: 
+  #   template: dslab.beamer.tex
+  #   slide-level: 1
+  #   section-titles: false
+execute:
+  freeze: true
+
+bibliography: references.bib
+
+

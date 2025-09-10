@@ -1,0 +1,10 @@
+*_files
+.quarto
+.vscode
+.DS_Store
+.env
+_book
+aux
+TODO.md
+/.quarto/
+*-files/
