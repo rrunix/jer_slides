@@ -2,11 +2,10 @@ project:
   type: default
   output-dir: slides
 
-lang: es
-
 format:
   revealjs:
     center: false
+    lang: es
     theme: [default, theme.scss]
     html-math-method: mathml
     margin: 0.15
@@ -37,10 +36,6 @@ format:
       data-background-size: 33%
       data-background-position: center 70%
 
-  # beamer: 
-  #   template: dslab.beamer.tex
-  #   slide-level: 1
-  #   section-titles: false
 execute:
   freeze: true
 
