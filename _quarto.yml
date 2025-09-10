@@ -2,17 +2,23 @@ project:
   type: default
   output-dir: docs
 
+lang: es
+
 format:
   revealjs:
     theme: [default, theme.scss]
     html-math-method: mathml
-    margin-left: '3rem'
+    margin: 0.15
     slide-number: true
+    center: false
     chalkboard: 
       buttons: true
     preview-links: auto    
     show-notes: false
     pdf-max-pages-per-slide: 1
+    auto-stretch: true
+    width: 1280
+    height: 720
     progress: true
     menu:
       openButton: true
@@ -23,7 +29,13 @@ format:
       titleSelector: ""
       side: left
       width: third
+    toc: true
+    toc-depth: 1
     logo: theme_images/URJClogo.png
+    title-slide-attributes:
+      data-background-image: theme_images/background_fronpage.png
+      data-background-size: 33%
+      data-background-position: center 70%
 
   # beamer: 
   #   template: dslab.beamer.tex

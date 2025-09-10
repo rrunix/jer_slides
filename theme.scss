@@ -4,15 +4,9 @@
 // Only visual styling, no behavioral CSS
 
 // Color Palette
-$urjc-blue: #003366;           // Main university blue
-$urjc-light-blue: #0066CC;    // Lighter university blue
-$network-teal: #008080;        // Network/connectivity color
-$gaming-orange: #FF6B35;       // Gaming accent
-$tech-green: #2E8B57;          // Technology green
+$primary-red: #DC143C;         // Primary red color for titles, bullets, etc.
 $dark-text: #2C3E50;           // Dark readable text
-$light-gray: #F8F9FA;          // Light background
 $medium-gray: #6C757D;         // Medium text
-$accent-red: #DC3545;          // Alert/error color
 
 // Typography
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
@@ -22,16 +16,16 @@ $font-family-monospace: "JetBrains Mono", "SF Mono", Monaco, "Cascadia Code", "R
 $presentation-heading-font: "Inter", sans-serif !default;
 
 // Theme Variables
-$presentation-heading-color: $urjc-blue !default;
+$presentation-heading-color: $primary-red !default;
 $presentation-heading-font-weight: 600;
 $presentation-font-size-root: 32px;
 $presentation-line-height: 1.4;
 
 // Colors
-$body-bg: $light-gray !default;
+$body-bg: white !default;
 $body-color: $dark-text !default;
-$link-color: $network-teal !default;
-$selection-bg: rgba($urjc-blue, 0.2) !default;
+$link-color: $primary-red !default;
+$selection-bg: rgba($primary-red, 0.2) !default;
 
 /*-- scss:rules --*/
 
@@ -39,7 +33,7 @@ $selection-bg: rgba($urjc-blue, 0.2) !default;
 .reveal {
   font-family: $font-family-sans-serif;
   color: $body-color;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: white;
 }
 
 .reveal .slides {
@@ -52,7 +46,7 @@ $selection-bg: rgba($urjc-blue, 0.2) !default;
   padding: 2rem;
 
   .title {
-    color: $urjc-blue;
+    color: $primary-red;
     font-size: 2.2em;
     font-weight: 700;
     margin-bottom: 0.5em;
@@ -61,7 +55,7 @@ $selection-bg: rgba($urjc-blue, 0.2) !default;
 
   .subtitle {
     font-size: 1.3em;
-    color: $network-teal;
+    color: $primary-red;
     font-weight: 400;
     margin-bottom: 1.5em;
   }
@@ -89,16 +83,16 @@ $selection-bg: rgba($urjc-blue, 0.2) !default;
 
 // Headings
 .reveal h1 {
-  color: $urjc-blue;
+  color: $primary-red;
   font-weight: 700;
   font-size: 1.8em;
   margin-bottom: 0.8em;
-  border-bottom: 3px solid $network-teal;
+  border-bottom: 3px solid $primary-red;
   padding-bottom: 0.3em;
 }
 
 .reveal h2 {
-  color: $network-teal;
+  color: $primary-red;
   font-weight: 600;
   font-size: 1.4em;
   margin-top: 1.5em;
@@ -106,7 +100,7 @@ $selection-bg: rgba($urjc-blue, 0.2) !default;
 }
 
 .reveal h3 {
-  color: $gaming-orange;
+  color: $primary-red;
   font-weight: 500;
   font-size: 1.1em;
   margin-top: 1.2em;
@@ -114,7 +108,7 @@ $selection-bg: rgba($urjc-blue, 0.2) !default;
 }
 
 .reveal h4 {
-  color: $tech-green;
+  color: $primary-red;
   font-weight: 500;
   font-size: 1em;
   margin-top: 1em;
@@ -129,19 +123,19 @@ $selection-bg: rgba($urjc-blue, 0.2) !default;
 }
 
 .reveal strong {
-  color: $urjc-blue;
+  color: $primary-red;
   font-weight: 600;
 }
 
 .reveal em {
-  color: $network-teal;
+  color: $primary-red;
   font-style: italic;
 }
 
 // Code styling
 .reveal code {
-  background-color: rgba($tech-green, 0.1);
-  color: $tech-green;
+  background-color: rgba($primary-red, 0.1);
+  color: $primary-red;
   padding: 0.2em 0.4em;
   border-radius: 4px;
   font-family: $font-family-monospace;
@@ -153,7 +147,7 @@ $selection-bg: rgba($urjc-blue, 0.2) !default;
   color: #f8f8f2;
   padding: 1em;
   border-radius: 8px;
-  border-left: 4px solid $network-teal;
+  border-left: 4px solid $primary-red;
   font-size: 0.75em;
   line-height: 1.4;
 }
@@ -167,7 +161,7 @@ $selection-bg: rgba($urjc-blue, 0.2) !default;
     margin-bottom: 0.5em;
     
     &::marker {
-      color: $network-teal;
+      color: $primary-red;
     }
   }
 }
@@ -180,7 +174,7 @@ $selection-bg: rgba($urjc-blue, 0.2) !default;
     margin-bottom: 0.5em;
     
     &::marker {
-      color: $gaming-orange;
+      color: $primary-red;
       font-weight: 600;
     }
   }
@@ -191,20 +185,20 @@ $selection-bg: rgba($urjc-blue, 0.2) !default;
   list-style-type: disc;
   
   li::marker {
-    color: $network-teal;
+    color: $primary-red;
   }
 }
 
 // Links
 .reveal a {
-  color: $network-teal;
+  color: $primary-red;
   text-decoration: none;
   border-bottom: 1px solid transparent;
   transition: all 0.3s ease;
 
   &:hover {
-    color: $urjc-blue;
-    border-bottom-color: $urjc-blue;
+    color: $primary-red;
+    border-bottom-color: $primary-red;
   }
 }
 
@@ -218,7 +212,7 @@ $selection-bg: rgba($urjc-blue, 0.2) !default;
   overflow: hidden;
 
   th {
-    background-color: $urjc-blue;
+    background-color: $primary-red;
     color: white;
     font-weight: 600;
     padding: 0.8em 1em;
@@ -231,18 +225,18 @@ $selection-bg: rgba($urjc-blue, 0.2) !default;
   }
 
   tr:nth-child(even) {
-    background-color: rgba($light-gray, 0.5);
+    background-color: rgba(248, 249, 250, 0.5);
   }
 
   tr:hover {
-    background-color: rgba($network-teal, 0.1);
+    background-color: rgba($primary-red, 0.1);
   }
 }
 
 // Blockquotes
 .reveal blockquote {
-  background-color: rgba($network-teal, 0.1);
-  border-left: 5px solid $network-teal;
+  background-color: rgba($primary-red, 0.1);
+  border-left: 5px solid $primary-red;
   padding: 1em 1.5em;
   margin: 1.5em 0;
   border-radius: 0 8px 8px 0;
@@ -261,12 +255,36 @@ $selection-bg: rgba($urjc-blue, 0.2) !default;
 }
 
 // Logo styling
-.slide-logo {
-  bottom: 10px !important;
+.reveal .slide-logo,
+.reveal .slide-logo img {
+  position: fixed !important;
+  bottom: 20px !important;
   right: 20px !important;
   left: auto !important;
-  max-height: 40px !important;
-  filter: brightness(0) invert(1);
+  top: auto !important;
+  max-height: 60px !important;
+  max-width: 200px !important;
   z-index: 9999 !important;
-  position: fixed !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  border: none !important;
+  box-shadow: none !important;
+  background: none !important;
+  border-radius: 0 !important;
+}
+
+// Slide numbers styling
+.reveal .slide-number {
+  color: $primary-red !important;
+  font-weight: 600;
+}
+
+// Progress bar styling  
+.reveal .progress {
+  color: $primary-red !important;
+  
+  span {
+    background: $primary-red !important;
+  }
 }
