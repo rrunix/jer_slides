@@ -6,11 +6,11 @@ lang: es
 
 format:
   revealjs:
+    center: false
     theme: [default, theme.scss]
     html-math-method: mathml
     margin: 0.15
     slide-number: true
-    center: false
     chalkboard: 
       buttons: true
     preview-links: auto    
