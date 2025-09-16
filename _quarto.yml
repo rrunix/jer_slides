@@ -4,9 +4,13 @@ project:
 
 format:
   revealjs:
+    theme: [simple, metropolis-beamer/custom.scss]
+    filters: 
+      - metropolis-beamer/metropolis-header.lua
+      - metropolis-beamer/custom-block.lua
     center: false
     lang: es
-    theme: [default, theme.scss]
+    # theme: [default, theme.scss]
     html-math-method: mathml
     margin: 0.15
     slide-number: true
