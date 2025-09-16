@@ -11,7 +11,7 @@ format:
     center: false
     lang: es
     # theme: [default, theme.scss]
-    html-math-method: mathml
+    html-math-method: katex
     margin: 0.15
     slide-number: true
     chalkboard: 
