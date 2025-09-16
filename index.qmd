@@ -1,0 +1,14 @@
+---
+title: "Juegos en Red"
+format: 
+  html:
+    toc: true
+---
+
+# Diapositivas de Juegos en Red
+
+## Introducción
+- [Introducción a la asignatura](sub_introduction.html)
+
+## Redes de computadores
+- [Introducción a las redes de computadores](ch1_p1_net_introduction.html) 
