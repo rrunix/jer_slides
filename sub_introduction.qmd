@@ -1,7 +1,6 @@
 ---
 title: Presentación de Juegos en Red
 authors:
-  - title: "Presentación de Juegos en Red"
     author: "Rubén Rodríguez Fernández (&#64;rrunix)"
     date: "12/09/2025"
     corresponding: true
@@ -19,23 +18,23 @@ authors:
 - Web: Aula Virtual (https://ww.aulavirtual.urjc.es).
 
 # Profesorado
-
+## Prof. Rubén Rodríguez
 Rubén Rodríguez Fernández
 
 - E-mail: `ruben.rodriguez@urjc.es`. (Escribir por aula virtual).
 - Despacho: 131, Ed. Departamental II (Campus de Móstoles).
 - Tutorias: Concertar por e-mail (aula virtual).
 
----
 
+## Prof. Natalia Madrueño
 Natalia Madrueño Sierro
 
 - Email: `natalia.madrueno@urjc.es` (Escribir por aula virtual).
 - Despacho: 044, Ed. Departamental II (Campus de Móstoles).
 - Tutorias: Concertar por e-mail (aula virtual).
 
-
 # Motivación
+## Aplicaciones en red
 La gran mayoría de las aplicaciones actuales son **aplicaciones basadas en red**:
 
 - Aula Virtual
