@@ -1,0 +1,240 @@
+---
+title: Presentación de Juegos en Red
+authors:
+    author: "Rubén Rodríguez Fernández (&#64;rrunix)"
+    date: "12/09/2025"
+    corresponding: true
+
+---
+
+# Datos de la asignatura
+
+- Tipo: Obligatoria.
+- Período de impartición: Primer cuatrimestre.
+- Nº de créditos: 6
+  - Sesiones: 28 clases de 2h.
+  - Horas de trabajo: 180h (56h clase / 124h fuera).
+- Departamento: Departamento de Informática y Estadística.
+- Web: Aula Virtual (https://ww.aulavirtual.urjc.es).
+
+# Profesorado
+## Prof. Rubén Rodríguez
+Rubén Rodríguez Fernández
+
+- E-mail: `ruben.rodriguez@urjc.es`. (Escribir por aula virtual).
+- Despacho: 131, Ed. Departamental II (Campus de Móstoles).
+- Tutorias: Concertar por e-mail (aula virtual).
+
+
+## Prof. Natalia Madrueño
+Natalia Madrueño Sierro
+
+- Email: `natalia.madrueno@urjc.es` (Escribir por aula virtual).
+- Despacho: 044, Ed. Departamental II (Campus de Móstoles).
+- Tutorias: Concertar por e-mail (aula virtual).
+
+# Motivación
+## Aplicaciones en red
+La gran mayoría de las aplicaciones actuales son **aplicaciones basadas en red**:
+
+- Aula Virtual
+- Gmail
+- Twitter
+- Facebook
+- La web de la Liga de Fútbol Profesional (LFP)
+- ...
+
+## Muchos juegos también
+
+- PlayerUnknown's Battlegrounds (PUBG) / Fortnite / Destiny 2 / Overwatch / Quake Champions / Counter-Strike: Global Offensive (CS:GO) / League of Legends (LoL) / DOTA 2
+- World of Warcraft
+- FIFA / PES
+- Mario Kart / Project Cars / Rocket League
+- Juegos de Facebook
+- ...
+
+# Objetivos
+
+- Introducir al alumno a las **redes de computadores**.
+- Dar a conocer y permitir comprender el modelo de **arquitectura de red cliente-servidor**.
+- Ofrecer al alumno una visión general de los **problemas y soluciones** al **desarrollar juegos en red**.
+- Fomentar el **trabajo en equipo** para la creación de videojuegos.
+- Guiar al alumno en la creación de un **producto software**.
+
+# Temario
+
+La asignatura se estructura en cinco temas:
+
+## Tema 1: Introducción a los juegos en red y a las redes de comunicaciones
+
+Se presentan los retos de las aplicaciones en red y se introducen los principales conceptos necesarios para entender su funcionamiento:
+
+- Qué son y como funcionan las aplicaciones en red.
+- Problemas propios de aplicaciones en red.
+- Conceptos fundamentales de comunicación en red entre aplicaciones.
+- Consideraciones al desarrollar juegos en red.
+
+
+## Tema 2: Desarrollo en el lado del cliente.
+
+Se estudia el lenguaje JavaScript para construir aplicaciones en el lado del cliente (browser). API REST.
+
+- Desarrollo web en JavaScript, HTML y CSS
+- Uso de las API REST
+
+## Tema 3: Desarrollo de juegos con tecnología web.
+
+Se presenta el framework JavaScript Phaser para desarrollo de juegos en el cliente:
+
+- Phaser 3 framework: https://phaser.io.
+- Amplia galería de ejemplos: https://phaser.io/examples/
+
+## Tema 4: Desarrollo en el lado del servidor.
+
+Se estudia el framework express.js con JavaScript para desarrollar el lado del servidor. Implementación de API REST:
+
+- Introducción a express.js
+- Desarrollo de comunicación cliente servidor a través de API REST.
+
+## Tema 5: Comunicación asíncrona cliente - servidor
+
+Se estudia el uso de WebSockets para comunicación asíncrona entre nodos:
+
+- Introducción a la comunicación asíncrona con WebSockets.
+- Creación de protocolos de mensajes.
+- Desarrollo de comunicación asíncrona entre cliente y servidor con WebSockets.
+
+# Metodología Docente
+
+El curso estará conducido por una **metodología basada en proyectos**, en la que los alumnos deberán realizar un proyecto en grupo a lo largo de toda la asignatura.
+
+Se combinarán las **lecciones magistrales síncronas** con la metodología de **clase invertida** para temas concretos.
+
+Se incluirán diferentes **gamificaciones** a lo largo del curso.
+
+Habrá **sesiones de prácticas** que se utilizarán para realizar y corregir la práctica, donde el profesor podrá realizar un seguimiento de cada grupo de prácticas.
+
+El profesor dejará el **material** necesario para el desempeño de la asignatura en el **Aula Virtual**, que incluirá vídeos, presentaciones, ejercicios propuestos y resueltos, etc., para que el alumno estudie de manera autónoma.
+
+# Material
+
+## Material teórico
+- El material se irá publicando en el Aula Virtual a medida que avance el cuatrimestre.
+- Se publicará como asignatura en abierto, todos los materiales son públicos.
+- Contará con diapositivas, apuntes, problemas y una guía de estudio.
+
+## Enunciado de la práctica
+- Los enunciados de las prácticas se colgarán en el aula virtual.
+
+# Herramientas
+
+Utilizaremos varias **herramientas software y bibliotecas**:
+
+- Visual Studio Code / Tu IDE de confianza.
+- Google Chrome/Firefox/Safari
+- JavaScript
+- Phaser 3
+- Node
+
+# Evaluación
+
+## Pruebas de evaluación:
+
+- **40% Pruebas teórico-prácticas**
+  - Nota mínima: cada prueba >=5
+- **40% Práctica**
+  - Nota mínima: cada prueba >=5
+- **15% Resolución de problemas y casos prácticos**
+  - No tiene nota mínima
+- **5% Participación en clase y otras actividades**
+  - No tiene nota mínima
+
+**Hay que obtener al menos un 5 de media**
+
+## Pruebas teórico-prácticas (40 %)
+
+- 3 exámenes: 
+  - Examen 1 (Tema 1): 35%.
+  - Examen 2 (Tema 2 y 3): 32.5%.
+  - Examen 3 (Tema 4): 32.5%.
+- Ejercicios online tipo test / preguntas cortas / ejercicios
+- Nota mínima en cada prueba 5
+- Revaluable en convocatoria extraordinaria
+
+## Práctica (40 %)
+
+- Se realiza en grupos de 4 personas
+- Cada alumno será evaluado individualmente
+- Se desarrolla en parte en las sesiones prácticas
+- Consta de 4 entregas (fases) obligatorias coonderaciones 10%, 35%, 25%, 30%.
+- Nota mínima en cada fase: 5 puntos
+- Cada fase es revaluable en convocatoria extraordinaria
+
+## Resolución de problemas (15 %)
+
+- Consiste en una fase adicional al juego desarrollado (fase 5).
+- Consistirá en una mejora sobre la práctica entregada y la publicación de la misma en plataformas online.
+- Nota mínima de 3.
+- Revaluable en convocatoria extraordinaria.
+
+## Participación en clase (5 %)
+
+- Es opcional. No tiene nota mínima.
+- Consiste en una serie de actividades que se irán realizando a lo largo del cuatrimestre.
+- También se podrán obtener proponiendo mejoras o correcciones a los apuntes y diapositivas de la asignatura.
+- No es revaluable en convocatoria extraordinaria
+
+# Evaluación extraordinaria
+
+Para aprobar la asignatura en la convocatoria extraordinaria se deberán realizar las pruebas no superadas durante la evaluación ordinaria.
+
+**Se guardan las notas de:**
+
+- La prueba teórico-práctica
+- Cada una de las fases por separado
+- La resolución de problemas (fase 5)
+- Las actividades de participación en clase
+
+## Dispensa académica
+
+Un alumno con dispensa académica debe realizar los exámenes teóricos-prácticos.
+
+Está obligado a hacer las 4 entregas presenciales de la parte práctica ya que son como exámenes.
+
+Las fechas de las pruebas serán anunciadas con anterioridad.
+
+## No presentado
+
+Un alumno obtendrá la calificación de no presentado únicamente si no se presenta a ninguna prueba evaluable (ya sea de teoría o práctica).
+
+# Inteligencia Artificial
+
+El uso de ChatGPT, Gemini, Claude o alternativas está permitido a excepción de los exámenes. La única condición que se impone es que seáis capaces de explicar vuestras prácticas, y en caso negativo, se considerarán suspensas.
+
+# Calendario aproximado de entregas
+
+- **Septiembre:** Registro grupos de prácticas
+- **Octubre:** Entrega fase 1 (mes de octubre)
+- **Noviembre:** Entrega fase 2 (mes de noviembre)
+- **Diciembre:** Entrega fase 3 (mes de diciembre)
+- **Enero:** Entrega fase 4 (mes de enero)
+- **Enero:** Entrega fase 5 (mes de enero)
+
+# Bibliografía
+
+- Material de la asignatura disponible en el **aula virtual**
+- **Biblioteca virtual** para alumnos
+
+
+## Internet
+
+- Páginas oficiales de los estándares y tecnologías
+- Tutoriales, ejemplos y blogs realizados por la comunidad
+- Aplicaciones web de código abierto
+- ... y todo lo que Google encuentre :)
+
+# Ejemplos de proyectos de otros años
+
+- [Head and Balls](https://www.newgrounds.com/portal/view/963939)
+- [Ink Catiction](https://www.newgrounds.com/portal/view/963911)
+- [Bombs 'R' Us](https://www.newgrounds.com/portal/view/965340)

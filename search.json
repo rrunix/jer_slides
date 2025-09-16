@@ -1,0 +1,366 @@
+[
+  {
+    "objectID": "ch1_p1_net_introduction.html#qué-es-internet",
+    "href": "ch1_p1_net_introduction.html#qué-es-internet",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "¿Qué es Internet?",
+    "text": "¿Qué es Internet?\n\n\nEtimología: “Interconnected Networks”\n\nRed global de redes interconectadas\nSistema descentralizado\nMúltiples capas jerárquicas\n\n\nCaracterísticas principales:\n\nArquitectura distribuida\nResiliencia a fallos\nEscalabilidad natural\nSin control centralizado\n\n\n\n\n\n\n\ngraph LR\n    G1[\"🌐 Google A\"]\n    F1[\"📘 Facebook\"]\n    G2[\"🌐 Google B\"]\n    A1[\"🛒 Amazon\"]\n    N1[\"📺 Netflix\"]\n    U1[\"👤 Usuario\"]\n    \n    %% Conexiones normales\n    G1 ---|\"✅\"| F1\n    F1 ---|\"✅\"| G2\n    G1 ---|\"✅\"| A1\n    A1 ---|\"✅\"| N1\n    N1 ---|\"✅\"| G2\n    U1 ---|\"✅\"| G1\n    \n    %% Conexiones rotas\n    G2 -.-|\"❌ ROTO\"| U1\n    A1 -.-|\"❌ ROTO\"| F1\n    \n    %% Rutas alternativas\n    U1 ---|\"🔄 Alt\"| F1\n    F1 ---|\"🔄 Alt\"| N1\n    N1 ---|\"🔄 Alt\"| G2\n    \n    classDef server fill:#4ecdc4,stroke:#00b894,stroke-width:2px,color:#fff\n    classDef user fill:#fd79a8,stroke:#e84393,stroke-width:2px,color:#fff\n    \n    class G1,F1,G2,A1,N1 server\n    class U1 user"
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#jerarquía-de-redes",
+    "href": "ch1_p1_net_introduction.html#jerarquía-de-redes",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Jerarquía de Redes",
+    "text": "Jerarquía de Redes\n\n\n\n\n\ngraph LR\n    PAN[\"📱 PAN (Personal Area Network)&lt;br&gt;Smartphone ↔ Smartwatch\"]\n    LAN[\"🏠 LAN (Local Area Network)&lt;br&gt;Home/Office/Building Network\"]\n    WLAN[\"📡 WLAN (Wireless LAN)&lt;br&gt;Wi-Fi Implementation of LAN\"]\n    CAN[\"🏫 CAN (Campus Area Network)&lt;br&gt;Multiple LANs in Campus\"]\n    MAN_ISP[\"🏙️ MAN (Metropolitan Area Network)&lt;br&gt;ISP Network\"]\n    MAN_MOBILE[\"📶 MAN (Metropolitan Area Network)&lt;br&gt;5G/4G Mobile Network\"]\n    WAN[\"🌍 WAN (Wide Area Network)&lt;br&gt;Between Cities or Countries\"]\n    INTERNET[\"🌐 Internet&lt;br&gt;Global Interconnected WANs\"]\n    VPN[\"🔐 VPN (Virtual Private Network)&lt;br&gt;Secure Tunnel over Internet\"]\n    \n    %% Traditional wired path\n    PAN --&gt; LAN\n    WLAN -.-&gt; LAN\n    LAN --&gt;|Multiple LANs| CAN\n    CAN --&gt; MAN_ISP\n    LAN --&gt;|Multiple LANs| MAN_ISP\n    \n    %% Mobile path\n    PAN --&gt; MAN_MOBILE\n    \n    %% Both MANs connect to WAN\n    MAN_ISP --&gt;|Multiple MANs| WAN\n    MAN_MOBILE --&gt;|Multiple MANs| WAN\n    WAN --&gt;|Multiple WANs| INTERNET\n    VPN --&gt; INTERNET\n    \n    style WLAN fill:#e1f5fe\n    style VPN fill:#f3e5f5\n    style MAN_MOBILE fill:#fff3e0\n\n\n\n\n\n\n\nPAN: Red personal entre dispositivos cercanos.\nLAN: Red local de casa/oficina/edificio.\nWLAN: LAN inalámbrica (Wi-Fi).\nCAN: Red de campus - conecta múltiples LANs.\nMAN: Red metropolitana - cubre una ciudad, incluye redes de ISP y móviles (4G/5G)\nWAN: Red de área amplia - conecta ciudades o países.\nInternet: Red global - interconexión de todas las WANs del mundo\n\n\n\nPAN: Personal (smartwatch, móvil)\nLAN: Local (hogar, oficina)\nMAN: Metropolitana (ciudad)\nWAN: Área amplia (países)\nInternet: Red global"
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#ejemplo-mensaje-madrid-tokio",
+    "href": "ch1_p1_net_introduction.html#ejemplo-mensaje-madrid-tokio",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Ejemplo: Mensaje Madrid → Tokio",
+    "text": "Ejemplo: Mensaje Madrid → Tokio\nSmartphone María (WiFI) en Madrid -&gt; Takeshi LAN en la Universidad de Tokyo\n\nOrigen LAN Madrid: Smartphone → Router WiFi\nRouter local → MAN: ISP local → MAN Madrid\nMAN → WAN nacional: MAN Madrid → WAN España\nWAN → Internet global: España → Backbone internacional\nLlegada a Japón: WAN Japón → MAN Tokio\nMAN → CAN: MAN Tokio → Universidad\nCAN → LAN: Campus → LAN específica\nDestino final: LAN → Dispositivo de Takeshi"
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#un-caso-un-poco-más-real",
+    "href": "ch1_p1_net_introduction.html#un-caso-un-poco-más-real",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Un caso un poco más real",
+    "text": "Un caso un poco más real\n\nProbad a ejecutar en vuestras terminales traceroute www.google.es (tracert www.google.es en Windows)\n¿Qué información estáis obteniendo?\nComparadla con vuestros compañer@s. ¿Es la misma?"
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#internet-simplificado",
+    "href": "ch1_p1_net_introduction.html#internet-simplificado",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Internet simplificado",
+    "text": "Internet simplificado"
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#componentes-clave",
+    "href": "ch1_p1_net_introduction.html#componentes-clave",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Componentes Clave",
+    "text": "Componentes Clave\n\n\nRouter\n\nConecta diferentes redes\nUsa direcciones IP\nEnrutamiento “hop by hop”\nOpera entre redes distantes\n\n\nSwitch\n\nConecta dispositivos en misma red\nUsa direcciones MAC\nEntrega local inteligente\nOpera dentro de la LAN"
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#en-nuestras-casas",
+    "href": "ch1_p1_net_introduction.html#en-nuestras-casas",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "En nuestras casas",
+    "text": "En nuestras casas\nEntonces… ¿Esto que es?"
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#identificadores-en-red",
+    "href": "ch1_p1_net_introduction.html#identificadores-en-red",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Identificadores en Red",
+    "text": "Identificadores en Red\n\n\nDirección IP\n\n“Dirección postal”\nLocaliza en la red\nEjemplo: 192.168.1.100\nPuede cambiar\n\n\nDirección MAC\n\n“DNI del dispositivo”\nÚnica y permanente\nAsignada por fabricante\nNo cambia nunca\n\n\nProtocolo ARP\n\n“Directorio telefónico”\nTraduce IP ↔︎ MAC\nPermite entrega final\nOpera localmente\n\n\n\n\n\n\n\n\nEjercicio\n\n\nPrueba a ejecutar ifconfig en tu terminal MacOS/Linux o ipconfig en Windows. ¿Qué ves?."
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#protocolos-de-red",
+    "href": "ch1_p1_net_introduction.html#protocolos-de-red",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Protocolos de Red",
+    "text": "Protocolos de Red\n\nProtocolo: Serie de pasos bien definidos que especifican cómo intercambiar información entre dispositivos\n\nAnalogía del tráfico urbano\n\nSin protocolos: Caos total, pérdida de información\nCon protocolos: Flujo ordenado, comunicación efectiva"
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#linea-temporal-de-internet.",
+    "href": "ch1_p1_net_introduction.html#linea-temporal-de-internet.",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Linea temporal de Internet.",
+    "text": "Linea temporal de Internet.\n\n\n\n\n\ntimeline\n    title Evolución de Internet: De ARPANET a la Era Digital\n    \n    section Era ARPANET (1969-1983)\n        1969 : Nace ARPANET\n             : 4 nodos iniciales (UCLA, Stanford, UC Santa Bárbara, Utah)\n             : Implementación de conmutación de paquetes\n        \n        1973 : Primera conexión internacional\n        \n        1983 : Adopción oficial de TCP/IP\n             : División de ARPANET (creación de MILNET)\n             : Nace el término \"Internet\"\n\n    section Nacimiento de la Web (1989-1995)\n        1989-1990 : Tim Berners-Lee inventa la World Wide Web\n                  : Desarrollo de HTTP, HTML y URLs\n        \n        1991 : Primer sitio web público\n\n    section Era Comercial (1995-2000)\n        1995 : Eliminación de restricciones comerciales\n             : Primeros ISPs comerciales (AOL)\n             : Aparecen Amazon y eBay\n        \n        1998 : Fundación de Google\n        \n        2000-2001 : Explosión de la burbuja punto-com\n\n    section Web 2.0 y Redes Sociales (2003-2010)\n        2003-2006 : Redes sociales\n        2007 : Lanzamiento del iPhone\n\n    section Era Moderna (2010-2025)\n        2010s : Computación en la nube, Internet de las cosas\n        \n        2020s : Inteligencia Artificial\n              : Tecnología 5G\n\n\n\n\n\n\n\n\nARPANET se creo con fines militares\nSe creo y publicó el primer sitio web (CERN)\nBurbuja punto com\nCreación de las Redes sociales.\nInteligencia Artificial Generativa."
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#crecimiento-exponencial",
+    "href": "ch1_p1_net_introduction.html#crecimiento-exponencial",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Crecimiento Exponencial",
+    "text": "Crecimiento Exponencial\nDe ~4 dispositivos (1969) a &gt;100.000 millones (2025) en 50 años."
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#sistemas-terminales-end-systems",
+    "href": "ch1_p1_net_introduction.html#sistemas-terminales-end-systems",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Sistemas Terminales (End Systems)",
+    "text": "Sistemas Terminales (End Systems)\n\nHosts (End systems): Son los dispositivos que usan Internet como PCs, smartphones, IoT, servidores. Ejecutan aplicaciones de red.\n\n\n\nClasificación\n\nClientes: Solicitan servicios\nServidores: Proporcionan servicios\nRoles dinámicos (P2P)\n\n\n\n\n\n\n\n\n\n---\ntitle: Cliente - Servidor \n---\ngraph TD\n    S[\"🖥️ Servidor&lt;br/&gt;Centralizado\"]\n    C1[\"💻 Cliente 1\"]\n    C2[\"📱 Cliente 2\"]\n    C3[\"🖥️ Cliente 3\"]\n    \n    C1 &lt;--&gt; S\n    C2 &lt;--&gt; S\n    C3 &lt;--&gt; S\n    \n    classDef server fill:#ff6b6b,stroke:#d63031,stroke-width:3px,color:#fff\n    classDef client fill:#74b9ff,stroke:#0984e3,stroke-width:2px,color:#fff\n    \n    class S server\n    class C1,C2,C3 client\n\n\n\n\n\n\n\n\n\n\n\n\n\n---\ntitle: Peer to peer \n---\ngraph LR\n    P1[\"💻 Peer 1\"]\n    P2[\"📱 Peer 2\"]\n    P3[\"🖥️ Peer 3\"]\n    P4[\"💻 Peer 4\"]\n    \n    P1 &lt;--&gt; P2\n    P1 &lt;--&gt; P3\n    P2 &lt;--&gt; P3\n    P2 &lt;--&gt; P4\n    P3 &lt;--&gt; P4\n    \n    classDef peer fill:#00b894,stroke:#00a085,stroke-width:2px,color:#fff\n    \n    class P1,P2,P3,P4 peer"
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#redes-de-acceso",
+    "href": "ch1_p1_net_introduction.html#redes-de-acceso",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Redes de Acceso",
+    "text": "Redes de Acceso\n\nRedes de acceso: Es la red en la que se conectan los host con el router de borde.\n\n\n\nTecnologías host → router\n\nWiFi 6: 200-400 Mb/s\nEthernet: 1000 Mb/s\n4G LTE: 50/15 Mb/s\n5G: 300/50 Mb/s\n\n\nCaracterísticas\n\nAlcance limitado\nVelocidades variables\nMedios compartidos vs dedicados"
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#tecnologías-wan",
+    "href": "ch1_p1_net_introduction.html#tecnologías-wan",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Tecnologías WAN",
+    "text": "Tecnologías WAN\n\nRouter de borde: Router que conecta la red de acceso con el núcleo de la red.\n\nTecnologías comunes:\n\n\n\nTecnología\nVelocidad típica\nEstado 2025\n\n\n\n\nDSL/VDSL\n50/15 Mb/s\nEn declive\n\n\nCable HFC\n300/30 Mb/s\nEstable\n\n\nFTTH PON\n1000/1000 Mb/s\nEn expansión\n\n\nFTTH P2P\n10000/10000 Mb/s\nPremium\n\n\nSatelital\n100/20 Mb/s\nNicho"
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#núcleo-de-la-red-isps",
+    "href": "ch1_p1_net_introduction.html#núcleo-de-la-red-isps",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Núcleo de la Red: ISPs",
+    "text": "Núcleo de la Red: ISPs\n\nISP (Internet Service Providers): Son los componentes del núcleo de la red y proporcionan interconexión entre diferentes redes.\n\n\n\n\n\n\n\ngraph LR\n    T1A[\"Tier 1&lt;br/&gt;🌍 Cogent\"]\n    T1B[\"Tier 1&lt;br/&gt;🌍 Level 3\"]\n    \n    T2A[\"Tier 2&lt;br/&gt;🇪🇸 Movistar\"]\n    T2B[\"Tier 2&lt;br/&gt;🇪🇸 Vodafone\"]\n    \n    T3A[\"Tier 3&lt;br/&gt;🏠 Lowi\"]\n    T3B[\"Tier 3&lt;br/&gt;🏠 Pepephone\"]\n    \n    \n    %% Tier 1 peering\n    T1A &lt;-.-&gt;|\"Peering Gratuito\"| T1B\n    \n    %% Tier 2 comprando de Tier 1\n    T1A --&gt;|\"Tránsito (€€€)\"| T2A\n    T1B --&gt;|\"Tránsito (€€€)\"| T2B\n    \n    %% Tier 3 comprando de Tier 2\n    T2A --&gt;|\"Tránsito (€€)\"| T3A\n    T2B --&gt;|\"Tránsito (€€)\"| T3B\n\n    T2A  &lt;-.-&gt;|\"Peering Gratuito\"| T2B\n    \n    %% Styling\n    classDef tier1 fill:#ff6b6b,stroke:#d63031,stroke-width:3px,color:#fff\n    classDef tier2 fill:#4ecdc4,stroke:#00b894,stroke-width:2px,color:#fff\n    classDef tier3 fill:#fdcb6e,stroke:#e17055,stroke-width:2px,color:#2d3436\n    classDef users fill:#a29bfe,stroke:#6c5ce7,stroke-width:2px,color:#fff\n    \n    class T1A,T1B tier1\n    class T2A,T2B tier2\n    class T3A,T3B tier3\n    class U1,U2 users\n\n\n\n\n\n\n\n\n\nTier 1\n\nCobertura global\nPeering gratuito\nAT&T, Telefónica\n10-100 Gb/s\n\n\nTier 2\n\nCobertura regional/nacional\nPagan tránsito a Tier 1\nPeering selectivo\n\n\nTier 3\n\nAcceso local\nÚltima milla\nUsuarios finales\nSin peering"
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#arquitecturas-por-capas",
+    "href": "ch1_p1_net_introduction.html#arquitecturas-por-capas",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Arquitecturas por Capas",
+    "text": "Arquitecturas por Capas\n\n\n\nCada capa = responsabilidad específica\nServicios a capa superior\nUsa servicios de capa inferior\nDesarrollo independiente\n\n\n\n\n\n\n\ngraph TD\n    C1[\"🌐 Capa 1&lt;br/&gt;Frontend&lt;br/&gt;&lt;small&gt;Javascript, HTML, CSS&lt;/small&gt;\"]\n    C2[\"⚡ Capa 2&lt;br/&gt;API/Backend&lt;br/&gt;&lt;small&gt;Node.js, Express&lt;/small&gt;\"]\n    C3[\"💾 Capa 3&lt;br/&gt;Base de Datos&lt;br/&gt;&lt;small&gt;MongoDB, PostgreSQL&lt;/small&gt;\"]\n    \n    C1 &lt;--&gt; C2\n    C2 &lt;--&gt; C3\n    \n    classDef frontend fill:#e3f2fd,stroke:#1976d2,stroke-width:2px\n    classDef backend fill:#fff3e0,stroke:#f57c00,stroke-width:2px\n    classDef database fill:#e8f5e8,stroke:#388e3c,stroke-width:2px\n    \n    class C1 frontend\n    class C2 backend\n    class C3 database"
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#encapsulación",
+    "href": "ch1_p1_net_introduction.html#encapsulación",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Encapsulación",
+    "text": "Encapsulación\n\n\n\nCada capa añade headers\nDatos superiores = payload\nNo modifica contenido interno\n\n\n\n\n\n\n\ngraph TD\n    subgraph L1 [\"⚡ Capa 1: Enlace - Header Ethernet\"]\n        subgraph L2 [\"🌐 Capa 2: Red - Header IP\"]\n            subgraph L3 [\"📦 Capa 3: Transporte - Header TCP\"]\n                subgraph L4 [\"📧 Datos Originales\"]\n                    DATA[\"Mensaje del usuario\"]\n                end\n            end\n        end\n    end\n    \n    classDef datalink fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px\n    classDef network fill:#e3f2fd,stroke:#1976d2,stroke-width:3px\n    classDef transport fill:#fff3e0,stroke:#f57c00,stroke-width:3px\n    classDef original fill:#e8f5e8,stroke:#388e3c,stroke-width:3px\n    \n    class L1 datalink\n    class L2 network\n    class L3 transport\n    class L4 original"
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#encapsulación-arquitectura-por-capas",
+    "href": "ch1_p1_net_introduction.html#encapsulación-arquitectura-por-capas",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Encapsulación + Arquitectura por capas",
+    "text": "Encapsulación + Arquitectura por capas\n\n\n\n\n\n\n\n---\ntitle: Encapsulación \n---\ngraph LR\n  APP[\"📧 Email\"]\n  \n  subgraph TCP [\"TCP\"]\n      APP2[\"📧 Email\"]\n  end\n  \n  subgraph IP [\"IP\"]\n      subgraph TCP2 [\"TCP\"]\n          APP3[\"📧 Email\"]\n      end\n  end\n  \n  subgraph ETH [\"Ethernet\"]\n      subgraph IP2 [\"IP\"]\n          subgraph TCP3 [\"TCP\"]\n              APP4[\"📧 Email\"]\n          end\n      end\n  end\n  \n  APP --&gt; TCP\n  TCP --&gt; IP\n  IP --&gt; ETH\n    \n  classDef app fill:#e8f5e8,stroke:#388e3c,stroke-width:2px\n  classDef transport fill:#fff3e0,stroke:#f57c00,stroke-width:2px\n  classDef network fill:#e3f2fd,stroke:#1976d2,stroke-width:2px\n  classDef datalink fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px\n  \n  class APP,APP2,APP3,APP4,APP5,APP6,APP7,APP8 app\n  class TCP,TCP2,TCP3,TCP4,TCP5,TCP6 transport\n  class IP,IP2,IP3,IP4 network\n  class ETH,ETH2 datalink\n\n\n\n\n\n\n\n\n\n\n\n\n\n---\ntitle: Desencapsulación \n---\ngraph LR\n    \n    DAPP[\"📧 Email\"]\n    \n    subgraph DTCP [\"TCP\"]\n        DAPP2[\"📧 Email\"]\n    end\n    \n    subgraph DIP [\"IP\"]\n        subgraph DTCP2 [\"TCP\"]\n            DAPP3[\"📧 Email\"]\n        end\n    end\n    \n    subgraph DETH [\"Ethernet\"]\n        subgraph DIP2 [\"IP\"]\n            subgraph DTCP3 [\"TCP\"]\n                DAPP4[\"📧 Email\"]\n            end\n        end\n    end\n    \n    DTCP --&gt; DAPP\n    DIP --&gt; DTCP\n    DETH --&gt; DIP\n    \n    classDef app fill:#e8f5e8,stroke:#388e3c,stroke-width:2px\n    classDef transport fill:#fff3e0,stroke:#f57c00,stroke-width:2px\n    classDef network fill:#e3f2fd,stroke:#1976d2,stroke-width:2px\n    classDef datalink fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px\n\n    class DAPP,DAPP2,DAPP3,DAPP4,DAPP5,DAPP6,DAPP7,DAPP8 app\n    class DTCP,DTCP2,DTCP3,DTCP4,DTCP5,DTCP6 transport\n    class DIP,DIP2,DIP3,DIP4 network\n    class DETH,DETH2 datalink"
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#modelos-osi-vs-tcpip",
+    "href": "ch1_p1_net_introduction.html#modelos-osi-vs-tcpip",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Modelos OSI vs TCP/IP",
+    "text": "Modelos OSI vs TCP/IP\n\n\n\n\n\n\n\nOSI: 7 capas, modelo teórico\nTCP/IP: 4 capas, usado en Internet\n\n\n\n⚠️ Nota: TCP/IP no es un protocolo, hace referencia a una pila de protocolos. Además, no tiene porque utilizar necesariamente TCP, podría ser UDP.\n\n\nTCP/IP es superior a OSI porque es simple, práctico y probado. Mientras OSI tiene 7 capas teóricas diseñadas en comités académicos, TCP/IP usa solo 4 capas que realmente se necesitan y ha funcionado en Internet durante más de 50 años. TCP/IP es más eficiente (menos overhead), más flexible (se adapta fácilmente), y tiene adopción masiva con ecosistemas completos de hardware y software. OSI llegó tarde al mercado cuando TCP/IP ya dominaba, y sus capas extra (como Sesión y Presentación) añaden complejidad innecesaria para la mayoría de aplicaciones reales. En resumen: OSI es el modelo perfecto para estudiar redes, pero TCP/IP es lo que realmente mueve Internet."
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#nivel-de-aplicación",
+    "href": "ch1_p1_net_introduction.html#nivel-de-aplicación",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Nivel de Aplicación",
+    "text": "Nivel de Aplicación\n\n\nOSI (Capas 7, 6, 5)\n\nAplicación: HTTP, FTP, DNS\nPresentación: Cifrado, compresión\nSesión: Control de diálogos\n\n\nTCP/IP\n\nUna sola capa integrada\nProtocolos: HTTP/HTTPS, SMTP, FTP, DNS\nMás práctico"
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#nivel-de-transporte",
+    "href": "ch1_p1_net_introduction.html#nivel-de-transporte",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Nivel de Transporte",
+    "text": "Nivel de Transporte\nCapa 4 (ambos modelos)\n\n\nTCP\n\nComunicación confiable\nControl de flujo\nEntrega ordenada\nCorrección de errores\n\n\nUDP\n\nComunicación rápida\nSin garantías\nIdeal para tiempo real\nMenor overhead"
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#nivel-de-redinternet",
+    "href": "ch1_p1_net_introduction.html#nivel-de-redinternet",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Nivel de Red/Internet",
+    "text": "Nivel de Red/Internet\nCapa 3 OSI / Capa Internet TCP/IP\nFunción principal: Enrutamiento de paquetes\nProtocolos:\n\nIP: Protocolo principal\nICMP: Control y errores\nARP: Resolución de direcciones\nOSPF, BGP: Protocolos de enrutamiento\n\n\n\n\n\n\n\nEjercicio\n\n\nPrueba a ejecutar ping www.google.es en tu terminal. ¿Qué ves?."
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#nivel-de-acceso-físico",
+    "href": "ch1_p1_net_introduction.html#nivel-de-acceso-físico",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Nivel de Acceso Físico",
+    "text": "Nivel de Acceso Físico\n\n\nOSI (Capas 2 y 1)\n\nEnlace: Control de errores, MAC\nFísica: Señales, voltajes\n\n\nTCP/IP\n\nCapa de Acceso a Red\nCombina ambas funciones\nEthernet, WiFi, etc."
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#métricas-principales",
+    "href": "ch1_p1_net_introduction.html#métricas-principales",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Métricas Principales",
+    "text": "Métricas Principales\n\n\nLatencia\n\nTiempo que tarda un paquete en llegar a su destino.\n“Velocidad del vehículo”\nMedida en ms\n\n\nThroughput**\n\nDatos enviados por cantidad de tiempo.\n“Número de carriles”\nMedido en Mb/s o Gb/s\n\n\n\n⚠️ Nota: 1 MB/s = 8 Mb/s"
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#throughput-vs-bandwidth",
+    "href": "ch1_p1_net_introduction.html#throughput-vs-bandwidth",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Throughput vs Bandwidth",
+    "text": "Throughput vs Bandwidth\n\n\nBandwidth\n\nCapacidad máxima teórica\nLímite físico del canal\nCondiciones ideales\n\n\nThroughput\n\nTransferencia real\nLimitado por el componente más lento\nCondiciones reales"
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#latencia-vs-throughput",
+    "href": "ch1_p1_net_introduction.html#latencia-vs-throughput",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Latencia vs Throughput",
+    "text": "Latencia vs Throughput\nComparativa del efecto de la latencia y throughput en el tiempo para enviar una cantidad de datos.\n\n\n\nviewof settings = Inputs.form({\n  \"Tamaño total\": Inputs.range([50, 5000], {value: 200, step: 10, label: \"Tamaño total\"},),\n  \"Latencia A\": Inputs.range([1, 50], {value: 1, step: 0.1, label: \"Latencia (A)\"}),\n  \"Throughput A\": Inputs.range([1, 50], {value: 10, step: 1, label:\"Throughput (A)\"}),\n  \"Latencia B\": Inputs.range([1, 50], {value: 2, step: 0.1, label:\"Latencia (B)\"}),\n  \"Throughput B\": Inputs.range([1, 50], {value: 20, step: 1, label:\"Throughput B\"})\n})\n\n// Extraemos variables del formulario\ntotalData = settings[\"Tamaño total\"]\nlatencyA = settings[\"Latencia A\"]\nthroughputA = settings[\"Throughput A\"]\nlatencyB = settings[\"Latencia B\"]\nthroughputB = settings[\"Throughput B\"]\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nfunction progress(t, latency, throughput, total) {\n  if (t &lt; latency) return 0;\n  return Math.min(100, ((t - latency) * throughput / total) * 100);\n}\n\n// Reloj animado\ntime = {\n  let t0 = Date.now();\n  while (true) {\n    yield (Date.now() - t0) / 100; // en decimas de segundo\n    await Promises.tick(50);\n  }\n}\n\n// Tiempo máximo\nmaxTime = Math.max(latencyA + totalData/throughputA, latencyB + totalData/throughputB)\n\n// Progresos\nprogA = progress(time % maxTime, latencyA, throughputA, totalData)\nprogB = progress(time % maxTime, latencyB, throughputB, totalData)\n\n// Gráfico con Plot\nPlot.plot({\n  y: {domain: [0, 100], label: \"% completado\"},\n  x: {label: \"Tiempo (s)\"},\n  color: {legend: true, domain: [\"A\", \"B\"], range: [\"blue\", \"red\"]},\n  marks: [\n    Plot.line(d3.range(0, maxTime, 0.1).map(t =&gt; ({t, y: progress(t, latencyA, throughputA, totalData), series: \"A\"})), {x: \"t\", y: \"y\", stroke: \"series\"}),\n    Plot.line(d3.range(0, maxTime, 0.1).map(t =&gt; ({t, y: progress(t, latencyB, throughputB, totalData), series: \"B\"})), {x: \"t\", y: \"y\", stroke: \"series\"}),\n    Plot.dot([{t: time % maxTime, y: progA, series: \"A\"}], {x: \"t\", y: \"y\", fill: \"series\", r: 5}),\n    Plot.dot([{t: time % maxTime, y: progB, series: \"B\"}], {x: \"t\", y: \"y\", fill: \"series\", r: 5})\n  ]\n})"
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#componentes-de-la-latencia",
+    "href": "ch1_p1_net_introduction.html#componentes-de-la-latencia",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Componentes de la Latencia",
+    "text": "Componentes de la Latencia\nd_{total} = \\textcolor{red}{d_{proc}} + \\textcolor{blue}{d_{queue}} + \\textcolor{green}{d_{prop}} + \\textcolor{orange}{d_{trans}}\n\ndproc: Procesamiento en router (microsegundos)\ndqueue: Espera en buffer (variable con tráfico)\ndprop: Propagación por el medio (d/s)\ndtrans: Transmisión de datos (L/R)"
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#rtt",
+    "href": "ch1_p1_net_introduction.html#rtt",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "RTT",
+    "text": "RTT\n\nRTT (Round trip time): Tiempo total que tarda un paquete en ir desde el origen hasta el destino y volver de vuelta (ida + vuelta).\n\n\nLa latencia no es simétrica.\nGeneralmente la descarga es más rápida que la subida.\nPor lo tanto, el RTT es un valor muy importante en aplicaciones interactivas."
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#comparación-fibra-vs-5g",
+    "href": "ch1_p1_net_introduction.html#comparación-fibra-vs-5g",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Comparación: Fibra vs 5G",
+    "text": "Comparación: Fibra vs 5G\n\n\n\nFactor\nFibra Óptica\n5G\n\n\n\n\nPropagación\n67% velocidad luz\n100% velocidad luz\n\n\nProcesamiento\n~0.1ms/salto\n~4ms (estación radio)\n\n\nCola\nBaja congestión\nAlta congestión\n\n\nTransmisión\nHasta 10 Gb/s\n&lt; 1 Gb/s\n\n\n\nResultado: Fibra generalmente más rápida y estable"
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#jitter-variabilidad-de-latencia",
+    "href": "ch1_p1_net_introduction.html#jitter-variabilidad-de-latencia",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Jitter: Variabilidad de Latencia",
+    "text": "Jitter: Variabilidad de Latencia\nEjemplo comparativo\n\n\nEscenario 1 (Bajo jitter):\n\nPaquetes: 50, 52, 48, 51 ms\nPromedio: 50.25 ms\nVariación: 1.48 ms ✅\n\n\nEscenario 2 (Alto jitter):\n\nPaquetes: 28, 68, 43, 62 ms\nPromedio: 50.25 ms\nVariación: 15.82 ms ❌\n\n\nImpacto: Voz entrecortada, saltos en video, degradación en juegos"
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#requisitos-para-videojuegos",
+    "href": "ch1_p1_net_introduction.html#requisitos-para-videojuegos",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Requisitos para Videojuegos",
+    "text": "Requisitos para Videojuegos\nLatencia máxima tolerada (RTT)\n\n\n\nGénero\nTolerancia\nEjemplo\n\n\n\n\nFighting\n16-50ms\nStreet Fighter\n\n\nFPS Competitivo\n20-50ms\nCounter-Strike\n\n\nRacing\n50-100ms\nGran Turismo\n\n\nRTS\n100-200ms\nStarCraft\n\n\nMMORPG\nVariable\nWorld of Warcraft\n\n\nTurn-based\n500ms+\nCivilization"
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#pérdida-de-paquetes",
+    "href": "ch1_p1_net_introduction.html#pérdida-de-paquetes",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Pérdida de Paquetes",
+    "text": "Pérdida de Paquetes\nCausas principales\n\nCongestión: Buffers llenos en routers\nCorrupción: Interferencias electromagnéticas\nRadiación cósmica: ~1 error/256MB/día\n\nSoluciones\n\nProtocolos de capas superiores (TCP)\nRetransmisión automática\nCódigos de corrección de errores"
+  },
+  {
+    "objectID": "ch1_p1_net_introduction.html#resumen",
+    "href": "ch1_p1_net_introduction.html#resumen",
+    "title": "Introducción a las Redes de Ordenadores",
+    "section": "Resumen",
+    "text": "Resumen\n\nInternet es un sistema distribuido y descentralizado\nEvolución desde 4 hosts (1969) a &gt;100B dispositivos (2025)\nInfraestructura jerárquica: PAN → LAN → MAN → WAN → Internet\nModelos de capas: OSI (teórico) vs TCP/IP (práctico)\nRendimiento: Balance entre latencia y throughput\nAplicaciones críticas: Videojuegos requieren &lt;50ms para competitivo"
+  },
+  {
+    "objectID": "sub_introduction.html#prof.-rubén-rodríguez",
+    "href": "sub_introduction.html#prof.-rubén-rodríguez",
+    "title": "Presentación de Juegos en Red",
+    "section": "Prof. Rubén Rodríguez",
+    "text": "Prof. Rubén Rodríguez\nRubén Rodríguez Fernández\n\nE-mail: ruben.rodriguez@urjc.es. (Escribir por aula virtual).\nDespacho: 131, Ed. Departamental II (Campus de Móstoles).\nTutorias: Concertar por e-mail (aula virtual)."
+  },
+  {
+    "objectID": "sub_introduction.html#prof.-natalia-madrueño",
+    "href": "sub_introduction.html#prof.-natalia-madrueño",
+    "title": "Presentación de Juegos en Red",
+    "section": "Prof. Natalia Madrueño",
+    "text": "Prof. Natalia Madrueño\nNatalia Madrueño Sierro\n\nEmail: natalia.madrueno@urjc.es (Escribir por aula virtual).\nDespacho: 044, Ed. Departamental II (Campus de Móstoles).\nTutorias: Concertar por e-mail (aula virtual)."
+  },
+  {
+    "objectID": "sub_introduction.html#aplicaciones-en-red",
+    "href": "sub_introduction.html#aplicaciones-en-red",
+    "title": "Presentación de Juegos en Red",
+    "section": "Aplicaciones en red",
+    "text": "Aplicaciones en red\nLa gran mayoría de las aplicaciones actuales son aplicaciones basadas en red:\n\nAula Virtual\nGmail\nTwitter\nFacebook\nLa web de la Liga de Fútbol Profesional (LFP)\n…"
+  },
+  {
+    "objectID": "sub_introduction.html#muchos-juegos-también",
+    "href": "sub_introduction.html#muchos-juegos-también",
+    "title": "Presentación de Juegos en Red",
+    "section": "Muchos juegos también",
+    "text": "Muchos juegos también\n\nPlayerUnknown’s Battlegrounds (PUBG) / Fortnite / Destiny 2 / Overwatch / Quake Champions / Counter-Strike: Global Offensive (CS:GO) / League of Legends (LoL) / DOTA 2\nWorld of Warcraft\nFIFA / PES\nMario Kart / Project Cars / Rocket League\nJuegos de Facebook\n…"
+  },
+  {
+    "objectID": "sub_introduction.html#tema-1-introducción-a-los-juegos-en-red-y-a-las-redes-de-comunicaciones",
+    "href": "sub_introduction.html#tema-1-introducción-a-los-juegos-en-red-y-a-las-redes-de-comunicaciones",
+    "title": "Presentación de Juegos en Red",
+    "section": "Tema 1: Introducción a los juegos en red y a las redes de comunicaciones",
+    "text": "Tema 1: Introducción a los juegos en red y a las redes de comunicaciones\nSe presentan los retos de las aplicaciones en red y se introducen los principales conceptos necesarios para entender su funcionamiento:\n\nQué son y como funcionan las aplicaciones en red.\nProblemas propios de aplicaciones en red.\nConceptos fundamentales de comunicación en red entre aplicaciones.\nConsideraciones al desarrollar juegos en red."
+  },
+  {
+    "objectID": "sub_introduction.html#tema-2-desarrollo-en-el-lado-del-cliente.",
+    "href": "sub_introduction.html#tema-2-desarrollo-en-el-lado-del-cliente.",
+    "title": "Presentación de Juegos en Red",
+    "section": "Tema 2: Desarrollo en el lado del cliente.",
+    "text": "Tema 2: Desarrollo en el lado del cliente.\nSe estudia el lenguaje JavaScript para construir aplicaciones en el lado del cliente (browser). API REST.\n\nDesarrollo web en JavaScript, HTML y CSS\nUso de las API REST"
+  },
+  {
+    "objectID": "sub_introduction.html#tema-3-desarrollo-de-juegos-con-tecnología-web.",
+    "href": "sub_introduction.html#tema-3-desarrollo-de-juegos-con-tecnología-web.",
+    "title": "Presentación de Juegos en Red",
+    "section": "Tema 3: Desarrollo de juegos con tecnología web.",
+    "text": "Tema 3: Desarrollo de juegos con tecnología web.\nSe presenta el framework JavaScript Phaser para desarrollo de juegos en el cliente:\n\nPhaser 3 framework: https://phaser.io.\nAmplia galería de ejemplos: https://phaser.io/examples/"
+  },
+  {
+    "objectID": "sub_introduction.html#tema-4-desarrollo-en-el-lado-del-servidor.",
+    "href": "sub_introduction.html#tema-4-desarrollo-en-el-lado-del-servidor.",
+    "title": "Presentación de Juegos en Red",
+    "section": "Tema 4: Desarrollo en el lado del servidor.",
+    "text": "Tema 4: Desarrollo en el lado del servidor.\nSe estudia el framework express.js con JavaScript para desarrollar el lado del servidor. Implementación de API REST:\n\nIntroducción a express.js\nDesarrollo de comunicación cliente servidor a través de API REST."
+  },
+  {
+    "objectID": "sub_introduction.html#tema-5-comunicación-asíncrona-cliente---servidor",
+    "href": "sub_introduction.html#tema-5-comunicación-asíncrona-cliente---servidor",
+    "title": "Presentación de Juegos en Red",
+    "section": "Tema 5: Comunicación asíncrona cliente - servidor",
+    "text": "Tema 5: Comunicación asíncrona cliente - servidor\nSe estudia el uso de WebSockets para comunicación asíncrona entre nodos:\n\nIntroducción a la comunicación asíncrona con WebSockets.\nCreación de protocolos de mensajes.\nDesarrollo de comunicación asíncrona entre cliente y servidor con WebSockets."
+  },
+  {
+    "objectID": "sub_introduction.html#material-teórico",
+    "href": "sub_introduction.html#material-teórico",
+    "title": "Presentación de Juegos en Red",
+    "section": "Material teórico",
+    "text": "Material teórico\n\nEl material se irá publicando en el Aula Virtual a medida que avance el cuatrimestre.\nSe publicará como asignatura en abierto, todos los materiales son públicos.\nContará con diapositivas, apuntes, problemas y una guía de estudio."
+  },
+  {
+    "objectID": "sub_introduction.html#enunciado-de-la-práctica",
+    "href": "sub_introduction.html#enunciado-de-la-práctica",
+    "title": "Presentación de Juegos en Red",
+    "section": "Enunciado de la práctica",
+    "text": "Enunciado de la práctica\n\nLos enunciados de las prácticas se colgarán en el aula virtual."
+  },
+  {
+    "objectID": "sub_introduction.html#pruebas-de-evaluación",
+    "href": "sub_introduction.html#pruebas-de-evaluación",
+    "title": "Presentación de Juegos en Red",
+    "section": "Pruebas de evaluación:",
+    "text": "Pruebas de evaluación:\n\n40% Pruebas teórico-prácticas\n\nNota mínima: cada prueba &gt;=5\n\n40% Práctica\n\nNota mínima: cada prueba &gt;=5\n\n15% Resolución de problemas y casos prácticos\n\nNo tiene nota mínima\n\n5% Participación en clase y otras actividades\n\nNo tiene nota mínima\n\n\nHay que obtener al menos un 5 de media"
+  },
+  {
+    "objectID": "sub_introduction.html#pruebas-teórico-prácticas-40",
+    "href": "sub_introduction.html#pruebas-teórico-prácticas-40",
+    "title": "Presentación de Juegos en Red",
+    "section": "Pruebas teórico-prácticas (40 %)",
+    "text": "Pruebas teórico-prácticas (40 %)\n\n3 exámenes:\n\nExamen 1 (Tema 1): 35%.\nExamen 2 (Tema 2 y 3): 32.5%.\nExamen 3 (Tema 4): 32.5%.\n\nEjercicios online tipo test / preguntas cortas / ejercicios\nNota mínima en cada prueba 5\nRevaluable en convocatoria extraordinaria"
+  },
+  {
+    "objectID": "sub_introduction.html#práctica-40",
+    "href": "sub_introduction.html#práctica-40",
+    "title": "Presentación de Juegos en Red",
+    "section": "Práctica (40 %)",
+    "text": "Práctica (40 %)\n\nSe realiza en grupos de 4 personas\nCada alumno será evaluado individualmente\nSe desarrolla en parte en las sesiones prácticas\nConsta de 4 entregas (fases) obligatorias coonderaciones 10%, 35%, 25%, 30%.\nNota mínima en cada fase: 5 puntos\nCada fase es revaluable en convocatoria extraordinaria"
+  },
+  {
+    "objectID": "sub_introduction.html#resolución-de-problemas-15",
+    "href": "sub_introduction.html#resolución-de-problemas-15",
+    "title": "Presentación de Juegos en Red",
+    "section": "Resolución de problemas (15 %)",
+    "text": "Resolución de problemas (15 %)\n\nConsiste en una fase adicional al juego desarrollado (fase 5).\nConsistirá en una mejora sobre la práctica entregada y la publicación de la misma en plataformas online.\nNota mínima de 3.\nRevaluable en convocatoria extraordinaria."
+  },
+  {
+    "objectID": "sub_introduction.html#participación-en-clase-5",
+    "href": "sub_introduction.html#participación-en-clase-5",
+    "title": "Presentación de Juegos en Red",
+    "section": "Participación en clase (5 %)",
+    "text": "Participación en clase (5 %)\n\nEs opcional. No tiene nota mínima.\nConsiste en una serie de actividades que se irán realizando a lo largo del cuatrimestre.\nTambién se podrán obtener proponiendo mejoras o correcciones a los apuntes y diapositivas de la asignatura.\nNo es revaluable en convocatoria extraordinaria"
+  },
+  {
+    "objectID": "sub_introduction.html#dispensa-académica",
+    "href": "sub_introduction.html#dispensa-académica",
+    "title": "Presentación de Juegos en Red",
+    "section": "Dispensa académica",
+    "text": "Dispensa académica\nUn alumno con dispensa académica debe realizar los exámenes teóricos-prácticos.\nEstá obligado a hacer las 4 entregas presenciales de la parte práctica ya que son como exámenes.\nLas fechas de las pruebas serán anunciadas con anterioridad."
+  },
+  {
+    "objectID": "sub_introduction.html#no-presentado",
+    "href": "sub_introduction.html#no-presentado",
+    "title": "Presentación de Juegos en Red",
+    "section": "No presentado",
+    "text": "No presentado\nUn alumno obtendrá la calificación de no presentado únicamente si no se presenta a ninguna prueba evaluable (ya sea de teoría o práctica)."
+  },
+  {
+    "objectID": "sub_introduction.html#internet",
+    "href": "sub_introduction.html#internet",
+    "title": "Presentación de Juegos en Red",
+    "section": "Internet",
+    "text": "Internet\n\nPáginas oficiales de los estándares y tecnologías\nTutoriales, ejemplos y blogs realizados por la comunidad\nAplicaciones web de código abierto\n… y todo lo que Google encuentre :)"
+  }
+]

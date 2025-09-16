@@ -1,0 +1,89 @@
+/* Reset completo para los controles */
+.ojscontrols,
+.ojscontrols *,
+.ojscontrols form,
+.ojscontrols .observablehq--input {
+  height: auto !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  position: static !important;
+}
+
+.ojscontrols .observablehq--input {
+  margin-bottom: 15px !important;
+  width: 100% !important;
+  min-width: 450px !important; /* Forzar ancho mínimo */
+}
+
+.ojscontrols .observablehq--input label {
+  display: block !important;
+  margin-bottom: 5px !important;
+  font-weight: bold !important;
+  width: 100% !important;
+  min-width: 450px !important; /* Forzar ancho mínimo del label */
+  max-width: none !important;
+  float: none !important;
+  white-space: normal !important;
+  word-wrap: break-word !important;
+  overflow: visible !important;
+  line-height: 1.3 !important;
+  text-overflow: clip !important; /* No cortar texto */
+}
+
+.ojscontrols .observablehq--input input[type="range"] {
+  display: block !important;
+  width: 100% !important;
+  min-width: 400px !important;
+  clear: both !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Layout flexible */
+.ojsinteractive {
+  display: flex !important;
+  gap: 1rem !important;
+  align-items: flex-start !important;
+  width: 100% !important;
+}
+
+.ojscontrols {
+  background: #f8f8f8 !important;
+  padding: 1.5rem !important;
+  border-radius: 8px !important;
+  width: 500px !important;
+  min-width: 500px !important; /* Forzar ancho mínimo */
+  flex-shrink: 0 !important;
+  height: auto !important;
+  box-sizing: border-box !important;
+}
+
+.ojscontrols form {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 15px !important;
+  width: 100% !important;
+  min-width: 450px !important;
+}
+
+/* Forzar que todos los elementos internos respeten el ancho */
+.ojscontrols form > *,
+.ojscontrols .observablehq--input > * {
+  max-width: none !important;
+  width: 100% !important;
+}
+
+.ojsplot {
+  background: white !important;
+  box-shadow: 0 0 8px rgba(0,0,0,.1) !important;
+  padding: 1rem !important;
+  flex: 1 !important;
+  height: fit-content !important;
+  min-width: 0 !important; /* Permite que se reduzca si es necesario */
+}
+
+.ojsplot > * {
+  max-width: 100% !important;
+  height: auto !important;
+}
