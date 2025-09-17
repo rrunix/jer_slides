@@ -10,3 +10,5 @@ TODO.md
 *-files/
 slides/
 renv/
+
+**/*.quarto_ipynb
