@@ -88,7 +88,7 @@
     "href": "ch1_p1_net_introduction.html#redes-de-acceso",
     "title": "Introducción a las Redes de Ordenadores",
     "section": "Redes de Acceso",
-    "text": "Redes de Acceso\n\nRedes de acceso: Es la red en la que se conectan los host con el router de borde.\n\n\n\nTecnologías host → router\n\nWiFi 6: 200-400 Mb/s\nEthernet: 1000 Mb/s\n4G LTE: 50/15 Mb/s\n5G: 300/50 Mb/s\n\n\nCaracterísticas\n\nAlcance limitado\nVelocidades variables\nMedios compartidos vs dedicados"
+    "text": "Redes de Acceso\n\nRedes de acceso: Es la red en la que se conectan los host con el router de borde.\n\n\n\nTecnologías host → router\n\nWiFi 6: 200-400 Mb/s\nEthernet: 10 Gb/s\n4G LTE: 50/15 Mb/s\n5G: 300/50 Mb/s\n\n\nCaracterísticas\n\nAlcance limitado\nVelocidades variables\nMedios compartidos vs dedicados"
   },
   {
     "objectID": "ch1_p1_net_introduction.html#tecnologías-wan",
@@ -130,42 +130,42 @@
     "href": "ch1_p1_net_introduction.html#modelos-osi-vs-tcpip",
     "title": "Introducción a las Redes de Ordenadores",
     "section": "Modelos OSI vs TCP/IP",
-    "text": "Modelos OSI vs TCP/IP\n\n\n\n\n\n\n\nOSI: 7 capas, modelo teórico\nTCP/IP: 4 capas, usado en Internet\n\n\n\n⚠️ Nota: TCP/IP no es un protocolo, hace referencia a una pila de protocolos. Además, no tiene porque utilizar necesariamente TCP, podría ser UDP.\n\n\nTCP/IP es superior a OSI porque es simple, práctico y probado. Mientras OSI tiene 7 capas teóricas diseñadas en comités académicos, TCP/IP usa solo 4 capas que realmente se necesitan y ha funcionado en Internet durante más de 50 años. TCP/IP es más eficiente (menos overhead), más flexible (se adapta fácilmente), y tiene adopción masiva con ecosistemas completos de hardware y software. OSI llegó tarde al mercado cuando TCP/IP ya dominaba, y sus capas extra (como Sesión y Presentación) añaden complejidad innecesaria para la mayoría de aplicaciones reales. En resumen: OSI es el modelo perfecto para estudiar redes, pero TCP/IP es lo que realmente mueve Internet."
+    "text": "Modelos OSI vs TCP/IP\n\n\n\n\n\n\n\nOSI: 7 capas, modelo teórico\nTCP/IP: 4 capas, usado en Internet\n\n\n\n⚠️ Nota: TCP/IP no es un protocolo, hace referencia a una pila de protocolos. Además, no tiene porque utilizar necesariamente TCP, podría ser UDP.\n\n\nTCP/IP es superior a OSI porque es simple, práctico y probado. Mientras OSI tiene 7 capas teóricas diseñadas en comités académicos, TCP/IP usa solo 4 capas que realmente se necesitan y ha funcionado en Internet durante más de 50 años. TCP/IP es más eficiente (menos overhead), más flexible (se adapta fácilmente), y tiene adopción masiva con ecosistemas completos de hardware y software. OSI llegó tarde al mercado cuando TCP/IP ya dominaba, y sus capas extra (como Sesión y Presentación) añaden complejidad innecesaria para la mayoría de aplicaciones reales. En resumen: OSI es el modelo perfecto para estudiar redes, pero TCP/IP es lo que realmente mueve Internet.\n\nRigid Foundation: X11’s network-based protocol became unchangeable due to backward compatibility, preventing modern optimizations\nPerformance Bottlenecks: Every graphics operation had to go through multiple layers (app → toolkit → X11 → server), creating unnecessary overhead for local applications\nHardware Evolution Mismatch: When GPUs emerged, X11’s software-rendering architecture couldn’t efficiently utilize new hardware acceleration\nExtension Hell: Adding modern features required bolt-on extensions (Composite, GLX, XRender) rather than clean integration, creating complexity\nLayer Lock-In: Applications built on X11 assumptions were hard to migrate to better architectures, requiring complete rewrites (hence Wayland’s slow adoption)"
   },
   {
     "objectID": "ch1_p1_net_introduction.html#nivel-de-aplicación",
     "href": "ch1_p1_net_introduction.html#nivel-de-aplicación",
     "title": "Introducción a las Redes de Ordenadores",
     "section": "Nivel de Aplicación",
-    "text": "Nivel de Aplicación\n\n\nOSI (Capas 7, 6, 5)\n\nAplicación: HTTP, FTP, DNS\nPresentación: Cifrado, compresión\nSesión: Control de diálogos\n\n\nTCP/IP\n\nUna sola capa integrada\nProtocolos: HTTP/HTTPS, SMTP, FTP, DNS\nMás práctico"
+    "text": "Nivel de Aplicación\n\nEs el nivel en que desarrollamos aplicaciones.\n\n\n\nOSI (Capas 7, 6, 5)\n\nAplicación: HTTP, FTP, DNS\nPresentación: Cifrado, compresión\nSesión: Control de diálogos\n\n\nTCP/IP\n\nUna sola capa integrada\nProtocolos: HTTP/HTTPS, SMTP, FTP, DNS\nMás práctico"
   },
   {
     "objectID": "ch1_p1_net_introduction.html#nivel-de-transporte",
     "href": "ch1_p1_net_introduction.html#nivel-de-transporte",
     "title": "Introducción a las Redes de Ordenadores",
     "section": "Nivel de Transporte",
-    "text": "Nivel de Transporte\nCapa 4 (ambos modelos)\n\n\nTCP\n\nComunicación confiable\nControl de flujo\nEntrega ordenada\nCorrección de errores\n\n\nUDP\n\nComunicación rápida\nSin garantías\nIdeal para tiempo real\nMenor overhead"
+    "text": "Nivel de Transporte\n\nGestiona la comunicación extremo a extremo entre aplicaciones.\n\nCapa 4 (ambos modelos)\n\n\nTCP\n\nComunicación confiable\nControl de flujo\nEntrega ordenada\nCorrección de errores\n\n\nUDP\n\nComunicación rápida\nSin garantías\nIdeal para tiempo real\nMenor overhead"
   },
   {
     "objectID": "ch1_p1_net_introduction.html#nivel-de-redinternet",
     "href": "ch1_p1_net_introduction.html#nivel-de-redinternet",
     "title": "Introducción a las Redes de Ordenadores",
     "section": "Nivel de Red/Internet",
-    "text": "Nivel de Red/Internet\nCapa 3 OSI / Capa Internet TCP/IP\nFunción principal: Enrutamiento de paquetes\nProtocolos:\n\nIP: Protocolo principal\nICMP: Control y errores\nARP: Resolución de direcciones\nOSPF, BGP: Protocolos de enrutamiento\n\n\n\n\n\n\n\nEjercicio\n\n\nPrueba a ejecutar ping www.google.es en tu terminal. ¿Qué ves?."
+    "text": "Nivel de Red/Internet\n\nSe encarga de encontrar el mejor camino para enviar datos a través de múltiples redes. En otras palabras, se encarga del enrutamiento de paquetes.\n\nCapa 3 OSI / Capa Internet TCP/IP\nProtocolos:\n\nIP: Protocolo principal\nICMP: Control y errores\nARP: Resolución de direcciones\nOSPF, BGP: Protocolos de enrutamiento\n\n\n\n\n\n\n\nEjercicio\n\n\nPrueba a ejecutar ping www.google.es en tu terminal. ¿Qué ves?."
   },
   {
     "objectID": "ch1_p1_net_introduction.html#nivel-de-acceso-físico",
     "href": "ch1_p1_net_introduction.html#nivel-de-acceso-físico",
     "title": "Introducción a las Redes de Ordenadores",
     "section": "Nivel de Acceso Físico",
-    "text": "Nivel de Acceso Físico\n\n\nOSI (Capas 2 y 1)\n\nEnlace: Control de errores, MAC\nFísica: Señales, voltajes\n\n\nTCP/IP\n\nCapa de Acceso a Red\nCombina ambas funciones\nEthernet, WiFi, etc."
+    "text": "Nivel de Acceso Físico\n\nControla cómo los datos se transmiten físicamente a través del medio de comunicación.\n\n\n\nOSI (Capas 2 y 1)\n\nEnlace: Control de errores, MAC\nFísica: Señales, voltajes\n\n\nTCP/IP\n\nCapa de Acceso a Red\nCombina ambas funciones\nEthernet, WiFi, etc."
   },
   {
     "objectID": "ch1_p1_net_introduction.html#métricas-principales",
     "href": "ch1_p1_net_introduction.html#métricas-principales",
     "title": "Introducción a las Redes de Ordenadores",
     "section": "Métricas Principales",
-    "text": "Métricas Principales\n\n\nLatencia\n\nTiempo que tarda un paquete en llegar a su destino.\n“Velocidad del vehículo”\nMedida en ms\n\n\nThroughput**\n\nDatos enviados por cantidad de tiempo.\n“Número de carriles”\nMedido en Mb/s o Gb/s\n\n\n\n⚠️ Nota: 1 MB/s = 8 Mb/s"
+    "text": "Métricas Principales\n\n\nLatencia\n\nTiempo que tarda un paquete en llegar a su destino.\n“Velocidad del vehículo”\nMedida en ms\n\n\nThroughput\n\nDatos enviados por cantidad de tiempo.\n“Número de carriles”\nMedido en Mb/s o Gb/s\n\n\n\n⚠️ Nota: 1 MB/s = 8 Mb/s"
   },
   {
     "objectID": "ch1_p1_net_introduction.html#throughput-vs-bandwidth",
@@ -193,7 +193,7 @@
     "href": "ch1_p1_net_introduction.html#rtt",
     "title": "Introducción a las Redes de Ordenadores",
     "section": "RTT",
-    "text": "RTT\n\nRTT (Round trip time): Tiempo total que tarda un paquete en ir desde el origen hasta el destino y volver de vuelta (ida + vuelta).\n\n\nLa latencia no es simétrica.\nGeneralmente la descarga es más rápida que la subida.\nPor lo tanto, el RTT es un valor muy importante en aplicaciones interactivas."
+    "text": "RTT\n\nRTT (Round trip time): Tiempo total que tarda un paquete en ir desde el origen hasta el destino y volver de vuelta (ida + vuelta).\n\n\nLa latencia no tiene porque ser simétrica.\nGeneralmente la descarga es más rápida que la subida.\nPor lo tanto, el RTT es un valor muy importante en aplicaciones interactivas."
   },
   {
     "objectID": "ch1_p1_net_introduction.html#comparación-fibra-vs-5g",
@@ -207,21 +207,21 @@
     "href": "ch1_p1_net_introduction.html#jitter-variabilidad-de-latencia",
     "title": "Introducción a las Redes de Ordenadores",
     "section": "Jitter: Variabilidad de Latencia",
-    "text": "Jitter: Variabilidad de Latencia\nEjemplo comparativo\n\n\nEscenario 1 (Bajo jitter):\n\nPaquetes: 50, 52, 48, 51 ms\nPromedio: 50.25 ms\nVariación: 1.48 ms ✅\n\n\nEscenario 2 (Alto jitter):\n\nPaquetes: 28, 68, 43, 62 ms\nPromedio: 50.25 ms\nVariación: 15.82 ms ❌\n\n\nImpacto: Voz entrecortada, saltos en video, degradación en juegos"
+    "text": "Jitter: Variabilidad de Latencia\n\nJitter: Variación en el tiempo de llegada de los paquetes que causa inconsistencia en la comunicación.\n\nEjemplo comparativo\n\n\nEscenario 1 (Bajo jitter):\n\nPaquetes: 50, 52, 48, 51 ms\nPromedio: 50.25 ms\nVariación: 1.48 ms ✅\n\n\nEscenario 2 (Alto jitter):\n\nPaquetes: 28, 68, 43, 62 ms\nPromedio: 50.25 ms\nVariación: 15.82 ms ❌\n\n\nImpacto: Voz entrecortada, saltos en video, degradación en juegos"
   },
   {
     "objectID": "ch1_p1_net_introduction.html#requisitos-para-videojuegos",
     "href": "ch1_p1_net_introduction.html#requisitos-para-videojuegos",
     "title": "Introducción a las Redes de Ordenadores",
     "section": "Requisitos para Videojuegos",
-    "text": "Requisitos para Videojuegos\nLatencia máxima tolerada (RTT)\n\n\n\nGénero\nTolerancia\nEjemplo\n\n\n\n\nFighting\n16-50ms\nStreet Fighter\n\n\nFPS Competitivo\n20-50ms\nCounter-Strike\n\n\nRacing\n50-100ms\nGran Turismo\n\n\nRTS\n100-200ms\nStarCraft\n\n\nMMORPG\nVariable\nWorld of Warcraft\n\n\nTurn-based\n500ms+\nCivilization"
+    "text": "Requisitos para Videojuegos\nRTT máximo tolerado\n\n\n\nGénero\nTolerancia\nEjemplo\n\n\n\n\nFighting\n16-50ms\nStreet Fighter\n\n\nFPS Competitivo\n20-50ms\nCounter-Strike\n\n\nRacing\n50-100ms\nGran Turismo\n\n\nRTS\n100-200ms\nStarCraft\n\n\nMMORPG\nVariable\nWorld of Warcraft\n\n\nTurn-based\n500ms+\nCivilization"
   },
   {
     "objectID": "ch1_p1_net_introduction.html#pérdida-de-paquetes",
     "href": "ch1_p1_net_introduction.html#pérdida-de-paquetes",
     "title": "Introducción a las Redes de Ordenadores",
     "section": "Pérdida de Paquetes",
-    "text": "Pérdida de Paquetes\nCausas principales\n\nCongestión: Buffers llenos en routers\nCorrupción: Interferencias electromagnéticas\nRadiación cósmica: ~1 error/256MB/día\n\nSoluciones\n\nProtocolos de capas superiores (TCP)\nRetransmisión automática\nCódigos de corrección de errores"
+    "text": "Pérdida de Paquetes\nCausas principales\n\nCongestión: Buffers llenos en routers\nCorrupción: Interferencias electromagnéticas\nRadiación cósmica: ~1 error/256MB/día\n\nSoluciones\n\nProtocolos de capas superiores (TCP)\nRetransmisión automática\nCódigos de corrección de errores\nInterpolar la información"
   },
   {
     "objectID": "ch1_p1_net_introduction.html#resumen",
