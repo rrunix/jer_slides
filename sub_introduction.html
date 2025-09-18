@@ -6,8 +6,8 @@
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.32">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
 
   <title>Presentación de Juegos en Red</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -28,7 +28,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-36aca472fbb6b3120303d74e3ba5d1f8.css">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-ed81c1eb8156b6dfccbd5cf511d4619a.css">
   <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -668,6 +668,117 @@
         ]
       });
     </script>
+    <script>
+    // Override Quarto's Mermaid responsive behavior to prevent pagination
+    window.addEventListener('load', function() {
+      // Wait for Quarto's mermaid initialization to complete
+      setTimeout(function() {
+        // Override the makeResponsive function to do nothing
+        if (window._quartoMermaid) {
+          window._quartoMermaid.makeResponsive = function(svg) {
+            // Do nothing - prevent responsive behavior that causes pagination
+          };
+          
+          // Override setSvgSize to not restrict sizes
+          window._quartoMermaid.setSvgSize = function(svg) {
+            // Remove any size restrictions
+            svg.style.maxWidth = 'none';
+            svg.style.maxHeight = 'none';
+            svg.style.width = 'auto';
+            svg.style.height = 'auto';
+            
+            // Force the slide section to allow overflow for this diagram
+            const section = svg.closest('section');
+            if (section) {
+              section.style.overflow = 'visible';
+              section.style.height = 'auto';
+              section.style.minHeight = '100vh';
+            }
+            
+            // Force parent containers to allow full height
+            let parent = svg.parentElement;
+            while (parent && !parent.classList.contains('reveal')) {
+              parent.style.maxHeight = 'none';
+              parent.style.height = 'auto';
+              parent.style.overflow = 'visible';
+              parent = parent.parentElement;
+            }
+          };
+          
+          // Reprocess all existing mermaid diagrams
+          const mermaidSvgs = document.querySelectorAll('svg.mermaid-js');
+          mermaidSvgs.forEach(svg => {
+            svg.style.maxWidth = 'none';
+            svg.style.maxHeight = 'none';
+            svg.style.width = 'auto';
+            svg.style.height = 'auto';
+            
+            // Remove any width/height attributes that might cause pagination
+            svg.removeAttribute('width');
+            svg.removeAttribute('height');
+            
+            // Force containers to allow full height
+            const section = svg.closest('section');
+            if (section) {
+              section.style.overflow = 'visible';
+              section.style.height = 'auto';
+              section.style.minHeight = '100vh';
+            }
+            
+            let parent = svg.parentElement;
+            while (parent && !parent.classList.contains('reveal')) {
+              parent.style.maxHeight = 'none';
+              parent.style.height = 'auto';
+              parent.style.overflow = 'visible';
+              parent = parent.parentElement;
+            }
+          });
+        }
+      }, 1000);
+    }, false);
+    </script>
+
+    <style>
+    /* Additional CSS to ensure Mermaid diagrams are not restricted */
+    .mermaid, .mermaid svg, svg.mermaid-js {
+      max-width: none !important;
+      max-height: none !important;
+      width: auto !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    /* Ensure containers don't restrict Mermaid */
+    .cell-output-display .mermaid,
+    .reveal .slides section .mermaid {
+      max-width: none !important;
+      max-height: none !important;
+      overflow: visible !important;
+    }
+
+    /* Force sections with Mermaid to allow overflow and full height */
+    .reveal .slides section:has(.mermaid),
+    .reveal .slides section:has(svg.mermaid-js) {
+      overflow: visible !important;
+      height: auto !important;
+      min-height: 100vh !important;
+    }
+
+    /* Remove height restrictions from all parent containers of Mermaid */
+    .reveal .slides section .cell-output-display:has(.mermaid),
+    .reveal .slides section .cell-output-display:has(svg.mermaid-js),
+    .reveal .slides section .cell:has(.mermaid),
+    .reveal .slides section .cell:has(svg.mermaid-js) {
+      max-height: none !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    /* Ensure the reveal slides container itself doesn't restrict height */
+    .reveal .slides {
+      overflow: visible !important;
+    }
+    </style>
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
@@ -716,13 +827,14 @@
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

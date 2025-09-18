@@ -1,0 +1,781 @@
+---
+title: "Capa de Acceso a la Red"
+subtitle: "Fundamentos de la transmisión física y control de acceso al medio"
+author: "Rubén Rodríguez Fernández (&#64;rrunix)"
+date: "17/09/2025"
+aliases:
+  - ch1_p2.html
+css: ojs_interactive.css
+mermaid:
+  theme: default
+  themeVariables:
+    background: "#ffffff"
+  config:
+    flowchart:
+      htmlLabels: true
+      useMaxWidth: false
+    sequence:
+      useMaxWidth: false
+      wrap: false
+    gantt:
+      useMaxWidth: false
+    journey:
+      useMaxWidth: false
+    gitgraph:
+      useMaxWidth: false
+---
+
+# Introducción
+
+## ¿Qué es la Capa de Acceso a la Red?
+
+> La Capa de Acceso a la Red se encarga de la **transmisión física de datos entre dispositivos directamente conectados** en una red local
+
+::: {.columns}
+::: {.column width="50%"}
+**¿Qué hace?**
+
+- Maneja los aspectos físicos de la transmisión
+- Controla el acceso al medio compartido
+- Se ejecuta en el host y en el nucleo de la red
+- Garantiza transmisión confiable entre nodos adyacentes
+:::
+
+::: {.column width="50%"}
+**Posición en los modelos:**
+
+::: {style="width: 12vw; text-align: center; margin: 0 auto;"}
+```{mermaid}
+block-beta
+    columns 1
+    
+    A["<b>Capa de Aplicación</b><br/><br/>HTTP, HTTPS, FTP, SMTP<br/>DNS, DHCP, Telnet, SSH"]
+    
+    B["<b>Capa de Transporte</b><br/><br/>TCP, UDP<br/>Control de flujo y errores"]
+    
+    C["<b>Capa de Internet</b><br/><br/>IP, ICMP, ARP<br/>Enrutamiento, Direccionamiento"]
+    
+    D["<b>Capa de Acceso a la Red</b><br/><br/>Ethernet, WiFi, PPP<br/>Frames, MAC Address<br/>Control de acceso al medio"]
+    
+    classDef highlight fill:#ff9999,stroke:#cc0000,stroke-width:4px,color:#000
+    classDef normal fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#000
+    
+    class D highlight
+    class A,B,C normal
+```
+:::
+:::
+:::
+
+::: {.callout-important}
+**Responsabilidad principal**: Garantizar que los datos puedan transmitirse de manera confiable entre nodos adyacentes en la red
+:::
+
+## Ejemplo: Comunicación en Red Local
+
+::: {style="width: 35vw; text-align: center; margin: 0 auto;"}
+```{mermaid}
+sequenceDiagram
+    participant A as Computadora A<br/>(00:1A:2B:3C:4D:5E)
+    participant S as Switch<br/>(Tabla MAC)
+    participant C as Computadora C<br/>(00:3C:4D:5E:6F:70)
+
+    Note over S: Tabla MAC vacía
+
+    Note over A,C: FASE 1: Descubrimiento ARP
+    
+    A->>S: ARP Request<br/>¿Quién tiene la IP de C?<br/>Destino: Broadcast
+    
+    Note over S: Aprende: Puerto 1 → MAC de A
+    
+    S->>C: ARP Request (Flooding)
+    
+    C->>S: ARP Response<br/>Mi MAC es 00:3C:4D:5E:6F:70
+    
+    Note over S: Aprende: Puerto 3 → MAC de C
+    
+    S->>A: ARP Response (Unicast)
+
+    Note over A,C: FASE 2: Comunicación Directa
+    
+    A->>S: Datos para C
+    
+    Note over S: Consulta tabla MAC
+    
+    S->>C: Datos (Solo puerto 3)
+```
+:::
+
+# Funciones Principales
+
+## 1. Control de Acceso al Medio (MAC)
+
+> Coordina cómo múltiples dispositivos comparten un medio de transmisión común
+
+::: {.columns}
+::: {.column width="50%"}
+### Ethernet Half-Duplex: CSMA/CD
+
+**Carrier Sense Multiple Access with Collision Detection**
+
+1. Escuchar el medio antes de transmitir
+2. Si está libre → transmitir
+3. Si hay colisión → detectar
+4. Aplicar backoff exponencial
+5. Reintentar transmisión
+
+*Solo puede transmitir en una dirección a la vez*. En **Full-Duplex** no necesitaríamos realizar controles.
+:::
+
+::: {.column width="50%"}
+### Redes Inalámbricas: CSMA/CA
+<br>
+**Carrier Sense Multiple Access with Collision Avoidance**
+
+1. Esperar tiempo aleatorio antes de transmitir
+2. Usar acknowledgments para confirmar recepción
+3. Protocolo RTS/CTS para problema del nodo oculto
+
+*La detección de colisiones es impráctica en radio*
+:::
+:::
+
+## 2. Direccionamiento Físico
+
+> Opera a nivel de hardware, independiente de protocolos superiores, usando direcciones MAC únicas
+
+::: {style="width: 40vw; text-align: center; margin: 0 auto;"}
+```{mermaid}
+%%| fig-width: 10
+graph LR
+    subgraph "Dirección MAC: 00:1A:2B:3C:4D:5E (48 bits)"
+        OUI["00:1A:2B<br/>OUI<br/>(Organizationally Unique Identifier)<br/>Asignado por IEEE"]
+        NIC["3C:4D:5E<br/>Identificador del Dispositivo<br/>Asignado por el fabricante"]
+    end
+    
+    style OUI fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style NIC fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+```
+:::
+
+::: {.columns}
+::: {.column width="33%"}
+**Unicast**
+
+- Un único destinatario
+- Dirección específica del dispositivo
+:::
+
+::: {.column width="33%"}
+**Broadcast**
+
+- Todos los dispositivos
+- FF:FF:FF:FF:FF:FF
+:::
+
+::: {.column width="33%"}
+**Multicast**
+
+- Grupo específico
+- Primer bit = 1
+:::
+:::
+
+::: {.callout-tip}
+Las direcciones MAC son como el DNI del dispositivo: únicas, estáticas y cada dispositivo tiene una
+:::
+
+## 3. Detección y Corrección de Errores
+
+> Garantiza la integridad de los datos transmitidos a través del medio físico
+
+### Códigos de Redundancia Cíclica (CRC)
+
+::: {.columns}
+::: {.column width="50%"}
+**Proceso CRC:**
+
+1. Generar polinomio matemático sobre datos
+2. Agregar Frame Check Sequence (FCS) al final
+3. Receptor recalcula el CRC
+4. Comparar con el recibido
+5. Detectar errores de 1 bit y múltiples bits
+
+**Checksums simples:**
+
+- Suma aritmética de bytes
+- Menos robusto pero más rápido
+:::
+
+::: {.column width="50%"}
+**Forward Error Correction (FEC):**
+
+- No solo detecta, también **corrige** errores
+- Códigos Hamming: errores de 1 bit
+- Reed-Solomon: errores en ráfagas
+- Especialmente importante en medios inalámbricos
+
+:::
+:::
+
+## 3. Detección y Corrección de Errores (Ejemplo)
+
+Introducir un mensaje de 4 bits (1011) y os saldrá a le derecha el mensaje codificado
+
+:::{.ojsinteractive}
+:::{.ojscontrols}
+```{ojs}
+// Input: 4-bit message
+viewof msg4 = Inputs.text({label: "Mensaje (4 bits)", placeholder: "e.g. 1011"})
+```
+:::
+
+:::{.ojsplot}
+```{ojs}
+// Encode using Hamming(7,4)
+function hamming74_encode(bits4) {
+  if (!/^[01]{4}$/.test(bits4)) return "";
+  const [d1, d2, d3, d4] = bits4.split("").map(b => +b);
+  
+  // parity bits
+  const p1 = d1 ^ d2 ^ d4;
+  const p2 = d1 ^ d3 ^ d4;
+  const p3 = d2 ^ d3 ^ d4;
+  
+  // Codeword positions: p1 p2 d1 p3 d2 d3 d4
+  const code = [p1, p2, d1, p3, d2, d3, d4];
+  return code.join("");
+}
+
+encoded = hamming74_encode(msg4)
+encoded
+```
+:::
+:::
+
+
+Aquí podréis meter el mensaje codificado y saber si ha habido cambios en un bit y corregirlos (Hamming).
+
+:::{.ojsinteractive}
+:::{.ojscontrols}
+```{ojs}
+// Input: 7-bit codeword
+viewof code7 = Inputs.text({label: "Codeword (7 bits)", placeholder: "e.g. 0110011"})
+```
+:::
+
+:::{.ojsplot}
+```{ojs}
+function hamming74_decode(code) {
+  if (!/^[01]{7}$/.test(code)) return "Enter exactly 7 bits";
+  const bits = code.split("").map(b => +b);
+  const [p1, p2, d1, p3, d2, d3, d4] = bits;
+
+  // syndrome bits
+  const s1 = p1 ^ d1 ^ d2 ^ d4;
+  const s2 = p2 ^ d1 ^ d3 ^ d4;
+  const s3 = p3 ^ d2 ^ d3 ^ d4;
+  
+  const syndrome = (s3 << 2) | (s2 << 1) | s1; // binary → position (1-7)
+
+  let corrected = [...bits];
+  let msg = [d1, d2, d3, d4].join("");
+  
+  if (syndrome === 0) {
+    return `✅ Valid codeword, message = ${msg}`;
+  } else {
+    // correct bit if single error
+    corrected[syndrome - 1] ^= 1; 
+    const [cp1, cp2, cd1, cp3, cd2, cd3, cd4] = corrected;
+    const corrected_msg = [cd1, cd2, cd3, cd4].join("");
+    return `❌ Error at position ${syndrome}. Corrected codeword = ${corrected.join("")}, message = ${corrected_msg}`;
+  }
+}
+
+result = hamming74_decode(code7)
+result
+```
+:::
+:::
+
+## 4. Control de Tamaño
+
+> Maneja las limitaciones de tamaño impuestas por diferentes tecnologías de red
+
+### Maximum Transmission Unit (MTU)
+
+| Tecnología | MTU (bytes) | Características |
+|------------|-------------|-----------------|
+| **Ethernet** | 1500 | Estándar más común en LAN |
+| **Token Ring** | 4464 | Tecnología legacy |
+| **FDDI** | 4352 | Fiber Distributed Data Interface |
+| **PPP** | Variable (~1500) | Para compatibilidad con Ethernet |
+
+::: {.callout-warning}
+Si datos > MTU → La Capa de Acceso a la Red **descarta automáticamente** el paquete
+:::
+
+::: {.fragment}
+*Nota: El MTU determina el tamaño máximo de datos que puede transportar una sola trama*
+:::
+
+## 5. Sincronización y Temporización
+
+> Coordina el timing entre dispositivos para asegurar la correcta interpretación de señales digitales
+
+### Niveles de sincronización
+
+::: {.columns}
+::: {.column width="50%"}
+**Tipos de sincronización:**
+
+- **Sincronización de bit**: Determina límites temporales de cada bit
+- **Sincronización de trama**: Identifica inicio y fin de cada trama
+- **Sincronización de símbolo**: Para modulaciones complejas (QAM)
+:::
+
+::: {.column width="50%"}
+**¿Por qué es crítica?**
+
+- En redes de alta velocidad, pequeñas diferencias causan errores
+- Establece marcos de tiempo comunes
+- Permite interpretación correcta de señales
+- Esencial para comunicación digital confiable
+:::
+:::
+
+::: {.fragment}
+```{mermaid}
+graph LR
+    B[Bits] --> F[Tramas]
+    F --> S[Símbolos]
+    S --> D[Datos correctos]
+    
+    style B fill:#e8f5e8
+    style F fill:#fff3e0
+    style S fill:#e3f2fd
+    style D fill:#f3e5f5
+```
+:::
+
+## 6. Gestión de Topología
+
+> Descubre y mantiene información sobre la estructura física de la red
+
+### Componentes principales
+
+::: {.columns}
+::: {.column width="50%"}
+**Mantenimiento de enlaces:**
+
+- Keepalive messages
+- Detección proactiva de fallos
+- Antes de afectar tráfico de usuarios
+
+**Protocolos de detección:**
+
+- **CDP** (Cisco Discovery Protocol)
+- **LLDP** (Link Layer Discovery Protocol)
+- Dispositivos se identifican mutuamente
+- Comparten información de capacidades
+:::
+
+::: {.column width="50%"}
+**Prevención de bucles:**
+
+- Spanning Tree Protocol (STP)
+- Previene bucles en topologías redundantes
+- Evita tormentas de broadcast
+
+**Adaptación automática:**
+
+- Detecta cambios en la topología
+- Responde a fallos de enlaces
+- Incorpora nuevos dispositivos
+:::
+:::
+
+## 7. Control de Calidad de Servicio (QoS)
+
+> Prioriza diferentes tipos de tráfico según su importancia y requisitos de rendimiento
+
+### Mecanismos de gestión
+
+::: {.columns}
+::: {.column width="50%"}
+**Gestión de buffers:**
+
+- **Weighted Fair Queuing**: Recursos proporcionales según importancia
+- **Priority Queuing**: Tráfico crítico tiene precedencia
+- **Random Early Detection**: Descarta proactivamente antes de saturación
+:::
+
+::: {.column width="50%"}
+**Aplicaciones beneficiadas:**
+
+- 🎥 Video en tiempo real
+- 📞 VoIP (Voz sobre IP)
+- 🎮 Gaming online
+- 💼 Aplicaciones críticas de negocio
+
+*Fundamental para aplicaciones sensibles al tiempo*
+:::
+:::
+
+::: {.callout-tip}
+QoS garantiza que aplicaciones críticas reciban el ancho de banda necesario incluso en momentos de congestión
+:::
+
+# Dispositivos de Capa 2
+
+## Switches: Evolución y Tipos
+
+::: {.columns}
+::: {.column width="50%"}
+**Switches No Gestionados**
+
+- Plug-and-play
+- Aprendizaje MAC automático
+- Redes pequeñas/domésticas
+- Sin configuración
+:::
+
+::: {.column width="50%"}
+**Switches Gestionados**
+
+- VLANs y segmentación
+- QoS y priorización
+- SNMP para monitorización
+- Seguridad 802.1X
+:::
+:::
+
+## Dominios de Colisión: Switch vs Hub
+
+```{mermaid}
+%%| fig-width: 14
+graph TB
+    subgraph "HUB - Medio Compartido"
+        H1[Hub]
+        SHARED((Medio<br/>Compartido))
+        PC1[PC1] --- SHARED
+        PC2[PC2] --- SHARED
+        PC3[PC3] --- SHARED
+        PC4[PC4] --- SHARED
+        SHARED --- H1
+    end
+    
+    subgraph "SWITCH - Dominios Separados"
+        S1[Switch]
+        PC5[PC5] --- S1
+        PC6[PC6] --- S1
+        PC7[PC7] --- S1
+        PC8[PC8] --- S1
+    end
+    
+    classDef collision fill:#ffcdd2,stroke:#d32f2f
+    classDef nocollision fill:#c8e6c9,stroke:#388e3c
+    classDef shared fill:#fff3e0,stroke:#f57c00
+    
+    class H1,PC1,PC2,PC3,PC4 collision
+    class S1,PC5,PC6,PC7,PC8 nocollision
+    class SHARED shared
+```
+
+::: {.callout-tip}
+Los switches crean **dominios de colisión separados para cada puerto**, evitando colisiones entre dispositivos en diferentes puertos
+:::
+
+## Otros Dispositivos de Acceso
+
+| Dispositivo | Función | Características | Aplicación |
+|-------------|---------|----------------|------------|
+| **Access Points** | WiFi ↔ Cableado | CSMA/CA, Beamforming | Redes inalámbricas |
+| **Repetidores** | Extensión alcance | Regeneración señal | Superar distancia |
+| **Media Converters** | Cambio de medio | Fibra ↔ Cobre | Migración gradual |
+| **Transceivers** | Modular | SFP/SFP+/QSFP | Flexibilidad |
+
+::: {.fragment}
+```{mermaid}
+graph LR
+    PC["💻 PC"]
+    AP["📡 Access Point"]
+    SW["🔌 Switch"]
+    MC1["🔄 Media Converter"]
+    FO["🌟 Fibra Óptica"]
+    MC2["🔄 Media Converter"]
+    RT["🌐 Router"]
+    
+    PC <-.->|"WiFi"| AP
+    AP <-->|"Ethernet"| SW
+    SW <-->|"Cobre"| MC1
+    MC1 <-->|"Fibra"| FO
+    FO <-->|"Fibra"| MC2
+    MC2 <-->|"Ethernet"| RT
+```
+:::
+
+# Protocolos Principales
+
+## Ethernet (IEEE 802.3)
+
+### Estructura de Trama Ethernet
+
+::: {style="width: 45vw; text-align: center; margin: 0 auto;"}
+```{mermaid}
+packet-beta
+    0-31: "Preámbulo"
+    32-47: "Preámbulo"
+    48-55: "Preámbulo"
+    56-63: "SFD"
+    64-111: "MAC Destino (6 bytes)"
+    112-159: "MAC Origen (6 bytes)"
+    160-175: "Tipo/Longitud"
+    176-191: "Datos"
+    192-207: "Datos"
+    208-223: "Datos (Payload)"
+    224-239: "..."
+    240-255: "Datos"
+    256-287: "FCS (4 bytes)"
+```
+:::
+
+::: {.columns}
+::: {.column width="50%"}
+**Campos principales:**
+
+- Preámbulo: Sincronización
+- MACs: Identificación única
+- Tipo: Protocolo superior (IPv4: 0x0800)
+- Payload: Datos + padding si < 46 bytes
+:::
+
+::: {.column width="50%"}
+**Evolución de velocidades:**
+
+- 10Base-T: 10 Mbps
+- Fast Ethernet: 100 Mbps
+- Gigabit: 1 Gbps
+- 10G/40G/100G Ethernet
+:::
+:::
+
+## WiFi (IEEE 802.11)
+
+### Trama WiFi: Mayor complejidad
+
+::: {style="width: 45vw; text-align: center; margin: 0 auto;"}
+```{mermaid}
+packet-beta
+    0-15: "Frame Control"
+    16-31: "Duration/ID"
+    32-79: "Address 1 (Receptor)"
+    80-127: "Address 2 (Transmisor)"
+    128-175: "Address 3 (BSSID/AP)"
+    176-191: "Sequence Control"
+    192-239: "Address 4 (opcional)"
+    240-255: "QoS Control (opcional)"
+    256-287: "Datos ..."
+    288-303: "Datos ..."
+    304-319: "FCS (4 bytes)"
+```
+:::
+
+::: {.callout-tip}
+La trama es considerablemente más compleja debido a que estamos en un medio compartido y puede haber repetidores, así como comunicaciones directas.
+:::
+
+
+## Evolución de Estándares WiFi
+
+| Generación | Estándar | Velocidad Max | Bandas | Año |
+|------------|----------|---------------|--------|-----|
+| **WiFi 4** | 802.11n | 600 Mbps | 2.4/5 GHz | 2009 |
+| **WiFi 5** | 802.11ac | 3.5 Gbps | 5 GHz | 2014 |
+| **WiFi 6** | 802.11ax | 9.6 Gbps | 2.4/5 GHz | 2019 |
+| **WiFi 6E** | 802.11ax | 9.6 Gbps | + 6 GHz | 2020 |
+| **WiFi 7** | 802.11be | 46 Gbps | 2.4/5/6 GHz | 2024 |
+
+::: {.columns}
+::: {.column width="50%"}
+**Mejoras clave:**
+
+- MIMO (múltiples antenas)
+- OFDMA (mejor uso espectro)
+- Beamforming direccional (dirigir hacia un punto en concreto)
+:::
+
+::: {.column width="50%"}
+**Trade-offs de bandas:**
+
+- 2.4 GHz: Mayor alcance, menor velocidad
+- 5 GHz: Mayor velocidad, menor alcance
+- 6 GHz: Máxima velocidad, mínimo alcance
+:::
+:::
+
+## PPP y Frame Relay
+
+::: {.columns}
+::: {.column width="50%"}
+### Point-to-Point Protocol (PPP)
+
+**Características:**
+
+- Enlaces punto a punto
+- Detección de errores
+- Autenticación (PAP/CHAP)
+- Configuración IP automática
+
+**Uso actual:**
+
+- Enlaces de respaldo
+- Conexiones satelitales
+- Algunas VPNs
+:::
+
+::: {.column width="50%"}
+### Frame Relay
+
+**Características:**
+
+- WAN con circuitos virtuales
+- Conmutación de tramas
+- Control de congestión
+
+<br>
+
+**Estado:**
+
+- Reemplazado por MPLS
+- Legacy en empresas antiguas
+- Conceptos aún relevantes
+:::
+:::
+
+## ARP: Address Resolution Protocol
+
+### Traducción IP → MAC
+
+
+::: {style="width: 35vw; text-align: center; margin: 0 auto;"}
+```{mermaid}
+%%| fig-width: 10
+sequenceDiagram
+    participant A as Host A<br/>IP: 192.168.1.10<br/>MAC: AA:BB:CC:DD:EE:FF
+    participant N as Red Local<br/>(Broadcast)
+    participant B as Host B<br/>IP: 192.168.1.20<br/>MAC: 11:22:33:44:55:66
+    
+    Note over A: Necesito MAC de 192.168.1.20
+    
+    A->>N: ARP Request (Broadcast)<br/>¿Quién tiene 192.168.1.20?
+    N->>B: ARP Request
+    
+    Note over B: ¡Esa es mi IP!
+    
+    B->>A: ARP Reply (Unicast)<br/>192.168.1.20 = 11:22:33:44:55:66
+    
+    Note over A: Guardo en caché ARP
+```
+:::
+
+::: {.columns}
+::: {.column width="50%"}
+**Proceso ARP:**
+
+1. Broadcast preguntando por IP
+2. Dispositivo con esa IP responde
+3. Se guarda en caché local
+4. Temporizador elimina entradas viejas
+:::
+
+::: {.column width="50%"}
+**Tipos de ARP:**
+
+- **Dinámico**: Aprendizaje automático
+- **Estático**: Entradas manuales permanentes
+- **Proxy ARP**: Router responde por otros
+- **Gratuitous**: Anuncio proactivo
+:::
+:::
+
+# Consideraciones Prácticas
+
+## Límites Físicos y Distancias
+
+### Cable de Cobre (UTP/STP)
+::: {.columns}
+::: {.column width="50%"}
+**Causas de la limitación:**
+
+- Atenuación de señal
+- Interferencia electromagnética
+- Crosstalk entre pares
+- Degradación con distancia
+:::
+
+::: {.column width="50%"}
+**Soluciones:**
+
+- Switches cada 100m
+- Repetidores/Extensores
+- Fibra óptica (kilómetros)
+- Enlaces inalámbricos
+:::
+:::
+
+### Comparación de Medios
+
+| Medio | Distancia Max | Velocidad | Interferencia |
+|-------|---------------|-----------|---------------|
+| UTP Cat5e | 100m | 1 Gbps | Alta |
+| UTP Cat6a | 100m | 10 Gbps | Media |
+| Fibra MM | 2 km | 10 Gbps | Nula |
+| Fibra SM | 100+ km | 100 Gbps | Nula |
+
+
+## Ejemplo Práctico: Verificación de Configuración
+
+### Comandos útiles para verificar la capa de acceso
+
+::: {.columns}
+::: {.column width="50%"}
+**Ver información de red:**
+```bash
+# Linux/Mac - Ver dirección MAC
+ifconfig
+
+# Windows - Ver dirección MAC
+ipconfig /all
+
+# Ver tabla ARP
+arp -a
+```
+:::
+
+::: {.column width="50%"}
+**Ejemplo de salida ARP:**
+```
+192.168.1.1   00:1a:2b:3c:4d:5e
+192.168.1.10  00:2b:3c:4d:5e:6f
+192.168.1.20  00:3c:4d:5e:6f:70
+```
+
+*Muestra las asociaciones IP-MAC en la caché local*
+:::
+:::
+
+# Resumen
+
+## Puntos Clave
+
+::: {.incremental}
+- La **Capa de Acceso a la Red** maneja la transmisión física y el control de acceso al medio compartido
+- Combina las funciones de las **capas física y de enlace del modelo OSI**
+- **Control de acceso al medio**: CSMA/CD (Ethernet) vs CSMA/CA (WiFi)
+- **Direcciones MAC**: 48 bits, únicas por dispositivo (OUI + ID dispositivo)
+- **Switches** evolucionaron desde hubs, creando dominios de colisión independientes
+- **Detección de errores** mediante CRC y técnicas FEC
+- **MTU** define el tamaño máximo de trama (Ethernet: 1500 bytes)
+- **ARP** resuelve la traducción entre direcciones IP y MAC
+:::

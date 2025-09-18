@@ -5,6 +5,8 @@ author: "Rubén Rodríguez Fernández (&#64;rrunix)"
 date: "16/09/2025"
 corresponding: true
 css: ojs_interactive.css
+aliases:
+  - ch1_p1.html
 
 mermaid:
   theme: default

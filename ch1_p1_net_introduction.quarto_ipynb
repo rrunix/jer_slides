@@ -11,6 +11,8 @@
         "date: \"16/09/2025\"\n",
         "corresponding: true\n",
         "css: ojs_interactive.css\n",
+        "aliases:\n",
+        "  - ch1_p1.html\n",
         "\n",
         "mermaid:\n",
         "  theme: default\n",
@@ -289,7 +291,7 @@
         "\n",
         "De ~4 dispositivos (1969) a >100.000 millones (2025) en 50 años."
       ],
-      "id": "aebc82bd"
+      "id": "f28b78a9"
     },
     {
       "cell_type": "code",
@@ -307,7 +309,7 @@
         "plt.ylim(0, 12)\n",
         "plt.show()"
       ],
-      "id": "d3f33cc9",
+      "id": "f2d8bc60",
       "execution_count": null,
       "outputs": []
     },
@@ -994,7 +996,7 @@
         "- **Aplicaciones críticas**: Videojuegos requieren <50ms para competitivo\n",
         ":::"
       ],
-      "id": "d3772348"
+      "id": "96007b6a"
     }
   ],
   "metadata": {

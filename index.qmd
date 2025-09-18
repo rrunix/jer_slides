@@ -11,4 +11,5 @@ format:
 - [Introducción a la asignatura](sub_introduction.html)
 
 ## Redes de computadores
-- [Introducción a las redes de computadores](ch1_p1_net_introduction.html) 
+- [Introducción a las redes de computadores](ch1_p1.html) 
+- [Capa de acceso a la red](ch1_p2.html)

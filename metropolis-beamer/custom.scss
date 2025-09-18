@@ -225,6 +225,26 @@ $authors-block-gap: 4em !default;
     overflow-y: auto;
   }
   
+  // Remove height restrictions for Mermaid diagrams
+  .cell-output-display:has(.mermaid),
+  .cell-output-display .mermaid,
+  pre:has(code.mermaid),
+  .mermaid,
+  .mermaid svg,
+  div[id^="mermaid-"] {
+    max-height: none !important;
+    max-width: none !important;
+    height: auto !important;
+    width: auto !important;
+    overflow: visible !important;
+  }
+  
+  // Ensure Mermaid containers don't get clipped
+  .reveal .slides section .mermaid {
+    transform: none !important;
+    overflow: visible !important;
+  }
+  
   .footer,
   .slide-number {
     color: #8b3a3a;
@@ -246,6 +266,31 @@ $authors-block-gap: 4em !default;
       color: $example-color;
       filter: brightness(2);
     }
+  }
+  
+  // Make title red ONLY on title slide
+  .title-slide .reveal-header .header-title h1,
+  #title-slide h1.title,
+  section.title-slide h1.title {
+    color: $primary-color !important;
+  }
+  
+  // Make subtitle red and date black ONLY on title slide
+  #title-slide .subtitle,
+  section.title-slide .subtitle {
+    color: $primary-color !important;
+  }
+  
+  #title-slide .date,
+  section.title-slide .date {
+    color: black !important;
+  }
+  
+  // Make TOC links use primary red color instead of orange
+  .slide-menu-items a,
+  nav[role="doc-toc"] a,
+  .reveal .slide-menu-items a {
+    color: $primary-color !important;
   }
   
   .progress {
