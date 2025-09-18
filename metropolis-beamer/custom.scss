@@ -225,6 +225,26 @@ $authors-block-gap: 4em !default;
     overflow-y: auto;
   }
   
+  // Remove height restrictions for Mermaid diagrams
+  .cell-output-display:has(.mermaid),
+  .cell-output-display .mermaid,
+  pre:has(code.mermaid),
+  .mermaid,
+  .mermaid svg,
+  div[id^="mermaid-"] {
+    max-height: none !important;
+    max-width: none !important;
+    height: auto !important;
+    width: auto !important;
+    overflow: visible !important;
+  }
+  
+  // Ensure Mermaid containers don't get clipped
+  .reveal .slides section .mermaid {
+    transform: none !important;
+    overflow: visible !important;
+  }
+  
   .footer,
   .slide-number {
     color: #8b3a3a;

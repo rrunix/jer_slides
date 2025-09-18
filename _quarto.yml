@@ -39,6 +39,7 @@ format:
       data-background-image: theme_images/background_fronpage.png
       data-background-size: 33%
       data-background-position: center 70%
+    include-after-body: mermaid-fix.html
 
 execute:
   freeze: true
