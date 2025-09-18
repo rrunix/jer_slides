@@ -1,13 +1,26 @@
 ---
 title: "Capa de Acceso a la Red"
 subtitle: "Fundamentos de la transmisión física y control de acceso al medio"
-author: "Rubén Rodríguez Fernández (@rrunix)"
+author: "Rubén Rodríguez Fernández (&#64;rrunix)"
 date: "17/09/2025"
-
+css: ojs_interactive.css
 mermaid:
   theme: default
   themeVariables:
     background: "#ffffff"
+  config:
+    flowchart:
+      htmlLabels: true
+      useMaxWidth: false
+    sequence:
+      useMaxWidth: false
+      wrap: false
+    gantt:
+      useMaxWidth: false
+    journey:
+      useMaxWidth: false
+    gitgraph:
+      useMaxWidth: false
 ---
 
 # Introducción
@@ -22,29 +35,33 @@ mermaid:
 
 - Maneja los aspectos físicos de la transmisión
 - Controla el acceso al medio compartido
-- Proporciona interfaz entre protocolos superiores y hardware
+- Se ejecuta en el host y en el nucleo de la red
 - Garantiza transmisión confiable entre nodos adyacentes
 :::
 
 ::: {.column width="50%"}
 **Posición en los modelos:**
 
+::: {style="width: 12vw; text-align: center; margin: 0 auto;"}
 ```{mermaid}
-graph TD
-    subgraph "Modelo OSI"
-        L2[Capa 2: Enlace de Datos]
-        L1[Capa 1: Física]
-    end
+block-beta
+    columns 1
     
-    subgraph "Modelo TCP/IP"
-        AR[Capa de Acceso a la Red]
-    end
+    A["<b>Capa de Aplicación</b><br/><br/>HTTP, HTTPS, FTP, SMTP<br/>DNS, DHCP, Telnet, SSH"]
     
-    L2 -.-> AR
-    L1 -.-> AR
+    B["<b>Capa de Transporte</b><br/><br/>TCP, UDP<br/>Control de flujo y errores"]
     
-    style AR fill:#e3f2fd,stroke:#1976d2,stroke-width:3px
+    C["<b>Capa de Internet</b><br/><br/>IP, ICMP, ARP<br/>Enrutamiento, Direccionamiento"]
+    
+    D["<b>Capa de Acceso a la Red</b><br/><br/>Ethernet, WiFi, PPP<br/>Frames, MAC Address<br/>Control de acceso al medio"]
+    
+    classDef highlight fill:#ff9999,stroke:#cc0000,stroke-width:4px,color:#000
+    classDef normal fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#000
+    
+    class D highlight
+    class A,B,C normal
 ```
+:::
 :::
 :::
 
@@ -54,7 +71,7 @@ graph TD
 
 ## Ejemplo: Comunicación en Red Local
 
-::: {style="height: 10hw; width: auto; overflow: visible;"}
+::: {style="width: 35vw; text-align: center; margin: 0 auto;"}
 ```{mermaid}
 sequenceDiagram
     participant A as Computadora A<br/>(00:1A:2B:3C:4D:5E)
@@ -125,6 +142,7 @@ sequenceDiagram
 
 > Opera a nivel de hardware, independiente de protocolos superiores, usando direcciones MAC únicas
 
+::: {style="width: 40vw; text-align: center; margin: 0 auto;"}
 ```{mermaid}
 %%| fig-width: 10
 graph LR
@@ -136,6 +154,7 @@ graph LR
     style OUI fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
     style NIC fill:#fff3e0,stroke:#f57c00,stroke-width:2px
 ```
+:::
 
 ::: {.columns}
 ::: {.column width="33%"}
@@ -194,12 +213,85 @@ Las direcciones MAC son como el DNI del dispositivo: únicas, estáticas y cada 
 - Reed-Solomon: errores en ráfagas
 - Especialmente importante en medios inalámbricos
 
-```{mermaid}
-graph LR
-    D[Datos] --> CRC[Cálculo CRC]
-    CRC --> F[Agregar FCS]
-    F --> T[Transmitir]
-    T --> R[Receptor verifica]
+:::
+:::
+
+## 3. Detección y Corrección de Errores (Ejemplo)
+
+Introducir un mensaje de 4 bits (1011) y os saldrá a le derecha el mensaje codificado
+
+:::{.ojsinteractive}
+:::{.ojscontrols}
+```{ojs}
+// Input: 4-bit message
+viewof msg4 = Inputs.text({label: "Mensaje (4 bits)", placeholder: "e.g. 1011"})
+```
+:::
+
+:::{.ojsplot}
+```{ojs}
+// Encode using Hamming(7,4)
+function hamming74_encode(bits4) {
+  if (!/^[01]{4}$/.test(bits4)) return "";
+  const [d1, d2, d3, d4] = bits4.split("").map(b => +b);
+  
+  // parity bits
+  const p1 = d1 ^ d2 ^ d4;
+  const p2 = d1 ^ d3 ^ d4;
+  const p3 = d2 ^ d3 ^ d4;
+  
+  // Codeword positions: p1 p2 d1 p3 d2 d3 d4
+  const code = [p1, p2, d1, p3, d2, d3, d4];
+  return code.join("");
+}
+
+encoded = hamming74_encode(msg4)
+encoded
+```
+:::
+:::
+
+
+Aquí podréis meter el mensaje codificado y saber si ha habido cambios en un bit y corregirlos (Hamming).
+
+:::{.ojsinteractive}
+:::{.ojscontrols}
+```{ojs}
+// Input: 7-bit codeword
+viewof code7 = Inputs.text({label: "Codeword (7 bits)", placeholder: "e.g. 0110011"})
+```
+:::
+
+:::{.ojsplot}
+```{ojs}
+function hamming74_decode(code) {
+  if (!/^[01]{7}$/.test(code)) return "Enter exactly 7 bits";
+  const bits = code.split("").map(b => +b);
+  const [p1, p2, d1, p3, d2, d3, d4] = bits;
+
+  // syndrome bits
+  const s1 = p1 ^ d1 ^ d2 ^ d4;
+  const s2 = p2 ^ d1 ^ d3 ^ d4;
+  const s3 = p3 ^ d2 ^ d3 ^ d4;
+  
+  const syndrome = (s3 << 2) | (s2 << 1) | s1; // binary → position (1-7)
+
+  let corrected = [...bits];
+  let msg = [d1, d2, d3, d4].join("");
+  
+  if (syndrome === 0) {
+    return `✅ Valid codeword, message = ${msg}`;
+  } else {
+    // correct bit if single error
+    corrected[syndrome - 1] ^= 1; 
+    const [cp1, cp2, cd1, cp3, cd2, cd3, cd4] = corrected;
+    const corrected_msg = [cd1, cd2, cd3, cd4].join("");
+    return `❌ Error at position ${syndrome}. Corrected codeword = ${corrected.join("")}, message = ${corrected_msg}`;
+  }
+}
+
+result = hamming74_decode(code7)
+result
 ```
 :::
 :::
@@ -356,6 +448,42 @@ QoS garantiza que aplicaciones críticas reciban el ancho de banda necesario inc
 :::
 :::
 
+## Dominios de Colisión: Switch vs Hub
+
+```{mermaid}
+%%| fig-width: 14
+graph TB
+    subgraph "HUB - Medio Compartido"
+        H1[Hub]
+        SHARED((Medio<br/>Compartido))
+        PC1[PC1] --- SHARED
+        PC2[PC2] --- SHARED
+        PC3[PC3] --- SHARED
+        PC4[PC4] --- SHARED
+        SHARED --- H1
+    end
+    
+    subgraph "SWITCH - Dominios Separados"
+        S1[Switch]
+        PC5[PC5] --- S1
+        PC6[PC6] --- S1
+        PC7[PC7] --- S1
+        PC8[PC8] --- S1
+    end
+    
+    classDef collision fill:#ffcdd2,stroke:#d32f2f
+    classDef nocollision fill:#c8e6c9,stroke:#388e3c
+    classDef shared fill:#fff3e0,stroke:#f57c00
+    
+    class H1,PC1,PC2,PC3,PC4 collision
+    class S1,PC5,PC6,PC7,PC8 nocollision
+    class SHARED shared
+```
+
+::: {.callout-tip}
+Los switches crean **dominios de colisión separados para cada puerto**, evitando colisiones entre dispositivos en diferentes puertos
+:::
+
 ## Otros Dispositivos de Acceso
 
 | Dispositivo | Función | Características | Aplicación |
@@ -391,20 +519,24 @@ graph LR
 
 ### Estructura de Trama Ethernet
 
+::: {style="width: 45vw; text-align: center; margin: 0 auto;"}
 ```{mermaid}
 packet-beta
-    0-15: "Preámbulo"
-    16-23: "SFD"
-    24-71: "MAC Destino (6 bytes)"
-    72-119: "MAC Origen (6 bytes)"
-    120-135: "Tipo/Longitud"
-    136-151: "Datos"
-    152-167: "..."
-    168-183: "Datos (Payload)"
-    184-199: "..."
-    200-215: "Datos"
-    216-231: "FCS (4 bytes)"
+    0-31: "Preámbulo"
+    32-47: "Preámbulo"
+    48-55: "Preámbulo"
+    56-63: "SFD"
+    64-111: "MAC Destino (6 bytes)"
+    112-159: "MAC Origen (6 bytes)"
+    160-175: "Tipo/Longitud"
+    176-191: "Datos"
+    192-207: "Datos"
+    208-223: "Datos (Payload)"
+    224-239: "..."
+    240-255: "Datos"
+    256-287: "FCS (4 bytes)"
 ```
+:::
 
 ::: {.columns}
 ::: {.column width="50%"}
@@ -430,24 +562,27 @@ packet-beta
 
 ### Trama WiFi: Mayor complejidad
 
+::: {style="width: 45vw; text-align: center; margin: 0 auto;"}
 ```{mermaid}
 packet-beta
-    0-15: "Frame Control (2 bytes)"
-    16-31: "Duration/ID (2 bytes)"
-    32-79: "Address 1 - Receiver (6 bytes)"
-    80-127: "Address 2 - Transmitter (6 bytes)"
-    128-175: "Address 3 - BSSID (6 bytes)"
-    176-191: "Seq Control (2 bytes)"
+    0-15: "Frame Control"
+    16-31: "Duration/ID"
+    32-79: "Address 1 (Receptor)"
+    80-127: "Address 2 (Transmisor)"
+    128-175: "Address 3 (BSSID/AP)"
+    176-191: "Sequence Control"
     192-239: "Address 4 (opcional)"
     240-255: "QoS Control (opcional)"
-    256-287: "HT Control (opcional)"
-    288-319: "Payload (0-2304 bytes)"
-    320-351: "FCS (4 bytes)"
+    256-287: "Datos ..."
+    288-303: "Datos ..."
+    304-319: "FCS (4 bytes)"
 ```
-
-::: {.callout-note}
-WiFi necesita hasta 4 direcciones MAC para manejar la complejidad del medio inalámbrico
 :::
+
+::: {.callout-tip}
+La trama es considerablemente más compleja debido a que estamos en un medio compartido y puede haber repetidores, así como comunicaciones directas.
+:::
+
 
 ## Evolución de Estándares WiFi
 
@@ -506,6 +641,8 @@ WiFi necesita hasta 4 direcciones MAC para manejar la complejidad del medio inal
 - Conmutación de tramas
 - Control de congestión
 
+<br>
+
 **Estado:**
 
 - Reemplazado por MPLS
@@ -518,6 +655,8 @@ WiFi necesita hasta 4 direcciones MAC para manejar la complejidad del medio inal
 
 ### Traducción IP → MAC
 
+
+::: {style="width: 35vw; text-align: center; margin: 0 auto;"}
 ```{mermaid}
 %%| fig-width: 10
 sequenceDiagram
@@ -536,6 +675,7 @@ sequenceDiagram
     
     Note over A: Guardo en caché ARP
 ```
+:::
 
 ::: {.columns}
 ::: {.column width="50%"}
@@ -562,13 +702,6 @@ sequenceDiagram
 ## Límites Físicos y Distancias
 
 ### Cable de Cobre (UTP/STP)
-
-::: {.callout-warning}
-**Límite máximo: 100 metros**
-
-Más allá requiere regeneración de señal
-:::
-
 ::: {.columns}
 ::: {.column width="50%"}
 **Causas de la limitación:**
@@ -598,41 +731,6 @@ Más allá requiere regeneración de señal
 | Fibra MM | 2 km | 10 Gbps | Nula |
 | Fibra SM | 100+ km | 100 Gbps | Nula |
 
-## Dominios de Colisión: Switch vs Hub
-
-```{mermaid}
-%%| fig-width: 14
-graph TB
-    subgraph "HUB - Medio Compartido"
-        H1[Hub]
-        SHARED((Medio<br/>Compartido))
-        PC1[PC1] --- SHARED
-        PC2[PC2] --- SHARED
-        PC3[PC3] --- SHARED
-        PC4[PC4] --- SHARED
-        SHARED --- H1
-    end
-    
-    subgraph "SWITCH - Dominios Separados"
-        S1[Switch]
-        PC5[PC5] --- S1
-        PC6[PC6] --- S1
-        PC7[PC7] --- S1
-        PC8[PC8] --- S1
-    end
-    
-    classDef collision fill:#ffcdd2,stroke:#d32f2f
-    classDef nocollision fill:#c8e6c9,stroke:#388e3c
-    classDef shared fill:#fff3e0,stroke:#f57c00
-    
-    class H1,PC1,PC2,PC3,PC4 collision
-    class S1,PC5,PC6,PC7,PC8 nocollision
-    class SHARED shared
-```
-
-::: {.callout-tip}
-Los switches crean **dominios de colisión separados para cada puerto**, evitando colisiones entre dispositivos en diferentes puertos
-:::
 
 ## Ejemplo Práctico: Verificación de Configuración
 
