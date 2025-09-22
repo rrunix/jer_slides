@@ -1,5 +1,306 @@
 [
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Juegos en Red",
+    "section": "",
+    "text": "Introducción a la asignatura\n\n\n\n\n\nIntroducción a las redes de computadores\nCapa de acceso a la red"
+  },
+  {
+    "objectID": "index.html#introducción",
+    "href": "index.html#introducción",
+    "title": "Juegos en Red",
+    "section": "",
+    "text": "Introducción a la asignatura"
+  },
+  {
+    "objectID": "index.html#redes-de-computadores",
+    "href": "index.html#redes-de-computadores",
+    "title": "Juegos en Red",
+    "section": "",
+    "text": "Introducción a las redes de computadores\nCapa de acceso a la red"
+  },
+  {
+    "objectID": "sub_introduction.html#prof.-rubén-rodríguez",
+    "href": "sub_introduction.html#prof.-rubén-rodríguez",
+    "title": "Presentación de Juegos en Red",
+    "section": "Prof. Rubén Rodríguez",
+    "text": "Prof. Rubén Rodríguez\nRubén Rodríguez Fernández\n\nE-mail: ruben.rodriguez@urjc.es. (Escribir por aula virtual).\nDespacho: 131, Ed. Departamental II (Campus de Móstoles).\nTutorias: Concertar por e-mail (aula virtual)."
+  },
+  {
+    "objectID": "sub_introduction.html#prof.-natalia-madrueño",
+    "href": "sub_introduction.html#prof.-natalia-madrueño",
+    "title": "Presentación de Juegos en Red",
+    "section": "Prof. Natalia Madrueño",
+    "text": "Prof. Natalia Madrueño\nNatalia Madrueño Sierro\n\nEmail: natalia.madrueno@urjc.es (Escribir por aula virtual).\nDespacho: 044, Ed. Departamental II (Campus de Móstoles).\nTutorias: Concertar por e-mail (aula virtual)."
+  },
+  {
+    "objectID": "sub_introduction.html#aplicaciones-en-red",
+    "href": "sub_introduction.html#aplicaciones-en-red",
+    "title": "Presentación de Juegos en Red",
+    "section": "Aplicaciones en red",
+    "text": "Aplicaciones en red\nLa gran mayoría de las aplicaciones actuales son aplicaciones basadas en red:\n\nAula Virtual\nGmail\nTwitter\nFacebook\nLa web de la Liga de Fútbol Profesional (LFP)\n…"
+  },
+  {
+    "objectID": "sub_introduction.html#muchos-juegos-también",
+    "href": "sub_introduction.html#muchos-juegos-también",
+    "title": "Presentación de Juegos en Red",
+    "section": "Muchos juegos también",
+    "text": "Muchos juegos también\n\nPlayerUnknown’s Battlegrounds (PUBG) / Fortnite / Destiny 2 / Overwatch / Quake Champions / Counter-Strike: Global Offensive (CS:GO) / League of Legends (LoL) / DOTA 2\nWorld of Warcraft\nFIFA / PES\nMario Kart / Project Cars / Rocket League\nJuegos de Facebook\n…"
+  },
+  {
+    "objectID": "sub_introduction.html#tema-1-introducción-a-los-juegos-en-red-y-a-las-redes-de-comunicaciones",
+    "href": "sub_introduction.html#tema-1-introducción-a-los-juegos-en-red-y-a-las-redes-de-comunicaciones",
+    "title": "Presentación de Juegos en Red",
+    "section": "Tema 1: Introducción a los juegos en red y a las redes de comunicaciones",
+    "text": "Tema 1: Introducción a los juegos en red y a las redes de comunicaciones\nSe presentan los retos de las aplicaciones en red y se introducen los principales conceptos necesarios para entender su funcionamiento:\n\nQué son y como funcionan las aplicaciones en red.\nProblemas propios de aplicaciones en red.\nConceptos fundamentales de comunicación en red entre aplicaciones.\nConsideraciones al desarrollar juegos en red."
+  },
+  {
+    "objectID": "sub_introduction.html#tema-2-desarrollo-en-el-lado-del-cliente.",
+    "href": "sub_introduction.html#tema-2-desarrollo-en-el-lado-del-cliente.",
+    "title": "Presentación de Juegos en Red",
+    "section": "Tema 2: Desarrollo en el lado del cliente.",
+    "text": "Tema 2: Desarrollo en el lado del cliente.\nSe estudia el lenguaje JavaScript para construir aplicaciones en el lado del cliente (browser). API REST.\n\nDesarrollo web en JavaScript, HTML y CSS\nUso de las API REST"
+  },
+  {
+    "objectID": "sub_introduction.html#tema-3-desarrollo-de-juegos-con-tecnología-web.",
+    "href": "sub_introduction.html#tema-3-desarrollo-de-juegos-con-tecnología-web.",
+    "title": "Presentación de Juegos en Red",
+    "section": "Tema 3: Desarrollo de juegos con tecnología web.",
+    "text": "Tema 3: Desarrollo de juegos con tecnología web.\nSe presenta el framework JavaScript Phaser para desarrollo de juegos en el cliente:\n\nPhaser 3 framework: https://phaser.io.\nAmplia galería de ejemplos: https://phaser.io/examples/"
+  },
+  {
+    "objectID": "sub_introduction.html#tema-4-desarrollo-en-el-lado-del-servidor.",
+    "href": "sub_introduction.html#tema-4-desarrollo-en-el-lado-del-servidor.",
+    "title": "Presentación de Juegos en Red",
+    "section": "Tema 4: Desarrollo en el lado del servidor.",
+    "text": "Tema 4: Desarrollo en el lado del servidor.\nSe estudia el framework express.js con JavaScript para desarrollar el lado del servidor. Implementación de API REST:\n\nIntroducción a express.js\nDesarrollo de comunicación cliente servidor a través de API REST."
+  },
+  {
+    "objectID": "sub_introduction.html#tema-5-comunicación-asíncrona-cliente---servidor",
+    "href": "sub_introduction.html#tema-5-comunicación-asíncrona-cliente---servidor",
+    "title": "Presentación de Juegos en Red",
+    "section": "Tema 5: Comunicación asíncrona cliente - servidor",
+    "text": "Tema 5: Comunicación asíncrona cliente - servidor\nSe estudia el uso de WebSockets para comunicación asíncrona entre nodos:\n\nIntroducción a la comunicación asíncrona con WebSockets.\nCreación de protocolos de mensajes.\nDesarrollo de comunicación asíncrona entre cliente y servidor con WebSockets."
+  },
+  {
+    "objectID": "sub_introduction.html#material-teórico",
+    "href": "sub_introduction.html#material-teórico",
+    "title": "Presentación de Juegos en Red",
+    "section": "Material teórico",
+    "text": "Material teórico\n\nEl material se irá publicando en el Aula Virtual a medida que avance el cuatrimestre.\nSe publicará como asignatura en abierto, todos los materiales son públicos.\nContará con diapositivas, apuntes, problemas y una guía de estudio."
+  },
+  {
+    "objectID": "sub_introduction.html#enunciado-de-la-práctica",
+    "href": "sub_introduction.html#enunciado-de-la-práctica",
+    "title": "Presentación de Juegos en Red",
+    "section": "Enunciado de la práctica",
+    "text": "Enunciado de la práctica\n\nLos enunciados de las prácticas se colgarán en el aula virtual."
+  },
+  {
+    "objectID": "sub_introduction.html#pruebas-de-evaluación",
+    "href": "sub_introduction.html#pruebas-de-evaluación",
+    "title": "Presentación de Juegos en Red",
+    "section": "Pruebas de evaluación:",
+    "text": "Pruebas de evaluación:\n\n40% Pruebas teórico-prácticas\n\nNota mínima: cada prueba &gt;=5\n\n40% Práctica\n\nNota mínima: cada prueba &gt;=5\n\n15% Resolución de problemas y casos prácticos\n\nNo tiene nota mínima\n\n5% Participación en clase y otras actividades\n\nNo tiene nota mínima\n\n\nHay que obtener al menos un 5 de media"
+  },
+  {
+    "objectID": "sub_introduction.html#pruebas-teórico-prácticas-40",
+    "href": "sub_introduction.html#pruebas-teórico-prácticas-40",
+    "title": "Presentación de Juegos en Red",
+    "section": "Pruebas teórico-prácticas (40 %)",
+    "text": "Pruebas teórico-prácticas (40 %)\n\n3 exámenes:\n\nExamen 1 (Tema 1): 35%.\nExamen 2 (Tema 2 y 3): 32.5%.\nExamen 3 (Tema 4): 32.5%.\n\nEjercicios online tipo test / preguntas cortas / ejercicios\nNota mínima en cada prueba 5\nRevaluable en convocatoria extraordinaria"
+  },
+  {
+    "objectID": "sub_introduction.html#práctica-40",
+    "href": "sub_introduction.html#práctica-40",
+    "title": "Presentación de Juegos en Red",
+    "section": "Práctica (40 %)",
+    "text": "Práctica (40 %)\n\nSe realiza en grupos de 4 personas\nCada alumno será evaluado individualmente\nSe desarrolla en parte en las sesiones prácticas\nConsta de 4 entregas (fases) obligatorias coonderaciones 10%, 35%, 25%, 30%.\nNota mínima en cada fase: 5 puntos\nCada fase es revaluable en convocatoria extraordinaria"
+  },
+  {
+    "objectID": "sub_introduction.html#resolución-de-problemas-15",
+    "href": "sub_introduction.html#resolución-de-problemas-15",
+    "title": "Presentación de Juegos en Red",
+    "section": "Resolución de problemas (15 %)",
+    "text": "Resolución de problemas (15 %)\n\nConsiste en una fase adicional al juego desarrollado (fase 5).\nConsistirá en una mejora sobre la práctica entregada y la publicación de la misma en plataformas online.\nNota mínima de 3.\nRevaluable en convocatoria extraordinaria."
+  },
+  {
+    "objectID": "sub_introduction.html#participación-en-clase-5",
+    "href": "sub_introduction.html#participación-en-clase-5",
+    "title": "Presentación de Juegos en Red",
+    "section": "Participación en clase (5 %)",
+    "text": "Participación en clase (5 %)\n\nEs opcional. No tiene nota mínima.\nConsiste en una serie de actividades que se irán realizando a lo largo del cuatrimestre.\nTambién se podrán obtener proponiendo mejoras o correcciones a los apuntes y diapositivas de la asignatura.\nNo es revaluable en convocatoria extraordinaria"
+  },
+  {
+    "objectID": "sub_introduction.html#dispensa-académica",
+    "href": "sub_introduction.html#dispensa-académica",
+    "title": "Presentación de Juegos en Red",
+    "section": "Dispensa académica",
+    "text": "Dispensa académica\nUn alumno con dispensa académica debe realizar los exámenes teóricos-prácticos.\nEstá obligado a hacer las 4 entregas presenciales de la parte práctica ya que son como exámenes.\nLas fechas de las pruebas serán anunciadas con anterioridad."
+  },
+  {
+    "objectID": "sub_introduction.html#no-presentado",
+    "href": "sub_introduction.html#no-presentado",
+    "title": "Presentación de Juegos en Red",
+    "section": "No presentado",
+    "text": "No presentado\nUn alumno obtendrá la calificación de no presentado únicamente si no se presenta a ninguna prueba evaluable (ya sea de teoría o práctica)."
+  },
+  {
+    "objectID": "sub_introduction.html#internet",
+    "href": "sub_introduction.html#internet",
+    "title": "Presentación de Juegos en Red",
+    "section": "Internet",
+    "text": "Internet\n\nPáginas oficiales de los estándares y tecnologías\nTutoriales, ejemplos y blogs realizados por la comunidad\nAplicaciones web de código abierto\n… y todo lo que Google encuentre :)"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#qué-es-la-capa-de-acceso-a-la-red",
+    "href": "ch1_p2_access_layer.html#qué-es-la-capa-de-acceso-a-la-red",
+    "title": "Capa de Acceso a la Red",
+    "section": "¿Qué es la Capa de Acceso a la Red?",
+    "text": "¿Qué es la Capa de Acceso a la Red?\n\nLa Capa de Acceso a la Red se encarga de la transmisión física de datos entre dispositivos directamente conectados en una red local\n\n\n\n¿Qué hace?\n\nManeja los aspectos físicos de la transmisión\nControla el acceso al medio compartido\nSe ejecuta en el host y en el nucleo de la red\nGarantiza transmisión confiable entre nodos adyacentes\n\n\nPosición en los modelos:\n\n\n\n\n\n\nblock-beta\n    columns 1\n    \n    A[\"&lt;b&gt;Capa de Aplicación&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;HTTP, HTTPS, FTP, SMTP&lt;br/&gt;DNS, DHCP, Telnet, SSH\"]\n    \n    B[\"&lt;b&gt;Capa de Transporte&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;TCP, UDP&lt;br/&gt;Control de flujo y errores\"]\n    \n    C[\"&lt;b&gt;Capa de Internet&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;IP, ICMP, ARP&lt;br/&gt;Enrutamiento, Direccionamiento\"]\n    \n    D[\"&lt;b&gt;Capa de Acceso a la Red&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Ethernet, WiFi, PPP&lt;br/&gt;Frames, MAC Address&lt;br/&gt;Control de acceso al medio\"]\n    \n    classDef highlight fill:#ff9999,stroke:#cc0000,stroke-width:4px,color:#000\n    classDef normal fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#000\n    \n    class D highlight\n    class A,B,C normal\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nImportante\n\n\nResponsabilidad principal: Garantizar que los datos puedan transmitirse de manera confiable entre nodos adyacentes en la red"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#ejemplo-comunicación-en-red-local",
+    "href": "ch1_p2_access_layer.html#ejemplo-comunicación-en-red-local",
+    "title": "Capa de Acceso a la Red",
+    "section": "Ejemplo: Comunicación en Red Local",
+    "text": "Ejemplo: Comunicación en Red Local\n\n\n\n\n\n\nsequenceDiagram\n    participant A as Computadora A&lt;br/&gt;(00:1A:2B:3C:4D:5E)\n    participant S as Switch&lt;br/&gt;(Tabla MAC)\n    participant C as Computadora C&lt;br/&gt;(00:3C:4D:5E:6F:70)\n\n    Note over S: Tabla MAC vacía\n\n    Note over A,C: FASE 1: Descubrimiento ARP\n    \n    A-&gt;&gt;S: ARP Request&lt;br/&gt;¿Quién tiene la IP de C?&lt;br/&gt;Destino: Broadcast\n    \n    Note over S: Aprende: Puerto 1 → MAC de A\n    \n    S-&gt;&gt;C: ARP Request (Flooding)\n    \n    C-&gt;&gt;S: ARP Response&lt;br/&gt;Mi MAC es 00:3C:4D:5E:6F:70\n    \n    Note over S: Aprende: Puerto 3 → MAC de C\n    \n    S-&gt;&gt;A: ARP Response (Unicast)\n\n    Note over A,C: FASE 2: Comunicación Directa\n    \n    A-&gt;&gt;S: Datos para C\n    \n    Note over S: Consulta tabla MAC\n    \n    S-&gt;&gt;C: Datos (Solo puerto 3)"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#control-de-acceso-al-medio-mac",
+    "href": "ch1_p2_access_layer.html#control-de-acceso-al-medio-mac",
+    "title": "Capa de Acceso a la Red",
+    "section": "1. Control de Acceso al Medio (MAC)",
+    "text": "1. Control de Acceso al Medio (MAC)\n\nCoordina cómo múltiples dispositivos comparten un medio de transmisión común\n\n\n\nEthernet Half-Duplex: CSMA/CD\nCarrier Sense Multiple Access with Collision Detection\n\nEscuchar el medio antes de transmitir\nSi está libre → transmitir\nSi hay colisión → detectar\nAplicar backoff exponencial\nReintentar transmisión\n\nSolo puede transmitir en una dirección a la vez. En Full-Duplex no necesitaríamos realizar controles.\n\nRedes Inalámbricas: CSMA/CA\n Carrier Sense Multiple Access with Collision Avoidance\n\nEsperar tiempo aleatorio antes de transmitir\nUsar acknowledgments para confirmar recepción\nProtocolo RTS/CTS para problema del nodo oculto\n\nLa detección de colisiones es impráctica en radio"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#direccionamiento-físico",
+    "href": "ch1_p2_access_layer.html#direccionamiento-físico",
+    "title": "Capa de Acceso a la Red",
+    "section": "2. Direccionamiento Físico",
+    "text": "2. Direccionamiento Físico\n\nOpera a nivel de hardware, independiente de protocolos superiores, usando direcciones MAC únicas\n\n\n\n\n\n\n\ngraph LR\n    subgraph \"Dirección MAC: 00:1A:2B:3C:4D:5E (48 bits)\"\n        OUI[\"00:1A:2B&lt;br/&gt;OUI&lt;br/&gt;(Organizationally Unique Identifier)&lt;br/&gt;Asignado por IEEE\"]\n        NIC[\"3C:4D:5E&lt;br/&gt;Identificador del Dispositivo&lt;br/&gt;Asignado por el fabricante\"]\n    end\n    \n    style OUI fill:#e3f2fd,stroke:#1976d2,stroke-width:2px\n    style NIC fill:#fff3e0,stroke:#f57c00,stroke-width:2px\n\n\n\n\n\n\n\n\n\nUnicast\n\nUn único destinatario\nDirección específica del dispositivo\n\n\nBroadcast\n\nTodos los dispositivos\nFF:FF:FF:FF:FF:FF\n\n\nMulticast\n\nGrupo específico\nPrimer bit = 1\n\n\n\n\n\n\n\n\nTip\n\n\nLas direcciones MAC son como el DNI del dispositivo: únicas, estáticas y cada dispositivo tiene una"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#detección-y-corrección-de-errores",
+    "href": "ch1_p2_access_layer.html#detección-y-corrección-de-errores",
+    "title": "Capa de Acceso a la Red",
+    "section": "3. Detección y Corrección de Errores",
+    "text": "3. Detección y Corrección de Errores\n\nGarantiza la integridad de los datos transmitidos a través del medio físico\n\nCódigos de Redundancia Cíclica (CRC)\n\n\nProceso CRC:\n\nGenerar polinomio matemático sobre datos\nAgregar Frame Check Sequence (FCS) al final\nReceptor recalcula el CRC\nComparar con el recibido\nDetectar errores de 1 bit y múltiples bits\n\nChecksums simples:\n\nSuma aritmética de bytes\nMenos robusto pero más rápido\n\n\nForward Error Correction (FEC):\n\nNo solo detecta, también corrige errores\nCódigos Hamming: errores de 1 bit\nReed-Solomon: errores en ráfagas\nEspecialmente importante en medios inalámbricos"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#detección-y-corrección-de-errores-ejemplo",
+    "href": "ch1_p2_access_layer.html#detección-y-corrección-de-errores-ejemplo",
+    "title": "Capa de Acceso a la Red",
+    "section": "3. Detección y Corrección de Errores (Ejemplo)",
+    "text": "3. Detección y Corrección de Errores (Ejemplo)\nIntroducir un mensaje de 4 bits (1011) y os saldrá a le derecha el mensaje codificado\n\n\n\n// Input: 4-bit message\nviewof msg4 = Inputs.text({label: \"Mensaje (4 bits)\", placeholder: \"e.g. 1011\"})\n\n\n\n\n\n\n\n\n\nfunction hamming74_encode(bits4) {\n  if (!/^[01]{4}$/.test(bits4)) return \"\";\n  const [d1, d2, d3, d4] = bits4.split(\"\").map(b =&gt; +b);\n  \n  // parity bits\n  const p1 = d1 ^ d2 ^ d4;\n  const p2 = d1 ^ d3 ^ d4;\n  const p3 = d2 ^ d3 ^ d4;\n  \n  // Codeword positions: p1 p2 d1 p3 d2 d3 d4\n  const code = [p1, p2, d1, p3, d2, d3, d4];\n  return code.join(\"\");\n}\n\nencoded = hamming74_encode(msg4)\nencoded\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAquí podréis meter el mensaje codificado y saber si ha habido cambios en un bit y corregirlos (Hamming).\n\n\n\n// Input: 7-bit codeword\nviewof code7 = Inputs.text({label: \"Codeword (7 bits)\", placeholder: \"e.g. 0110011\"})\n\n\n\n\n\n\n\n\n\nfunction hamming74_decode(code) {\n  if (!/^[01]{7}$/.test(code)) return \"Enter exactly 7 bits\";\n  const bits = code.split(\"\").map(b =&gt; +b);\n  const [p1, p2, d1, p3, d2, d3, d4] = bits;\n\n  // syndrome bits\n  const s1 = p1 ^ d1 ^ d2 ^ d4;\n  const s2 = p2 ^ d1 ^ d3 ^ d4;\n  const s3 = p3 ^ d2 ^ d3 ^ d4;\n  \n  const syndrome = (s3 &lt;&lt; 2) | (s2 &lt;&lt; 1) | s1; // binary → position (1-7)\n\n  let corrected = [...bits];\n  let msg = [d1, d2, d3, d4].join(\"\");\n  \n  if (syndrome === 0) {\n    return `✅ Valid codeword, message = ${msg}`;\n  } else {\n    // correct bit if single error\n    corrected[syndrome - 1] ^= 1; \n    const [cp1, cp2, cd1, cp3, cd2, cd3, cd4] = corrected;\n    const corrected_msg = [cd1, cd2, cd3, cd4].join(\"\");\n    return `❌ Error at position ${syndrome}. Corrected codeword = ${corrected.join(\"\")}, message = ${corrected_msg}`;\n  }\n}\n\nresult = hamming74_decode(code7)\nresult"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#control-de-tamaño",
+    "href": "ch1_p2_access_layer.html#control-de-tamaño",
+    "title": "Capa de Acceso a la Red",
+    "section": "4. Control de Tamaño",
+    "text": "4. Control de Tamaño\n\nManeja las limitaciones de tamaño impuestas por diferentes tecnologías de red\n\nMaximum Transmission Unit (MTU)\n\n\n\nTecnología\nMTU (bytes)\nCaracterísticas\n\n\n\n\nEthernet\n1500\nEstándar más común en LAN\n\n\nToken Ring\n4464\nTecnología legacy\n\n\nFDDI\n4352\nFiber Distributed Data Interface\n\n\nPPP\nVariable (~1500)\nPara compatibilidad con Ethernet\n\n\n\n\n\n\n\n\n\nAdvertencia\n\n\nSi datos &gt; MTU → La Capa de Acceso a la Red descarta automáticamente el paquete\n\n\n\n\nNota: El MTU determina el tamaño máximo de datos que puede transportar una sola trama"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#sincronización-y-temporización",
+    "href": "ch1_p2_access_layer.html#sincronización-y-temporización",
+    "title": "Capa de Acceso a la Red",
+    "section": "5. Sincronización y Temporización",
+    "text": "5. Sincronización y Temporización\n\nCoordina el timing entre dispositivos para asegurar la correcta interpretación de señales digitales\n\nNiveles de sincronización\n\n\nTipos de sincronización:\n\nSincronización de bit: Determina límites temporales de cada bit\nSincronización de trama: Identifica inicio y fin de cada trama\nSincronización de símbolo: Para modulaciones complejas (QAM)\n\n\n¿Por qué es crítica?\n\nEn redes de alta velocidad, pequeñas diferencias causan errores\nEstablece marcos de tiempo comunes\nPermite interpretación correcta de señales\nEsencial para comunicación digital confiable"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#gestión-de-topología",
+    "href": "ch1_p2_access_layer.html#gestión-de-topología",
+    "title": "Capa de Acceso a la Red",
+    "section": "6. Gestión de Topología",
+    "text": "6. Gestión de Topología\n\nDescubre y mantiene información sobre la estructura física de la red\n\nComponentes principales\n\n\nMantenimiento de enlaces:\n\nKeepalive messages\nDetección proactiva de fallos\nAntes de afectar tráfico de usuarios\n\nProtocolos de detección:\n\nCDP (Cisco Discovery Protocol)\nLLDP (Link Layer Discovery Protocol)\nDispositivos se identifican mutuamente\nComparten información de capacidades\n\n\nPrevención de bucles:\n\nSpanning Tree Protocol (STP)\nPreviene bucles en topologías redundantes\nEvita tormentas de broadcast\n\nAdaptación automática:\n\nDetecta cambios en la topología\nResponde a fallos de enlaces\nIncorpora nuevos dispositivos"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#control-de-calidad-de-servicio-qos",
+    "href": "ch1_p2_access_layer.html#control-de-calidad-de-servicio-qos",
+    "title": "Capa de Acceso a la Red",
+    "section": "7. Control de Calidad de Servicio (QoS)",
+    "text": "7. Control de Calidad de Servicio (QoS)\n\nPrioriza diferentes tipos de tráfico según su importancia y requisitos de rendimiento\n\nMecanismos de gestión\n\n\nGestión de buffers:\n\nWeighted Fair Queuing: Recursos proporcionales según importancia\nPriority Queuing: Tráfico crítico tiene precedencia\nRandom Early Detection: Descarta proactivamente antes de saturación\n\n\nAplicaciones beneficiadas:\n\n🎥 Video en tiempo real\n📞 VoIP (Voz sobre IP)\n🎮 Gaming online\n💼 Aplicaciones críticas de negocio\n\nFundamental para aplicaciones sensibles al tiempo\n\n\n\n\n\n\n\nTip\n\n\nQoS garantiza que aplicaciones críticas reciban el ancho de banda necesario incluso en momentos de congestión"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#switches-evolución-y-tipos",
+    "href": "ch1_p2_access_layer.html#switches-evolución-y-tipos",
+    "title": "Capa de Acceso a la Red",
+    "section": "Switches: Evolución y Tipos",
+    "text": "Switches: Evolución y Tipos\n\n\nSwitches No Gestionados\n\nPlug-and-play\nAprendizaje MAC automático\nRedes pequeñas/domésticas\nSin configuración\n\n\nSwitches Gestionados\n\nVLANs y segmentación\nQoS y priorización\nSNMP para monitorización\nSeguridad 802.1X"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#dominios-de-colisión-switch-vs-hub",
+    "href": "ch1_p2_access_layer.html#dominios-de-colisión-switch-vs-hub",
+    "title": "Capa de Acceso a la Red",
+    "section": "Dominios de Colisión: Switch vs Hub",
+    "text": "Dominios de Colisión: Switch vs Hub\n\n\n\n\n\ngraph TB\n    subgraph \"HUB - Medio Compartido\"\n        H1[Hub]\n        SHARED((Medio&lt;br/&gt;Compartido))\n        PC1[PC1] --- SHARED\n        PC2[PC2] --- SHARED\n        PC3[PC3] --- SHARED\n        PC4[PC4] --- SHARED\n        SHARED --- H1\n    end\n    \n    subgraph \"SWITCH - Dominios Separados\"\n        S1[Switch]\n        PC5[PC5] --- S1\n        PC6[PC6] --- S1\n        PC7[PC7] --- S1\n        PC8[PC8] --- S1\n    end\n    \n    classDef collision fill:#ffcdd2,stroke:#d32f2f\n    classDef nocollision fill:#c8e6c9,stroke:#388e3c\n    classDef shared fill:#fff3e0,stroke:#f57c00\n    \n    class H1,PC1,PC2,PC3,PC4 collision\n    class S1,PC5,PC6,PC7,PC8 nocollision\n    class SHARED shared\n\n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nLos switches crean dominios de colisión separados para cada puerto, evitando colisiones entre dispositivos en diferentes puertos"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#otros-dispositivos-de-acceso",
+    "href": "ch1_p2_access_layer.html#otros-dispositivos-de-acceso",
+    "title": "Capa de Acceso a la Red",
+    "section": "Otros Dispositivos de Acceso",
+    "text": "Otros Dispositivos de Acceso\n\n\n\n\n\n\n\n\n\nDispositivo\nFunción\nCaracterísticas\nAplicación\n\n\n\n\nAccess Points\nWiFi ↔︎ Cableado\nCSMA/CA, Beamforming\nRedes inalámbricas\n\n\nRepetidores\nExtensión alcance\nRegeneración señal\nSuperar distancia\n\n\nMedia Converters\nCambio de medio\nFibra ↔︎ Cobre\nMigración gradual\n\n\nTransceivers\nModular\nSFP/SFP+/QSFP\nFlexibilidad\n\n\n\n\n\n\n\n\n\ngraph LR\n    PC[\"💻 PC\"]\n    AP[\"📡 Access Point\"]\n    SW[\"🔌 Switch\"]\n    MC1[\"🔄 Media Converter\"]\n    FO[\"🌟 Fibra Óptica\"]\n    MC2[\"🔄 Media Converter\"]\n    RT[\"🌐 Router\"]\n    \n    PC &lt;-.-&gt;|\"WiFi\"| AP\n    AP &lt;--&gt;|\"Ethernet\"| SW\n    SW &lt;--&gt;|\"Cobre\"| MC1\n    MC1 &lt;--&gt;|\"Fibra\"| FO\n    FO &lt;--&gt;|\"Fibra\"| MC2\n    MC2 &lt;--&gt;|\"Ethernet\"| RT"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#ethernet-ieee-802.3",
+    "href": "ch1_p2_access_layer.html#ethernet-ieee-802.3",
+    "title": "Capa de Acceso a la Red",
+    "section": "Ethernet (IEEE 802.3)",
+    "text": "Ethernet (IEEE 802.3)\nEstructura de Trama Ethernet\n\n\n\n\n\n\npacket-beta\n    0-31: \"Preámbulo\"\n    32-47: \"Preámbulo\"\n    48-55: \"Preámbulo\"\n    56-63: \"SFD\"\n    64-111: \"MAC Destino (6 bytes)\"\n    112-159: \"MAC Origen (6 bytes)\"\n    160-175: \"Tipo/Longitud\"\n    176-191: \"Datos\"\n    192-207: \"Datos\"\n    208-223: \"Datos (Payload)\"\n    224-239: \"...\"\n    240-255: \"Datos\"\n    256-287: \"FCS (4 bytes)\"\n\n\n\n\n\n\n\n\n\nCampos principales:\n\nPreámbulo: Sincronización\nMACs: Identificación única\nTipo: Protocolo superior (IPv4: 0x0800)\nPayload: Datos + padding si &lt; 46 bytes\n\n\nEvolución de velocidades:\n\n10Base-T: 10 Mbps\nFast Ethernet: 100 Mbps\nGigabit: 1 Gbps\n10G/40G/100G Ethernet"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#wifi-ieee-802.11",
+    "href": "ch1_p2_access_layer.html#wifi-ieee-802.11",
+    "title": "Capa de Acceso a la Red",
+    "section": "WiFi (IEEE 802.11)",
+    "text": "WiFi (IEEE 802.11)\nTrama WiFi: Mayor complejidad\n\n\n\n\n\n\npacket-beta\n    0-15: \"Frame Control\"\n    16-31: \"Duration/ID\"\n    32-79: \"Address 1 (Receptor)\"\n    80-127: \"Address 2 (Transmisor)\"\n    128-175: \"Address 3 (BSSID/AP)\"\n    176-191: \"Sequence Control\"\n    192-239: \"Address 4 (opcional)\"\n    240-255: \"QoS Control (opcional)\"\n    256-287: \"Datos ...\"\n    288-303: \"Datos ...\"\n    304-319: \"FCS (4 bytes)\"\n\n\n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nLa trama es considerablemente más compleja debido a que estamos en un medio compartido y puede haber repetidores, así como comunicaciones directas."
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#evolución-de-estándares-wifi",
+    "href": "ch1_p2_access_layer.html#evolución-de-estándares-wifi",
+    "title": "Capa de Acceso a la Red",
+    "section": "Evolución de Estándares WiFi",
+    "text": "Evolución de Estándares WiFi\n\n\n\nGeneración\nEstándar\nVelocidad Max\nBandas\nAño\n\n\n\n\nWiFi 4\n802.11n\n600 Mbps\n2.4/5 GHz\n2009\n\n\nWiFi 5\n802.11ac\n3.5 Gbps\n5 GHz\n2014\n\n\nWiFi 6\n802.11ax\n9.6 Gbps\n2.4/5 GHz\n2019\n\n\nWiFi 6E\n802.11ax\n9.6 Gbps\n+ 6 GHz\n2020\n\n\nWiFi 7\n802.11be\n46 Gbps\n2.4/5/6 GHz\n2024\n\n\n\n\n\nMejoras clave:\n\nMIMO (múltiples antenas)\nOFDMA (mejor uso espectro)\nBeamforming direccional (dirigir hacia un punto en concreto)\n\n\nTrade-offs de bandas:\n\n2.4 GHz: Mayor alcance, menor velocidad\n5 GHz: Mayor velocidad, menor alcance\n6 GHz: Máxima velocidad, mínimo alcance"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#ppp-y-frame-relay",
+    "href": "ch1_p2_access_layer.html#ppp-y-frame-relay",
+    "title": "Capa de Acceso a la Red",
+    "section": "PPP y Frame Relay",
+    "text": "PPP y Frame Relay\n\n\nPoint-to-Point Protocol (PPP)\nCaracterísticas:\n\nEnlaces punto a punto\nDetección de errores\nAutenticación (PAP/CHAP)\nConfiguración IP automática\n\nUso actual:\n\nEnlaces de respaldo\nConexiones satelitales\nAlgunas VPNs\n\n\nFrame Relay\nCaracterísticas:\n\nWAN con circuitos virtuales\nConmutación de tramas\nControl de congestión\n\n\nEstado:\n\nReemplazado por MPLS\nLegacy en empresas antiguas\nConceptos aún relevantes"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#arp-address-resolution-protocol",
+    "href": "ch1_p2_access_layer.html#arp-address-resolution-protocol",
+    "title": "Capa de Acceso a la Red",
+    "section": "ARP: Address Resolution Protocol",
+    "text": "ARP: Address Resolution Protocol\nTraducción IP → MAC\n\n\n\n\n\n\nsequenceDiagram\n    participant A as Host A&lt;br/&gt;IP: 192.168.1.10&lt;br/&gt;MAC: AA:BB:CC:DD:EE:FF\n    participant N as Red Local&lt;br/&gt;(Broadcast)\n    participant B as Host B&lt;br/&gt;IP: 192.168.1.20&lt;br/&gt;MAC: 11:22:33:44:55:66\n    \n    Note over A: Necesito MAC de 192.168.1.20\n    \n    A-&gt;&gt;N: ARP Request (Broadcast)&lt;br/&gt;¿Quién tiene 192.168.1.20?\n    N-&gt;&gt;B: ARP Request\n    \n    Note over B: ¡Esa es mi IP!\n    \n    B-&gt;&gt;A: ARP Reply (Unicast)&lt;br/&gt;192.168.1.20 = 11:22:33:44:55:66\n    \n    Note over A: Guardo en caché ARP\n\n\n\n\n\n\n\n\n\nProceso ARP:\n\nBroadcast preguntando por IP\nDispositivo con esa IP responde\nSe guarda en caché local\nTemporizador elimina entradas viejas\n\n\nTipos de ARP:\n\nDinámico: Aprendizaje automático\nEstático: Entradas manuales permanentes\nProxy ARP: Router responde por otros\nGratuitous: Anuncio proactivo"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#límites-físicos-y-distancias",
+    "href": "ch1_p2_access_layer.html#límites-físicos-y-distancias",
+    "title": "Capa de Acceso a la Red",
+    "section": "Límites Físicos y Distancias",
+    "text": "Límites Físicos y Distancias\nCable de Cobre (UTP/STP)\n\n\nCausas de la limitación:\n\nAtenuación de señal\nInterferencia electromagnética\nCrosstalk entre pares\nDegradación con distancia\n\n\nSoluciones:\n\nSwitches cada 100m\nRepetidores/Extensores\nFibra óptica (kilómetros)\nEnlaces inalámbricos\n\n\nComparación de Medios\n\n\n\nMedio\nDistancia Max\nVelocidad\nInterferencia\n\n\n\n\nUTP Cat5e\n100m\n1 Gbps\nAlta\n\n\nUTP Cat6a\n100m\n10 Gbps\nMedia\n\n\nFibra MM\n2 km\n10 Gbps\nNula\n\n\nFibra SM\n100+ km\n100 Gbps\nNula"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#ejemplo-práctico-verificación-de-configuración",
+    "href": "ch1_p2_access_layer.html#ejemplo-práctico-verificación-de-configuración",
+    "title": "Capa de Acceso a la Red",
+    "section": "Ejemplo Práctico: Verificación de Configuración",
+    "text": "Ejemplo Práctico: Verificación de Configuración\nComandos útiles para verificar la capa de acceso\n\n\nVer información de red:\n# Linux/Mac - Ver dirección MAC\nifconfig\n\n# Windows - Ver dirección MAC\nipconfig /all\n\n# Ver tabla ARP\narp -a\n\nEjemplo de salida ARP:\n192.168.1.1   00:1a:2b:3c:4d:5e\n192.168.1.10  00:2b:3c:4d:5e:6f\n192.168.1.20  00:3c:4d:5e:6f:70\nMuestra las asociaciones IP-MAC en la caché local"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#puntos-clave",
+    "href": "ch1_p2_access_layer.html#puntos-clave",
+    "title": "Capa de Acceso a la Red",
+    "section": "Puntos Clave",
+    "text": "Puntos Clave\n\nLa Capa de Acceso a la Red maneja la transmisión física y el control de acceso al medio compartido\nCombina las funciones de las capas física y de enlace del modelo OSI\nControl de acceso al medio: CSMA/CD (Ethernet) vs CSMA/CA (WiFi)\nDirecciones MAC: 48 bits, únicas por dispositivo (OUI + ID dispositivo)\nSwitches evolucionaron desde hubs, creando dominios de colisión independientes\nDetección de errores mediante CRC y técnicas FEC\nMTU define el tamaño máximo de trama (Ethernet: 1500 bytes)\nARP resuelve la traducción entre direcciones IP y MAC"
+  },
+  {
     "objectID": "ch1_p1_net_introduction.html#qué-es-internet",
     "href": "ch1_p1_net_introduction.html#qué-es-internet",
     "title": "Introducción a las Redes de Ordenadores",
@@ -229,306 +530,5 @@
     "title": "Introducción a las Redes de Ordenadores",
     "section": "Resumen",
     "text": "Resumen\n\nInternet es un sistema distribuido y descentralizado\nEvolución desde 4 hosts (1969) a &gt;100B dispositivos (2025)\nInfraestructura jerárquica: PAN → LAN → MAN → WAN → Internet\nModelos de capas: OSI (teórico) vs TCP/IP (práctico)\nRendimiento: Balance entre latencia y throughput\nAplicaciones críticas: Videojuegos requieren &lt;50ms para competitivo"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#qué-es-la-capa-de-acceso-a-la-red",
-    "href": "ch1_p2_access_layer.html#qué-es-la-capa-de-acceso-a-la-red",
-    "title": "Capa de Acceso a la Red",
-    "section": "¿Qué es la Capa de Acceso a la Red?",
-    "text": "¿Qué es la Capa de Acceso a la Red?\n\nLa Capa de Acceso a la Red se encarga de la transmisión física de datos entre dispositivos directamente conectados en una red local\n\n\n\n¿Qué hace?\n\nManeja los aspectos físicos de la transmisión\nControla el acceso al medio compartido\nSe ejecuta en el host y en el nucleo de la red\nGarantiza transmisión confiable entre nodos adyacentes\n\n\nPosición en los modelos:\n\n\n\n\n\n\nblock-beta\n    columns 1\n    \n    A[\"&lt;b&gt;Capa de Aplicación&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;HTTP, HTTPS, FTP, SMTP&lt;br/&gt;DNS, DHCP, Telnet, SSH\"]\n    \n    B[\"&lt;b&gt;Capa de Transporte&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;TCP, UDP&lt;br/&gt;Control de flujo y errores\"]\n    \n    C[\"&lt;b&gt;Capa de Internet&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;IP, ICMP, ARP&lt;br/&gt;Enrutamiento, Direccionamiento\"]\n    \n    D[\"&lt;b&gt;Capa de Acceso a la Red&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Ethernet, WiFi, PPP&lt;br/&gt;Frames, MAC Address&lt;br/&gt;Control de acceso al medio\"]\n    \n    classDef highlight fill:#ff9999,stroke:#cc0000,stroke-width:4px,color:#000\n    classDef normal fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#000\n    \n    class D highlight\n    class A,B,C normal\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nImportante\n\n\nResponsabilidad principal: Garantizar que los datos puedan transmitirse de manera confiable entre nodos adyacentes en la red"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#ejemplo-comunicación-en-red-local",
-    "href": "ch1_p2_access_layer.html#ejemplo-comunicación-en-red-local",
-    "title": "Capa de Acceso a la Red",
-    "section": "Ejemplo: Comunicación en Red Local",
-    "text": "Ejemplo: Comunicación en Red Local\n\n\n\n\n\n\nsequenceDiagram\n    participant A as Computadora A&lt;br/&gt;(00:1A:2B:3C:4D:5E)\n    participant S as Switch&lt;br/&gt;(Tabla MAC)\n    participant C as Computadora C&lt;br/&gt;(00:3C:4D:5E:6F:70)\n\n    Note over S: Tabla MAC vacía\n\n    Note over A,C: FASE 1: Descubrimiento ARP\n    \n    A-&gt;&gt;S: ARP Request&lt;br/&gt;¿Quién tiene la IP de C?&lt;br/&gt;Destino: Broadcast\n    \n    Note over S: Aprende: Puerto 1 → MAC de A\n    \n    S-&gt;&gt;C: ARP Request (Flooding)\n    \n    C-&gt;&gt;S: ARP Response&lt;br/&gt;Mi MAC es 00:3C:4D:5E:6F:70\n    \n    Note over S: Aprende: Puerto 3 → MAC de C\n    \n    S-&gt;&gt;A: ARP Response (Unicast)\n\n    Note over A,C: FASE 2: Comunicación Directa\n    \n    A-&gt;&gt;S: Datos para C\n    \n    Note over S: Consulta tabla MAC\n    \n    S-&gt;&gt;C: Datos (Solo puerto 3)"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#control-de-acceso-al-medio-mac",
-    "href": "ch1_p2_access_layer.html#control-de-acceso-al-medio-mac",
-    "title": "Capa de Acceso a la Red",
-    "section": "1. Control de Acceso al Medio (MAC)",
-    "text": "1. Control de Acceso al Medio (MAC)\n\nCoordina cómo múltiples dispositivos comparten un medio de transmisión común\n\n\n\nEthernet Half-Duplex: CSMA/CD\nCarrier Sense Multiple Access with Collision Detection\n\nEscuchar el medio antes de transmitir\nSi está libre → transmitir\nSi hay colisión → detectar\nAplicar backoff exponencial\nReintentar transmisión\n\nSolo puede transmitir en una dirección a la vez. En Full-Duplex no necesitaríamos realizar controles.\n\nRedes Inalámbricas: CSMA/CA\n Carrier Sense Multiple Access with Collision Avoidance\n\nEsperar tiempo aleatorio antes de transmitir\nUsar acknowledgments para confirmar recepción\nProtocolo RTS/CTS para problema del nodo oculto\n\nLa detección de colisiones es impráctica en radio"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#direccionamiento-físico",
-    "href": "ch1_p2_access_layer.html#direccionamiento-físico",
-    "title": "Capa de Acceso a la Red",
-    "section": "2. Direccionamiento Físico",
-    "text": "2. Direccionamiento Físico\n\nOpera a nivel de hardware, independiente de protocolos superiores, usando direcciones MAC únicas\n\n\n\n\n\n\n\ngraph LR\n    subgraph \"Dirección MAC: 00:1A:2B:3C:4D:5E (48 bits)\"\n        OUI[\"00:1A:2B&lt;br/&gt;OUI&lt;br/&gt;(Organizationally Unique Identifier)&lt;br/&gt;Asignado por IEEE\"]\n        NIC[\"3C:4D:5E&lt;br/&gt;Identificador del Dispositivo&lt;br/&gt;Asignado por el fabricante\"]\n    end\n    \n    style OUI fill:#e3f2fd,stroke:#1976d2,stroke-width:2px\n    style NIC fill:#fff3e0,stroke:#f57c00,stroke-width:2px\n\n\n\n\n\n\n\n\n\nUnicast\n\nUn único destinatario\nDirección específica del dispositivo\n\n\nBroadcast\n\nTodos los dispositivos\nFF:FF:FF:FF:FF:FF\n\n\nMulticast\n\nGrupo específico\nPrimer bit = 1\n\n\n\n\n\n\n\n\nTip\n\n\nLas direcciones MAC son como el DNI del dispositivo: únicas, estáticas y cada dispositivo tiene una"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#detección-y-corrección-de-errores",
-    "href": "ch1_p2_access_layer.html#detección-y-corrección-de-errores",
-    "title": "Capa de Acceso a la Red",
-    "section": "3. Detección y Corrección de Errores",
-    "text": "3. Detección y Corrección de Errores\n\nGarantiza la integridad de los datos transmitidos a través del medio físico\n\nCódigos de Redundancia Cíclica (CRC)\n\n\nProceso CRC:\n\nGenerar polinomio matemático sobre datos\nAgregar Frame Check Sequence (FCS) al final\nReceptor recalcula el CRC\nComparar con el recibido\nDetectar errores de 1 bit y múltiples bits\n\nChecksums simples:\n\nSuma aritmética de bytes\nMenos robusto pero más rápido\n\n\nForward Error Correction (FEC):\n\nNo solo detecta, también corrige errores\nCódigos Hamming: errores de 1 bit\nReed-Solomon: errores en ráfagas\nEspecialmente importante en medios inalámbricos"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#detección-y-corrección-de-errores-ejemplo",
-    "href": "ch1_p2_access_layer.html#detección-y-corrección-de-errores-ejemplo",
-    "title": "Capa de Acceso a la Red",
-    "section": "3. Detección y Corrección de Errores (Ejemplo)",
-    "text": "3. Detección y Corrección de Errores (Ejemplo)\nIntroducir un mensaje de 4 bits (1011) y os saldrá a le derecha el mensaje codificado\n\n\n\n// Input: 4-bit message\nviewof msg4 = Inputs.text({label: \"Mensaje (4 bits)\", placeholder: \"e.g. 1011\"})\n\n\n\n\n\n\n\n\n\nfunction hamming74_encode(bits4) {\n  if (!/^[01]{4}$/.test(bits4)) return \"\";\n  const [d1, d2, d3, d4] = bits4.split(\"\").map(b =&gt; +b);\n  \n  // parity bits\n  const p1 = d1 ^ d2 ^ d4;\n  const p2 = d1 ^ d3 ^ d4;\n  const p3 = d2 ^ d3 ^ d4;\n  \n  // Codeword positions: p1 p2 d1 p3 d2 d3 d4\n  const code = [p1, p2, d1, p3, d2, d3, d4];\n  return code.join(\"\");\n}\n\nencoded = hamming74_encode(msg4)\nencoded\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAquí podréis meter el mensaje codificado y saber si ha habido cambios en un bit y corregirlos (Hamming).\n\n\n\n// Input: 7-bit codeword\nviewof code7 = Inputs.text({label: \"Codeword (7 bits)\", placeholder: \"e.g. 0110011\"})\n\n\n\n\n\n\n\n\n\nfunction hamming74_decode(code) {\n  if (!/^[01]{7}$/.test(code)) return \"Enter exactly 7 bits\";\n  const bits = code.split(\"\").map(b =&gt; +b);\n  const [p1, p2, d1, p3, d2, d3, d4] = bits;\n\n  // syndrome bits\n  const s1 = p1 ^ d1 ^ d2 ^ d4;\n  const s2 = p2 ^ d1 ^ d3 ^ d4;\n  const s3 = p3 ^ d2 ^ d3 ^ d4;\n  \n  const syndrome = (s3 &lt;&lt; 2) | (s2 &lt;&lt; 1) | s1; // binary → position (1-7)\n\n  let corrected = [...bits];\n  let msg = [d1, d2, d3, d4].join(\"\");\n  \n  if (syndrome === 0) {\n    return `✅ Valid codeword, message = ${msg}`;\n  } else {\n    // correct bit if single error\n    corrected[syndrome - 1] ^= 1; \n    const [cp1, cp2, cd1, cp3, cd2, cd3, cd4] = corrected;\n    const corrected_msg = [cd1, cd2, cd3, cd4].join(\"\");\n    return `❌ Error at position ${syndrome}. Corrected codeword = ${corrected.join(\"\")}, message = ${corrected_msg}`;\n  }\n}\n\nresult = hamming74_decode(code7)\nresult"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#control-de-tamaño",
-    "href": "ch1_p2_access_layer.html#control-de-tamaño",
-    "title": "Capa de Acceso a la Red",
-    "section": "4. Control de Tamaño",
-    "text": "4. Control de Tamaño\n\nManeja las limitaciones de tamaño impuestas por diferentes tecnologías de red\n\nMaximum Transmission Unit (MTU)\n\n\n\nTecnología\nMTU (bytes)\nCaracterísticas\n\n\n\n\nEthernet\n1500\nEstándar más común en LAN\n\n\nToken Ring\n4464\nTecnología legacy\n\n\nFDDI\n4352\nFiber Distributed Data Interface\n\n\nPPP\nVariable (~1500)\nPara compatibilidad con Ethernet\n\n\n\n\n\n\n\n\n\nAdvertencia\n\n\nSi datos &gt; MTU → La Capa de Acceso a la Red descarta automáticamente el paquete\n\n\n\n\nNota: El MTU determina el tamaño máximo de datos que puede transportar una sola trama"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#sincronización-y-temporización",
-    "href": "ch1_p2_access_layer.html#sincronización-y-temporización",
-    "title": "Capa de Acceso a la Red",
-    "section": "5. Sincronización y Temporización",
-    "text": "5. Sincronización y Temporización\n\nCoordina el timing entre dispositivos para asegurar la correcta interpretación de señales digitales\n\nNiveles de sincronización\n\n\nTipos de sincronización:\n\nSincronización de bit: Determina límites temporales de cada bit\nSincronización de trama: Identifica inicio y fin de cada trama\nSincronización de símbolo: Para modulaciones complejas (QAM)\n\n\n¿Por qué es crítica?\n\nEn redes de alta velocidad, pequeñas diferencias causan errores\nEstablece marcos de tiempo comunes\nPermite interpretación correcta de señales\nEsencial para comunicación digital confiable\n\n\n\n\n\n\n\n\ngraph LR\n    B[Bits] --&gt; F[Tramas]\n    F --&gt; S[Símbolos]\n    S --&gt; D[Datos correctos]\n    \n    style B fill:#e8f5e8\n    style F fill:#fff3e0\n    style S fill:#e3f2fd\n    style D fill:#f3e5f5"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#gestión-de-topología",
-    "href": "ch1_p2_access_layer.html#gestión-de-topología",
-    "title": "Capa de Acceso a la Red",
-    "section": "6. Gestión de Topología",
-    "text": "6. Gestión de Topología\n\nDescubre y mantiene información sobre la estructura física de la red\n\nComponentes principales\n\n\nMantenimiento de enlaces:\n\nKeepalive messages\nDetección proactiva de fallos\nAntes de afectar tráfico de usuarios\n\nProtocolos de detección:\n\nCDP (Cisco Discovery Protocol)\nLLDP (Link Layer Discovery Protocol)\nDispositivos se identifican mutuamente\nComparten información de capacidades\n\n\nPrevención de bucles:\n\nSpanning Tree Protocol (STP)\nPreviene bucles en topologías redundantes\nEvita tormentas de broadcast\n\nAdaptación automática:\n\nDetecta cambios en la topología\nResponde a fallos de enlaces\nIncorpora nuevos dispositivos"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#control-de-calidad-de-servicio-qos",
-    "href": "ch1_p2_access_layer.html#control-de-calidad-de-servicio-qos",
-    "title": "Capa de Acceso a la Red",
-    "section": "7. Control de Calidad de Servicio (QoS)",
-    "text": "7. Control de Calidad de Servicio (QoS)\n\nPrioriza diferentes tipos de tráfico según su importancia y requisitos de rendimiento\n\nMecanismos de gestión\n\n\nGestión de buffers:\n\nWeighted Fair Queuing: Recursos proporcionales según importancia\nPriority Queuing: Tráfico crítico tiene precedencia\nRandom Early Detection: Descarta proactivamente antes de saturación\n\n\nAplicaciones beneficiadas:\n\n🎥 Video en tiempo real\n📞 VoIP (Voz sobre IP)\n🎮 Gaming online\n💼 Aplicaciones críticas de negocio\n\nFundamental para aplicaciones sensibles al tiempo\n\n\n\n\n\n\n\nTip\n\n\nQoS garantiza que aplicaciones críticas reciban el ancho de banda necesario incluso en momentos de congestión"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#switches-evolución-y-tipos",
-    "href": "ch1_p2_access_layer.html#switches-evolución-y-tipos",
-    "title": "Capa de Acceso a la Red",
-    "section": "Switches: Evolución y Tipos",
-    "text": "Switches: Evolución y Tipos\n\n\nSwitches No Gestionados\n\nPlug-and-play\nAprendizaje MAC automático\nRedes pequeñas/domésticas\nSin configuración\n\n\nSwitches Gestionados\n\nVLANs y segmentación\nQoS y priorización\nSNMP para monitorización\nSeguridad 802.1X"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#dominios-de-colisión-switch-vs-hub",
-    "href": "ch1_p2_access_layer.html#dominios-de-colisión-switch-vs-hub",
-    "title": "Capa de Acceso a la Red",
-    "section": "Dominios de Colisión: Switch vs Hub",
-    "text": "Dominios de Colisión: Switch vs Hub\n\n\n\n\n\ngraph TB\n    subgraph \"HUB - Medio Compartido\"\n        H1[Hub]\n        SHARED((Medio&lt;br/&gt;Compartido))\n        PC1[PC1] --- SHARED\n        PC2[PC2] --- SHARED\n        PC3[PC3] --- SHARED\n        PC4[PC4] --- SHARED\n        SHARED --- H1\n    end\n    \n    subgraph \"SWITCH - Dominios Separados\"\n        S1[Switch]\n        PC5[PC5] --- S1\n        PC6[PC6] --- S1\n        PC7[PC7] --- S1\n        PC8[PC8] --- S1\n    end\n    \n    classDef collision fill:#ffcdd2,stroke:#d32f2f\n    classDef nocollision fill:#c8e6c9,stroke:#388e3c\n    classDef shared fill:#fff3e0,stroke:#f57c00\n    \n    class H1,PC1,PC2,PC3,PC4 collision\n    class S1,PC5,PC6,PC7,PC8 nocollision\n    class SHARED shared\n\n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nLos switches crean dominios de colisión separados para cada puerto, evitando colisiones entre dispositivos en diferentes puertos"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#otros-dispositivos-de-acceso",
-    "href": "ch1_p2_access_layer.html#otros-dispositivos-de-acceso",
-    "title": "Capa de Acceso a la Red",
-    "section": "Otros Dispositivos de Acceso",
-    "text": "Otros Dispositivos de Acceso\n\n\n\n\n\n\n\n\n\nDispositivo\nFunción\nCaracterísticas\nAplicación\n\n\n\n\nAccess Points\nWiFi ↔︎ Cableado\nCSMA/CA, Beamforming\nRedes inalámbricas\n\n\nRepetidores\nExtensión alcance\nRegeneración señal\nSuperar distancia\n\n\nMedia Converters\nCambio de medio\nFibra ↔︎ Cobre\nMigración gradual\n\n\nTransceivers\nModular\nSFP/SFP+/QSFP\nFlexibilidad\n\n\n\n\n\n\n\n\n\ngraph LR\n    PC[\"💻 PC\"]\n    AP[\"📡 Access Point\"]\n    SW[\"🔌 Switch\"]\n    MC1[\"🔄 Media Converter\"]\n    FO[\"🌟 Fibra Óptica\"]\n    MC2[\"🔄 Media Converter\"]\n    RT[\"🌐 Router\"]\n    \n    PC &lt;-.-&gt;|\"WiFi\"| AP\n    AP &lt;--&gt;|\"Ethernet\"| SW\n    SW &lt;--&gt;|\"Cobre\"| MC1\n    MC1 &lt;--&gt;|\"Fibra\"| FO\n    FO &lt;--&gt;|\"Fibra\"| MC2\n    MC2 &lt;--&gt;|\"Ethernet\"| RT"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#ethernet-ieee-802.3",
-    "href": "ch1_p2_access_layer.html#ethernet-ieee-802.3",
-    "title": "Capa de Acceso a la Red",
-    "section": "Ethernet (IEEE 802.3)",
-    "text": "Ethernet (IEEE 802.3)\nEstructura de Trama Ethernet\n\n\n\n\n\n\npacket-beta\n    0-31: \"Preámbulo\"\n    32-47: \"Preámbulo\"\n    48-55: \"Preámbulo\"\n    56-63: \"SFD\"\n    64-111: \"MAC Destino (6 bytes)\"\n    112-159: \"MAC Origen (6 bytes)\"\n    160-175: \"Tipo/Longitud\"\n    176-191: \"Datos\"\n    192-207: \"Datos\"\n    208-223: \"Datos (Payload)\"\n    224-239: \"...\"\n    240-255: \"Datos\"\n    256-287: \"FCS (4 bytes)\"\n\n\n\n\n\n\n\n\n\nCampos principales:\n\nPreámbulo: Sincronización\nMACs: Identificación única\nTipo: Protocolo superior (IPv4: 0x0800)\nPayload: Datos + padding si &lt; 46 bytes\n\n\nEvolución de velocidades:\n\n10Base-T: 10 Mbps\nFast Ethernet: 100 Mbps\nGigabit: 1 Gbps\n10G/40G/100G Ethernet"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#wifi-ieee-802.11",
-    "href": "ch1_p2_access_layer.html#wifi-ieee-802.11",
-    "title": "Capa de Acceso a la Red",
-    "section": "WiFi (IEEE 802.11)",
-    "text": "WiFi (IEEE 802.11)\nTrama WiFi: Mayor complejidad\n\n\n\n\n\n\npacket-beta\n    0-15: \"Frame Control\"\n    16-31: \"Duration/ID\"\n    32-79: \"Address 1 (Receptor)\"\n    80-127: \"Address 2 (Transmisor)\"\n    128-175: \"Address 3 (BSSID/AP)\"\n    176-191: \"Sequence Control\"\n    192-239: \"Address 4 (opcional)\"\n    240-255: \"QoS Control (opcional)\"\n    256-287: \"Datos ...\"\n    288-303: \"Datos ...\"\n    304-319: \"FCS (4 bytes)\"\n\n\n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nLa trama es considerablemente más compleja debido a que estamos en un medio compartido y puede haber repetidores, así como comunicaciones directas."
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#evolución-de-estándares-wifi",
-    "href": "ch1_p2_access_layer.html#evolución-de-estándares-wifi",
-    "title": "Capa de Acceso a la Red",
-    "section": "Evolución de Estándares WiFi",
-    "text": "Evolución de Estándares WiFi\n\n\n\nGeneración\nEstándar\nVelocidad Max\nBandas\nAño\n\n\n\n\nWiFi 4\n802.11n\n600 Mbps\n2.4/5 GHz\n2009\n\n\nWiFi 5\n802.11ac\n3.5 Gbps\n5 GHz\n2014\n\n\nWiFi 6\n802.11ax\n9.6 Gbps\n2.4/5 GHz\n2019\n\n\nWiFi 6E\n802.11ax\n9.6 Gbps\n+ 6 GHz\n2020\n\n\nWiFi 7\n802.11be\n46 Gbps\n2.4/5/6 GHz\n2024\n\n\n\n\n\nMejoras clave:\n\nMIMO (múltiples antenas)\nOFDMA (mejor uso espectro)\nBeamforming direccional (dirigir hacia un punto en concreto)\n\n\nTrade-offs de bandas:\n\n2.4 GHz: Mayor alcance, menor velocidad\n5 GHz: Mayor velocidad, menor alcance\n6 GHz: Máxima velocidad, mínimo alcance"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#ppp-y-frame-relay",
-    "href": "ch1_p2_access_layer.html#ppp-y-frame-relay",
-    "title": "Capa de Acceso a la Red",
-    "section": "PPP y Frame Relay",
-    "text": "PPP y Frame Relay\n\n\nPoint-to-Point Protocol (PPP)\nCaracterísticas:\n\nEnlaces punto a punto\nDetección de errores\nAutenticación (PAP/CHAP)\nConfiguración IP automática\n\nUso actual:\n\nEnlaces de respaldo\nConexiones satelitales\nAlgunas VPNs\n\n\nFrame Relay\nCaracterísticas:\n\nWAN con circuitos virtuales\nConmutación de tramas\nControl de congestión\n\n\nEstado:\n\nReemplazado por MPLS\nLegacy en empresas antiguas\nConceptos aún relevantes"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#arp-address-resolution-protocol",
-    "href": "ch1_p2_access_layer.html#arp-address-resolution-protocol",
-    "title": "Capa de Acceso a la Red",
-    "section": "ARP: Address Resolution Protocol",
-    "text": "ARP: Address Resolution Protocol\nTraducción IP → MAC\n\n\n\n\n\n\nsequenceDiagram\n    participant A as Host A&lt;br/&gt;IP: 192.168.1.10&lt;br/&gt;MAC: AA:BB:CC:DD:EE:FF\n    participant N as Red Local&lt;br/&gt;(Broadcast)\n    participant B as Host B&lt;br/&gt;IP: 192.168.1.20&lt;br/&gt;MAC: 11:22:33:44:55:66\n    \n    Note over A: Necesito MAC de 192.168.1.20\n    \n    A-&gt;&gt;N: ARP Request (Broadcast)&lt;br/&gt;¿Quién tiene 192.168.1.20?\n    N-&gt;&gt;B: ARP Request\n    \n    Note over B: ¡Esa es mi IP!\n    \n    B-&gt;&gt;A: ARP Reply (Unicast)&lt;br/&gt;192.168.1.20 = 11:22:33:44:55:66\n    \n    Note over A: Guardo en caché ARP\n\n\n\n\n\n\n\n\n\nProceso ARP:\n\nBroadcast preguntando por IP\nDispositivo con esa IP responde\nSe guarda en caché local\nTemporizador elimina entradas viejas\n\n\nTipos de ARP:\n\nDinámico: Aprendizaje automático\nEstático: Entradas manuales permanentes\nProxy ARP: Router responde por otros\nGratuitous: Anuncio proactivo"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#límites-físicos-y-distancias",
-    "href": "ch1_p2_access_layer.html#límites-físicos-y-distancias",
-    "title": "Capa de Acceso a la Red",
-    "section": "Límites Físicos y Distancias",
-    "text": "Límites Físicos y Distancias\nCable de Cobre (UTP/STP)\n\n\nCausas de la limitación:\n\nAtenuación de señal\nInterferencia electromagnética\nCrosstalk entre pares\nDegradación con distancia\n\n\nSoluciones:\n\nSwitches cada 100m\nRepetidores/Extensores\nFibra óptica (kilómetros)\nEnlaces inalámbricos\n\n\nComparación de Medios\n\n\n\nMedio\nDistancia Max\nVelocidad\nInterferencia\n\n\n\n\nUTP Cat5e\n100m\n1 Gbps\nAlta\n\n\nUTP Cat6a\n100m\n10 Gbps\nMedia\n\n\nFibra MM\n2 km\n10 Gbps\nNula\n\n\nFibra SM\n100+ km\n100 Gbps\nNula"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#ejemplo-práctico-verificación-de-configuración",
-    "href": "ch1_p2_access_layer.html#ejemplo-práctico-verificación-de-configuración",
-    "title": "Capa de Acceso a la Red",
-    "section": "Ejemplo Práctico: Verificación de Configuración",
-    "text": "Ejemplo Práctico: Verificación de Configuración\nComandos útiles para verificar la capa de acceso\n\n\nVer información de red:\n# Linux/Mac - Ver dirección MAC\nifconfig\n\n# Windows - Ver dirección MAC\nipconfig /all\n\n# Ver tabla ARP\narp -a\n\nEjemplo de salida ARP:\n192.168.1.1   00:1a:2b:3c:4d:5e\n192.168.1.10  00:2b:3c:4d:5e:6f\n192.168.1.20  00:3c:4d:5e:6f:70\nMuestra las asociaciones IP-MAC en la caché local"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#puntos-clave",
-    "href": "ch1_p2_access_layer.html#puntos-clave",
-    "title": "Capa de Acceso a la Red",
-    "section": "Puntos Clave",
-    "text": "Puntos Clave\n\nLa Capa de Acceso a la Red maneja la transmisión física y el control de acceso al medio compartido\nCombina las funciones de las capas física y de enlace del modelo OSI\nControl de acceso al medio: CSMA/CD (Ethernet) vs CSMA/CA (WiFi)\nDirecciones MAC: 48 bits, únicas por dispositivo (OUI + ID dispositivo)\nSwitches evolucionaron desde hubs, creando dominios de colisión independientes\nDetección de errores mediante CRC y técnicas FEC\nMTU define el tamaño máximo de trama (Ethernet: 1500 bytes)\nARP resuelve la traducción entre direcciones IP y MAC"
-  },
-  {
-    "objectID": "sub_introduction.html#prof.-rubén-rodríguez",
-    "href": "sub_introduction.html#prof.-rubén-rodríguez",
-    "title": "Presentación de Juegos en Red",
-    "section": "Prof. Rubén Rodríguez",
-    "text": "Prof. Rubén Rodríguez\nRubén Rodríguez Fernández\n\nE-mail: ruben.rodriguez@urjc.es. (Escribir por aula virtual).\nDespacho: 131, Ed. Departamental II (Campus de Móstoles).\nTutorias: Concertar por e-mail (aula virtual)."
-  },
-  {
-    "objectID": "sub_introduction.html#prof.-natalia-madrueño",
-    "href": "sub_introduction.html#prof.-natalia-madrueño",
-    "title": "Presentación de Juegos en Red",
-    "section": "Prof. Natalia Madrueño",
-    "text": "Prof. Natalia Madrueño\nNatalia Madrueño Sierro\n\nEmail: natalia.madrueno@urjc.es (Escribir por aula virtual).\nDespacho: 044, Ed. Departamental II (Campus de Móstoles).\nTutorias: Concertar por e-mail (aula virtual)."
-  },
-  {
-    "objectID": "sub_introduction.html#aplicaciones-en-red",
-    "href": "sub_introduction.html#aplicaciones-en-red",
-    "title": "Presentación de Juegos en Red",
-    "section": "Aplicaciones en red",
-    "text": "Aplicaciones en red\nLa gran mayoría de las aplicaciones actuales son aplicaciones basadas en red:\n\nAula Virtual\nGmail\nTwitter\nFacebook\nLa web de la Liga de Fútbol Profesional (LFP)\n…"
-  },
-  {
-    "objectID": "sub_introduction.html#muchos-juegos-también",
-    "href": "sub_introduction.html#muchos-juegos-también",
-    "title": "Presentación de Juegos en Red",
-    "section": "Muchos juegos también",
-    "text": "Muchos juegos también\n\nPlayerUnknown’s Battlegrounds (PUBG) / Fortnite / Destiny 2 / Overwatch / Quake Champions / Counter-Strike: Global Offensive (CS:GO) / League of Legends (LoL) / DOTA 2\nWorld of Warcraft\nFIFA / PES\nMario Kart / Project Cars / Rocket League\nJuegos de Facebook\n…"
-  },
-  {
-    "objectID": "sub_introduction.html#tema-1-introducción-a-los-juegos-en-red-y-a-las-redes-de-comunicaciones",
-    "href": "sub_introduction.html#tema-1-introducción-a-los-juegos-en-red-y-a-las-redes-de-comunicaciones",
-    "title": "Presentación de Juegos en Red",
-    "section": "Tema 1: Introducción a los juegos en red y a las redes de comunicaciones",
-    "text": "Tema 1: Introducción a los juegos en red y a las redes de comunicaciones\nSe presentan los retos de las aplicaciones en red y se introducen los principales conceptos necesarios para entender su funcionamiento:\n\nQué son y como funcionan las aplicaciones en red.\nProblemas propios de aplicaciones en red.\nConceptos fundamentales de comunicación en red entre aplicaciones.\nConsideraciones al desarrollar juegos en red."
-  },
-  {
-    "objectID": "sub_introduction.html#tema-2-desarrollo-en-el-lado-del-cliente.",
-    "href": "sub_introduction.html#tema-2-desarrollo-en-el-lado-del-cliente.",
-    "title": "Presentación de Juegos en Red",
-    "section": "Tema 2: Desarrollo en el lado del cliente.",
-    "text": "Tema 2: Desarrollo en el lado del cliente.\nSe estudia el lenguaje JavaScript para construir aplicaciones en el lado del cliente (browser). API REST.\n\nDesarrollo web en JavaScript, HTML y CSS\nUso de las API REST"
-  },
-  {
-    "objectID": "sub_introduction.html#tema-3-desarrollo-de-juegos-con-tecnología-web.",
-    "href": "sub_introduction.html#tema-3-desarrollo-de-juegos-con-tecnología-web.",
-    "title": "Presentación de Juegos en Red",
-    "section": "Tema 3: Desarrollo de juegos con tecnología web.",
-    "text": "Tema 3: Desarrollo de juegos con tecnología web.\nSe presenta el framework JavaScript Phaser para desarrollo de juegos en el cliente:\n\nPhaser 3 framework: https://phaser.io.\nAmplia galería de ejemplos: https://phaser.io/examples/"
-  },
-  {
-    "objectID": "sub_introduction.html#tema-4-desarrollo-en-el-lado-del-servidor.",
-    "href": "sub_introduction.html#tema-4-desarrollo-en-el-lado-del-servidor.",
-    "title": "Presentación de Juegos en Red",
-    "section": "Tema 4: Desarrollo en el lado del servidor.",
-    "text": "Tema 4: Desarrollo en el lado del servidor.\nSe estudia el framework express.js con JavaScript para desarrollar el lado del servidor. Implementación de API REST:\n\nIntroducción a express.js\nDesarrollo de comunicación cliente servidor a través de API REST."
-  },
-  {
-    "objectID": "sub_introduction.html#tema-5-comunicación-asíncrona-cliente---servidor",
-    "href": "sub_introduction.html#tema-5-comunicación-asíncrona-cliente---servidor",
-    "title": "Presentación de Juegos en Red",
-    "section": "Tema 5: Comunicación asíncrona cliente - servidor",
-    "text": "Tema 5: Comunicación asíncrona cliente - servidor\nSe estudia el uso de WebSockets para comunicación asíncrona entre nodos:\n\nIntroducción a la comunicación asíncrona con WebSockets.\nCreación de protocolos de mensajes.\nDesarrollo de comunicación asíncrona entre cliente y servidor con WebSockets."
-  },
-  {
-    "objectID": "sub_introduction.html#material-teórico",
-    "href": "sub_introduction.html#material-teórico",
-    "title": "Presentación de Juegos en Red",
-    "section": "Material teórico",
-    "text": "Material teórico\n\nEl material se irá publicando en el Aula Virtual a medida que avance el cuatrimestre.\nSe publicará como asignatura en abierto, todos los materiales son públicos.\nContará con diapositivas, apuntes, problemas y una guía de estudio."
-  },
-  {
-    "objectID": "sub_introduction.html#enunciado-de-la-práctica",
-    "href": "sub_introduction.html#enunciado-de-la-práctica",
-    "title": "Presentación de Juegos en Red",
-    "section": "Enunciado de la práctica",
-    "text": "Enunciado de la práctica\n\nLos enunciados de las prácticas se colgarán en el aula virtual."
-  },
-  {
-    "objectID": "sub_introduction.html#pruebas-de-evaluación",
-    "href": "sub_introduction.html#pruebas-de-evaluación",
-    "title": "Presentación de Juegos en Red",
-    "section": "Pruebas de evaluación:",
-    "text": "Pruebas de evaluación:\n\n40% Pruebas teórico-prácticas\n\nNota mínima: cada prueba &gt;=5\n\n40% Práctica\n\nNota mínima: cada prueba &gt;=5\n\n15% Resolución de problemas y casos prácticos\n\nNo tiene nota mínima\n\n5% Participación en clase y otras actividades\n\nNo tiene nota mínima\n\n\nHay que obtener al menos un 5 de media"
-  },
-  {
-    "objectID": "sub_introduction.html#pruebas-teórico-prácticas-40",
-    "href": "sub_introduction.html#pruebas-teórico-prácticas-40",
-    "title": "Presentación de Juegos en Red",
-    "section": "Pruebas teórico-prácticas (40 %)",
-    "text": "Pruebas teórico-prácticas (40 %)\n\n3 exámenes:\n\nExamen 1 (Tema 1): 35%.\nExamen 2 (Tema 2 y 3): 32.5%.\nExamen 3 (Tema 4): 32.5%.\n\nEjercicios online tipo test / preguntas cortas / ejercicios\nNota mínima en cada prueba 5\nRevaluable en convocatoria extraordinaria"
-  },
-  {
-    "objectID": "sub_introduction.html#práctica-40",
-    "href": "sub_introduction.html#práctica-40",
-    "title": "Presentación de Juegos en Red",
-    "section": "Práctica (40 %)",
-    "text": "Práctica (40 %)\n\nSe realiza en grupos de 4 personas\nCada alumno será evaluado individualmente\nSe desarrolla en parte en las sesiones prácticas\nConsta de 4 entregas (fases) obligatorias coonderaciones 10%, 35%, 25%, 30%.\nNota mínima en cada fase: 5 puntos\nCada fase es revaluable en convocatoria extraordinaria"
-  },
-  {
-    "objectID": "sub_introduction.html#resolución-de-problemas-15",
-    "href": "sub_introduction.html#resolución-de-problemas-15",
-    "title": "Presentación de Juegos en Red",
-    "section": "Resolución de problemas (15 %)",
-    "text": "Resolución de problemas (15 %)\n\nConsiste en una fase adicional al juego desarrollado (fase 5).\nConsistirá en una mejora sobre la práctica entregada y la publicación de la misma en plataformas online.\nNota mínima de 3.\nRevaluable en convocatoria extraordinaria."
-  },
-  {
-    "objectID": "sub_introduction.html#participación-en-clase-5",
-    "href": "sub_introduction.html#participación-en-clase-5",
-    "title": "Presentación de Juegos en Red",
-    "section": "Participación en clase (5 %)",
-    "text": "Participación en clase (5 %)\n\nEs opcional. No tiene nota mínima.\nConsiste en una serie de actividades que se irán realizando a lo largo del cuatrimestre.\nTambién se podrán obtener proponiendo mejoras o correcciones a los apuntes y diapositivas de la asignatura.\nNo es revaluable en convocatoria extraordinaria"
-  },
-  {
-    "objectID": "sub_introduction.html#dispensa-académica",
-    "href": "sub_introduction.html#dispensa-académica",
-    "title": "Presentación de Juegos en Red",
-    "section": "Dispensa académica",
-    "text": "Dispensa académica\nUn alumno con dispensa académica debe realizar los exámenes teóricos-prácticos.\nEstá obligado a hacer las 4 entregas presenciales de la parte práctica ya que son como exámenes.\nLas fechas de las pruebas serán anunciadas con anterioridad."
-  },
-  {
-    "objectID": "sub_introduction.html#no-presentado",
-    "href": "sub_introduction.html#no-presentado",
-    "title": "Presentación de Juegos en Red",
-    "section": "No presentado",
-    "text": "No presentado\nUn alumno obtendrá la calificación de no presentado únicamente si no se presenta a ninguna prueba evaluable (ya sea de teoría o práctica)."
-  },
-  {
-    "objectID": "sub_introduction.html#internet",
-    "href": "sub_introduction.html#internet",
-    "title": "Presentación de Juegos en Red",
-    "section": "Internet",
-    "text": "Internet\n\nPáginas oficiales de los estándares y tecnologías\nTutoriales, ejemplos y blogs realizados por la comunidad\nAplicaciones web de código abierto\n… y todo lo que Google encuentre :)"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Juegos en Red",
-    "section": "",
-    "text": "Introducción a la asignatura\n\n\n\n\n\nIntroducción a las redes de computadores\nCapa de acceso a la red"
-  },
-  {
-    "objectID": "index.html#introducción",
-    "href": "index.html#introducción",
-    "title": "Juegos en Red",
-    "section": "",
-    "text": "Introducción a la asignatura"
-  },
-  {
-    "objectID": "index.html#redes-de-computadores",
-    "href": "index.html#redes-de-computadores",
-    "title": "Juegos en Red",
-    "section": "",
-    "text": "Introducción a las redes de computadores\nCapa de acceso a la red"
   }
 ]
