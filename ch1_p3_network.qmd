@@ -4,6 +4,8 @@ subtitle: "Comunicación end-to-end en Internet"
 author: "Rubén Rodríguez Fernández (&#64;rrunix)"
 date: "22/09/2025"
 css: ojs_interactive.css
+aliases:
+  - ch1_p3.html
 mermaid:
   theme: default
   themeVariables:
