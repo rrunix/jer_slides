@@ -1,0 +1,1012 @@
+---
+title: "Capa de Aplicación"
+subtitle: "Protocolos y arquitecturas para la comunicación entre procesos"
+author: "Rubén Rodríguez Fernández (&#64;rrunix)"
+date: "23/09/2025"
+css: ojs_interactive.css
+mermaid:
+  theme: default
+  themeVariables:
+    background: "#ffffff"
+---
+
+# Introducción
+
+## ¿Qué es la Capa de Aplicación?
+
+> La capa de aplicación define los **protocolos que utilizarán las aplicaciones para intercambiar datos**
+
+::: {.columns}
+::: {.column width="50%"}
+**¿Qué hace?**
+
+- Define protocolos para intercambio de datos
+- Se centra en comunicación entre procesos
+- Permite crear protocolos propios
+- Opera sobre la capa de transporte
+:::
+
+::: {.column width="50%"}
+**Posición en el modelo TCP/IP:**
+
+::: {style="width: 12vw; text-align: center; margin: 0 auto;"}
+```{mermaid}
+block-beta
+    columns 1
+    
+    A["<b>Capa de Aplicación</b><br/><br/>HTTP, HTTPS, FTP, SMTP<br/>DNS, DHCP, SSH, IMAP, POP"]
+    
+    B["<b>Capa de Transporte</b><br/><br/>TCP, UDP<br/>Control de flujo y errores"]
+    
+    C["<b>Capa de Internet</b><br/><br/>IP, ICMP, ARP<br/>Enrutamiento, Direccionamiento"]
+    
+    D["<b>Capa de Acceso a la Red</b><br/><br/>Ethernet, WiFi, PPP<br/>Frames, MAC Address"]
+    
+    classDef highlight fill:#ff9999,stroke:#cc0000,stroke-width:4px,color:#000
+    classDef normal fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#000
+    
+    class A highlight
+    class B,C,D normal
+```
+:::
+:::
+:::
+
+::: {.callout-important}
+**Concepto clave**: Podemos crear nuestros propios protocolos que se ejecuten a nivel de capa de aplicación
+:::
+
+## Ejemplo: Protocolo Echo
+
+### Servidor Echo (JavaScript)
+
+```javascript
+const net = require('net');
+
+function echoServer() {
+    const server = net.createServer();
+    
+    server.on('connection', (socket) => {
+        const clientAddress = `${socket.remoteAddress}:${socket.remotePort}`;
+        console.log(`Client connected: ${clientAddress}`);
+        handleClient(socket, clientAddress);
+    });
+    
+    server.listen(8888, () => {
+        console.log('Echo server listening on localhost:8888');
+    });
+}
+
+function handleClient(socket, clientAddress) {
+    socket.on('data', (data) => {
+        const message = data.toString('utf-8').trim();
+        if (message.toLowerCase() === 'quit') {
+            socket.end();
+            return;
+        }
+        socket.write(`Echo: ${message}`);
+    });
+}
+```
+
+## Ejemplo: Cliente Echo
+
+### Cliente Echo (Python)
+
+```python
+import socket
+
+def echo_client():
+    """Interactive echo client"""
+    
+    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    client_socket.connect(('localhost', 8888))
+    
+    while True:
+        message = input("Enter message: ")
+        
+        if message.lower() == 'quit':
+            client_socket.send(message.encode('utf-8'))
+            break
+        
+        client_socket.send(message.encode('utf-8'))
+        response = client_socket.recv(1024).decode('utf-8')
+        print(f"Server response: {response}")
+    
+    client_socket.close()
+```
+
+::: {.callout-tip}
+La comunicación puede ser entre procesos en diferentes máquinas e independiente del lenguaje de programación
+:::
+
+## Conceptos Clave Introducidos
+
+::: {.incremental}
+1. **Protocolos de capa de aplicación**: Definen cómo las aplicaciones intercambian datos
+2. **Arquitectura de aplicaciones en red**: Cliente-servidor, P2P, híbrida
+3. **Sockets**: Interfaz entre capa de aplicación y capa de transporte
+:::
+
+# Sockets
+
+## ¿Qué son los Sockets?
+
+> Los sockets son la **interfaz de programación** que permite a las aplicaciones comunicarse con la capa de transporte
+
+::: {.columns}
+::: {.column width="50%"}
+**Características:**
+
+- Punto de conexión bidireccional
+- Abstracción de detalles de bajo nivel
+- API introducida en BSD4.1 UNIX (1981)
+- Basada en paradigma cliente/servidor
+:::
+
+::: {.column width="50%"}
+**Identificación de procesos:**
+
+Para identificar un proceso necesitamos:
+- **IP del host**: Dirección única (32 bits IPv4)
+- **Número de puerto**: Asociado al proceso
+
+Ejemplos de puertos:
+- HTTP: 80
+- HTTPS: 443
+- DNS: 53
+:::
+:::
+
+## Sockets TCP
+
+### Características principales
+
+::: {.columns}
+::: {.column width="50%"}
+**Propiedades:**
+
+- Orientado a conexión
+- Confiabilidad garantizada
+- Control de flujo
+- Control de congestión
+- Full-duplex
+:::
+
+::: {.column width="50%"}
+**Proceso:**
+
+1. Establecer conexión
+2. Intercambiar datos
+3. Cerrar conexión
+
+*Requiere conexión explícita antes del intercambio*
+:::
+:::
+
+## Creación de Servidor TCP
+
+### Paso 1: Crear y escuchar
+
+```javascript
+const net = require('net');
+
+// Crear servidor TCP
+const server = net.createServer();
+
+// Configurar el servidor para escuchar en puerto 8888
+server.listen(8888, 'localhost', () => {
+    console.log('Servidor TCP escuchando en localhost:8888');
+});
+```
+
+### Paso 2: Manejar conexiones
+
+```javascript
+// Manejar nuevas conexiones
+server.on('connection', (socket) => {
+    console.log('Cliente conectado:', socket.remoteAddress);
+    
+    // Manejar datos recibidos
+    socket.on('data', (data) => {
+        // Procesar datos
+    });
+    
+    // Manejar cierre de conexión
+    socket.on('close', () => {
+        console.log('Cliente desconectado');
+    });
+});
+```
+
+## Cliente TCP
+
+### Establecer conexión y comunicar
+
+```javascript
+const net = require('net');
+
+// Crear socket TCP
+const socket = new net.Socket();
+
+// Conectar al servidor
+socket.connect(8888, 'localhost', () => {
+    console.log('Conectado al servidor TCP');
+});
+
+// Enviar datos
+socket.write('Hola servidor');
+
+// Recibir respuesta
+socket.on('data', (data) => {
+    console.log('Respuesta:', data.toString());
+});
+
+// Cerrar conexión
+socket.close();
+```
+
+## Sockets UDP
+
+### Características principales
+
+::: {.columns}
+::: {.column width="50%"}
+**Propiedades:**
+
+- Sin conexión
+- Mejor esfuerzo
+- Baja latencia
+- Simplicidad
+- Broadcast/Multicast nativo
+:::
+
+::: {.column width="50%"}
+**Ventajas:**
+
+- Menor overhead que TCP
+- Ideal para tiempo real
+- No requiere establecer conexión
+
+**Desventajas:**
+
+- No garantiza entrega
+- No garantiza orden
+:::
+:::
+
+## Servidor y Cliente UDP
+
+### Servidor UDP
+
+```javascript
+const dgram = require('dgram');
+const server = dgram.createSocket('udp4');
+
+server.bind(8888, 'localhost', () => {
+    console.log('Servidor UDP escuchando en localhost:8888');
+});
+
+server.on('message', (msg, rinfo) => {
+    console.log(`Mensaje de ${rinfo.address}:${rinfo.port}`);
+    // Responder al cliente
+    server.send('Respuesta', rinfo.port, rinfo.address);
+});
+```
+
+### Cliente UDP
+
+```javascript
+const dgram = require('dgram');
+const client = dgram.createSocket('udp4');
+
+client.send('Hola servidor UDP', 8888, 'localhost', (err) => {
+    if (err) throw err;
+    console.log('Mensaje enviado');
+});
+
+client.on('message', (msg, rinfo) => {
+    console.log('Respuesta recibida:', msg.toString());
+});
+```
+
+## Servicios Requeridos por Aplicaciones
+
+### Requisitos de las aplicaciones de red
+
+| Aplicación | Confiabilidad | Temporización | Ancho de Banda | Seguridad | Protocolo |
+|------------|---------------|---------------|----------------|-----------|-----------|
+| **Transferencia archivos** | Sí | No crítica | Elástica | Según contenido | TCP |
+| **Correo electrónico** | Sí | No crítica | Elástica | Sí | TCP |
+| **Navegación web** | Sí | Moderada | Elástica | Sí (HTTPS) | UDP (HTTP/3) / TCP |
+| **Streaming video** | Tolerante | Crítica | Mínima garantizada | Según contenido | UDP/TCP |
+| **Juegos tiempo real** | Tolerante | Muy crítica | Moderada | Sí | UDP |
+| **Videoconferencia** | Tolerante | Crítica | Mínima garantizada | Sí | UDP/TCP |
+
+::: {.callout-tip}
+HTTP/3 utiliza QUIC sobre UDP, añadiendo confiabilidad en la capa de aplicación
+:::
+
+# Arquitecturas de Aplicaciones Distribuidas
+
+## Tipos de Arquitecturas
+
+> Las arquitecturas indican **cómo se conectan los nodos** y **cuál es el rol de cada uno**
+
+::: {.columns}
+::: {.column width="33%"}
+### Cliente-Servidor
+
+- Servidor siempre activo
+- IP fija conocida
+- Clientes no se comunican entre sí
+- Centralización de recursos
+:::
+
+::: {.column width="33%"}
+### Peer-to-Peer
+
+- Nodos se conectan entre sí
+- Sin servidor central
+- Funcionalidad distribuida
+- Ejemplo: BitTorrent
+:::
+
+::: {.column width="33%"}
+### Híbrida
+
+- Mezcla de ambas
+- Autoridades centrales
+- Funcionalidades distribuidas
+- Más común que P2P puro
+:::
+:::
+
+## Arquitectura Cliente-Servidor
+
+### Características fundamentales
+
+::: {.columns}
+::: {.column width="50%"}
+**Modelo de funcionamiento:**
+
+1. Cliente inicia comunicación
+2. Servidor procesa petición
+3. Servidor envía respuesta
+4. Cliente procesa respuesta
+
+**Ventajas:**
+
+- Centralización de recursos
+- Facilita mantenimiento
+- Mayor seguridad
+- Consistencia del sistema
+:::
+
+::: {.column width="50%"}
+**Requerimientos del servidor:**
+
+- Dirección IP fija
+- Alta disponibilidad
+- Capacidad de múltiples conexiones
+- Centros de datos
+- Balanceamiento de carga
+- Redundancia
+
+**Ejemplos:**
+
+- Netflix, Spotify
+- Instagram, Gmail
+- Servicios web en general
+:::
+:::
+
+## Cliente-Servidor en Videojuegos
+
+### Implementación en juegos multijugador
+
+::: {.columns}
+::: {.column width="50%"}
+**Arquitectura típica:**
+
+- Servidor mantiene estado autoritativo
+- Clientes manejan presentación visual
+- Servidor valida todas las acciones
+- Prevención de trampas centralizada
+
+**Ejemplos:**
+
+- World of Warcraft
+- Counter-Strike: GO
+- League of Legends
+- Fortnite Battle Royale
+:::
+
+::: {.column width="50%"}
+**Problemas comunes:**
+
+- **Latencia/Lag**: Tiempo de procesamiento
+- **Sincronización**: Orden de acciones
+- **Servidores sobrecargados**: Lanzamientos
+- **Pérdida de conexión**: Penalizaciones
+- **Costos de infraestructura**: Millones en servidores
+
+*Soluciones: Predicción cliente, interpolación, CDNs*
+:::
+:::
+
+## Arquitectura Peer-to-Peer
+
+### Funcionamiento y características
+
+::: {.columns}
+::: {.column width="50%"}
+**Principios:**
+
+- Cada peer es cliente y servidor
+- Sin entidad central
+- Autoescalable
+- Recursos compartidos
+- Unión/salida libre
+
+**Clasificación por pureza:**
+
+- Centralizados (Napster, BitTorrent)
+- Descentralizados (Freenet, Gnutella)
+:::
+
+::: {.column width="50%"}
+**Aplicaciones comunes:**
+
+- BitTorrent (archivos)
+- Bitcoin (criptomonedas)
+- IPFS (contenido distribuido)
+- Skype original (VoIP)
+- Tox, Briar (mensajería)
+
+**En videojuegos:**
+
+- Juegos de lucha (Street Fighter 6)
+- Cooperativos (Portal 2, It Takes Two)
+:::
+:::
+
+## Topologías P2P
+
+::: {layout="[[33, 33, 33], [100]]"}
+```{mermaid}
+%%| fig-cap: "A) Full Mesh"
+%%| fig-height: 4
+graph TB
+    P1((Peer 1))
+    P2((Peer 2))
+    P3((Peer 3))
+    P4((Peer 4))
+    P5((Peer 5))
+    
+    P1 --- P2
+    P1 --- P3
+    P1 --- P4
+    P1 --- P5
+    P2 --- P3
+    P2 --- P4
+    P2 --- P5
+    P3 --- P4
+    P3 --- P5
+    P4 --- P5
+
+    classDef peerNode fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef hubNode fill:#fff3e0,stroke:#e65100,stroke-width:3px
+
+    class P1,P2,P3,P4,P5 peerNode
+```
+
+```{mermaid}
+%%| fig-cap: "B) Ring"
+%%| fig-height: 4 
+graph TB   
+    R1((Peer 1))
+    R2((Peer 2))
+    R3((Peer 3))
+    R4((Peer 4))
+    R5((Peer 5))
+    
+    R1 --- R2
+    R2 --- R3
+    R3 --- R4
+    R4 --- R5
+    R5 --- R1
+
+    classDef peerNode fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+
+    class R1,R2,R3,R4,R5 peerNode
+```
+
+```{mermaid}
+%%| fig-cap: "C) Star"
+%%| fig-height: 4 
+graph TB
+    S1((Host/Hub))
+    S2((Peer 2))
+    S3((Peer 3))
+    S4((Peer 4))
+    S5((Peer 5))
+    
+    S1 --- S2
+    S1 --- S3
+    S1 --- S4
+    S1 --- S5
+
+    classDef peerNode fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef hubNode fill:#fff3e0,stroke:#e65100,stroke-width:3px
+
+    class S2,S3,S4,S5 peerNode
+    class S1 hubNode
+```
+
+```{mermaid}
+%%| fig-cap: "D) Hybrid"  
+%%| fig-height: 4  
+graph TB
+    H1((Hub))
+    H2((Peer 2))
+    H3((Peer 3))
+    H4((Peer 4))
+    H5((Peer 5))
+    H6((Peer 6))
+    
+    H1 --- H2
+    H1 --- H3
+    H2 --- H3
+    H4 --- H5
+    H4 --- H6
+    H5 --- H6
+    H3 --- H4
+    
+    classDef peerNode fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef hubNode fill:#fff3e0,stroke:#e65100,stroke-width:3px
+    
+    class H2,H3,H4,H5,H6 peerNode
+    class H1 hubNode
+```
+:::
+
+::: {.columns}
+::: {.column width="25%"}
+**Full Mesh**: Máxima redundancia, no escalable
+:::
+
+::: {.column width="25%"}
+**Ring**: Eficiente, vulnerable a fallos
+:::
+
+::: {.column width="25%"}
+**Star**: Pseudo-P2P, punto único de falla
+:::
+
+::: {.column width="25%"}
+**Hybrid**: Combina ventajas de diferentes topologías
+:::
+:::
+
+# Protocolos de Aplicación
+
+## HTTP - HyperText Transfer Protocol
+
+### Fundamentos
+
+::: {.columns}
+::: {.column width="50%"}
+**Características:**
+
+- Protocolo para transferencia en WWW
+- Texto legible en comandos y respuestas
+- Puerto 80 (HTTP) / 443 (HTTPS)
+- Modelo cliente-servidor
+- Sin estado (stateless)
+
+**URL estructura:**
+
+`https://www.ejemplo.com/pagina.html`
+- Protocolo: https
+- Host: www.ejemplo.com
+- Recurso: /pagina.html
+:::
+
+::: {.column width="50%"}
+**Verbos HTTP:**
+
+- **GET**: Obtener recurso (idempotente)
+- **POST**: Enviar datos (cambia estado)
+- **HEAD**: Como GET sin cuerpo
+- **PUT**: Cargar objeto (idempotente)
+- **DELETE**: Borrar recurso
+
+**Códigos de respuesta:**
+
+- 1XX: Informativa
+- 2XX: Éxito (200 OK)
+- 3XX: Redirección (301 Moved)
+- 4XX: Error cliente (404 Not Found)
+- 5XX: Error servidor (500 Internal)
+:::
+:::
+
+## Evolución de HTTP
+
+### Conexiones persistentes vs no persistentes
+
+::: {layout="[[50,50]]"}
+```{mermaid}
+%%| label: no-persistent-http
+%%| fig-height: 4
+sequenceDiagram
+    participant C as Cliente (Navegador)
+    participant S as Servidor Web
+    Note over C,S: HTTP/1.0 - No persistente
+    C->>S: 1. SYN - Establecer conexión TCP
+    S->>C: 2. SYN-ACK - Confirmar conexión
+    C->>S: 3. ACK - Conexión establecida
+    
+    C->>S: 4. GET /index.html HTTP/1.0
+    S->>C: 5. HTTP/1.0 200 OK + contenido HTML
+    
+    C->>S: 6. FIN - Cerrar conexión TCP
+    S->>C: 7. FIN-ACK - Confirmar cierre
+    C->>S: 8. ACK - Conexión cerrada
+
+    Note over C,S: Nueva conexión para segundo recurso
+    C->>S: 9. SYN - Nueva conexión TCP
+    S->>C: 10. SYN-ACK
+    C->>S: 11. ACK
+    
+    C->>S: 12. GET /imagen.jpg HTTP/1.0
+    S->>C: 13. HTTP/1.0 200 OK + imagen
+    
+    Note over C,S: Tiempo total: 4 RTT + transferencia
+```
+
+```{mermaid}
+%%| label: persistent-http
+%%| fig-height: 4
+sequenceDiagram
+    participant C as Cliente (Navegador)
+    participant S as Servidor Web
+    
+    Note over C,S: HTTP/1.1+ - Persistente
+    C->>S: 1. SYN - Establecer conexión TCP
+    S->>C: 2. SYN-ACK - Confirmar conexión
+    C->>S: 3. ACK - Conexión establecida
+    
+    C->>S: 4. GET /index.html HTTP/1.1<br/>Connection: keep-alive
+    S->>C: 5. HTTP/1.1 200 OK<br/>+ contenido HTML
+        
+    C->>S: 6. GET /imagen.jpg HTTP/1.1<br/>Connection: keep-alive
+    S->>C: 7. HTTP/1.1 200 OK<br/>+ imagen
+    
+    Note over C,S: Más recursos pueden solicitarse...
+    
+    C->>S: 8. Connection: close (cuando termine)    
+    Note over C,S: Tiempo total: 1 RTT + transferencia
+```
+:::
+
+- **HTTP/1.0**: 2 RTT por objeto, nueva conexión cada vez
+- **HTTP/1.1**: 1 RTT por objeto, conexión persistente
+- **HTTP/2**: Múltiples streams independientes
+- **HTTP/3**: Sobre QUIC (UDP)
+
+## Cookies HTTP
+
+### Mecanismo de estado en protocolo sin estado
+
+::: {.columns}
+::: {.column width="50%"}
+**Funcionamiento:**
+
+- Pares clave-valor en cliente
+- Se configuran en respuesta HTTP
+- Fecha de expiración
+- Dominio del servidor
+
+**Tipos:**
+
+- **Propias**: De la web navegada
+- **Terceros**: Servicios externos
+- **Permanentes**: Sin expiración
+- **Sesión**: Expiran al cerrar
+:::
+
+::: {.column width="50%"}
+**Usos principales:**
+
+- Mantener sesiones
+- Personalización
+- Análisis de uso
+- Publicidad dirigida
+
+**Seguridad:**
+
+- Dominio específico
+- Evitar suplantaciones
+- HTTPS only cookies
+:::
+:::
+
+## DNS - Domain Name System
+
+### Sistema de nombres de dominio
+
+::: {.columns}
+::: {.column width="50%"}
+**Objetivo:**
+
+Traducir nombres a direcciones IP
+- www.google.es → 142.250.200.67
+
+**Jerarquía de servidores:**
+
+1. **Servidores raíz**: 13 lógicos (A-M)
+2. **Servidores TLD**: .com, .org, .es
+3. **Servidores autoritativos**: Info definitiva
+4. **Servidores locales**: Recursivos/resolvers
+:::
+
+::: {.column width="50%"}
+**Proceso de resolución:**
+
+1. Verificar caché local
+2. Consulta a DNS local
+3. DNS local → Servidor raíz
+4. Raíz → Servidor TLD
+5. TLD → Servidor autoritativo
+6. Autoritativo → IP final
+7. Respuesta al cliente
+
+*Sistema distribuido sin servidor central*
+:::
+:::
+
+## Proceso DNS - Ejemplo
+
+```{mermaid}
+%%| fig-height: 4
+sequenceDiagram
+    participant Cliente as Cliente/SO
+    participant Local as Servidor DNS Local<br/>(Recursivo)
+    participant Raiz as Servidor Raíz
+    participant TLD as Servidor TLD<br/>(.es)
+    participant Auth as Servidor Autoritativo
+
+    Note over Cliente: Ejemplo: www.google.es
+    
+    Cliente->>Cliente: 1. Verifica caché local del SO
+    alt No está en caché local
+        Cliente->>Local: 2. Consulta DNS: ¿IP de www.google.es?
+        
+        Local->>Local: Verifica caché DNS local
+        alt No está en caché DNS
+            Local->>Raiz: 3. ¿Quién maneja .es?
+            Raiz->>Local: 4. Servidor TLD para .es: [IP_TLD]
+            
+            Local->>TLD: 5. ¿Quién maneja google.es?
+            TLD->>Local: 6. Servidor autoritativo: [IP_AUTH]
+            
+            Local->>Auth: 7. ¿IP de www.google.es?
+            Auth->>Local: 8. IP: 142.250.200.67
+        end
+        
+        Local->>Cliente: 9. Respuesta: 142.250.200.67
+    end
+    
+    Note over Cliente,Auth: El cliente ahora puede conectarse<br/>directamente a 142.250.200.67
+```
+
+## Protocolos de Correo
+
+### SMTP, IMAP y POP
+
+::: {.columns}
+::: {.column width="33%"}
+### SMTP
+
+**Función**: Envío de correos
+
+- Protocolo "push"
+- Transporta mensajes
+- No maneja recepción
+- Puerto 25/587
+:::
+
+::: {.column width="33%"}
+### POP3
+
+**Función**: Descarga de correos
+
+- Descarga completa
+- Elimina del servidor
+- Un solo dispositivo
+- Puerto 110/995
+:::
+
+::: {.column width="33%"}
+### IMAP
+
+**Función**: Acceso sincronizado
+
+- Mensajes en servidor
+- Multi-dispositivo
+- Carpetas y etiquetas
+- Puerto 143/993
+:::
+:::
+
+## QUIC
+
+### Protocolo moderno sobre UDP
+
+::: {.columns}
+::: {.column width="50%"}
+**Ventajas principales:**
+
+- Multiplexado sin head-of-line blocking
+- Establecimiento 0-RTT
+- Migración de conexión transparente
+- Control de congestión mejorado
+- Forward Error Correction
+
+**Desarrollado por:**
+
+- Google (2012)
+- Estandarizado IETF (2021)
+- RFC 9000
+:::
+
+::: {.column width="50%"}
+**Adopción 2025:**
+
+- 8.2% de sitios web usan QUIC
+- 31.1% usan HTTP/3
+- YouTube reduce 30% tiempo de carga
+
+**Casos de uso:**
+
+- Streaming
+- Videoconferencia
+- Juegos en línea
+- Plataformas de contenido
+:::
+:::
+
+::: {.callout-tip}
+QUIC combina lo mejor de TCP con seguridad TLS 1.3 integrada, eliminando limitaciones históricas
+:::
+
+# Servicios
+
+## CDNs - Content Delivery Networks
+
+### Funcionamiento y beneficios
+
+::: {.columns}
+::: {.column width="50%"}
+**¿Cómo funcionan?**
+
+- Red distribuida de servidores edge
+- Copias de contenido cerca del usuario
+- Enrutamiento inteligente automático
+- Reduce latencia: 200-500ms → <50ms
+
+**Estrategias de caché:**
+
+- **Estático**: Días/semanas (imágenes, videos)
+- **Dinámico**: Minutos/horas (APIs)
+- **Personalizado**: Cache parcial
+- **Streaming**: Segmentos individuales
+:::
+
+::: {.column width="50%"}
+**Servicios adicionales:**
+
+- Compresión automática
+- Conversión de formatos
+- Balanceo de carga
+- Protección DDoS
+- Pre-carga predictiva
+- Ejecución edge computing
+
+**En videojuegos:**
+
+- Descarga de actualizaciones
+- Assets y contenido
+- Reducción de carga en servidores origen
+:::
+:::
+
+## Servidores Proxy
+
+### Intermediarios inteligentes
+
+::: {.columns}
+::: {.column width="50%"}
+**Funcionamiento:**
+
+1. Cliente envía petición a proxy
+2. Proxy analiza petición
+3. Si puede resolver → responde
+4. Si no → consulta servidor origen
+5. Cachea respuesta
+6. Envía al cliente
+
+**Ubicación típica:**
+
+- Cache local (navegador)
+- ISP
+- CDNs
+:::
+
+::: {.column width="50%"}
+**Ventajas:**
+
+- Navegación más rápida
+- Reduce tráfico de red
+- Seguridad adicional
+- Anonimato
+- Control de acceso
+
+**GET condicional:**
+
+- Solo devuelve si hay cambios
+- Ahorra ancho de banda
+- Reduce tiempo de respuesta
+:::
+:::
+
+# Resumen
+
+## Puntos Clave
+
+::: {.incremental}
+- La **Capa de Aplicación** define protocolos para intercambio de datos entre procesos
+- **Sockets**: Interfaz entre aplicación y transporte (TCP confiable vs UDP rápido)
+- **Arquitecturas**: Cliente-servidor (centralizado), P2P (distribuido), Híbrida
+- **HTTP**: Protocolo web sin estado, evolución de 1.0 a HTTP/3 sobre QUIC
+- **DNS**: Sistema distribuido jerárquico para traducir nombres a IPs
+- **Correo**: SMTP (envío), POP (descarga), IMAP (sincronización)
+- **QUIC**: Protocolo moderno sobre UDP con ventajas de TCP + TLS
+- **CDNs**: Redes de distribución que acercan contenido a usuarios
+- Podemos crear **protocolos propios** en esta capa
+:::
+
+## Conceptos para Recordar
+
+::: {.columns}
+::: {.column width="50%"}
+**Elección de transporte:**
+
+- **TCP**: Confiabilidad crítica
+- **UDP**: Baja latencia prioritaria
+- **QUIC**: Mejor de ambos mundos
+
+**Identificación de procesos:**
+
+- IP del host + Puerto
+- Ejemplos: HTTP(80), HTTPS(443), DNS(53)
+:::
+
+::: {.column width="50%"}
+**Servicios requeridos:**
+
+- Transferencia confiable
+- Temporización
+- Ancho de banda
+- Seguridad
+
+**Verbos HTTP principales:**
+
+- GET (obtener)
+- POST (enviar)
+- PUT (actualizar)
+- DELETE (eliminar)
+:::
+:::

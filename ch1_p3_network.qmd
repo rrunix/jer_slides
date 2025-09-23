@@ -1,0 +1,722 @@
+---
+title: "Capa de Red"
+subtitle: "Comunicación end-to-end en Internet"
+author: "Rubén Rodríguez Fernández (&#64;rrunix)"
+date: "22/09/2025"
+css: ojs_interactive.css
+aliases:
+  - ch1_p3.html
+mermaid:
+  theme: default
+  themeVariables:
+    background: "#ffffff"
+  config:
+    flowchart:
+      htmlLabels: true
+      useMaxWidth: false
+    sequence:
+      useMaxWidth: false
+      wrap: false
+    gantt:
+      useMaxWidth: false
+    journey:
+      useMaxWidth: false
+    gitgraph:
+      useMaxWidth: false
+---
+
+# Introducción
+
+## ¿Qué es la Capa de Red?
+
+> La Capa de Red es el **tercer nivel del modelo TCP/IP** y forma el núcleo del sistema de comunicaciones de Internet
+
+::: {.columns}
+::: {.column width="50%"}
+**Función principal:**
+
+- Proporcionar comunicación end-to-end entre dispositivos
+- Potencialmente separados por múltiples redes intermedias
+- Independiente de la tecnología subyacente
+:::
+
+::: {.column width="50%"}
+::: {style="width: 12vw; text-align: center; margin: 0 auto;"}
+```{mermaid}
+block-beta
+    columns 1
+    
+    A["<b>Capa de Aplicación</b><br/><br/>HTTP, HTTPS, FTP, SMTP<br/>DNS, DHCP, Telnet, SSH"]
+    
+    B["<b>Capa de Transporte</b><br/><br/>TCP, UDP<br/>Control de flujo y errores"]
+    
+    C["<b>Capa de Internet</b><br/><br/>IP, ICMP, ARP<br/>Enrutamiento, Direccionamiento"]
+    
+    D["<b>Capa de Acceso a la Red</b><br/><br/>Ethernet, WiFi, PPP<br/>Frames, MAC Address<br/>Control de acceso al medio"]
+    
+    classDef highlight fill:#ff9999,stroke:#cc0000,stroke-width:4px,color:#000
+    classDef normal fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#000
+    
+    class C highlight
+    class A,B, Dnormal
+```
+:::
+:::
+:::
+
+::: {.callout-important}
+La comunicación funciona de igual forma independientemente del medio físico utilizado
+:::
+
+## Ejemplo Simplificado: Host A → Servidor Google
+
+```
+Red A (Privada)                    Internet                    Red B (Google DC)
+192.168.1.0/24                                                142.250.184.0/24
+┌────────────┐     ┌────────────────┐   ┌──────────┐   ┌─────────────────┐      ┌──────────────┐
+│   Host A   │─────│   Router-A     │───│          │───│    Router-B     │──────│ Servidor Web │
+│            │     │    (Casa)      │   │ Internet │   │   (Google DC)   │      │   (Google)   │
+│192.168.1.10│     │LAN:192.168.1.1 │   │          │   │WAN:74.125.24.1  │      │              │
+│            │     │WAN:203.0.113.2 │   └──────────┘   │LAN:142.250.184.1│      │142.250.184.3 │
+└────────────┘     └────────────────┘                  └─────────────────┘      └──────────────┘
+```
+
+::: {style="width: 41vw; text-align: center; margin: 0 auto;"}
+```{mermaid}
+sequenceDiagram
+    participant A as Dispositivo A<br/>(192.168.1.10)
+    participant RA as Router-A<br/>(Casa)<br/>192.168.1.1
+    participant RB as Router-B<br/>(Google DC)<br/>142.250.184.1
+    participant B as Servidor Web<br/>(142.250.184.3)
+
+    Note over A: 1) Analiza IP destino<br/>2) No está en mi red<br/>3) Enviar al gateway
+
+    A->>RA: Trama Ethernet<br/>MAC: A → Router-A<br/>IP: 192.168.1.10 → 142.250.184.3
+
+    Note over RA: 1) Extrae datagrama IP<br/>2) Consulta tabla enrutamiento<br/>3) Envía al siguiente salto
+
+    RA->>RB: Nueva trama<br/>(múltiples saltos)
+
+    Note over RB: IP destino en red local
+
+    RB->>B: Trama final
+
+    Note over B: Entrega a capa superior
+```
+:::
+
+# Funciones Fundamentales
+
+## Enrutamiento vs Reenvío
+
+::: {.columns}
+::: {.column width="50%"}
+### Enrutamiento
+
+**Proceso global** que determina rutas óptimas
+
+- Considera toda la topología de red
+- Tiempo: segundos a minutos
+- Algoritmos: RIP, OSPF, BGP
+- Genera tabla de enrutamiento completa
+:::
+
+::: {.column width="50%"}
+### Reenvío
+
+**Proceso local** de mover paquetes
+
+- Puerto entrada → puerto salida
+- Tiempo: microsegundos
+- Implementado en hardware
+- Usa tabla de reenvío optimizada
+:::
+:::
+
+::: {.callout-tip}
+Los algoritmos de enrutamiento generan la tabla de enrutamiento → se traduce en tabla de reenvío con next-hop
+:::
+
+## Responsabilidades por Dispositivo
+
+
+::: {.columns}
+::: {.column width="50%"}
+### Host Emisor
+
+- Recibe segmentos de TCP/UDP
+- Encapsula en datagramas IP
+- Fragmenta si excede MTU
+- Determina si destino es local o remoto
+
+### Host Receptor
+
+- Reensambla fragmentos
+- Verifica integridad (checksum)
+- Extrae segmentos
+- Entrega a capa de transporte
+
+:::
+::: {.column width="50%"}
+### Routers Intermedios
+
+- Examinan cabecera IP (dirección destino)
+- Consultan tabla de enrutamiento
+- Determinan siguiente salto
+- Reenvían por interfaz correspondiente
+:::
+:::
+
+# Modelos de Servicio
+
+## Redes de Circuitos Virtuales
+
+**Funcionamiento en 3 fases:**
+
+1. **Establecimiento:** SETUP, reserva recursos
+2. **Transferencia:** Usa VC ID, ruta fija
+3. **Terminación:** TEARDOWN, libera recursos
+
+::: {.columns}
+::: {.column width="50%"}
+**Ventajas:**
+
+- QoS predecible
+- Overhead reducido (solo VC ID)
+- Orden garantizado
+:::
+::: {.column width="50%"}
+**Desventajas:**
+
+- Complejidad alta
+- Mantiene estado por conexión
+- Rigidez ante cambios
+:::
+:::
+
+**Tecnologías:** ATM, Frame Relay, X.25, MPLS
+
+## Redes de Datagramas
+
+::: {.columns}
+::: {.column width="50%"}
+**Características:**
+
+- Cada paquete tratado independientemente
+- Sin estado de conexión en routers
+- Dirección destino completa en cada paquete
+- Diferentes rutas posibles por paquete
+:::
+
+::: {.column width="50%"}
+**Ventajas:**
+
+- Simplicidad de diseño
+- Robustez ante fallos
+- Flexibilidad y balanceo de carga
+- Escalabilidad superior
+
+**Limitaciones:**
+
+- Sin garantías QoS
+- Posible desorden de paquetes
+- Servicio best-effort
+:::
+:::
+
+::: {.callout-important}
+Fundamento de Internet por su adaptabilidad a condiciones cambiantes
+:::
+
+## Circuitos Virtuales vs Datagramas
+
+| Aspecto | Circuitos Virtuales | Datagramas |
+|---------|-------------------|------------|
+| **Establecimiento** | Requerido | No requerido |
+| **Estado en routers** | Sí, por conexión | No |
+| **Direccionamiento** | VC ID | IP completa |
+| **Enrutamiento** | Ruta fija | Por paquete |
+| **QoS** | Garantías posibles | Best effort |
+| **Recuperación fallos** | Difícil | Automática |
+| **Escalabilidad** | Limitada | Alta |
+
+
+Internet usa el modelo de **datagramas** por su simplicidad, robustez y escalabilidad
+
+# Dispositivos de Capa de Red
+
+## Arquitectura del Router
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│                 │    │                 │    │                 │
+│  Puertos de     │    │   Procesador    │    │  Puertos de     │
+│   Entrada       │◄──►│      de         │◄──►│   Salida        │
+│                 │    │  Enrutamiento   │    │                 │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+         ▲                        │                        ▲
+         │              ┌─────────▼─────────┐              │
+         │              │                   │              │
+         └──────────────│ Fabric de         │──────────────┘
+                        │ Conmutación       │
+                        │                   │
+                        └───────────────────┘
+```
+
+::: {.columns}
+::: {.column width="50%"}
+**Plano de Control:**
+
+- Ejecuta enrutamiento (software)
+- Genera tablas de enrutamiento
+:::
+
+::: {.column width="50%"}
+**Plano de Datos:**
+
+- Ejecuta reenvío (hardware)
+- Puertos entrada/salida + fabric
+:::
+:::
+
+
+## Proceso de Reenvío de Paquetes
+
+1. **Recepción:** Llega paquete, se procesa capa enlace, se extrae datagrama IP
+
+2. **Verificación:** Checksum de cabecera, TTL > 0
+
+3. **Decisión:** Extrae IP destino, aplica longest prefix matching
+
+4. **Modificación:** Decrementa TTL, recalcula checksum
+
+5. **Resolución:** ARP si necesario para MAC siguiente salto
+
+6. **Encapsulación:** Nueva trama según protocolo salida
+
+7. **Transmisión:** Envío por interfaz física
+
+::: {.callout-warning}
+Si TTL llega a 0 → descarta paquete y envía ICMP "Time Exceeded"
+:::
+
+## Switches Layer 3
+
+Un switch Ethernet (L3) que combina switching de alta velocidad por hardware (ASICs) con capacidades básicas de enrutamiento IP para redes LAN.
+<br>
+
+| Aspecto | Router Tradicional | Switch L3 |
+|---------|-------------------|-----------|
+| **Reenvío** | Software/ASIC | Hardware puro |
+| **Latencia** | Microsegundos | Nanosegundos |
+| **Throughput** | Limitado por CPU | Wire-speed |
+| **Flexibilidad** | Alta | Limitada |
+
+<br>
+Los switches L3 combinan la velocidad del switching con las capacidades del routing. Útiles en redes locales.
+
+
+# Protocolo 
+
+## Protocolo IP
+
+::: {.columns}
+::: {.column width="50%"}
+
+**Características fundamentales:**
+
+- **Sin conexión:** No requiere establecimiento previo
+- **No confiable:** No garantiza entrega, orden, o integridad
+- **Best effort:** Hace el "mejor esfuerzo" por entregar paquetes
+- **Independiente del medio:** Funciona sobre cualquier tecnología de enlace
+
+:::
+::: {.column width="50%"}
+
+**Responsabilidades principales:**
+
+- Define estructura de datagramas
+- Establece sistema de direccionamiento
+- Mecanismos básicos de entrega
+- Fragmentación y reensamblado
+- Control de vida del paquete (TTL)
+:::
+:::
+
+::: {.callout-important}
+**IP NO garantiza:** Entrega, orden entre datagramas diferentes, ni detección de duplicados. Estas funciones se delegan a capas superiores (TCP).
+:::
+
+**Versiones:** IPv4 (32 bits, diseñado años 70) e IPv6 (128 bits, soluciona limitaciones IPv4)
+
+
+## IPv4: Estructura Básica
+
+```{mermaid}
+---
+config:
+  packet:
+    showBits: true
+---
+packet-beta
+
+title IPv4 Header Format
+0-3: "Version (4)"
+4-7: "IHL (4)"
+8-15: "Type of Service (8)"
+16-31: "Total Length (16)"
+32-47: "Identification (16)"
+48-50: "Flags (3)"
+51-63: "Fragment Offset (13)"
+64-71: "Time to Live (8)"
+72-79: "Protocol (8)"
+80-95: "Header Checksum (16)"
+96-127: "Source Address (32)"
+128-159: "Destination Address (32)"
+160-191: "Options (variable)"
+```
+
+- Source address y Destination address para identificación de hosts
+- Protocol para identificar el protocolo de la capa superior
+- Checksum para integridad de datos.
+
+## IPv4: Direccionamiento
+
+### Formato: 32 bits (4 octetos)
+
+**Ejemplo:** <span style="color:blue">192.168.1.</span><span style="color:red">1</span> con máscara 255.255.255.0 (/24)
+
+- Parte azul: **Red**
+- Parte roja: **Host**
+- Total direcciones: 2³² ≈ 4.3 mil millones
+
+### Obtención dirección de red:
+```
+192.168.1.1 AND 255.255.255.0 = 192.168.1.0
+```
+
+::: {.callout-tip}
+La división red/host permite enrutamiento jerárquico eficiente
+:::
+
+## Sistema de Clases (Histórico)
+
+| Clase | Rango | Bits Red | Bits Host | Redes | Hosts/Red | Uso |
+|-------|-------|----------|-----------|--------|-----------|-----|
+| **A** | 0.0.0.0 - 127.255.255.255 | 7 | 24 | 126 | 16,777,214 | ISPs, gobiernos |
+| **B** | 128.0.0.0 - 191.255.255.255 | 14 | 16 | 16,384 | 65,534 | Universidades |
+| **C** | 192.0.0.0 - 223.255.255.255 | 21 | 8 | 2,097,152 | 254 | Empresas pequeñas |
+
+::: {.callout-warning}
+**Problema:** Organización con 1,000 hosts
+
+- Clase B: desperdicia 64,534 direcciones (98.5%)
+- Clase C: insuficiente
+:::
+
+## CIDR: Solución Moderna
+
+### Classless Inter-Domain Routing
+
+**Notación:** 192.168.1.0/**24** → 24 bits para red
+
+**Ventajas:**
+
+- Asignación flexible (cualquier potencia de 2)
+- Utilización: 20-30% → 95-98%
+- Agregación de rutas eficiente
+
+### Longest Prefix Matching
+
+Seleccionamos en nuestra tabla de rutas aquella con la coincidencia **mas grande**.
+
+Tabla con rutas:
+
+- 192.168.0.0/16
+- 192.168.1.0/24 ← **Seleccionada**
+- 192.168.1.128/25
+
+Destino 192.168.1.200 → Selecciona /24 (prefijo más largo)
+
+## Direcciones Especiales
+
+### Direcciones Reservadas
+
+| Dirección | Propósito | Descripción |
+|-----------|-----------|-------------|
+| 0.0.0.0/32 | This host | Sin IP configurada (DHCP) |
+| 127.0.0.0/8 | Loopback | Pruebas locales (127.0.0.1) |
+| 255.255.255.255/32 | Limited broadcast | Solo red local |
+| x.x.x.0 | Dirección de red | Identifica la red |
+| x.x.x.255 | Directed broadcast | Broadcast a red específica |
+
+### Rangos Privados (RFC 1918)
+
+- **10.0.0.0/8** → 16.7 millones hosts (grandes organizaciones)
+- **172.16.0.0/12** → 1 millón hosts (empresas medianas)
+- **192.168.0.0/16** → 65,000 hosts (hogares/oficinas)
+
+::: {.fragment}
+No enrutables en Internet público → Requieren NAT
+:::
+
+## Direcciones Especiales (Práctica)
+
+- Broadcast: Cuando queremos enviar un paquete a todos los dispositivos de la red local. Ejemplo: 192.168.1.255 (para red 192.168.1.0/24)
+
+```bash
+ifconfig
+ipconfig /all en windows
+```
+
+- Gateway: Dirección del router que conecta nuestra red local con otras redes/Internet. Ejemplo: 192.168.1.1 (típicamente la primera IP utilizable de la red)
+
+```bash
+route -n get default (macOS/Linux)
+ip route show default (Linux)
+ipconfig /all (Windows)
+```
+
+## Fragmentación
+
+### MTU (Maximum Transmission Unit)
+
+| Tecnología | MTU (bytes) |
+|------------|-------------|
+| **Ethernet** | 1500 |
+| **Token Ring** | 4464 |
+| **FDDI** | 4352 |
+| **PPP** | Variable (~1500) |
+
+**Proceso:**
+
+1. Si datagrama > MTU → fragmentar
+2. Enviar fragmentos por separado
+3. Reensamblar en destino
+4. IP preserva integridad del datagrama original
+
+::: {.callout-important}
+IP garantiza orden dentro del datagrama, NO entre datagramas diferentes
+:::
+
+## IPv6: La Evolución
+
+### Motivación
+
+::: {.columns}
+::: {.column width="50%"}
+**Limitaciones IPv4:**
+
+- Agotamiento de direcciones ($4.3×10^{9}$)
+- Fragmentación ineficiente en routers
+- Sin autoconfiguración
+- Seguridad opcional (IPSec)
+- QoS limitado
+
+:::
+::: {.column width="50%"}
+### Características IPv6
+
+- **Direcciones:** 128 bits ($3.4×10^{38}$ direcciones)
+- **Cabecera:** Fija 40 bytes
+- **Sin checksum** en cabecera
+- **IPSec obligatorio**
+- **Autoconfiguración SLAAC**
+- **Mejor QoS** (Traffic Class, Flow Label)
+:::
+:::
+
+## Cabecera IPv6
+
+
+::: {style="width: 60vw; text-align: center; margin: 0 auto;"}
+```{mermaid}
+---
+config:
+  packet:
+    showBits: true
+---
+packet-beta
+
+0-3: "Version (4)"
+4-11: "Traffic Class (8)"
+12-31: "Flow Label (20)"
+32-47: "Payload Length (16)"
+48-55: "Next Header (8)"
+56-63: "Hop Limit (8)"
+64-191: "Source Address (128 bits)"
+192-319: "Destination Address (128 bits)"
+```
+:::
+
+- Migración gradual IPv4 → IPv6 mediante mecanismos de interoperabilidad
+- Las direcciones IP ahora ocupan el doble de tamaño
+- Se elimina el checksum
+- El siguiente protocolo es ahora "Next Header"
+
+# Protocolos Complementarios
+
+## ICMP: Control y Diagnóstico
+
+### Internet Control Message Protocol
+
+**Características:**
+
+- Complementario a IP
+- Usa IP para transporte
+- No orientado a conexión
+- Implementación obligatoria (en IPv6)
+
+### Tipos de Mensajes
+
+::: {.columns}
+::: {.column width="50%"}
+**Mensajes de Error:**
+
+- Destination Unreachable (Type 3)
+- Time Exceeded (Type 11)
+- Parameter Problem (Type 12)
+- Packet Too Big (IPv6)
+:::
+
+::: {.column width="50%"}
+**Mensajes de Consulta:**
+
+- Echo Request/Reply (Type 8/0)
+- Timestamp Request/Reply (Type 13/14)
+:::
+:::
+
+## ICMP: Herramientas de Diagnóstico
+
+### Ping - Verificación de Conectividad
+
+```bash
+$ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8): 56 data bytes
+64 bytes from 8.8.8.8: icmp_seq=0 ttl=55 time=15.1 ms
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=55 time=14.9 ms
+```
+
+Echo Request (Type 8) → Echo Reply (Type 0)
+
+<br>
+
+### Traceroute - Descubrimiento de Ruta
+
+```bash
+$ traceroute google.com
+ 1  192.168.1.1 (192.168.1.1)  3.414 ms
+ 2  100.70.0.1 (100.70.0.1)  5.245 ms
+ 3  10.14.0.53 (10.14.0.53)  7.091 ms
+ 4  * * *
+ 5  72.14.195.182 (72.14.195.182)  4.665 ms
+```
+
+Incrementa TTL progresivamente → Time Exceeded (Type 11)
+
+## NAT: Network Address Translation
+
+### Problema y Solución
+
+::: {.columns}
+::: {.column width="50%"}
+**Problema:**
+
+- Agotamiento direcciones IPv4
+- Múltiples dispositivos, una IP pública
+
+**Solución NAT:**
+
+- Usa direcciones privadas internamente
+- Traduce a IP pública en router
+- Mantiene tabla de traducción
+:::
+
+::: {.column width="50%"}
+**Funcionamiento:**
+
+1. Host interno inicia conexión
+2. Router reemplaza IP:puerto origen
+3. Registra en tabla NAT
+4. Respuesta llega a router
+5. Consulta tabla y reenvía internamente
+:::
+:::
+
+## NAT: Ejemplo Práctico
+
+
+```
+Red Interna (192.168.1.0/24)          NAT Router          Internet
+                                    (203.0.113.100)
+                                                           
+┌─────────────┐                    ┌─────────────┐     ┌─────────────┐
+│Host A       │ ────────────────── │             │ ─── │Servidor Web │
+│192.168.1.10 │ Src: 192.168.1.10  │   Tabla     │     │8.8.8.8:80   │
+│Port: 12345  │ Dst: 8.8.8.8:80    │     NAT     │     └─────────────┘
+└─────────────┘                    │             │
+                                   │192.168.1.10:│ Src: 203.0.113.100:5001
+┌─────────────┐                    │12345 → 5001 │ Dst: 8.8.8.8:80
+│Host B       │ ────────────────── │             │
+│192.168.1.20 │ Src: 192.168.1.20  │192.168.1.20:│
+│Port: 54321  │ Dst: 8.8.8.8:80    │54321 → 5002 │
+└─────────────┘                    └─────────────┘
+```
+<br>
+
+- Traducción de direcciones: El router NAT convierte las IP privadas a su IP pública
+- Mapeo de puertos: Asigna puertos únicos externos (5001, 5002) a cada host interno para distinguir las conexiones simultáneas en la tabla NAT
+- Enmascaramiento de red interna: Permite que múltiples dispositivos privados compartan una sola IP pública
+
+## NAT: Limitaciones y Soluciones
+
+### Limitaciones
+
+- No permite conexiones entrantes directas
+- Complicaciones con protocolos que embeben IPs
+- Pérdida del principio end-to-end
+
+### Técnicas para Atravesar NAT
+
+::: {.columns}
+::: {.column width="50%"}
+**Hole Punching:**
+
+- Ambos conectan simultáneamente
+- Crea "agujeros" temporales
+
+**STUN:**
+
+- Descubre IP pública y tipo NAT
+- Útil para VoIP/tiempo real
+:::
+
+::: {.column width="50%"}
+**TURN:**
+
+- Servidor relay intermedio
+- Más confiable pero más recursos
+
+**UPnP:**
+
+- Configuración automática de puertos
+- Conveniente pero riesgos de seguridad
+:::
+:::
+
+# Resumen
+
+## Puntos Clave
+
+::: {.incremental}
+- La **Capa de Red** proporciona comunicación end-to-end entre dispositivos en diferentes redes
+- **Dos funciones principales:** Enrutamiento (global) y Reenvío (local)
+- **Modelos de servicio:** Circuitos Virtuales vs Datagramas (Internet usa datagramas)
+- **IPv4:** 32 bits, sistema de clases → CIDR para eficiencia
+- **IPv6:** 128 bits, soluciona limitaciones de IPv4
+- **ICMP:** Herramientas de diagnóstico (ping, traceroute)
+- **NAT:** Permite compartir IP pública, pero limita conectividad directa
+- **MTU:** Define tamaño máximo, fragmentación si se excede
+- Los **routers** operan con plano de control (enrutamiento) y plano de datos (reenvío)
+:::

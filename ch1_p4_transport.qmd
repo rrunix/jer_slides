@@ -1,0 +1,564 @@
+---
+title: "Capa de Transporte"
+subtitle: "Comunicación lógica entre procesos de aplicación"
+author: "Rubén Rodríguez Fernández (@rrunix)"
+date: "23/09/2025"
+---
+
+# Introducción
+
+## ¿Qué es la Capa de Transporte?
+
+::: {.columns}
+::: {.column width="50%"}
+**Función principal:**
+
+Proporciona comunicación lógica entre procesos de aplicación que se ejecutan en diferentes hosts
+
+- Se ejecuta en hosts finales
+- No en el núcleo de la red
+- Divide mensajes en segmentos
+- Recompone segmentos en el receptor
+:::
+
+::: {.column width="50%"}
+**Protocolos principales:**
+
+- **UDP**: Protocolo minimalista
+- **TCP**: Protocolo complejo con garantías
+
+La elección depende del dominio y la aplicación
+:::
+:::
+
+## Ejemplo: Cliente-Servidor con UDP
+
+```{mermaid}
+%%| fig-height: 4
+%%| fig-align: center
+sequenceDiagram
+    participant A as Client A
+    participant I as The Internet
+    participant B as Server B
+        
+    A->>I: Paquete UDP 1 (IP destino: 8.8.8.8, puerto: 80)
+    I->>B: Paquete 1 entregado
+    
+    A->>I: Paquete UDP 2 (IP destino: 8.8.8.8, puerto:80)
+    I->>B: Paquete 2 entregado
+    
+    A->>I: Paquete UDP 3 (IP destino: 8.8.8.8, puerto:80)
+    
+    A->>I: Paquete UDP 4 (IP destino: 8.8.8.8, puerto:80)
+    I->>B: Paquete 4 entregado (llega primero!)
+    A->>I: Paquete UDP 5 (IP destino: 8.8.8.8, puerto:80)
+    I->>B: Paquete 3 entregado (llega tarde!)
+```
+
+::: {.fragment}
+- Paquete 5: perdido (~1% pérdida normal)
+- Paquete 4 llega antes que el 3
+- UDP no corrige orden ni pérdidas
+:::
+
+# Funciones Principales
+
+## 1. Multiplexación y Demultiplexación
+
+::: {.columns}
+::: {.column width="50%"}
+**Multiplexación:**
+
+Recoger información de diferentes sockets y enviarla por un único medio
+
+**Demultiplexación:**
+
+Recibir segmentos y enviarlos a los sockets correspondientes
+:::
+
+::: {.column width="50%"}
+**Identificación de sockets:**
+
+**TCP:**
+- IP origen
+- Puerto origen  
+- IP destino
+- Puerto destino
+
+**UDP:**
+- IP origen
+- Puerto origen
+:::
+:::
+
+::: {.fragment}
+**Puertos:** Identificadores numéricos (1-65535)
+- Servidores: asignación manual y fija
+- Clientes: asignación aleatoria
+:::
+
+## 2. Transferencia Fiable
+
+**Características de una transferencia fiable:**
+
+::: {.incremental}
+- No se corrompe ningún bit
+- No se pierde información (paquetes)
+- La información se entrega en orden correcto
+:::
+
+::: {.fragment}
+**Opciones de implementación:**
+
+1. Usar protocolos fiables existentes (TCP)
+2. Implementar características propias sobre protocolo no fiable (UDP + lógica aplicación)
+:::
+
+# UDP (User Datagram Protocol)
+
+## Características de UDP
+
+::: {.columns}
+::: {.column width="50%"}
+**Protocolo minimalista [RFC 768]:**
+
+- Basado en best-effort
+- No orientado a conexión
+- Entrega no fiable y sin orden
+- Integridad básica (checksum)
+- Multiplexación y demultiplexación
+:::
+
+::: {.column width="50%"}
+**Lo que NO proporciona:**
+
+- Control de flujo
+- Control de congestión
+- Temporización
+- Tasa de transferencia mínima
+- Seguridad
+:::
+:::
+
+::: {.fragment}
+**"Fire-and-forget":** Envías el paquete y te olvidas, independientemente de si llega
+:::
+
+## Estructura del Paquete UDP
+
+```{mermaid}
+%%| fig-height: 6
+%%| fig-align: center
+%%| out-width: "80%"
+---
+title: Estructura del paquete UDP
+---
+packet-beta
+
+    0-15: "Source Port"
+    16-31: "Destination Port"
+    32-47: "Length"
+    48-63: "Checksum"
+    64-95: "Data (longitud variable)"
+```
+
+::: {.fragment}
+- **Longitud:** Hasta 65535 bytes (limitado por MTU)
+- **Checksum:** Verificación de integridad
+- Estructura simple comparada con otros protocolos
+:::
+
+## Checksum UDP
+
+**Proceso de cálculo:**
+
+1. Preparación: pseudo-cabecera IP + cabecera UDP + datos
+2. División en palabras de 16 bits
+3. Suma usando aritmética de complemento a uno
+4. Complemento del resultado → campo checksum
+
+::: {.fragment}
+**Verificación en receptor:**
+
+- Mismo algoritmo incluyendo checksum recibido
+- Resultado esperado: 0xFFFF
+- Si difiere: datagrama descartado silenciosamente
+:::
+
+## Casos de Uso de UDP
+
+**Aplicaciones ideales para UDP:**
+
+::: {.incremental}
+- **Multimedia streaming:** Tolerante a pérdidas, sensible a interrupciones
+- **DNS:** Respuestas rápidas necesarias
+- **SNMP:** Administración de red
+- **Gaming online:** Latencia baja crítica
+- **QUIC/HTTP3:** Base para protocolos modernos optimizados
+:::
+
+::: {.fragment}
+Ejemplo: Implementar protocolo propio sobre UDP para juegos
+- Añadir número de paquete
+- Descartar paquetes fuera de orden
+- Ignorar duplicados
+- Sobrecarga mínima
+:::
+
+# TCP (Transmission Control Protocol)
+
+## Características de TCP
+
+::: {.columns}
+::: {.column width="50%"}
+**Protocolo confiable [RFC 793]:**
+
+- Orientado a conexión
+- Entrega fiable y ordenada
+- Control de flujo
+- Control de congestión
+- Multiplexación y demultiplexación
+:::
+
+::: {.column width="50%"}
+**Lo que NO proporciona:**
+
+- Temporización específica
+- Tasa mínima garantizada
+- Seguridad nativa (necesita TLS/SSL)
+:::
+:::
+
+::: {.fragment}
+**Trade-off:** Confiabilidad y orden sobre velocidad pura
+:::
+
+## Estructura del Paquete TCP
+
+```{mermaid}
+%%| fig-height: 6
+%%| fig-align: center
+%%| out-width: "80%"
+---
+title: Estructura del paquete TCP
+---
+packet-beta
+  0-15: "Source Port"
+  16-31: "Destination Port"
+  32-63: "Sequence Number"
+  64-95: "Acknowledgment Number"
+  96-99: "Data Offset"
+  100-105: "Reserved"
+  106: "URG"
+  107: "ACK"
+  108: "PSH"
+  109: "RST"
+  110: "SYN"
+  111: "FIN"
+  112-127: "Window"
+  128-143: "Checksum"
+  144-159: "Urgent Pointer"
+  160-191: "Options (variable)"
+  192-255: "Data (variable length)"
+```
+
+## Flags de Control TCP
+
+**Significado de cada flag:**
+
+::: {.incremental}
+- **SYN:** Sincronizar números de secuencia (establecimiento)
+- **ACK:** Campo acknowledgment válido
+- **FIN:** Fin de datos del emisor
+- **RST:** Reinicio forzado de conexión
+- **PSH:** Entrega inmediata a aplicación
+- **URG:** Datos urgentes
+:::
+
+::: {.fragment}
+**Window:** Implementa control de flujo (bytes que receptor acepta)
+:::
+
+## Handshake de Tres Fases
+
+```{mermaid}
+%%| fig-height: 4
+%%| fig-align: center
+sequenceDiagram
+    participant CS as Cliente Socket
+    participant SS as Server Socket (listen)
+    participant NS as Nuevo Socket
+    
+    Note over CS: Estado: CLOSED
+    Note over SS: Estado: LISTEN
+    CS->>SS: SYN=1, seq=x
+    Note over CS: Estado: SYN_SENT
+    Note over SS: accept() crea nuevo socket
+    SS->>NS: Deriva conexión
+    Note over NS: Estado: SYN_RCVD
+    NS->>CS: SYN=1, ACK=1, seq=y, ack=x+1
+    Note over CS: Estado: ESTABLISHED
+    CS->>NS: ACK=1, seq=x+1, ack=y+1
+```
+
+::: {.fragment}
+Se negocian: MSS, opciones de ventana, extensiones TCP
+:::
+
+## Mecanismos de Confiabilidad
+
+**Números de secuencia y ACKs:**
+- Cada byte tiene número único
+- ACKs acumulativos (ACK para byte N confirma hasta N-1)
+
+::: {.fragment}
+**Detección de pérdidas - Dos métodos:**
+:::
+
+## Detección por Timeout
+
+```{mermaid}
+%%| fig-width: 6
+%%| fig-height: 4
+sequenceDiagram
+    participant E as Emisor
+    participant R as Receptor
+    E ->> X: seq=100, data="A", Paquete perdido
+    Note over E: Timeout de seq:100, reenvio
+    E ->> R: seq=100, data="A",
+```
+
+::: {.fragment}
+Si no recibe ACK en tiempo determinado → asume pérdida y retransmite
+:::
+
+## Detección por ACKs Duplicados
+
+```{mermaid}
+%%| fig-width: 6
+%%| fig-height: 4
+sequenceDiagram
+    participant E as Emisor
+    participant R as Receptor
+    E ->> X: seq=100, data="A", Paquete perdido
+    E ->> R: seq=101, data="B"
+    E ->> R: seq=102, data="C"
+    E ->> R: seq=103, data="D"
+    R ->> E: ACK=100
+    R ->> E: ACK=100
+    R ->> E: ACK=100
+    Note over E,R: Retransmisión rápida
+    E ->> R: seq=100, data="A"
+```
+
+::: {.fragment}
+3 ACKs duplicados → Fast Retransmit inmediato
+:::
+
+## Control de Flujo
+
+```{mermaid}
+%%| fig-height: 4
+%%| fig-align: center
+sequenceDiagram
+    participant E as Emisor
+    participant R as Receptor
+    
+    Note over R: Buffer: 4KB libres
+    R->>E: ACK=1000, Window=4096
+    E->>R: seq=1000, data=2KB
+    Note over R: Buffer: 2KB libres
+    R->>E: ACK=3000, Window=2048
+    E->>R: seq=3000, data=2KB
+    Note over R: Buffer: 0KB libres (lleno)
+    R->>E: ACK=5000, Window=0
+    Note over E: Detiene envío, inicia probe timer
+```
+
+::: {.fragment}
+```
+VentanaRecepcion = BufferRecepcion - (UltimoByteRecibido - UltimoByteLeido)
+```
+:::
+
+## Control de Congestión
+
+**Ventana de congestión:**
+- Variable del emisor
+- Bytes máximos en "el aire" (enviados sin ACK)
+- Tasa efectiva = min(VentanaCongestion, VentanaRecepcion)
+
+## Slow Start
+
+```{mermaid}
+%%| fig-height: 4
+sequenceDiagram
+    participant E as Emisor
+    participant R as Receptor
+    
+    Note over E: Slow Start: cwnd=1 MSS
+    E->>R: seq=1000, MSS=1KB
+    R->>E: ACK=2000
+    Note over E: cwnd=2 MSS
+    E->>R: seq=2000, MSS=1KB
+    E->>R: seq=3000, MSS=1KB
+    R->>E: ACK=3000
+    R->>E: ACK=4000
+    Note over E: cwnd=4 MSS (crecimiento exponencial)
+    Note over E: ... continúa hasta threshold o detectar pérdida ...
+```
+
+## Congestion Avoidance  
+
+```{mermaid}
+%%| fig-height: 4
+sequenceDiagram
+    participant E as Emisor
+    participant R as Receptor
+    
+    Note over E: Congestion Avoidance: cwnd=1 MSS
+
+    E->>R: seq=1000, MSS=1KB
+    R->>E: ACK=2000
+
+    Note over E: cwnd=2 MSS
+
+    E->>R: seq=2000, MSS=1KB
+    E->>R: seq=3000, MSS=1KB
+    R->>E: ACK=3000
+    R->>E: ACK=4000
+
+    Note over E: cwnd=3 MSS (crecimiento lineal)
+    Note over E: ... continúa hasta detectar pérdida ...
+```
+
+## Eventos de Congestión
+
+**Respuesta a pérdidas:**
+
+::: {.incremental}
+- **Timeout:** 
+  - Pérdida severa
+  - Ventana → 1 MSS
+  - Modo slow start
+
+- **3 ACKs duplicados:**
+  - Pérdida moderada
+  - Ventana → mitad
+  - Continúa congestion avoidance
+:::
+
+::: {.fragment}
+Crea patrón "diente de sierra" en throughput
+:::
+
+## Terminación de Conexión
+
+```{mermaid}
+%%| fig-height: 4
+sequenceDiagram
+    participant C as Cliente
+    participant S as Servidor
+    
+    Note over C,S: Conexión establecida
+    C->>S: FIN=1, seq=x
+    Note over C: Estado: FIN_WAIT_1
+    S->>C: ACK=1, ack=x+1
+    Note over C: Estado: FIN_WAIT_2
+    S->>C: FIN=1, ACK=1, seq=y
+    Note over S: Estado: LAST_ACK
+    C->>S: ACK=1, ack=y+1
+    Note over C: Estado: TIME_WAIT
+    Note over C: Espera 2*MSL
+    Note over C,S: CLOSED
+```
+
+## Equidad y Coexistencia
+
+**TCP es "fair":**
+- N conexiones TCP comparten enlace equitativamente
+- Cada una obtiene ~R/N del ancho de banda R
+
+::: {.fragment}
+**Limitaciones:**
+
+- UDP no implementa control → puede monopolizar
+- Aplicaciones con múltiples conexiones TCP
+- Conexiones con menor RTT tienen ventaja
+:::
+
+# Comparativa TCP vs UDP para Videojuegos
+
+## Cuándo usar UDP
+
+**Requisitos para UDP:**
+- Latencias < 50ms
+- Actualizaciones frecuentes
+- Información nueva más valiosa que la vieja
+
+::: {.fragment}
+**Ventajas:**
+- Cabeceras pequeñas
+- Sin tráfico de control
+- Servidor necesita menos recursos
+- No mantiene estado
+:::
+
+::: {.fragment}
+**Ejemplos:** Shooters (Counter Strike), juegos de lucha
+:::
+
+## Cuándo usar TCP
+
+**Requisitos para TCP:**
+- Tolerancia 100-200ms latencia
+- Entrega ordenada garantizada
+- Detección y corrección de errores
+
+::: {.fragment}
+**Consideraciones:**
+- Bloqueo cabeza de línea
+- Latencias variables por retransmisiones
+- Mayor tráfico de red
+:::
+
+::: {.fragment}
+**Ejemplos:** MMORPGs (World of Warcraft), juegos por turnos
+:::
+
+## Ejemplos Concretos
+
+::: {.columns}
+::: {.column width="50%"}
+**World of Warcraft (TCP):**
+
+- Hechizos necesitan entrega garantizada
+- Actualizaciones de inventario críticas
+- Estado de misiones consistente
+- MMORPGs toleran 100-200ms
+:::
+
+::: {.column width="50%"}
+**Counter Strike (UDP):**
+
+- Retroalimentación inmediata crítica
+- Actualizaciones posición/disparos
+- Técnicas de interpolación en cliente
+- Mitiga efecto paquetes perdidos
+:::
+:::
+
+# Resumen
+
+## Puntos Clave
+
+::: {.incremental}
+- La capa de transporte proporciona comunicación lógica entre **procesos**
+- **UDP:** Minimalista, best-effort, no orientado a conexión
+- **TCP:** Confiable, ordenado, orientado a conexión
+- **Multiplexación:** Múltiples sockets por un medio
+- **Control de flujo:** Evita saturar al receptor
+- **Control de congestión:** Responde a condiciones de red
+- **Trade-off fundamental:** Confiabilidad vs velocidad
+- Elección protocolo depende de requisitos aplicación
+:::

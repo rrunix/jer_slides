@@ -9,7 +9,9 @@
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.8.24">
 
-  <title>a</title>
+  <meta name="author" content="Rubén Rodríguez Fernández ((rrunix?))">
+  <meta name="dcterms.date" content="2026-11-09">
+  <title>Capa de Transporte</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -122,14 +124,626 @@
       margin-right: 0; 
     }
   </style>
+  <script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+  <script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+  <link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
+<section id="title-slide" data-background-image="theme_images/background_fronpage.png" data-background-position="center 70%" data-background-size="33%" class="quarto-title-block center">
+  <h1 class="title">Capa de Transporte</h1>
+  <p class="subtitle">Comunicación lógica entre procesos de aplicación</p>
 
-<section class="slide level2">
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Rubén Rodríguez Fernández (<span class="citation" data-cites="rrunix">(<a href="" role="doc-biblioref" onclick="return false;"><strong>rrunix?</strong></a>)</span>) 
+</div>
+</div>
+</div>
 
+  <p class="date">2026-11-09</p>
+</section><section id="TOC">
+<nav role="doc-toc"> 
+<h2 id="toc-title">Tabla de contenidos</h2>
+<ul>
+<li><a href="#/introducción" id="/toc-introducción">Introducción</a></li>
+<li><a href="#/funciones-principales" id="/toc-funciones-principales">Funciones Principales</a></li>
+<li><a href="#/udp-user-datagram-protocol" id="/toc-udp-user-datagram-protocol">UDP (User Datagram Protocol)</a></li>
+<li><a href="#/tcp-transmission-control-protocol" id="/toc-tcp-transmission-control-protocol">TCP (Transmission Control Protocol)</a></li>
+<li><a href="#/comparativa-tcp-vs-udp-para-videojuegos" id="/toc-comparativa-tcp-vs-udp-para-videojuegos">Comparativa TCP vs UDP para Videojuegos</a></li>
+<li><a href="#/resumen" id="/toc-resumen">Resumen</a></li>
+</ul>
+</nav>
+</section>
+<section>
+<section id="introducción" class="title-slide slide level1 center">
+<h1>Introducción</h1>
+
+</section>
+<section id="qué-es-la-capa-de-transporte" class="slide level2">
+<h2>¿Qué es la Capa de Transporte?</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Función principal:</strong></p>
+<p>Proporciona comunicación lógica entre procesos de aplicación que se ejecutan en diferentes hosts</p>
+<ul>
+<li>Se ejecuta en hosts finales</li>
+<li>No en el núcleo de la red</li>
+<li>Divide mensajes en segmentos</li>
+<li>Recompone segmentos en el receptor</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><strong>Protocolos principales:</strong></p>
+<ul>
+<li><strong>UDP</strong>: Protocolo minimalista</li>
+<li><strong>TCP</strong>: Protocolo complejo con garantías</li>
+</ul>
+<p>La elección depende del dominio y la aplicación</p>
+</div></div>
+</section>
+<section id="ejemplo-cliente-servidor-con-udp" class="slide level2">
+<h2>Ejemplo: Cliente-Servidor con UDP</h2>
+<div class="cell" data-reveal="true" data-fig-height="4" data-layout-align="center">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">sequenceDiagram
+    participant A as Client A
+    participant I as The Internet
+    participant B as Server B
+        
+    A-&gt;&gt;I: Paquete UDP 1 (IP destino: 8.8.8.8, puerto: 80)
+    I-&gt;&gt;B: Paquete 1 entregado
+    
+    A-&gt;&gt;I: Paquete UDP 2 (IP destino: 8.8.8.8, puerto:80)
+    I-&gt;&gt;B: Paquete 2 entregado
+    
+    A-&gt;&gt;I: Paquete UDP 3 (IP destino: 8.8.8.8, puerto:80)
+    
+    A-&gt;&gt;I: Paquete UDP 4 (IP destino: 8.8.8.8, puerto:80)
+    I-&gt;&gt;B: Paquete 4 entregado (llega primero!)
+    A-&gt;&gt;I: Paquete UDP 5 (IP destino: 8.8.8.8, puerto:80)
+    I-&gt;&gt;B: Paquete 3 entregado (llega tarde!)
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Paquete 5: perdido (~1% pérdida normal)</li>
+<li>Paquete 4 llega antes que el 3</li>
+<li>UDP no corrige orden ni pérdidas</li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="funciones-principales" class="title-slide slide level1 center">
+<h1>Funciones Principales</h1>
+
+</section>
+<section id="multiplexación-y-demultiplexación" class="slide level2">
+<h2>1. Multiplexación y Demultiplexación</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Multiplexación:</strong></p>
+<p>Recoger información de diferentes sockets y enviarla por un único medio</p>
+<p><strong>Demultiplexación:</strong></p>
+<p>Recibir segmentos y enviarlos a los sockets correspondientes</p>
+</div><div class="column" style="width:50%;">
+<p><strong>Identificación de sockets:</strong></p>
+<p><strong>TCP:</strong> - IP origen - Puerto origen<br>
+- IP destino - Puerto destino</p>
+<p><strong>UDP:</strong> - IP origen - Puerto origen</p>
+</div></div>
+<div class="fragment">
+<p><strong>Puertos:</strong> Identificadores numéricos (1-65535) - Servidores: asignación manual y fija - Clientes: asignación aleatoria</p>
+</div>
+</section>
+<section id="transferencia-fiable" class="slide level2">
+<h2>2. Transferencia Fiable</h2>
+<p><strong>Características de una transferencia fiable:</strong></p>
+<ul>
+<li class="fragment">No se corrompe ningún bit</li>
+<li class="fragment">No se pierde información (paquetes)</li>
+<li class="fragment">La información se entrega en orden correcto</li>
+</ul>
+<div class="fragment">
+<p><strong>Opciones de implementación:</strong></p>
+<ol type="1">
+<li>Usar protocolos fiables existentes (TCP)</li>
+<li>Implementar características propias sobre protocolo no fiable (UDP + lógica aplicación)</li>
+</ol>
+</div>
+</section></section>
+<section>
+<section id="udp-user-datagram-protocol" class="title-slide slide level1 center">
+<h1>UDP (User Datagram Protocol)</h1>
+
+</section>
+<section id="características-de-udp" class="slide level2">
+<h2>Características de UDP</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Protocolo minimalista [RFC 768]:</strong></p>
+<ul>
+<li>Basado en best-effort</li>
+<li>No orientado a conexión</li>
+<li>Entrega no fiable y sin orden</li>
+<li>Integridad básica (checksum)</li>
+<li>Multiplexación y demultiplexación</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><strong>Lo que NO proporciona:</strong></p>
+<ul>
+<li>Control de flujo</li>
+<li>Control de congestión</li>
+<li>Temporización</li>
+<li>Tasa de transferencia mínima</li>
+<li>Seguridad</li>
+</ul>
+</div></div>
+<div class="fragment">
+<p><strong>“Fire-and-forget”:</strong> Envías el paquete y te olvidas, independientemente de si llega</p>
+</div>
+</section>
+<section id="estructura-del-paquete-udp" class="slide level2">
+<h2>Estructura del Paquete UDP</h2>
+<div class="cell" data-reveal="true" data-fig-height="6" data-out-width="80%" data-layout-align="center">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">---
+title: Estructura del paquete UDP
+---
+packet-beta
+
+    0-15: "Source Port"
+    16-31: "Destination Port"
+    32-47: "Length"
+    48-63: "Checksum"
+    64-95: "Data (longitud variable)"
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li><strong>Longitud:</strong> Hasta 65535 bytes (limitado por MTU)</li>
+<li><strong>Checksum:</strong> Verificación de integridad</li>
+<li>Estructura simple comparada con otros protocolos</li>
+</ul>
+</div>
+</section>
+<section id="checksum-udp" class="slide level2">
+<h2>Checksum UDP</h2>
+<p><strong>Proceso de cálculo:</strong></p>
+<ol type="1">
+<li>Preparación: pseudo-cabecera IP + cabecera UDP + datos</li>
+<li>División en palabras de 16 bits</li>
+<li>Suma usando aritmética de complemento a uno</li>
+<li>Complemento del resultado → campo checksum</li>
+</ol>
+<div class="fragment">
+<p><strong>Verificación en receptor:</strong></p>
+<ul>
+<li>Mismo algoritmo incluyendo checksum recibido</li>
+<li>Resultado esperado: 0xFFFF</li>
+<li>Si difiere: datagrama descartado silenciosamente</li>
+</ul>
+</div>
+</section>
+<section id="casos-de-uso-de-udp" class="slide level2">
+<h2>Casos de Uso de UDP</h2>
+<p><strong>Aplicaciones ideales para UDP:</strong></p>
+<ul>
+<li class="fragment"><strong>Multimedia streaming:</strong> Tolerante a pérdidas, sensible a interrupciones</li>
+<li class="fragment"><strong>DNS:</strong> Respuestas rápidas necesarias</li>
+<li class="fragment"><strong>SNMP:</strong> Administración de red</li>
+<li class="fragment"><strong>Gaming online:</strong> Latencia baja crítica</li>
+<li class="fragment"><strong>QUIC/HTTP3:</strong> Base para protocolos modernos optimizados</li>
+</ul>
+<div class="fragment">
+<p>Ejemplo: Implementar protocolo propio sobre UDP para juegos - Añadir número de paquete - Descartar paquetes fuera de orden - Ignorar duplicados - Sobrecarga mínima</p>
+</div>
+</section></section>
+<section>
+<section id="tcp-transmission-control-protocol" class="title-slide slide level1 center">
+<h1>TCP (Transmission Control Protocol)</h1>
+
+</section>
+<section id="características-de-tcp" class="slide level2">
+<h2>Características de TCP</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Protocolo confiable [RFC 793]:</strong></p>
+<ul>
+<li>Orientado a conexión</li>
+<li>Entrega fiable y ordenada</li>
+<li>Control de flujo</li>
+<li>Control de congestión</li>
+<li>Multiplexación y demultiplexación</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><strong>Lo que NO proporciona:</strong></p>
+<ul>
+<li>Temporización específica</li>
+<li>Tasa mínima garantizada</li>
+<li>Seguridad nativa (necesita TLS/SSL)</li>
+</ul>
+</div></div>
+<div class="fragment">
+<p><strong>Trade-off:</strong> Confiabilidad y orden sobre velocidad pura</p>
+</div>
+</section>
+<section id="estructura-del-paquete-tcp" class="slide level2">
+<h2>Estructura del Paquete TCP</h2>
+<div class="cell" data-reveal="true" data-fig-height="6" data-out-width="80%" data-layout-align="center">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">---
+title: Estructura del paquete TCP
+---
+packet-beta
+  0-15: "Source Port"
+  16-31: "Destination Port"
+  32-63: "Sequence Number"
+  64-95: "Acknowledgment Number"
+  96-99: "Data Offset"
+  100-105: "Reserved"
+  106: "URG"
+  107: "ACK"
+  108: "PSH"
+  109: "RST"
+  110: "SYN"
+  111: "FIN"
+  112-127: "Window"
+  128-143: "Checksum"
+  144-159: "Urgent Pointer"
+  160-191: "Options (variable)"
+  192-255: "Data (variable length)"
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="flags-de-control-tcp" class="slide level2">
+<h2>Flags de Control TCP</h2>
+<p><strong>Significado de cada flag:</strong></p>
+<ul>
+<li class="fragment"><strong>SYN:</strong> Sincronizar números de secuencia (establecimiento)</li>
+<li class="fragment"><strong>ACK:</strong> Campo acknowledgment válido</li>
+<li class="fragment"><strong>FIN:</strong> Fin de datos del emisor</li>
+<li class="fragment"><strong>RST:</strong> Reinicio forzado de conexión</li>
+<li class="fragment"><strong>PSH:</strong> Entrega inmediata a aplicación</li>
+<li class="fragment"><strong>URG:</strong> Datos urgentes</li>
+</ul>
+<div class="fragment">
+<p><strong>Window:</strong> Implementa control de flujo (bytes que receptor acepta)</p>
+</div>
+</section>
+<section id="handshake-de-tres-fases" class="slide level2">
+<h2>Handshake de Tres Fases</h2>
+<div class="cell" data-reveal="true" data-fig-height="4" data-layout-align="center">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">sequenceDiagram
+    participant CS as Cliente Socket
+    participant SS as Server Socket (listen)
+    participant NS as Nuevo Socket
+    
+    Note over CS: Estado: CLOSED
+    Note over SS: Estado: LISTEN
+    CS-&gt;&gt;SS: SYN=1, seq=x
+    Note over CS: Estado: SYN_SENT
+    Note over SS: accept() crea nuevo socket
+    SS-&gt;&gt;NS: Deriva conexión
+    Note over NS: Estado: SYN_RCVD
+    NS-&gt;&gt;CS: SYN=1, ACK=1, seq=y, ack=x+1
+    Note over CS: Estado: ESTABLISHED
+    CS-&gt;&gt;NS: ACK=1, seq=x+1, ack=y+1
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>Se negocian: MSS, opciones de ventana, extensiones TCP</p>
+</div>
+</section>
+<section id="mecanismos-de-confiabilidad" class="slide level2">
+<h2>Mecanismos de Confiabilidad</h2>
+<p><strong>Números de secuencia y ACKs:</strong> - Cada byte tiene número único - ACKs acumulativos (ACK para byte N confirma hasta N-1)</p>
+<div class="fragment">
+<p><strong>Detección de pérdidas - Dos métodos:</strong></p>
+</div>
+</section>
+<section id="detección-por-timeout" class="slide level2">
+<h2>Detección por Timeout</h2>
+<div class="cell" data-reveal="true" data-fig-width="6" data-fig-height="4" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">sequenceDiagram
+    participant E as Emisor
+    participant R as Receptor
+    E -&gt;&gt; X: seq=100, data="A", Paquete perdido
+    Note over E: Timeout de seq:100, reenvio
+    E -&gt;&gt; R: seq=100, data="A",
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>Si no recibe ACK en tiempo determinado → asume pérdida y retransmite</p>
+</div>
+</section>
+<section id="detección-por-acks-duplicados" class="slide level2">
+<h2>Detección por ACKs Duplicados</h2>
+<div class="cell" data-reveal="true" data-fig-width="6" data-fig-height="4" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">sequenceDiagram
+    participant E as Emisor
+    participant R as Receptor
+    E -&gt;&gt; X: seq=100, data="A", Paquete perdido
+    E -&gt;&gt; R: seq=101, data="B"
+    E -&gt;&gt; R: seq=102, data="C"
+    E -&gt;&gt; R: seq=103, data="D"
+    R -&gt;&gt; E: ACK=100
+    R -&gt;&gt; E: ACK=100
+    R -&gt;&gt; E: ACK=100
+    Note over E,R: Retransmisión rápida
+    E -&gt;&gt; R: seq=100, data="A"
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>3 ACKs duplicados → Fast Retransmit inmediato</p>
+</div>
+</section>
+<section id="control-de-flujo" class="slide level2">
+<h2>Control de Flujo</h2>
+<div class="cell" data-reveal="true" data-fig-height="4" data-layout-align="center">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">sequenceDiagram
+    participant E as Emisor
+    participant R as Receptor
+    
+    Note over R: Buffer: 4KB libres
+    R-&gt;&gt;E: ACK=1000, Window=4096
+    E-&gt;&gt;R: seq=1000, data=2KB
+    Note over R: Buffer: 2KB libres
+    R-&gt;&gt;E: ACK=3000, Window=2048
+    E-&gt;&gt;R: seq=3000, data=2KB
+    Note over R: Buffer: 0KB libres (lleno)
+    R-&gt;&gt;E: ACK=5000, Window=0
+    Note over E: Detiene envío, inicia probe timer
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<pre><code>VentanaRecepcion = BufferRecepcion - (UltimoByteRecibido - UltimoByteLeido)</code></pre>
+</div>
+</section>
+<section id="control-de-congestión" class="slide level2">
+<h2>Control de Congestión</h2>
+<p><strong>Ventana de congestión:</strong> - Variable del emisor - Bytes máximos en “el aire” (enviados sin ACK) - Tasa efectiva = min(VentanaCongestion, VentanaRecepcion)</p>
+</section>
+<section id="slow-start" class="slide level2">
+<h2>Slow Start</h2>
+<div class="cell" data-reveal="true" data-fig-height="4" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">sequenceDiagram
+    participant E as Emisor
+    participant R as Receptor
+    
+    Note over E: Slow Start: cwnd=1 MSS
+    E-&gt;&gt;R: seq=1000, MSS=1KB
+    R-&gt;&gt;E: ACK=2000
+    Note over E: cwnd=2 MSS
+    E-&gt;&gt;R: seq=2000, MSS=1KB
+    E-&gt;&gt;R: seq=3000, MSS=1KB
+    R-&gt;&gt;E: ACK=3000
+    R-&gt;&gt;E: ACK=4000
+    Note over E: cwnd=4 MSS (crecimiento exponencial)
+    Note over E: ... continúa hasta threshold o detectar pérdida ...
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="congestion-avoidance" class="slide level2">
+<h2>Congestion Avoidance</h2>
+<div class="cell" data-reveal="true" data-fig-height="4" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">sequenceDiagram
+    participant E as Emisor
+    participant R as Receptor
+    
+    Note over E: Congestion Avoidance: cwnd=1 MSS
+
+    E-&gt;&gt;R: seq=1000, MSS=1KB
+    R-&gt;&gt;E: ACK=2000
+
+    Note over E: cwnd=2 MSS
+
+    E-&gt;&gt;R: seq=2000, MSS=1KB
+    E-&gt;&gt;R: seq=3000, MSS=1KB
+    R-&gt;&gt;E: ACK=3000
+    R-&gt;&gt;E: ACK=4000
+
+    Note over E: cwnd=3 MSS (crecimiento lineal)
+    Note over E: ... continúa hasta detectar pérdida ...
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="eventos-de-congestión" class="slide level2">
+<h2>Eventos de Congestión</h2>
+<p><strong>Respuesta a pérdidas:</strong></p>
+<ul>
+<li class="fragment"><strong>Timeout:</strong>
+<ul>
+<li class="fragment">Pérdida severa</li>
+<li class="fragment">Ventana → 1 MSS</li>
+<li class="fragment">Modo slow start</li>
+</ul></li>
+<li class="fragment"><strong>3 ACKs duplicados:</strong>
+<ul>
+<li class="fragment">Pérdida moderada</li>
+<li class="fragment">Ventana → mitad</li>
+<li class="fragment">Continúa congestion avoidance</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<p>Crea patrón “diente de sierra” en throughput</p>
+</div>
+</section>
+<section id="terminación-de-conexión" class="slide level2">
+<h2>Terminación de Conexión</h2>
+<div class="cell" data-reveal="true" data-fig-height="4" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">sequenceDiagram
+    participant C as Cliente
+    participant S as Servidor
+    
+    Note over C,S: Conexión establecida
+    C-&gt;&gt;S: FIN=1, seq=x
+    Note over C: Estado: FIN_WAIT_1
+    S-&gt;&gt;C: ACK=1, ack=x+1
+    Note over C: Estado: FIN_WAIT_2
+    S-&gt;&gt;C: FIN=1, ACK=1, seq=y
+    Note over S: Estado: LAST_ACK
+    C-&gt;&gt;S: ACK=1, ack=y+1
+    Note over C: Estado: TIME_WAIT
+    Note over C: Espera 2*MSL
+    Note over C,S: CLOSED
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="equidad-y-coexistencia" class="slide level2">
+<h2>Equidad y Coexistencia</h2>
+<p><strong>TCP es “fair”:</strong> - N conexiones TCP comparten enlace equitativamente - Cada una obtiene ~R/N del ancho de banda R</p>
+<div class="fragment">
+<p><strong>Limitaciones:</strong></p>
+<ul>
+<li>UDP no implementa control → puede monopolizar</li>
+<li>Aplicaciones con múltiples conexiones TCP</li>
+<li>Conexiones con menor RTT tienen ventaja</li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="comparativa-tcp-vs-udp-para-videojuegos" class="title-slide slide level1 center">
+<h1>Comparativa TCP vs UDP para Videojuegos</h1>
+
+</section>
+<section id="cuándo-usar-udp" class="slide level2">
+<h2>Cuándo usar UDP</h2>
+<p><strong>Requisitos para UDP:</strong> - Latencias &lt; 50ms - Actualizaciones frecuentes - Información nueva más valiosa que la vieja</p>
+<div class="fragment">
+<p><strong>Ventajas:</strong> - Cabeceras pequeñas - Sin tráfico de control - Servidor necesita menos recursos - No mantiene estado</p>
+</div>
+<div class="fragment">
+<p><strong>Ejemplos:</strong> Shooters (Counter Strike), juegos de lucha</p>
+</div>
+</section>
+<section id="cuándo-usar-tcp" class="slide level2">
+<h2>Cuándo usar TCP</h2>
+<p><strong>Requisitos para TCP:</strong> - Tolerancia 100-200ms latencia - Entrega ordenada garantizada - Detección y corrección de errores</p>
+<div class="fragment">
+<p><strong>Consideraciones:</strong> - Bloqueo cabeza de línea - Latencias variables por retransmisiones - Mayor tráfico de red</p>
+</div>
+<div class="fragment">
+<p><strong>Ejemplos:</strong> MMORPGs (World of Warcraft), juegos por turnos</p>
+</div>
+</section>
+<section id="ejemplos-concretos" class="slide level2">
+<h2>Ejemplos Concretos</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>World of Warcraft (TCP):</strong></p>
+<ul>
+<li>Hechizos necesitan entrega garantizada</li>
+<li>Actualizaciones de inventario críticas</li>
+<li>Estado de misiones consistente</li>
+<li>MMORPGs toleran 100-200ms</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><strong>Counter Strike (UDP):</strong></p>
+<ul>
+<li>Retroalimentación inmediata crítica</li>
+<li>Actualizaciones posición/disparos</li>
+<li>Técnicas de interpolación en cliente</li>
+<li>Mitiga efecto paquetes perdidos</li>
+</ul>
+</div></div>
+</section></section>
+<section>
+<section id="resumen" class="title-slide slide level1 center">
+<h1>Resumen</h1>
+
+</section>
+<section id="puntos-clave" class="slide level2">
+<h2>Puntos Clave</h2>
+<ul>
+<li class="fragment">La capa de transporte proporciona comunicación lógica entre <strong>procesos</strong></li>
+<li class="fragment"><strong>UDP:</strong> Minimalista, best-effort, no orientado a conexión</li>
+<li class="fragment"><strong>TCP:</strong> Confiable, ordenado, orientado a conexión</li>
+<li class="fragment"><strong>Multiplexación:</strong> Múltiples sockets por un medio</li>
+<li class="fragment"><strong>Control de flujo:</strong> Evita saturar al receptor</li>
+<li class="fragment"><strong>Control de congestión:</strong> Responde a condiciones de red</li>
+<li class="fragment"><strong>Trade-off fundamental:</strong> Confiabilidad vs velocidad</li>
+<li class="fragment">Elección protocolo depende de requisitos aplicación</li>
+</ul>
 
 
 <div class="reveal-header">
@@ -140,7 +754,7 @@
 <img data-src="">
 </div>
 </div>
-</section>
+</section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <p><img src="theme_images/URJClogo.png" class="slide-logo"></p>
@@ -522,7 +1136,7 @@
         }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp('/' + window.location.host + '/');
+            var filterRegex = new RegExp("https:\/\/rrunix\.github\.io\/jer_slides\/");
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }
