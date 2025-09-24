@@ -444,7 +444,7 @@ Destino 192.168.1.200 → Selecciona /24 (prefijo más largo)
 
 | Dirección | Propósito | Descripción |
 |-----------|-----------|-------------|
-| 0.0.0.0/32 | This host | Sin IP configurada (DHCP) |
+| 0.0.0.0/32 | Este host | Sin IP configurada (DHCP) |
 | 127.0.0.0/8 | Loopback | Pruebas locales (127.0.0.1) |
 | 255.255.255.255/32 | Limited broadcast | Solo red local |
 | x.x.x.0 | Dirección de red | Identifica la red |
