@@ -823,7 +823,7 @@
     "href": "ch1_p3_network.html#direcciones-especiales",
     "title": "Capa de Red",
     "section": "Direcciones Especiales",
-    "text": "Direcciones Especiales\nDirecciones Reservadas\n\n\n\nDirección\nPropósito\nDescripción\n\n\n\n\n0.0.0.0/32\nThis host\nSin IP configurada (DHCP)\n\n\n127.0.0.0/8\nLoopback\nPruebas locales (127.0.0.1)\n\n\n255.255.255.255/32\nLimited broadcast\nSolo red local\n\n\nx.x.x.0\nDirección de red\nIdentifica la red\n\n\nx.x.x.255\nDirected broadcast\nBroadcast a red específica\n\n\n\nRangos Privados (RFC 1918)\n\n10.0.0.0/8 → 16.7 millones hosts (grandes organizaciones)\n172.16.0.0/12 → 1 millón hosts (empresas medianas)\n192.168.0.0/16 → 65,000 hosts (hogares/oficinas)\n\n\nNo enrutables en Internet público → Requieren NAT"
+    "text": "Direcciones Especiales\nDirecciones Reservadas\n\n\n\nDirección\nPropósito\nDescripción\n\n\n\n\n0.0.0.0/32\nEste host\nSin IP configurada (DHCP)\n\n\n127.0.0.0/8\nLoopback\nPruebas locales (127.0.0.1)\n\n\n255.255.255.255/32\nLimited broadcast\nSolo red local\n\n\nx.x.x.0\nDirección de red\nIdentifica la red\n\n\nx.x.x.255\nDirected broadcast\nBroadcast a red específica\n\n\n\nRangos Privados (RFC 1918)\n\n10.0.0.0/8 → 16.7 millones hosts (grandes organizaciones)\n172.16.0.0/12 → 1 millón hosts (empresas medianas)\n192.168.0.0/16 → 65,000 hosts (hogares/oficinas)\n\n\nNo enrutables en Internet público → Requieren NAT"
   },
   {
     "objectID": "ch1_p3_network.html#direcciones-especiales-práctica",
