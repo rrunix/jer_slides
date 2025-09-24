@@ -1,31 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://rrunix.github.io/jer_slides/ch1_p1_net_introduction.html</loc>
-    <lastmod>2025-09-18T11:30:25.067Z</lastmod>
+    <loc>https://rrunix.github.io/jer_slides/example_markdown.html</loc>
+    <lastmod>2025-09-24T08:57:50.962Z</lastmod>
   </url>
   <url>
-    <loc>https://rrunix.github.io/jer_slides/index.html</loc>
-    <lastmod>2025-09-23T22:12:57.698Z</lastmod>
+    <loc>https://rrunix.github.io/jer_slides/ch1_p5_application.html</loc>
+    <lastmod>2025-09-23T08:32:10.484Z</lastmod>
   </url>
   <url>
-    <loc>https://rrunix.github.io/jer_slides/ch1_p2_access_layer.html</loc>
-    <lastmod>2025-09-22T09:01:38.213Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rrunix.github.io/jer_slides/ch1_p4_transport.html</loc>
-    <lastmod>2025-09-23T08:16:33.257Z</lastmod>
+    <loc>https://rrunix.github.io/jer_slides/ch1_p3_network.html</loc>
+    <lastmod>2025-09-24T22:37:55.846Z</lastmod>
   </url>
   <url>
     <loc>https://rrunix.github.io/jer_slides/sub_introduction.html</loc>
     <lastmod>2025-09-18T08:57:08.831Z</lastmod>
   </url>
   <url>
-    <loc>https://rrunix.github.io/jer_slides/ch1_p3_network.html</loc>
-    <lastmod>2025-09-24T08:42:30.792Z</lastmod>
+    <loc>https://rrunix.github.io/jer_slides/ch1_p4_transport.html</loc>
+    <lastmod>2025-09-24T22:44:13.817Z</lastmod>
   </url>
   <url>
-    <loc>https://rrunix.github.io/jer_slides/ch1_p5_application.html</loc>
-    <lastmod>2025-09-23T08:32:10.484Z</lastmod>
+    <loc>https://rrunix.github.io/jer_slides/ch1_p2_access_layer.html</loc>
+    <lastmod>2025-09-22T09:01:38.213Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rrunix.github.io/jer_slides/index.html</loc>
+    <lastmod>2025-09-24T22:45:04.412Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rrunix.github.io/jer_slides/ch1_p1_net_introduction.html</loc>
+    <lastmod>2025-09-18T11:30:25.067Z</lastmod>
   </url>
 </urlset>

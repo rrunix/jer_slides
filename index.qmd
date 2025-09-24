@@ -14,3 +14,4 @@ format:
 - [Introducción a las redes de computadores](ch1_p1.html) 
 - [Capa de acceso a la red](ch1_p2.html)
 - [Capa de red](ch1_p3.html)
+- [Capa de transporte](ch1_p4.html)

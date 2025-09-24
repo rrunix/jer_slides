@@ -9,8 +9,8 @@
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.8.24">
 
-  <meta name="author" content="Rubén Rodríguez Fernández ((rrunix?))">
-  <meta name="dcterms.date" content="2026-11-09">
+  <meta name="author" content="Rubén Rodríguez Fernández (@rrunix)">
+  <meta name="dcterms.date" content="2026-10-09">
   <title>Capa de Transporte</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -124,6 +124,7 @@
       margin-right: 0; 
     }
   </style>
+  <meta name="mermaid-theme" content="default">
   <script src="site_libs/quarto-diagram/mermaid.min.js"></script>
   <script src="site_libs/quarto-diagram/mermaid-init.js"></script>
   <link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
@@ -139,12 +140,12 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Rubén Rodríguez Fernández (<span class="citation" data-cites="rrunix">(<a href="" role="doc-biblioref" onclick="return false;"><strong>rrunix?</strong></a>)</span>) 
+Rubén Rodríguez Fernández (@rrunix) 
 </div>
 </div>
 </div>
 
-  <p class="date">2026-11-09</p>
+  <p class="date">2026-10-09</p>
 </section><section id="TOC">
 <nav role="doc-toc"> 
 <h2 id="toc-title">Tabla de contenidos</h2>
@@ -165,27 +166,58 @@ Rubén Rodríguez Fernández (<span class="citation" data-cites="rrunix">(<a hre
 </section>
 <section id="qué-es-la-capa-de-transporte" class="slide level2">
 <h2>¿Qué es la Capa de Transporte?</h2>
+<blockquote>
+<p>La capa de transporte proporciona comunicación lógica entre procesos de aplicación que se ejecutan en diferentes hosts</p>
+</blockquote>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><strong>Función principal:</strong></p>
-<p>Proporciona comunicación lógica entre procesos de aplicación que se ejecutan en diferentes hosts</p>
 <ul>
 <li>Se ejecuta en hosts finales</li>
 <li>No en el núcleo de la red</li>
 <li>Divide mensajes en segmentos</li>
 <li>Recompone segmentos en el receptor</li>
 </ul>
-</div><div class="column" style="width:50%;">
 <p><strong>Protocolos principales:</strong></p>
 <ul>
 <li><strong>UDP</strong>: Protocolo minimalista</li>
 <li><strong>TCP</strong>: Protocolo complejo con garantías</li>
 </ul>
-<p>La elección depende del dominio y la aplicación</p>
+</div><div class="column" style="width:50%;">
+<div style="width: 12vw; text-align: center; margin: 0 auto;">
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">block-beta
+    columns 1
+    
+    A["&lt;b&gt;Capa de Aplicación&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;HTTP, HTTPS, FTP, SMTP&lt;br/&gt;DNS, DHCP, Telnet, SSH"]
+    
+    B["&lt;b&gt;Capa de Transporte&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;TCP, UDP&lt;br/&gt;Control de flujo y errores"]
+    
+    C["&lt;b&gt;Capa de Internet&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;IP, ICMP, ARP&lt;br/&gt;Enrutamiento, Direccionamiento"]
+    
+    D["&lt;b&gt;Capa de Acceso a la Red&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Ethernet, WiFi, PPP&lt;br/&gt;Frames, MAC Address&lt;br/&gt;Control de acceso al medio"]
+    
+    classDef highlight fill:#ff9999,stroke:#cc0000,stroke-width:4px,color:#000
+    classDef normal fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#000
+    
+    class B highlight
+    class A,C,D normal
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
 </div></div>
 </section>
 <section id="ejemplo-cliente-servidor-con-udp" class="slide level2">
 <h2>Ejemplo: Cliente-Servidor con UDP</h2>
+<div style="width: 50vw; text-align: center; margin: 0 auto;">
 <div class="cell" data-reveal="true" data-fig-height="4" data-layout-align="center">
 <div class="cell-output-display">
 <div>
@@ -214,13 +246,12 @@ Rubén Rodríguez Fernández (<span class="citation" data-cites="rrunix">(<a hre
 </div>
 </div>
 </div>
-<div class="fragment">
+</div>
 <ul>
 <li>Paquete 5: perdido (~1% pérdida normal)</li>
 <li>Paquete 4 llega antes que el 3</li>
 <li>UDP no corrige orden ni pérdidas</li>
 </ul>
-</div>
 </section></section>
 <section>
 <section id="funciones-principales" class="title-slide slide level1 center">
@@ -229,37 +260,115 @@ Rubén Rodríguez Fernández (<span class="citation" data-cites="rrunix">(<a hre
 </section>
 <section id="multiplexación-y-demultiplexación" class="slide level2">
 <h2>1. Multiplexación y Demultiplexación</h2>
+<p><strong>Multiplexación:</strong> Recoger información de diferentes sockets y enviarla por un único medio.</p>
+<p><strong>Demultiplexación:</strong> Recibir segmentos y enviarlos a los sockets correspondientes.</p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<p><strong>Multiplexación:</strong></p>
-<p>Recoger información de diferentes sockets y enviarla por un único medio</p>
-<p><strong>Demultiplexación:</strong></p>
-<p>Recibir segmentos y enviarlos a los sockets correspondientes</p>
-</div><div class="column" style="width:50%;">
 <p><strong>Identificación de sockets:</strong></p>
-<p><strong>TCP:</strong> - IP origen - Puerto origen<br>
-- IP destino - Puerto destino</p>
-<p><strong>UDP:</strong> - IP origen - Puerto origen</p>
+<ul>
+<li>TCP: (IP y Puerto origen, IP y puerto destino)</li>
+<li>UDP: (<span style="color:red;">IP y puerto origen</span>, IP y puerto destino)</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><strong>Puertos:</strong> Identificadores numéricos (1-65535)</p>
+<ul>
+<li>Servidores: asignación manual y fija</li>
+<li>Clientes: asignación aleatoria</li>
+</ul>
 </div></div>
-<div class="fragment">
-<p><strong>Puertos:</strong> Identificadores numéricos (1-65535) - Servidores: asignación manual y fija - Clientes: asignación aleatoria</p>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+    subgraph "MULTIPLEXACIÓN"
+        A1[Socket 1&lt;br/&gt;App A] --&gt; M[Multiplexor&lt;br/&gt;Capa de Transporte]
+        A2[Socket 2&lt;br/&gt;App B] --&gt; M
+        A3[Socket 3&lt;br/&gt;App C] --&gt; M
+        M --&gt; N[Red&lt;br/&gt;Medio único]
+    end
+    
+    subgraph "DEMULTIPLEXACIÓN"
+        N2[Red&lt;br/&gt;Segmentos entrantes] --&gt; D[Demultiplexor&lt;br/&gt;Capa de Transporte]
+        D --&gt; B1[Socket 1&lt;br/&gt;App A]
+        D --&gt; B2[Socket 2&lt;br/&gt;App B]
+        D --&gt; B3[Socket 3&lt;br/&gt;App C]
+    end
+    
+    N -.-&gt;|Transmisión| N2
+    
+    classDef appClass fill:#e1f5fe,stroke:#0277bd,stroke-width:2px
+    classDef muxClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef netClass fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    
+    class A1,A2,A3,B1,B2,B3 appClass
+    class M,D muxClass
+    class N,N2 netClass
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
 </div>
 </section>
 <section id="transferencia-fiable" class="slide level2">
 <h2>2. Transferencia Fiable</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
 <p><strong>Características de una transferencia fiable:</strong></p>
 <ul>
-<li class="fragment">No se corrompe ningún bit</li>
-<li class="fragment">No se pierde información (paquetes)</li>
-<li class="fragment">La información se entrega en orden correcto</li>
+<li>No se corrompe ningún bit</li>
+<li>No se pierde información (paquetes)</li>
+<li>La información se entrega en orden correcto</li>
 </ul>
-<div class="fragment">
+</div><div class="column" style="width:50%;">
 <p><strong>Opciones de implementación:</strong></p>
 <ol type="1">
 <li>Usar protocolos fiables existentes (TCP)</li>
 <li>Implementar características propias sobre protocolo no fiable (UDP + lógica aplicación)</li>
 </ol>
+</div></div>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+    
+    E[EMISOR] --&gt; PC1[PROTOCOLO&lt;br/&gt;CONFIABILIDAD]
+    PC1 --&gt; MNF[MEDIO&lt;br/&gt;NO FIABLE&lt;br/&gt;&lt;br/&gt;• Puede corromper bits&lt;br/&gt;• Puede perder paquetes&lt;br/&gt;• Puede desordenar]
+    MNF --&gt; PC2[PROTOCOLO&lt;br/&gt;CONFIABILIDAD]
+    PC2 --&gt; R[RECEPTOR]
+    
+    PC1 -.-&gt;|Implementa| MECH[• Detección de errores&lt;br/&gt;• Retransmisión&lt;br/&gt;• Control de flujo&lt;br/&gt;• Secuenciación&lt;br/&gt;• ACK/NACK&lt;br/&gt;• Timeouts]
+    PC2 -.-&gt;|Implementa| MECH
+    
+    classDef endpointClass fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef protocolClass fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px
+    classDef unreliableClass fill:#ffebee,stroke:#d32f2f,stroke-width:2px
+    classDef reliableClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef mechClass fill:#fafafa,stroke:#616161,stroke-width:1px
+    
+    class E,R endpointClass
+    class PC1,PC2 protocolClass
+    class MNF unreliableClass
+    class MECH mechClass
+</pre>
 </div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="otros-conceptos" class="slide level2">
+<h2>Otros conceptos</h2>
+<ul>
+<li><strong>Control de flujo</strong>: Evita que el emisor sature al receptor limitando la velocidad de envío según la capacidad del destinatario</li>
+<li><strong>Control de congestión</strong>: Ajusta la velocidad de transmisión para evitar saturar la red cuando detecta congestión</li>
+<li><strong>Temporización</strong>: Proporciona el tiempo mínimo de entrega de datos entre emisor y receptor a través de la red</li>
+<li><strong>Tasa de transferencia mínima</strong>: Garantiza una velocidad mínima de transmisión de datos para aplicaciones que requieren ancho de banda constante</li>
+</ul>
 </section></section>
 <section>
 <section id="udp-user-datagram-protocol" class="title-slide slide level1 center">
@@ -299,29 +408,23 @@ Rubén Rodríguez Fernández (<span class="citation" data-cites="rrunix">(<a hre
 <div>
 <p></p><figure class=""><p></p>
 <div>
-<pre class="mermaid mermaid-js">---
-title: Estructura del paquete UDP
----
-packet-beta
+<pre class="mermaid mermaid-js">packet-beta
 
     0-15: "Source Port"
     16-31: "Destination Port"
     32-47: "Length"
     48-63: "Checksum"
-    64-95: "Data (longitud variable)"
 </pre>
 </div>
 <p></p></figure><p></p>
 </div>
 </div>
 </div>
-<div class="fragment">
 <ul>
 <li><strong>Longitud:</strong> Hasta 65535 bytes (limitado por MTU)</li>
 <li><strong>Checksum:</strong> Verificación de integridad</li>
 <li>Estructura simple comparada con otros protocolos</li>
 </ul>
-</div>
 </section>
 <section id="checksum-udp" class="slide level2">
 <h2>Checksum UDP</h2>
@@ -332,28 +435,30 @@ packet-beta
 <li>Suma usando aritmética de complemento a uno</li>
 <li>Complemento del resultado → campo checksum</li>
 </ol>
-<div class="fragment">
 <p><strong>Verificación en receptor:</strong></p>
 <ul>
 <li>Mismo algoritmo incluyendo checksum recibido</li>
 <li>Resultado esperado: 0xFFFF</li>
 <li>Si difiere: datagrama descartado silenciosamente</li>
 </ul>
-</div>
 </section>
 <section id="casos-de-uso-de-udp" class="slide level2">
 <h2>Casos de Uso de UDP</h2>
 <p><strong>Aplicaciones ideales para UDP:</strong></p>
 <ul>
-<li class="fragment"><strong>Multimedia streaming:</strong> Tolerante a pérdidas, sensible a interrupciones</li>
-<li class="fragment"><strong>DNS:</strong> Respuestas rápidas necesarias</li>
-<li class="fragment"><strong>SNMP:</strong> Administración de red</li>
-<li class="fragment"><strong>Gaming online:</strong> Latencia baja crítica</li>
-<li class="fragment"><strong>QUIC/HTTP3:</strong> Base para protocolos modernos optimizados</li>
+<li><strong>Multimedia streaming:</strong> Tolerante a pérdidas, sensible a interrupciones</li>
+<li><strong>DNS:</strong> Respuestas rápidas necesarias</li>
+<li><strong>SNMP:</strong> Administración de red</li>
+<li><strong>Gaming online:</strong> Latencia baja crítica</li>
+<li><strong>QUIC/HTTP3:</strong> Base para protocolos modernos optimizados</li>
 </ul>
-<div class="fragment">
-<p>Ejemplo: Implementar protocolo propio sobre UDP para juegos - Añadir número de paquete - Descartar paquetes fuera de orden - Ignorar duplicados - Sobrecarga mínima</p>
-</div>
+<p>Ejemplo: Implementar protocolo propio sobre UDP para juegos</p>
+<ul>
+<li>Añadir número de paquete</li>
+<li>Descartar paquetes fuera de orden</li>
+<li>Ignorar duplicados</li>
+<li>Sobrecarga mínima</li>
+</ul>
 </section></section>
 <section>
 <section id="tcp-transmission-control-protocol" class="title-slide slide level1 center">
@@ -380,21 +485,17 @@ packet-beta
 <li>Seguridad nativa (necesita TLS/SSL)</li>
 </ul>
 </div></div>
-<div class="fragment">
 <p><strong>Trade-off:</strong> Confiabilidad y orden sobre velocidad pura</p>
-</div>
 </section>
 <section id="estructura-del-paquete-tcp" class="slide level2">
 <h2>Estructura del Paquete TCP</h2>
+<div style="width: 50vw; text-align: center; margin: 0 auto;">
 <div class="cell" data-reveal="true" data-fig-height="6" data-out-width="80%" data-layout-align="center">
 <div class="cell-output-display">
 <div>
 <p></p><figure class=""><p></p>
 <div>
-<pre class="mermaid mermaid-js">---
-title: Estructura del paquete TCP
----
-packet-beta
+<pre class="mermaid mermaid-js">packet-beta
   0-15: "Source Port"
   16-31: "Destination Port"
   32-63: "Sequence Number"
@@ -411,31 +512,285 @@ packet-beta
   128-143: "Checksum"
   144-159: "Urgent Pointer"
   160-191: "Options (variable)"
-  192-255: "Data (variable length)"
 </pre>
 </div>
 <p></p></figure><p></p>
 </div>
 </div>
 </div>
-</section>
-<section id="flags-de-control-tcp" class="slide level2">
-<h2>Flags de Control TCP</h2>
-<p><strong>Significado de cada flag:</strong></p>
-<ul>
-<li class="fragment"><strong>SYN:</strong> Sincronizar números de secuencia (establecimiento)</li>
-<li class="fragment"><strong>ACK:</strong> Campo acknowledgment válido</li>
-<li class="fragment"><strong>FIN:</strong> Fin de datos del emisor</li>
-<li class="fragment"><strong>RST:</strong> Reinicio forzado de conexión</li>
-<li class="fragment"><strong>PSH:</strong> Entrega inmediata a aplicación</li>
-<li class="fragment"><strong>URG:</strong> Datos urgentes</li>
-</ul>
-<div class="fragment">
-<p><strong>Window:</strong> Implementa control de flujo (bytes que receptor acepta)</p>
 </div>
+<ul>
+<li><strong>Sequence number</strong>: Número que identifica la posición del primer byte de datos en el segmento dentro del flujo de datos.</li>
+<li><strong>Ack number</strong>: Indica el próximo número de secuencia que el receptor espera recibir. Confirma la recepción correcta de datos anteriores.</li>
+<li><strong>Window:</strong> Implementa control de flujo (bytes que receptor acepta)</li>
+</ul>
+</section>
+<section id="mecanismos-de-confiabilidad" class="slide level2">
+<h2>Mecanismos de Confiabilidad</h2>
+<blockquote>
+<p>Los mecanismos de confiabilidad en TCP garantizan que los datos lleguen correctamente y en orden.</p>
+</blockquote>
+<p><strong>Números de secuencia y ACKs:</strong></p>
+<ul>
+<li>Cada byte tiene número único</li>
+<li>Cuando enviamos información, está identificada por un número de secuencia (SEQ)</li>
+<li>Además, esperamos confirmación de que se ha recibido correctamente (ACK)</li>
+<li>ACKs acumulativos (ACK para byte N confirma hasta N-1)</li>
+<li>Los ACKs y SEQs permite detectar datos perdidos, duplicados o desordenados</li>
+</ul>
+<p><strong>Detección de pérdidas:</strong></p>
+<ul>
+<li>Detección de timeout</li>
+<li>Detección de ACKs duplicados</li>
+</ul>
+</section>
+<section id="tcp-básico" class="slide level2">
+<h2>TCP básico</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div style="width: 38vw; text-align: center; margin: 0 auto;">
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">sequenceDiagram
+    participant E as Emisor
+    participant R as Receptor
+    
+    Note over E,R: Conexión ya establecida, seq inicial=100
+    
+    E-&gt;&gt;R: seq=100, data="Hola" (4 bytes)
+    Note over R: Recibe
+    R-&gt;&gt;E: ACK=104 ("Espero byte 104")
+    Note over R: Confirma
+    
+    E-&gt;&gt;R: seq=104, data=" mundo!" (7 bytes)  
+    R-&gt;&gt;E: ACK=111 ("Espero byte 111")
+    
+    E-&gt;&gt;R: seq=111, data=" TCP" (4 bytes)
+    E-&gt;&gt;R: seq=115, data=" rocks" (6 bytes)
+    Note over R: Recibe ambos correctamente
+    Note over R: ACK acumulativo confirma todo
+    R-&gt;&gt;E: ACK=121 ("Recibí todo hasta byte 120")
+    
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>Primer envío: seq=100 con “Hola” (4 bytes) → el receptor responde ACK=104, indicando que espera el byte 104</li>
+<li>Envíos consecutivos: Cada mensaje usa el número de secuencia donde terminó el anterior (104, 111, 115)</li>
+<li>ACK acumulativo final: ACK=121 confirma de una vez ambos paquetes “TCP” y “rocks”</li>
+</ul>
+</div></div>
+</section>
+<section id="detección-de-pérdidas" class="slide level2">
+<h2>Detección de pérdidas</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="pérdidas-por-timeout">Pérdidas por timeout</h3>
+<div style="width: 38vw; text-align: center; margin: 0 auto;">
+<div class="cell" data-reveal="true" data-fig-width="6" data-fig-height="4" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">sequenceDiagram
+    participant E as Emisor
+    participant R as Receptor
+    E -&gt;&gt; X: seq=100, data="A", Paquete perdido
+    Note over E: Timeout de seq:100, reenvio
+    E -&gt;&gt; R: seq=100, data="A",
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>Si no recibe ACK en tiempo determinado → asume pérdida y retransmite</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="pérdidas-por-acks-duplicados">Pérdidas por ACKs duplicados</h3>
+<div style="width: 38vw; text-align: center; margin: 0 auto;">
+<div class="cell" data-reveal="true" data-fig-width="6" data-fig-height="4" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">sequenceDiagram
+    participant E as Emisor
+    participant R as Receptor
+    E -&gt;&gt; X: seq=100, data="A", Paquete perdido
+    E -&gt;&gt; R: seq=101, data="B"
+    E -&gt;&gt; R: seq=102, data="C"
+    E -&gt;&gt; R: seq=103, data="D"
+    R -&gt;&gt; E: ACK=100
+    R -&gt;&gt; E: ACK=100
+    R -&gt;&gt; E: ACK=100
+    Note over E,R: Retransmisión rápida
+    E -&gt;&gt; R: seq=100, data="A"
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>3 ACKs duplicados → Fast Retransmit inmediato</li>
+</ul>
+</div></div>
+</section>
+<section id="control-de-flujo" class="slide level2">
+<h2>Control de Flujo</h2>
+<blockquote>
+<p>El control de flujo en TCP es un mecanismo que evita que el emisor envíe más datos de los que el receptor puede procesar.</p>
+</blockquote>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div style="width: 30vw; text-align: center; margin: 0 auto;">
+<div class="cell" data-reveal="true" data-fig-height="4" data-layout-align="center">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">sequenceDiagram
+    participant E as Emisor
+    participant R as Receptor
+    
+    Note over R: Buffer: 4KB libres
+    R-&gt;&gt;E: ACK=1000, Window=4096
+    E-&gt;&gt;R: seq=1000, data=2KB
+    Note over R: Buffer: 2KB libres
+    R-&gt;&gt;E: ACK=3000, Window=2048
+    E-&gt;&gt;R: seq=3000, data=2KB
+    Note over R: Buffer: 0KB libres (lleno)
+    R-&gt;&gt;E: ACK=5000, Window=0
+    Note over E: Detiene envío, inicia probe timer
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>Receptor informa de su capacidad disponible, y se define:</li>
+<li><code>VentanaRecepcion = BufferRecepcion - (UltimoByteRecibido - UltimoByteLeido)</code></li>
+<li>El emisor se limita a esta ventana</li>
+<li>Si la capacidad es 0, se espera un tiempo y se vuelve a probar.</li>
+</ul>
+</div></div>
+</section>
+<section id="control-de-congestión" class="slide level2">
+<h2>Control de Congestión</h2>
+<blockquote>
+<p>El control de congestión en TCP es un mecanismo que ajusta automáticamente la velocidad de envío (ventana de congestión) para evitar saturar la red cuando detecta pérdida de paquetes o retardos.</p>
+</blockquote>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="ventana-de-congestión">Ventana de congestión</h3>
+<ul>
+<li>Variable del emisor</li>
+<li>Bytes máximos en “el aire” (enviados sin ACK)</li>
+<li>Tasa efectiva = min(VentanaCongestion, VentanaRecepcion)</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="eventos-de-congestión-pérdidas">Eventos de Congestión (Pérdidas)</h3>
+<ul>
+<li><p><strong>Timeout -&gt; Modo slow start</strong></p>
+<ul>
+<li>Pérdida severa</li>
+<li>Ventana → 1 MSS</li>
+</ul></li>
+<li><p><strong>3 ACKs duplicados -&gt; Modo congestion avoidance</strong></p>
+<ul>
+<li>Pérdida moderada</li>
+<li>Ventana → mitad</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="mecanismos-de-control-de-congestión" class="slide level2">
+<h2>Mecanismos de control de congestión</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="slow-start">Slow start</h3>
+<div style="width: 30vw; text-align: center; margin: 0 auto;">
+<div class="cell" data-reveal="true" data-fig-height="4" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">sequenceDiagram
+    participant E as Emisor
+    participant R as Receptor
+    
+    Note over E: Slow Start: cwnd=1 MSS
+    E-&gt;&gt;R: seq=1000, MSS=1KB
+    R-&gt;&gt;E: ACK=2000
+    Note over E: cwnd=2 MSS
+    E-&gt;&gt;R: seq=2000, MSS=1KB
+    E-&gt;&gt;R: seq=3000, MSS=1KB
+    R-&gt;&gt;E: ACK=4000
+    Note over E: cwnd=4 MSS (crecimiento exponencial)
+    Note over E: ... continúa hasta threshold o detectar pérdida ...
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
+<p>Duplicar ventana por cada RTT</p>
+</div><div class="column" style="width:50%;">
+<h3 id="congestion-avoidance">Congestion Avoidance</h3>
+<div style="width: 30vw; text-align: center; margin: 0 auto;">
+<div class="cell" data-reveal="true" data-fig-height="4" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">sequenceDiagram
+    participant E as Emisor
+    participant R as Receptor
+    
+    Note over E: Congestion Avoidance: cwnd=1 MSS
+
+    E-&gt;&gt;R: seq=1000, MSS=1KB
+    R-&gt;&gt;E: ACK=2000
+
+    Note over E: cwnd=2 MSS
+
+    E-&gt;&gt;R: seq=2000, MSS=1KB
+    E-&gt;&gt;R: seq=3000, MSS=1KB
+    R-&gt;&gt;E: ACK=4000
+
+    Note over E: cwnd=3 MSS (crecimiento lineal)
+    Note over E: ... continúa hasta detectar pérdida ...
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
+<p>Incrementar en 1 la ventana en cada RTT</p>
+</div></div>
 </section>
 <section id="handshake-de-tres-fases" class="slide level2">
 <h2>Handshake de Tres Fases</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div style="width: 38vw; text-align: center; margin: 0 auto;">
 <div class="cell" data-reveal="true" data-fig-height="4" data-layout-align="center">
 <div class="cell-output-display">
 <div>
@@ -462,186 +817,21 @@ packet-beta
 </div>
 </div>
 </div>
-<div class="fragment">
-<p>Se negocian: MSS, opciones de ventana, extensiones TCP</p>
 </div>
-</section>
-<section id="mecanismos-de-confiabilidad" class="slide level2">
-<h2>Mecanismos de Confiabilidad</h2>
-<p><strong>Números de secuencia y ACKs:</strong> - Cada byte tiene número único - ACKs acumulativos (ACK para byte N confirma hasta N-1)</p>
-<div class="fragment">
-<p><strong>Detección de pérdidas - Dos métodos:</strong></p>
-</div>
-</section>
-<section id="detección-por-timeout" class="slide level2">
-<h2>Detección por Timeout</h2>
-<div class="cell" data-reveal="true" data-fig-width="6" data-fig-height="4" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<pre class="mermaid mermaid-js">sequenceDiagram
-    participant E as Emisor
-    participant R as Receptor
-    E -&gt;&gt; X: seq=100, data="A", Paquete perdido
-    Note over E: Timeout de seq:100, reenvio
-    E -&gt;&gt; R: seq=100, data="A",
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>Si no recibe ACK en tiempo determinado → asume pérdida y retransmite</p>
-</div>
-</section>
-<section id="detección-por-acks-duplicados" class="slide level2">
-<h2>Detección por ACKs Duplicados</h2>
-<div class="cell" data-reveal="true" data-fig-width="6" data-fig-height="4" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<pre class="mermaid mermaid-js">sequenceDiagram
-    participant E as Emisor
-    participant R as Receptor
-    E -&gt;&gt; X: seq=100, data="A", Paquete perdido
-    E -&gt;&gt; R: seq=101, data="B"
-    E -&gt;&gt; R: seq=102, data="C"
-    E -&gt;&gt; R: seq=103, data="D"
-    R -&gt;&gt; E: ACK=100
-    R -&gt;&gt; E: ACK=100
-    R -&gt;&gt; E: ACK=100
-    Note over E,R: Retransmisión rápida
-    E -&gt;&gt; R: seq=100, data="A"
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>3 ACKs duplicados → Fast Retransmit inmediato</p>
-</div>
-</section>
-<section id="control-de-flujo" class="slide level2">
-<h2>Control de Flujo</h2>
-<div class="cell" data-reveal="true" data-fig-height="4" data-layout-align="center">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<pre class="mermaid mermaid-js">sequenceDiagram
-    participant E as Emisor
-    participant R as Receptor
-    
-    Note over R: Buffer: 4KB libres
-    R-&gt;&gt;E: ACK=1000, Window=4096
-    E-&gt;&gt;R: seq=1000, data=2KB
-    Note over R: Buffer: 2KB libres
-    R-&gt;&gt;E: ACK=3000, Window=2048
-    E-&gt;&gt;R: seq=3000, data=2KB
-    Note over R: Buffer: 0KB libres (lleno)
-    R-&gt;&gt;E: ACK=5000, Window=0
-    Note over E: Detiene envío, inicia probe timer
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<pre><code>VentanaRecepcion = BufferRecepcion - (UltimoByteRecibido - UltimoByteLeido)</code></pre>
-</div>
-</section>
-<section id="control-de-congestión" class="slide level2">
-<h2>Control de Congestión</h2>
-<p><strong>Ventana de congestión:</strong> - Variable del emisor - Bytes máximos en “el aire” (enviados sin ACK) - Tasa efectiva = min(VentanaCongestion, VentanaRecepcion)</p>
-</section>
-<section id="slow-start" class="slide level2">
-<h2>Slow Start</h2>
-<div class="cell" data-reveal="true" data-fig-height="4" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<pre class="mermaid mermaid-js">sequenceDiagram
-    participant E as Emisor
-    participant R as Receptor
-    
-    Note over E: Slow Start: cwnd=1 MSS
-    E-&gt;&gt;R: seq=1000, MSS=1KB
-    R-&gt;&gt;E: ACK=2000
-    Note over E: cwnd=2 MSS
-    E-&gt;&gt;R: seq=2000, MSS=1KB
-    E-&gt;&gt;R: seq=3000, MSS=1KB
-    R-&gt;&gt;E: ACK=3000
-    R-&gt;&gt;E: ACK=4000
-    Note over E: cwnd=4 MSS (crecimiento exponencial)
-    Note over E: ... continúa hasta threshold o detectar pérdida ...
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="congestion-avoidance" class="slide level2">
-<h2>Congestion Avoidance</h2>
-<div class="cell" data-reveal="true" data-fig-height="4" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<pre class="mermaid mermaid-js">sequenceDiagram
-    participant E as Emisor
-    participant R as Receptor
-    
-    Note over E: Congestion Avoidance: cwnd=1 MSS
-
-    E-&gt;&gt;R: seq=1000, MSS=1KB
-    R-&gt;&gt;E: ACK=2000
-
-    Note over E: cwnd=2 MSS
-
-    E-&gt;&gt;R: seq=2000, MSS=1KB
-    E-&gt;&gt;R: seq=3000, MSS=1KB
-    R-&gt;&gt;E: ACK=3000
-    R-&gt;&gt;E: ACK=4000
-
-    Note over E: cwnd=3 MSS (crecimiento lineal)
-    Note over E: ... continúa hasta detectar pérdida ...
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="eventos-de-congestión" class="slide level2">
-<h2>Eventos de Congestión</h2>
-<p><strong>Respuesta a pérdidas:</strong></p>
+</div><div class="column" style="width:50%;">
 <ul>
-<li class="fragment"><strong>Timeout:</strong>
-<ul>
-<li class="fragment">Pérdida severa</li>
-<li class="fragment">Ventana → 1 MSS</li>
-<li class="fragment">Modo slow start</li>
-</ul></li>
-<li class="fragment"><strong>3 ACKs duplicados:</strong>
-<ul>
-<li class="fragment">Pérdida moderada</li>
-<li class="fragment">Ventana → mitad</li>
-<li class="fragment">Continúa congestion avoidance</li>
-</ul></li>
+<li>Se negocian: MSS, opciones de ventana, extensiones TCP</li>
+<li>Los flags de las cabeceras también consumen bits.</li>
+<li>El serverSocket está en el servidor,</li>
+<li>una vez se establece la comunicación ambos sockets son iguales.</li>
 </ul>
-<div class="fragment">
-<p>Crea patrón “diente de sierra” en throughput</p>
-</div>
+</div></div>
 </section>
 <section id="terminación-de-conexión" class="slide level2">
 <h2>Terminación de Conexión</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div style="width: 28vw; text-align: center; margin: 0 auto;">
 <div class="cell" data-reveal="true" data-fig-height="4" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -668,43 +858,68 @@ packet-beta
 </div>
 </div>
 </div>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>Cada extremo debe enviar su propio FIN y recibir confirmación, permitiendo cierre unidireccional (half-close).</li>
+<li>El cliente espera 2*MSL para asegurar que su último ACK llegó y manejar retransmisiones tardías antes del cierre definitivo.</li>
+</ul>
+</div></div>
 </section>
 <section id="equidad-y-coexistencia" class="slide level2">
 <h2>Equidad y Coexistencia</h2>
-<p><strong>TCP es “fair”:</strong> - N conexiones TCP comparten enlace equitativamente - Cada una obtiene ~R/N del ancho de banda R</p>
-<div class="fragment">
+<p><strong>TCP es “fair”:</strong></p>
+<ul>
+<li>N conexiones TCP comparten enlace equitativamente</li>
+<li>Cada una obtiene ~R/N del ancho de banda R</li>
+</ul>
 <p><strong>Limitaciones:</strong></p>
 <ul>
 <li>UDP no implementa control → puede monopolizar</li>
 <li>Aplicaciones con múltiples conexiones TCP</li>
 <li>Conexiones con menor RTT tienen ventaja</li>
 </ul>
-</div>
 </section></section>
 <section>
 <section id="comparativa-tcp-vs-udp-para-videojuegos" class="title-slide slide level1 center">
 <h1>Comparativa TCP vs UDP para Videojuegos</h1>
 
 </section>
-<section id="cuándo-usar-udp" class="slide level2">
-<h2>Cuándo usar UDP</h2>
-<p><strong>Requisitos para UDP:</strong> - Latencias &lt; 50ms - Actualizaciones frecuentes - Información nueva más valiosa que la vieja</p>
-<div class="fragment">
-<p><strong>Ventajas:</strong> - Cabeceras pequeñas - Sin tráfico de control - Servidor necesita menos recursos - No mantiene estado</p>
-</div>
-<div class="fragment">
+<section id="cuándo-usar" class="slide level2">
+<h2>Cuándo usar…</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="udp">UDP</h3>
+<p><strong>Requisitos para UDP:</strong></p>
+<ul>
+<li>Latencias &lt; 50ms</li>
+<li>Actualizaciones frecuentes</li>
+<li>Información nueva más valiosa que la vieja</li>
+</ul>
+<p><strong>Ventajas:</strong></p>
+<ul>
+<li>Cabeceras pequeñas</li>
+<li>Sin tráfico de control</li>
+<li>Servidor necesita menos recursos</li>
+<li>No mantiene estado</li>
+</ul>
 <p><strong>Ejemplos:</strong> Shooters (Counter Strike), juegos de lucha</p>
-</div>
-</section>
-<section id="cuándo-usar-tcp" class="slide level2">
-<h2>Cuándo usar TCP</h2>
-<p><strong>Requisitos para TCP:</strong> - Tolerancia 100-200ms latencia - Entrega ordenada garantizada - Detección y corrección de errores</p>
-<div class="fragment">
-<p><strong>Consideraciones:</strong> - Bloqueo cabeza de línea - Latencias variables por retransmisiones - Mayor tráfico de red</p>
-</div>
-<div class="fragment">
-<p><strong>Ejemplos:</strong> MMORPGs (World of Warcraft), juegos por turnos</p>
-</div>
+</div><div class="column" style="width:50%;">
+<h3 id="tcp">TCP</h3>
+<p><strong>Requisitos para TCP:</strong></p>
+<ul>
+<li>Tolerancia 100-200ms latencia</li>
+<li>Entrega ordenada garantizada</li>
+<li>Detección y corrección de errores</li>
+</ul>
+<p><br> <strong>Consideraciones:</strong></p>
+<ul>
+<li>Bloqueo cabeza de línea</li>
+<li>Latencias variables por retransmisiones</li>
+<li>Mayor tráfico de red</li>
+</ul>
+<p><br> <strong>Ejemplos:</strong> MMORPGs (World of Warcraft), juegos por turnos</p>
+</div></div>
 </section>
 <section id="ejemplos-concretos" class="slide level2">
 <h2>Ejemplos Concretos</h2>

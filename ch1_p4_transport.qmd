@@ -1,38 +1,62 @@
 ---
 title: "Capa de Transporte"
 subtitle: "Comunicación lógica entre procesos de aplicación"
-author: "Rubén Rodríguez Fernández (@rrunix)"
-date: "23/09/2025"
+author: "Rubén Rodríguez Fernández (&#64;rrunix)"
+date: "22/09/2025"
+
+mermaid:
+      theme: default
 ---
 
 # Introducción
 
 ## ¿Qué es la Capa de Transporte?
 
+> La capa de transporte proporciona comunicación lógica entre procesos de aplicación que se ejecutan en diferentes hosts
+
 ::: {.columns}
 ::: {.column width="50%"}
 **Función principal:**
-
-Proporciona comunicación lógica entre procesos de aplicación que se ejecutan en diferentes hosts
 
 - Se ejecuta en hosts finales
 - No en el núcleo de la red
 - Divide mensajes en segmentos
 - Recompone segmentos en el receptor
-:::
 
-::: {.column width="50%"}
 **Protocolos principales:**
 
 - **UDP**: Protocolo minimalista
 - **TCP**: Protocolo complejo con garantías
-
-La elección depende del dominio y la aplicación
 :::
+
+::: {.column width="50%"}
+::: {style="width: 12vw; text-align: center; margin: 0 auto;"}
+```{mermaid}
+block-beta
+    columns 1
+    
+    A["<b>Capa de Aplicación</b><br/><br/>HTTP, HTTPS, FTP, SMTP<br/>DNS, DHCP, Telnet, SSH"]
+    
+    B["<b>Capa de Transporte</b><br/><br/>TCP, UDP<br/>Control de flujo y errores"]
+    
+    C["<b>Capa de Internet</b><br/><br/>IP, ICMP, ARP<br/>Enrutamiento, Direccionamiento"]
+    
+    D["<b>Capa de Acceso a la Red</b><br/><br/>Ethernet, WiFi, PPP<br/>Frames, MAC Address<br/>Control de acceso al medio"]
+    
+    classDef highlight fill:#ff9999,stroke:#cc0000,stroke-width:4px,color:#000
+    classDef normal fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#000
+    
+    class B highlight
+    class A,C,D normal
+```
+:::
+:::
+
 :::
 
 ## Ejemplo: Cliente-Servidor con UDP
 
+::: {style="width: 50vw; text-align: center; margin: 0 auto;"}
 ```{mermaid}
 %%| fig-height: 4
 %%| fig-align: center
@@ -54,65 +78,117 @@ sequenceDiagram
     A->>I: Paquete UDP 5 (IP destino: 8.8.8.8, puerto:80)
     I->>B: Paquete 3 entregado (llega tarde!)
 ```
+:::
 
-::: {.fragment}
+
 - Paquete 5: perdido (~1% pérdida normal)
 - Paquete 4 llega antes que el 3
 - UDP no corrige orden ni pérdidas
-:::
+
 
 # Funciones Principales
 
 ## 1. Multiplexación y Demultiplexación
 
+**Multiplexación:** Recoger información de diferentes sockets y enviarla por un único medio.
+
+**Demultiplexación:** Recibir segmentos y enviarlos a los sockets correspondientes.
+
 ::: {.columns}
-::: {.column width="50%"}
-**Multiplexación:**
-
-Recoger información de diferentes sockets y enviarla por un único medio
-
-**Demultiplexación:**
-
-Recibir segmentos y enviarlos a los sockets correspondientes
-:::
-
 ::: {.column width="50%"}
 **Identificación de sockets:**
 
-**TCP:**
-- IP origen
-- Puerto origen  
-- IP destino
-- Puerto destino
-
-**UDP:**
-- IP origen
-- Puerto origen
+- TCP: (IP y Puerto origen, IP y puerto destino)
+- UDP: ([IP y puerto origen]{style="color:red;"}, IP y puerto destino)
 :::
-:::
-
-::: {.fragment}
+::: {.column width="50%"}
 **Puertos:** Identificadores numéricos (1-65535)
+
 - Servidores: asignación manual y fija
 - Clientes: asignación aleatoria
 :::
+:::
+
+```{mermaid}
+graph LR
+    subgraph "MULTIPLEXACIÓN"
+        A1[Socket 1<br/>App A] --> M[Multiplexor<br/>Capa de Transporte]
+        A2[Socket 2<br/>App B] --> M
+        A3[Socket 3<br/>App C] --> M
+        M --> N[Red<br/>Medio único]
+    end
+    
+    subgraph "DEMULTIPLEXACIÓN"
+        N2[Red<br/>Segmentos entrantes] --> D[Demultiplexor<br/>Capa de Transporte]
+        D --> B1[Socket 1<br/>App A]
+        D --> B2[Socket 2<br/>App B]
+        D --> B3[Socket 3<br/>App C]
+    end
+    
+    N -.->|Transmisión| N2
+    
+    classDef appClass fill:#e1f5fe,stroke:#0277bd,stroke-width:2px
+    classDef muxClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef netClass fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    
+    class A1,A2,A3,B1,B2,B3 appClass
+    class M,D muxClass
+    class N,N2 netClass
+```
+
+
 
 ## 2. Transferencia Fiable
 
+
+::: {.columns}
+::: {.column width="50%"}
 **Características de una transferencia fiable:**
 
-::: {.incremental}
+
 - No se corrompe ningún bit
 - No se pierde información (paquetes)
 - La información se entrega en orden correcto
 :::
+::: {.column width="50%"}
 
-::: {.fragment}
 **Opciones de implementación:**
 
 1. Usar protocolos fiables existentes (TCP)
 2. Implementar características propias sobre protocolo no fiable (UDP + lógica aplicación)
 :::
+:::
+
+
+```{mermaid}
+graph LR
+    
+    E[EMISOR] --> PC1[PROTOCOLO<br/>CONFIABILIDAD]
+    PC1 --> MNF[MEDIO<br/>NO FIABLE<br/><br/>• Puede corromper bits<br/>• Puede perder paquetes<br/>• Puede desordenar]
+    MNF --> PC2[PROTOCOLO<br/>CONFIABILIDAD]
+    PC2 --> R[RECEPTOR]
+    
+    PC1 -.->|Implementa| MECH[• Detección de errores<br/>• Retransmisión<br/>• Control de flujo<br/>• Secuenciación<br/>• ACK/NACK<br/>• Timeouts]
+    PC2 -.->|Implementa| MECH
+    
+    classDef endpointClass fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef protocolClass fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px
+    classDef unreliableClass fill:#ffebee,stroke:#d32f2f,stroke-width:2px
+    classDef reliableClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef mechClass fill:#fafafa,stroke:#616161,stroke-width:1px
+    
+    class E,R endpointClass
+    class PC1,PC2 protocolClass
+    class MNF unreliableClass
+    class MECH mechClass
+```
+
+## Otros conceptos
+
+- **Control de flujo**: Evita que el emisor sature al receptor limitando la velocidad de envío según la capacidad del destinatario
+- **Control de congestión**: Ajusta la velocidad de transmisión para evitar saturar la red cuando detecta congestión
+- **Temporización**: Proporciona el tiempo mínimo de entrega de datos entre emisor y receptor a través de la red
+- **Tasa de transferencia mínima**: Garantiza una velocidad mínima de transmisión de datos para aplicaciones que requieren ancho de banda constante
 
 # UDP (User Datagram Protocol)
 
@@ -150,23 +226,18 @@ Recibir segmentos y enviarlos a los sockets correspondientes
 %%| fig-height: 6
 %%| fig-align: center
 %%| out-width: "80%"
----
-title: Estructura del paquete UDP
----
 packet-beta
 
     0-15: "Source Port"
     16-31: "Destination Port"
     32-47: "Length"
     48-63: "Checksum"
-    64-95: "Data (longitud variable)"
 ```
 
-::: {.fragment}
 - **Longitud:** Hasta 65535 bytes (limitado por MTU)
 - **Checksum:** Verificación de integridad
 - Estructura simple comparada con otros protocolos
-:::
+
 
 ## Checksum UDP
 
@@ -177,33 +248,30 @@ packet-beta
 3. Suma usando aritmética de complemento a uno
 4. Complemento del resultado → campo checksum
 
-::: {.fragment}
+
 **Verificación en receptor:**
 
 - Mismo algoritmo incluyendo checksum recibido
 - Resultado esperado: 0xFFFF
 - Si difiere: datagrama descartado silenciosamente
-:::
+
 
 ## Casos de Uso de UDP
 
 **Aplicaciones ideales para UDP:**
 
-::: {.incremental}
 - **Multimedia streaming:** Tolerante a pérdidas, sensible a interrupciones
 - **DNS:** Respuestas rápidas necesarias
 - **SNMP:** Administración de red
 - **Gaming online:** Latencia baja crítica
 - **QUIC/HTTP3:** Base para protocolos modernos optimizados
-:::
 
-::: {.fragment}
 Ejemplo: Implementar protocolo propio sobre UDP para juegos
+
 - Añadir número de paquete
 - Descartar paquetes fuera de orden
 - Ignorar duplicados
 - Sobrecarga mínima
-:::
 
 # TCP (Transmission Control Protocol)
 
@@ -229,19 +297,17 @@ Ejemplo: Implementar protocolo propio sobre UDP para juegos
 :::
 :::
 
-::: {.fragment}
+
 **Trade-off:** Confiabilidad y orden sobre velocidad pura
-:::
+
 
 ## Estructura del Paquete TCP
 
+::: {style="width: 50vw; text-align: center; margin: 0 auto;"}
 ```{mermaid}
 %%| fig-height: 6
 %%| fig-align: center
 %%| out-width: "80%"
----
-title: Estructura del paquete TCP
----
 packet-beta
   0-15: "Source Port"
   16-31: "Destination Port"
@@ -259,28 +325,235 @@ packet-beta
   128-143: "Checksum"
   144-159: "Urgent Pointer"
   160-191: "Options (variable)"
-  192-255: "Data (variable length)"
 ```
+:::
+- **Sequence number**: Número que identifica la posición del primer byte de datos en el segmento dentro del flujo de datos.
+- **Ack number**: Indica el próximo número de secuencia que el receptor espera recibir. Confirma la recepción correcta de datos anteriores.
+- **Window:** Implementa control de flujo (bytes que receptor acepta)
 
-## Flags de Control TCP
 
-**Significado de cada flag:**
+## Mecanismos de Confiabilidad
 
-::: {.incremental}
-- **SYN:** Sincronizar números de secuencia (establecimiento)
-- **ACK:** Campo acknowledgment válido
-- **FIN:** Fin de datos del emisor
-- **RST:** Reinicio forzado de conexión
-- **PSH:** Entrega inmediata a aplicación
-- **URG:** Datos urgentes
+> Los mecanismos de confiabilidad en TCP garantizan que los datos lleguen correctamente y en orden.
+
+**Números de secuencia y ACKs:**
+
+- Cada byte tiene número único
+- Cuando enviamos información, está identificada por un número de secuencia (SEQ)
+- Además, esperamos confirmación de que se ha recibido correctamente (ACK)
+- ACKs acumulativos (ACK para byte N confirma hasta N-1)
+- Los ACKs y SEQs permite detectar datos perdidos, duplicados o desordenados
+
+**Detección de pérdidas:**
+
+- Detección de timeout
+- Detección de ACKs duplicados
+
+## TCP básico
+
+::: {.columns}
+::: {.column width="50%"}
+::: {style="width: 38vw; text-align: center; margin: 0 auto;"}
+```{mermaid}
+
+sequenceDiagram
+    participant E as Emisor
+    participant R as Receptor
+    
+    Note over E,R: Conexión ya establecida, seq inicial=100
+    
+    E->>R: seq=100, data="Hola" (4 bytes)
+    Note over R: Recibe
+    R->>E: ACK=104 ("Espero byte 104")
+    Note over R: Confirma
+    
+    E->>R: seq=104, data=" mundo!" (7 bytes)  
+    R->>E: ACK=111 ("Espero byte 111")
+    
+    E->>R: seq=111, data=" TCP" (4 bytes)
+    E->>R: seq=115, data=" rocks" (6 bytes)
+    Note over R: Recibe ambos correctamente
+    Note over R: ACK acumulativo confirma todo
+    R->>E: ACK=121 ("Recibí todo hasta byte 120")
+    
+```
+:::
+:::
+::: {.column width="50%"}
+
+- Primer envío: seq=100 con "Hola" (4 bytes) → el receptor responde ACK=104, indicando que espera el byte 104
+- Envíos consecutivos: Cada mensaje usa el número de secuencia donde terminó el anterior (104, 111, 115)
+- ACK acumulativo final: ACK=121 confirma de una vez ambos paquetes "TCP" y "rocks"
+
+:::
 :::
 
-::: {.fragment}
-**Window:** Implementa control de flujo (bytes que receptor acepta)
+## Detección de pérdidas
+
+::: {.columns}
+::: {.column width="50%"}
+### Pérdidas por timeout
+::: {style="width: 38vw; text-align: center; margin: 0 auto;"}
+```{mermaid}
+%%| fig-width: 6
+%%| fig-height: 4
+sequenceDiagram
+    participant E as Emisor
+    participant R as Receptor
+    E ->> X: seq=100, data="A", Paquete perdido
+    Note over E: Timeout de seq:100, reenvio
+    E ->> R: seq=100, data="A",
+```
+:::
+- Si no recibe ACK en tiempo determinado → asume pérdida y retransmite
+:::
+::: {.column width="50%"}
+### Pérdidas por ACKs duplicados
+::: {style="width: 38vw; text-align: center; margin: 0 auto;"}
+```{mermaid}
+%%| fig-width: 6
+%%| fig-height: 4
+sequenceDiagram
+    participant E as Emisor
+    participant R as Receptor
+    E ->> X: seq=100, data="A", Paquete perdido
+    E ->> R: seq=101, data="B"
+    E ->> R: seq=102, data="C"
+    E ->> R: seq=103, data="D"
+    R ->> E: ACK=100
+    R ->> E: ACK=100
+    R ->> E: ACK=100
+    Note over E,R: Retransmisión rápida
+    E ->> R: seq=100, data="A"
+```
+:::
+- 3 ACKs duplicados → Fast Retransmit inmediato
+:::
+:::
+
+
+## Control de Flujo
+
+> El control de flujo en TCP es un mecanismo que evita que el emisor envíe más datos de los que el receptor puede procesar.
+
+::: {.columns}
+::: {.column width="50%"}
+::: {style="width: 30vw; text-align: center; margin: 0 auto;"}
+```{mermaid}
+%%| fig-height: 4
+%%| fig-align: center
+sequenceDiagram
+    participant E as Emisor
+    participant R as Receptor
+    
+    Note over R: Buffer: 4KB libres
+    R->>E: ACK=1000, Window=4096
+    E->>R: seq=1000, data=2KB
+    Note over R: Buffer: 2KB libres
+    R->>E: ACK=3000, Window=2048
+    E->>R: seq=3000, data=2KB
+    Note over R: Buffer: 0KB libres (lleno)
+    R->>E: ACK=5000, Window=0
+    Note over E: Detiene envío, inicia probe timer
+```
+:::
+:::
+::: {.column width="50%"}
+- Receptor informa de su capacidad disponible, y se define:
+- ```VentanaRecepcion = BufferRecepcion - (UltimoByteRecibido - UltimoByteLeido) ```
+- El emisor se limita a esta ventana
+- Si la capacidad es 0, se espera un tiempo y se vuelve a probar.
+:::
+:::
+
+
+## Control de Congestión
+
+> El control de congestión en TCP es un mecanismo que ajusta automáticamente la velocidad de envío (ventana de congestión) para evitar saturar la red cuando detecta pérdida de paquetes o retardos.
+
+::: {.columns}
+::: {.column width="50%"}
+### Ventana de congestión
+
+- Variable del emisor
+- Bytes máximos en "el aire" (enviados sin ACK)
+- Tasa efectiva = min(VentanaCongestion, VentanaRecepcion)
+:::
+::: {.column width="50%"}
+
+### Eventos de Congestión (Pérdidas)
+
+- **Timeout -> Modo slow start** 
+
+  - Pérdida severa
+  - Ventana → 1 MSS
+
+- **3 ACKs duplicados -> Modo congestion avoidance**
+
+  - Pérdida moderada
+  - Ventana → mitad
+
+:::
+:::
+
+## Mecanismos de control de congestión
+
+::: {.columns}
+::: {.column width="50%"}
+### Slow start
+::: {style="width: 30vw; text-align: center; margin: 0 auto;"}
+```{mermaid}
+%%| fig-height: 4
+sequenceDiagram
+    participant E as Emisor
+    participant R as Receptor
+    
+    Note over E: Slow Start: cwnd=1 MSS
+    E->>R: seq=1000, MSS=1KB
+    R->>E: ACK=2000
+    Note over E: cwnd=2 MSS
+    E->>R: seq=2000, MSS=1KB
+    E->>R: seq=3000, MSS=1KB
+    R->>E: ACK=4000
+    Note over E: cwnd=4 MSS (crecimiento exponencial)
+    Note over E: ... continúa hasta threshold o detectar pérdida ...
+```
+:::
+Duplicar ventana por cada RTT
+:::
+::: {.column width="50%"}
+### Congestion Avoidance  
+::: {style="width: 30vw; text-align: center; margin: 0 auto;"}
+```{mermaid}
+%%| fig-height: 4
+sequenceDiagram
+    participant E as Emisor
+    participant R as Receptor
+    
+    Note over E: Congestion Avoidance: cwnd=1 MSS
+
+    E->>R: seq=1000, MSS=1KB
+    R->>E: ACK=2000
+
+    Note over E: cwnd=2 MSS
+
+    E->>R: seq=2000, MSS=1KB
+    E->>R: seq=3000, MSS=1KB
+    R->>E: ACK=4000
+
+    Note over E: cwnd=3 MSS (crecimiento lineal)
+    Note over E: ... continúa hasta detectar pérdida ...
+```
+:::
+Incrementar en 1 la ventana en cada RTT
+:::
 :::
 
 ## Handshake de Tres Fases
 
+::: {.columns}
+::: {.column width="50%"}
+::: {style="width: 38vw; text-align: center; margin: 0 auto;"}
 ```{mermaid}
 %%| fig-height: 4
 %%| fig-align: center
@@ -300,160 +573,21 @@ sequenceDiagram
     Note over CS: Estado: ESTABLISHED
     CS->>NS: ACK=1, seq=x+1, ack=y+1
 ```
-
-::: {.fragment}
-Se negocian: MSS, opciones de ventana, extensiones TCP
 :::
-
-## Mecanismos de Confiabilidad
-
-**Números de secuencia y ACKs:**
-- Cada byte tiene número único
-- ACKs acumulativos (ACK para byte N confirma hasta N-1)
-
-::: {.fragment}
-**Detección de pérdidas - Dos métodos:**
 :::
-
-## Detección por Timeout
-
-```{mermaid}
-%%| fig-width: 6
-%%| fig-height: 4
-sequenceDiagram
-    participant E as Emisor
-    participant R as Receptor
-    E ->> X: seq=100, data="A", Paquete perdido
-    Note over E: Timeout de seq:100, reenvio
-    E ->> R: seq=100, data="A",
-```
-
-::: {.fragment}
-Si no recibe ACK en tiempo determinado → asume pérdida y retransmite
+::: {.column width="50%"}
+- Se negocian: MSS, opciones de ventana, extensiones TCP
+- Los flags de las cabeceras también consumen bits.
+- El serverSocket está en el servidor,
+- una vez se establece la comunicación ambos sockets son iguales.
 :::
-
-## Detección por ACKs Duplicados
-
-```{mermaid}
-%%| fig-width: 6
-%%| fig-height: 4
-sequenceDiagram
-    participant E as Emisor
-    participant R as Receptor
-    E ->> X: seq=100, data="A", Paquete perdido
-    E ->> R: seq=101, data="B"
-    E ->> R: seq=102, data="C"
-    E ->> R: seq=103, data="D"
-    R ->> E: ACK=100
-    R ->> E: ACK=100
-    R ->> E: ACK=100
-    Note over E,R: Retransmisión rápida
-    E ->> R: seq=100, data="A"
-```
-
-::: {.fragment}
-3 ACKs duplicados → Fast Retransmit inmediato
-:::
-
-## Control de Flujo
-
-```{mermaid}
-%%| fig-height: 4
-%%| fig-align: center
-sequenceDiagram
-    participant E as Emisor
-    participant R as Receptor
-    
-    Note over R: Buffer: 4KB libres
-    R->>E: ACK=1000, Window=4096
-    E->>R: seq=1000, data=2KB
-    Note over R: Buffer: 2KB libres
-    R->>E: ACK=3000, Window=2048
-    E->>R: seq=3000, data=2KB
-    Note over R: Buffer: 0KB libres (lleno)
-    R->>E: ACK=5000, Window=0
-    Note over E: Detiene envío, inicia probe timer
-```
-
-::: {.fragment}
-```
-VentanaRecepcion = BufferRecepcion - (UltimoByteRecibido - UltimoByteLeido)
-```
-:::
-
-## Control de Congestión
-
-**Ventana de congestión:**
-- Variable del emisor
-- Bytes máximos en "el aire" (enviados sin ACK)
-- Tasa efectiva = min(VentanaCongestion, VentanaRecepcion)
-
-## Slow Start
-
-```{mermaid}
-%%| fig-height: 4
-sequenceDiagram
-    participant E as Emisor
-    participant R as Receptor
-    
-    Note over E: Slow Start: cwnd=1 MSS
-    E->>R: seq=1000, MSS=1KB
-    R->>E: ACK=2000
-    Note over E: cwnd=2 MSS
-    E->>R: seq=2000, MSS=1KB
-    E->>R: seq=3000, MSS=1KB
-    R->>E: ACK=3000
-    R->>E: ACK=4000
-    Note over E: cwnd=4 MSS (crecimiento exponencial)
-    Note over E: ... continúa hasta threshold o detectar pérdida ...
-```
-
-## Congestion Avoidance  
-
-```{mermaid}
-%%| fig-height: 4
-sequenceDiagram
-    participant E as Emisor
-    participant R as Receptor
-    
-    Note over E: Congestion Avoidance: cwnd=1 MSS
-
-    E->>R: seq=1000, MSS=1KB
-    R->>E: ACK=2000
-
-    Note over E: cwnd=2 MSS
-
-    E->>R: seq=2000, MSS=1KB
-    E->>R: seq=3000, MSS=1KB
-    R->>E: ACK=3000
-    R->>E: ACK=4000
-
-    Note over E: cwnd=3 MSS (crecimiento lineal)
-    Note over E: ... continúa hasta detectar pérdida ...
-```
-
-## Eventos de Congestión
-
-**Respuesta a pérdidas:**
-
-::: {.incremental}
-- **Timeout:** 
-  - Pérdida severa
-  - Ventana → 1 MSS
-  - Modo slow start
-
-- **3 ACKs duplicados:**
-  - Pérdida moderada
-  - Ventana → mitad
-  - Continúa congestion avoidance
-:::
-
-::: {.fragment}
-Crea patrón "diente de sierra" en throughput
 :::
 
 ## Terminación de Conexión
 
+::: {.columns}
+::: {.column width="50%"}
+::: {style="width: 28vw; text-align: center; margin: 0 auto;"}
 ```{mermaid}
 %%| fig-height: 4
 sequenceDiagram
@@ -472,58 +606,73 @@ sequenceDiagram
     Note over C: Espera 2*MSL
     Note over C,S: CLOSED
 ```
+:::
+:::
+::: {.column width="50%"}
+
+- Cada extremo debe enviar su propio FIN y recibir confirmación, permitiendo cierre unidireccional (half-close).
+- El cliente espera 2*MSL para asegurar que su último ACK llegó y manejar retransmisiones tardías antes del cierre definitivo.
+:::
+:::
 
 ## Equidad y Coexistencia
 
 **TCP es "fair":**
+
 - N conexiones TCP comparten enlace equitativamente
 - Cada una obtiene ~R/N del ancho de banda R
 
-::: {.fragment}
+
 **Limitaciones:**
 
 - UDP no implementa control → puede monopolizar
 - Aplicaciones con múltiples conexiones TCP
 - Conexiones con menor RTT tienen ventaja
-:::
+
 
 # Comparativa TCP vs UDP para Videojuegos
 
-## Cuándo usar UDP
+## Cuándo usar...
+
+::: {.columns}
+::: {.column width="50%"}
+### UDP
 
 **Requisitos para UDP:**
+
 - Latencias < 50ms
 - Actualizaciones frecuentes
 - Información nueva más valiosa que la vieja
 
-::: {.fragment}
+
 **Ventajas:**
+
 - Cabeceras pequeñas
 - Sin tráfico de control
 - Servidor necesita menos recursos
 - No mantiene estado
-:::
 
-::: {.fragment}
 **Ejemplos:** Shooters (Counter Strike), juegos de lucha
 :::
-
-## Cuándo usar TCP
+::: {.column width="50%"}
+### TCP
 
 **Requisitos para TCP:**
+
 - Tolerancia 100-200ms latencia
 - Entrega ordenada garantizada
 - Detección y corrección de errores
 
-::: {.fragment}
+<br>
 **Consideraciones:**
+
 - Bloqueo cabeza de línea
 - Latencias variables por retransmisiones
 - Mayor tráfico de red
-:::
 
-::: {.fragment}
+<br>
 **Ejemplos:** MMORPGs (World of Warcraft), juegos por turnos
+:::
 :::
 
 ## Ejemplos Concretos
