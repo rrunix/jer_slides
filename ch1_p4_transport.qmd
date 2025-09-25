@@ -4,7 +4,7 @@ subtitle: "Comunicación lógica entre procesos de aplicación"
 author: "Rubén Rodríguez Fernández (&#64;rrunix)"
 date: "22/09/2025"
 aliases:
-  - ch1_p3.html
+  - ch1_p4.html
 
 mermaid:
       theme: default
