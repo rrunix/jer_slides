@@ -291,7 +291,7 @@
         "\n",
         "De ~4 dispositivos (1969) a >100.000 millones (2025) en 50 años."
       ],
-      "id": "b0d73a1e"
+      "id": "20915f70"
     },
     {
       "cell_type": "code",
@@ -309,7 +309,7 @@
         "plt.ylim(0, 12)\n",
         "plt.show()"
       ],
-      "id": "9b2fbcbd",
+      "id": "b253d2db",
       "execution_count": null,
       "outputs": []
     },
@@ -996,7 +996,7 @@
         "- **Aplicaciones críticas**: Videojuegos requieren <50ms para competitivo\n",
         ":::"
       ],
-      "id": "25ad3e95"
+      "id": "06f222a2"
     }
   ],
   "metadata": {
