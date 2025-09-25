@@ -198,7 +198,7 @@ graph LR
 ::: {.column width="50%"}
 **Protocolo minimalista [RFC 768]:**
 
-- Basado en best-effort
+- Basado en best-effort (Fire-and-forget)
 - No orientado a conexión
 - Entrega no fiable y sin orden
 - Integridad básica (checksum)
@@ -216,8 +216,28 @@ graph LR
 :::
 :::
 
+
+::: {style="width: 40vw; text-align: center; margin: 0 auto;"}
+```{mermaid}
+%%| fig-height: 4
+%%| fig-align: center
+sequenceDiagram
+    participant A as Client A
+    participant I as The Internet
+    participant B as Server B
+        
+    A->>I: Paquete UDP 3 (IP destino: 8.8.8.8, puerto:80)
+    Note over I: Paquete UDP 3 se pierde
+    A->>I: Paquete UDP 4 (IP destino: 8.8.8.8, puerto:80)
+    I->>B: Paquete 4 entregado (llega primero!)
+    Note over B: No garantiza orden
+    A->>I: Paquete UDP 5 (IP destino: 8.8.8.8, puerto:80)
+    I->>B: Paquete 3 entregado (llega tarde!)
+```
+:::
+
+
 ::: {.fragment}
-**"Fire-and-forget":** Envías el paquete y te olvidas, independientemente de si llega
 :::
 
 ## Estructura del Paquete UDP
@@ -237,7 +257,7 @@ packet-beta
 - **Longitud:** Hasta 65535 bytes (limitado por MTU)
 - **Checksum:** Verificación de integridad
 - Estructura simple comparada con otros protocolos
-
+- 8 bytes de cabecera fijos.
 
 ## Checksum UDP
 
@@ -282,7 +302,7 @@ Ejemplo: Implementar protocolo propio sobre UDP para juegos
 **Protocolo confiable [RFC 793]:**
 
 - Orientado a conexión
-- Entrega fiable y ordenada
+- Entrega fiable y ordenada (confiabilidad)
 - Control de flujo
 - Control de congestión
 - Multiplexación y demultiplexación
@@ -330,12 +350,16 @@ packet-beta
 - **Sequence number**: Número que identifica la posición del primer byte de datos en el segmento dentro del flujo de datos.
 - **Ack number**: Indica el próximo número de secuencia que el receptor espera recibir. Confirma la recepción correcta de datos anteriores.
 - **Window:** Implementa control de flujo (bytes que receptor acepta)
+- **checksum:** Muy similar a UDP.
+- Tamaño variable de 20 a 60 bytes.
 
 
 ## Mecanismos de Confiabilidad
 
 > Los mecanismos de confiabilidad en TCP garantizan que los datos lleguen correctamente y en orden.
 
+::: {.columns}
+::: {.column width="50%"}
 **Números de secuencia y ACKs:**
 
 - Cada byte tiene número único
@@ -343,17 +367,9 @@ packet-beta
 - Además, esperamos confirmación de que se ha recibido correctamente (ACK)
 - ACKs acumulativos (ACK para byte N confirma hasta N-1)
 - Los ACKs y SEQs permite detectar datos perdidos, duplicados o desordenados
-
-**Detección de pérdidas:**
-
-- Detección de timeout
-- Detección de ACKs duplicados
-
-## TCP básico
-
-::: {.columns}
+:::
 ::: {.column width="50%"}
-::: {style="width: 38vw; text-align: center; margin: 0 auto;"}
+::: {style="width: 30vw; text-align: center; margin: 0 auto;"}
 ```{mermaid}
 
 sequenceDiagram
@@ -378,13 +394,6 @@ sequenceDiagram
     
 ```
 :::
-:::
-::: {.column width="50%"}
-
-- Primer envío: seq=100 con "Hola" (4 bytes) → el receptor responde ACK=104, indicando que espera el byte 104
-- Envíos consecutivos: Cada mensaje usa el número de secuencia donde terminó el anterior (104, 111, 115)
-- ACK acumulativo final: ACK=121 confirma de una vez ambos paquetes "TCP" y "rocks"
-
 :::
 :::
 
@@ -610,8 +619,10 @@ sequenceDiagram
 :::
 ::: {.column width="50%"}
 
-- Cada extremo debe enviar su propio FIN y recibir confirmación, permitiendo cierre unidireccional (half-close).
-- El cliente espera 2*MSL para asegurar que su último ACK llegó y manejar retransmisiones tardías antes del cierre definitivo.
+- Cada extremo debe enviar su propio FIN y recibir confirmación, 
+- permitiendo cierre unidireccional (half-close).
+- El cliente espera 2*MSL para asegurar que su último ACK llegó,
+- manejando retransmisiones tardías antes del cierre definitivo.
 :::
 :::
 
@@ -621,6 +632,7 @@ sequenceDiagram
 
 - N conexiones TCP comparten enlace equitativamente
 - Cada una obtiene ~R/N del ancho de banda R
+- Ver ejemplos en [jergames](https://jergames.dslabapps.es) (Bandwidth distribution)
 
 
 **Limitaciones:**
