@@ -1141,6 +1141,58 @@ packet-beta
 <li>Conveniente pero riesgos de seguridad</li>
 </ul>
 </div></div>
+</section>
+<section id="hole-punching" class="slide level2">
+<h2>Hole punching</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div style="width: 35vw; text-align: center; margin: 0 auto;">
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">sequenceDiagram
+    participant A as Alice
+    participant NA as NAT-A
+    participant S as STUN Server
+    participant NB as NAT-B
+    participant B as Bob
+
+    Note over A,B: 1. Discovery &amp; Exchange
+    A-&gt;&gt;S: Register
+    S-&gt;&gt;A: Bob: 198.76.54.32:37000
+    B-&gt;&gt;S: Register
+    S-&gt;&gt;B: Alice: 203.45.67.89:42000
+    
+    Note over A,B: 2. Simultaneous Hole Punching
+    par Alice to Bob
+        A-&gt;&gt;NA: Send to Bob
+        Note over NA: Map: Allow from&lt;br/&gt;198.76.54.32:37000
+        NA-&gt;&gt;NB: Packet
+    and Bob to Alice
+        B-&gt;&gt;NB: Send to Alice
+        Note over NB: Map: Allow from&lt;br/&gt;203.45.67.89:42000
+        NB-&gt;&gt;NA: Packet
+    end
+    
+    Note over NA,NB: NAT holes ready when packets arrive
+    NA-&gt;&gt;A: Bob's packet passes
+    NB-&gt;&gt;B: Alice's packet passes
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>Descubrimiento: servidor STUN para obtener sus IPs/puertos</li>
+<li>Envío simultáneo: Envían paquetes UDP al <strong>mismo tiemp</strong> -&gt; mappings en sus NATs</li>
+<li>Agujeros listos: Los mappings NAT se crean <strong>ANTES</strong> de recibir</li>
+</ul>
+</div></div>
 </section></section>
 <section>
 <section id="resumen" class="title-slide slide level1 center">

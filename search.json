@@ -476,6 +476,13 @@
     "text": "NAT: Limitaciones y Soluciones\nLimitaciones\n\nNo permite conexiones entrantes directas\nComplicaciones con protocolos que embeben IPs\nPérdida del principio end-to-end\n\nTécnicas para Atravesar NAT\n\n\nHole Punching:\n\nAmbos conectan simultáneamente\nCrea “agujeros” temporales\n\nSTUN:\n\nDescubre IP pública y tipo NAT\nÚtil para VoIP/tiempo real\n\n\nTURN:\n\nServidor relay intermedio\nMás confiable pero más recursos\n\nUPnP:\n\nConfiguración automática de puertos\nConveniente pero riesgos de seguridad"
   },
   {
+    "objectID": "ch1_p3_network.html#hole-punching",
+    "href": "ch1_p3_network.html#hole-punching",
+    "title": "Capa de Red",
+    "section": "Hole punching",
+    "text": "Hole punching\n\n\n\n\n\n\n\n\nsequenceDiagram\n    participant A as Alice\n    participant NA as NAT-A\n    participant S as STUN Server\n    participant NB as NAT-B\n    participant B as Bob\n\n    Note over A,B: 1. Discovery & Exchange\n    A-&gt;&gt;S: Register\n    S-&gt;&gt;A: Bob: 198.76.54.32:37000\n    B-&gt;&gt;S: Register\n    S-&gt;&gt;B: Alice: 203.45.67.89:42000\n    \n    Note over A,B: 2. Simultaneous Hole Punching\n    par Alice to Bob\n        A-&gt;&gt;NA: Send to Bob\n        Note over NA: Map: Allow from&lt;br/&gt;198.76.54.32:37000\n        NA-&gt;&gt;NB: Packet\n    and Bob to Alice\n        B-&gt;&gt;NB: Send to Alice\n        Note over NB: Map: Allow from&lt;br/&gt;203.45.67.89:42000\n        NB-&gt;&gt;NA: Packet\n    end\n    \n    Note over NA,NB: NAT holes ready when packets arrive\n    NA-&gt;&gt;A: Bob's packet passes\n    NB-&gt;&gt;B: Alice's packet passes\n\n\n\n\n\n\n\n\n\nDescubrimiento: servidor STUN para obtener sus IPs/puertos\nEnvío simultáneo: Envían paquetes UDP al mismo tiemp -&gt; mappings en sus NATs\nAgujeros listos: Los mappings NAT se crean ANTES de recibir"
+  },
+  {
     "objectID": "ch1_p3_network.html#puntos-clave",
     "href": "ch1_p3_network.html#puntos-clave",
     "title": "Capa de Red",

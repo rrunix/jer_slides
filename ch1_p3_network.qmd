@@ -705,6 +705,51 @@ Red Interna (192.168.1.0/24)          NAT Router          Internet
 :::
 :::
 
+## Hole punching
+
+
+::: {.columns}
+::: {.column width="50%"}
+::: {style="width: 35vw; text-align: center; margin: 0 auto;"}
+```{mermaid}
+sequenceDiagram
+    participant A as Alice
+    participant NA as NAT-A
+    participant S as STUN Server
+    participant NB as NAT-B
+    participant B as Bob
+
+    Note over A,B: 1. Discovery & Exchange
+    A->>S: Register
+    S->>A: Bob: 198.76.54.32:37000
+    B->>S: Register
+    S->>B: Alice: 203.45.67.89:42000
+    
+    Note over A,B: 2. Simultaneous Hole Punching
+    par Alice to Bob
+        A->>NA: Send to Bob
+        Note over NA: Map: Allow from<br/>198.76.54.32:37000
+        NA->>NB: Packet
+    and Bob to Alice
+        B->>NB: Send to Alice
+        Note over NB: Map: Allow from<br/>203.45.67.89:42000
+        NB->>NA: Packet
+    end
+    
+    Note over NA,NB: NAT holes ready when packets arrive
+    NA->>A: Bob's packet passes
+    NB->>B: Alice's packet passes
+```
+:::
+:::
+::: {.column width="50%"}
+
+- Descubrimiento: servidor STUN para obtener sus IPs/puertos
+- Envío simultáneo: Envían paquetes UDP al **mismo tiemp** -> mappings en sus NATs
+- Agujeros listos: Los mappings NAT se crean **ANTES** de recibir
+:::
+:::
+
 # Resumen
 
 ## Puntos Clave
