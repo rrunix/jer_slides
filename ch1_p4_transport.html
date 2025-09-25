@@ -381,7 +381,7 @@ Rubén Rodríguez Fernández (@rrunix)
 <div class="column" style="width:50%;">
 <p><strong>Protocolo minimalista [RFC 768]:</strong></p>
 <ul>
-<li>Basado en best-effort</li>
+<li>Basado en best-effort (Fire-and-forget)</li>
 <li>No orientado a conexión</li>
 <li>Entrega no fiable y sin orden</li>
 <li>Integridad básica (checksum)</li>
@@ -397,8 +397,33 @@ Rubén Rodríguez Fernández (@rrunix)
 <li>Seguridad</li>
 </ul>
 </div></div>
+<div style="width: 40vw; text-align: center; margin: 0 auto;">
+<div class="cell" data-reveal="true" data-fig-height="4" data-layout-align="center">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">sequenceDiagram
+    participant A as Client A
+    participant I as The Internet
+    participant B as Server B
+        
+    A-&gt;&gt;I: Paquete UDP 3 (IP destino: 8.8.8.8, puerto:80)
+    Note over I: Paquete UDP 3 se pierde
+    A-&gt;&gt;I: Paquete UDP 4 (IP destino: 8.8.8.8, puerto:80)
+    I-&gt;&gt;B: Paquete 4 entregado (llega primero!)
+    Note over B: No garantiza orden
+    A-&gt;&gt;I: Paquete UDP 5 (IP destino: 8.8.8.8, puerto:80)
+    I-&gt;&gt;B: Paquete 3 entregado (llega tarde!)
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
 <div class="fragment">
-<p><strong>“Fire-and-forget”:</strong> Envías el paquete y te olvidas, independientemente de si llega</p>
+
 </div>
 </section>
 <section id="estructura-del-paquete-udp" class="slide level2">
@@ -424,6 +449,7 @@ Rubén Rodríguez Fernández (@rrunix)
 <li><strong>Longitud:</strong> Hasta 65535 bytes (limitado por MTU)</li>
 <li><strong>Checksum:</strong> Verificación de integridad</li>
 <li>Estructura simple comparada con otros protocolos</li>
+<li>8 bytes de cabecera fijos.</li>
 </ul>
 </section>
 <section id="checksum-udp" class="slide level2">
@@ -472,7 +498,7 @@ Rubén Rodríguez Fernández (@rrunix)
 <p><strong>Protocolo confiable [RFC 793]:</strong></p>
 <ul>
 <li>Orientado a conexión</li>
-<li>Entrega fiable y ordenada</li>
+<li>Entrega fiable y ordenada (confiabilidad)</li>
 <li>Control de flujo</li>
 <li>Control de congestión</li>
 <li>Multiplexación y demultiplexación</li>
@@ -523,6 +549,8 @@ Rubén Rodríguez Fernández (@rrunix)
 <li><strong>Sequence number</strong>: Número que identifica la posición del primer byte de datos en el segmento dentro del flujo de datos.</li>
 <li><strong>Ack number</strong>: Indica el próximo número de secuencia que el receptor espera recibir. Confirma la recepción correcta de datos anteriores.</li>
 <li><strong>Window:</strong> Implementa control de flujo (bytes que receptor acepta)</li>
+<li><strong>checksum:</strong> Muy similar a UDP.</li>
+<li>Tamaño variable de 20 a 60 bytes.</li>
 </ul>
 </section>
 <section id="mecanismos-de-confiabilidad" class="slide level2">
@@ -530,6 +558,8 @@ Rubén Rodríguez Fernández (@rrunix)
 <blockquote>
 <p>Los mecanismos de confiabilidad en TCP garantizan que los datos lleguen correctamente y en orden.</p>
 </blockquote>
+<div class="columns">
+<div class="column" style="width:50%;">
 <p><strong>Números de secuencia y ACKs:</strong></p>
 <ul>
 <li>Cada byte tiene número único</li>
@@ -538,17 +568,8 @@ Rubén Rodríguez Fernández (@rrunix)
 <li>ACKs acumulativos (ACK para byte N confirma hasta N-1)</li>
 <li>Los ACKs y SEQs permite detectar datos perdidos, duplicados o desordenados</li>
 </ul>
-<p><strong>Detección de pérdidas:</strong></p>
-<ul>
-<li>Detección de timeout</li>
-<li>Detección de ACKs duplicados</li>
-</ul>
-</section>
-<section id="tcp-básico" class="slide level2">
-<h2>TCP básico</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div style="width: 38vw; text-align: center; margin: 0 auto;">
+</div><div class="column" style="width:50%;">
+<div style="width: 30vw; text-align: center; margin: 0 auto;">
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -581,12 +602,6 @@ Rubén Rodríguez Fernández (@rrunix)
 </div>
 </div>
 </div>
-</div><div class="column" style="width:50%;">
-<ul>
-<li>Primer envío: seq=100 con “Hola” (4 bytes) → el receptor responde ACK=104, indicando que espera el byte 104</li>
-<li>Envíos consecutivos: Cada mensaje usa el número de secuencia donde terminó el anterior (104, 111, 115)</li>
-<li>ACK acumulativo final: ACK=121 confirma de una vez ambos paquetes “TCP” y “rocks”</li>
-</ul>
 </div></div>
 </section>
 <section id="detección-de-pérdidas" class="slide level2">
@@ -861,8 +876,10 @@ Rubén Rodríguez Fernández (@rrunix)
 </div>
 </div><div class="column" style="width:50%;">
 <ul>
-<li>Cada extremo debe enviar su propio FIN y recibir confirmación, permitiendo cierre unidireccional (half-close).</li>
-<li>El cliente espera 2*MSL para asegurar que su último ACK llegó y manejar retransmisiones tardías antes del cierre definitivo.</li>
+<li>Cada extremo debe enviar su propio FIN y recibir confirmación,</li>
+<li>permitiendo cierre unidireccional (half-close).</li>
+<li>El cliente espera 2*MSL para asegurar que su último ACK llegó,</li>
+<li>manejando retransmisiones tardías antes del cierre definitivo.</li>
 </ul>
 </div></div>
 </section>
@@ -872,6 +889,7 @@ Rubén Rodríguez Fernández (@rrunix)
 <ul>
 <li>N conexiones TCP comparten enlace equitativamente</li>
 <li>Cada una obtiene ~R/N del ancho de banda R</li>
+<li>Ver ejemplos en <a href="https://jergames.dslabapps.es">jergames</a> (Bandwidth distribution)</li>
 </ul>
 <p><strong>Limitaciones:</strong></p>
 <ul>

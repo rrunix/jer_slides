@@ -655,14 +655,14 @@
     "href": "ch1_p4_transport.html#características-de-udp",
     "title": "Capa de Transporte",
     "section": "Características de UDP",
-    "text": "Características de UDP\n\n\nProtocolo minimalista [RFC 768]:\n\nBasado en best-effort\nNo orientado a conexión\nEntrega no fiable y sin orden\nIntegridad básica (checksum)\nMultiplexación y demultiplexación\n\n\nLo que NO proporciona:\n\nControl de flujo\nControl de congestión\nTemporización\nTasa de transferencia mínima\nSeguridad\n\n\n\n“Fire-and-forget”: Envías el paquete y te olvidas, independientemente de si llega"
+    "text": "Características de UDP\n\n\nProtocolo minimalista [RFC 768]:\n\nBasado en best-effort (Fire-and-forget)\nNo orientado a conexión\nEntrega no fiable y sin orden\nIntegridad básica (checksum)\nMultiplexación y demultiplexación\n\n\nLo que NO proporciona:\n\nControl de flujo\nControl de congestión\nTemporización\nTasa de transferencia mínima\nSeguridad\n\n\n\n\n\n\n\n\nsequenceDiagram\n    participant A as Client A\n    participant I as The Internet\n    participant B as Server B\n        \n    A-&gt;&gt;I: Paquete UDP 3 (IP destino: 8.8.8.8, puerto:80)\n    Note over I: Paquete UDP 3 se pierde\n    A-&gt;&gt;I: Paquete UDP 4 (IP destino: 8.8.8.8, puerto:80)\n    I-&gt;&gt;B: Paquete 4 entregado (llega primero!)\n    Note over B: No garantiza orden\n    A-&gt;&gt;I: Paquete UDP 5 (IP destino: 8.8.8.8, puerto:80)\n    I-&gt;&gt;B: Paquete 3 entregado (llega tarde!)"
   },
   {
     "objectID": "ch1_p4_transport.html#estructura-del-paquete-udp",
     "href": "ch1_p4_transport.html#estructura-del-paquete-udp",
     "title": "Capa de Transporte",
     "section": "Estructura del Paquete UDP",
-    "text": "Estructura del Paquete UDP\n\n\n\n\n\npacket-beta\n\n    0-15: \"Source Port\"\n    16-31: \"Destination Port\"\n    32-47: \"Length\"\n    48-63: \"Checksum\"\n\n\n\n\n\n\n\nLongitud: Hasta 65535 bytes (limitado por MTU)\nChecksum: Verificación de integridad\nEstructura simple comparada con otros protocolos"
+    "text": "Estructura del Paquete UDP\n\n\n\n\n\npacket-beta\n\n    0-15: \"Source Port\"\n    16-31: \"Destination Port\"\n    32-47: \"Length\"\n    48-63: \"Checksum\"\n\n\n\n\n\n\n\nLongitud: Hasta 65535 bytes (limitado por MTU)\nChecksum: Verificación de integridad\nEstructura simple comparada con otros protocolos\n8 bytes de cabecera fijos."
   },
   {
     "objectID": "ch1_p4_transport.html#checksum-udp",
@@ -683,28 +683,21 @@
     "href": "ch1_p4_transport.html#características-de-tcp",
     "title": "Capa de Transporte",
     "section": "Características de TCP",
-    "text": "Características de TCP\n\n\nProtocolo confiable [RFC 793]:\n\nOrientado a conexión\nEntrega fiable y ordenada\nControl de flujo\nControl de congestión\nMultiplexación y demultiplexación\n\n\nLo que NO proporciona:\n\nTemporización específica\nTasa mínima garantizada\nSeguridad nativa (necesita TLS/SSL)\n\n\nTrade-off: Confiabilidad y orden sobre velocidad pura"
+    "text": "Características de TCP\n\n\nProtocolo confiable [RFC 793]:\n\nOrientado a conexión\nEntrega fiable y ordenada (confiabilidad)\nControl de flujo\nControl de congestión\nMultiplexación y demultiplexación\n\n\nLo que NO proporciona:\n\nTemporización específica\nTasa mínima garantizada\nSeguridad nativa (necesita TLS/SSL)\n\n\nTrade-off: Confiabilidad y orden sobre velocidad pura"
   },
   {
     "objectID": "ch1_p4_transport.html#estructura-del-paquete-tcp",
     "href": "ch1_p4_transport.html#estructura-del-paquete-tcp",
     "title": "Capa de Transporte",
     "section": "Estructura del Paquete TCP",
-    "text": "Estructura del Paquete TCP\n\n\n\n\n\n\npacket-beta\n  0-15: \"Source Port\"\n  16-31: \"Destination Port\"\n  32-63: \"Sequence Number\"\n  64-95: \"Acknowledgment Number\"\n  96-99: \"Data Offset\"\n  100-105: \"Reserved\"\n  106: \"URG\"\n  107: \"ACK\"\n  108: \"PSH\"\n  109: \"RST\"\n  110: \"SYN\"\n  111: \"FIN\"\n  112-127: \"Window\"\n  128-143: \"Checksum\"\n  144-159: \"Urgent Pointer\"\n  160-191: \"Options (variable)\"\n\n\n\n\n\n\n\n\nSequence number: Número que identifica la posición del primer byte de datos en el segmento dentro del flujo de datos.\nAck number: Indica el próximo número de secuencia que el receptor espera recibir. Confirma la recepción correcta de datos anteriores.\nWindow: Implementa control de flujo (bytes que receptor acepta)"
+    "text": "Estructura del Paquete TCP\n\n\n\n\n\n\npacket-beta\n  0-15: \"Source Port\"\n  16-31: \"Destination Port\"\n  32-63: \"Sequence Number\"\n  64-95: \"Acknowledgment Number\"\n  96-99: \"Data Offset\"\n  100-105: \"Reserved\"\n  106: \"URG\"\n  107: \"ACK\"\n  108: \"PSH\"\n  109: \"RST\"\n  110: \"SYN\"\n  111: \"FIN\"\n  112-127: \"Window\"\n  128-143: \"Checksum\"\n  144-159: \"Urgent Pointer\"\n  160-191: \"Options (variable)\"\n\n\n\n\n\n\n\n\nSequence number: Número que identifica la posición del primer byte de datos en el segmento dentro del flujo de datos.\nAck number: Indica el próximo número de secuencia que el receptor espera recibir. Confirma la recepción correcta de datos anteriores.\nWindow: Implementa control de flujo (bytes que receptor acepta)\nchecksum: Muy similar a UDP.\nTamaño variable de 20 a 60 bytes."
   },
   {
     "objectID": "ch1_p4_transport.html#mecanismos-de-confiabilidad",
     "href": "ch1_p4_transport.html#mecanismos-de-confiabilidad",
     "title": "Capa de Transporte",
     "section": "Mecanismos de Confiabilidad",
-    "text": "Mecanismos de Confiabilidad\n\nLos mecanismos de confiabilidad en TCP garantizan que los datos lleguen correctamente y en orden.\n\nNúmeros de secuencia y ACKs:\n\nCada byte tiene número único\nCuando enviamos información, está identificada por un número de secuencia (SEQ)\nAdemás, esperamos confirmación de que se ha recibido correctamente (ACK)\nACKs acumulativos (ACK para byte N confirma hasta N-1)\nLos ACKs y SEQs permite detectar datos perdidos, duplicados o desordenados\n\nDetección de pérdidas:\n\nDetección de timeout\nDetección de ACKs duplicados"
-  },
-  {
-    "objectID": "ch1_p4_transport.html#tcp-básico",
-    "href": "ch1_p4_transport.html#tcp-básico",
-    "title": "Capa de Transporte",
-    "section": "TCP básico",
-    "text": "TCP básico\n\n\n\n\n\n\n\n\nsequenceDiagram\n    participant E as Emisor\n    participant R as Receptor\n    \n    Note over E,R: Conexión ya establecida, seq inicial=100\n    \n    E-&gt;&gt;R: seq=100, data=\"Hola\" (4 bytes)\n    Note over R: Recibe\n    R-&gt;&gt;E: ACK=104 (\"Espero byte 104\")\n    Note over R: Confirma\n    \n    E-&gt;&gt;R: seq=104, data=\" mundo!\" (7 bytes)  \n    R-&gt;&gt;E: ACK=111 (\"Espero byte 111\")\n    \n    E-&gt;&gt;R: seq=111, data=\" TCP\" (4 bytes)\n    E-&gt;&gt;R: seq=115, data=\" rocks\" (6 bytes)\n    Note over R: Recibe ambos correctamente\n    Note over R: ACK acumulativo confirma todo\n    R-&gt;&gt;E: ACK=121 (\"Recibí todo hasta byte 120\")\n    \n\n\n\n\n\n\n\n\n\nPrimer envío: seq=100 con “Hola” (4 bytes) → el receptor responde ACK=104, indicando que espera el byte 104\nEnvíos consecutivos: Cada mensaje usa el número de secuencia donde terminó el anterior (104, 111, 115)\nACK acumulativo final: ACK=121 confirma de una vez ambos paquetes “TCP” y “rocks”"
+    "text": "Mecanismos de Confiabilidad\n\nLos mecanismos de confiabilidad en TCP garantizan que los datos lleguen correctamente y en orden.\n\n\n\nNúmeros de secuencia y ACKs:\n\nCada byte tiene número único\nCuando enviamos información, está identificada por un número de secuencia (SEQ)\nAdemás, esperamos confirmación de que se ha recibido correctamente (ACK)\nACKs acumulativos (ACK para byte N confirma hasta N-1)\nLos ACKs y SEQs permite detectar datos perdidos, duplicados o desordenados\n\n\n\n\n\n\n\n\nsequenceDiagram\n    participant E as Emisor\n    participant R as Receptor\n    \n    Note over E,R: Conexión ya establecida, seq inicial=100\n    \n    E-&gt;&gt;R: seq=100, data=\"Hola\" (4 bytes)\n    Note over R: Recibe\n    R-&gt;&gt;E: ACK=104 (\"Espero byte 104\")\n    Note over R: Confirma\n    \n    E-&gt;&gt;R: seq=104, data=\" mundo!\" (7 bytes)  \n    R-&gt;&gt;E: ACK=111 (\"Espero byte 111\")\n    \n    E-&gt;&gt;R: seq=111, data=\" TCP\" (4 bytes)\n    E-&gt;&gt;R: seq=115, data=\" rocks\" (6 bytes)\n    Note over R: Recibe ambos correctamente\n    Note over R: ACK acumulativo confirma todo\n    R-&gt;&gt;E: ACK=121 (\"Recibí todo hasta byte 120\")"
   },
   {
     "objectID": "ch1_p4_transport.html#detección-de-pérdidas",
@@ -746,14 +739,14 @@
     "href": "ch1_p4_transport.html#terminación-de-conexión",
     "title": "Capa de Transporte",
     "section": "Terminación de Conexión",
-    "text": "Terminación de Conexión\n\n\n\n\n\n\n\n\nsequenceDiagram\n    participant C as Cliente\n    participant S as Servidor\n    \n    Note over C,S: Conexión establecida\n    C-&gt;&gt;S: FIN=1, seq=x\n    Note over C: Estado: FIN_WAIT_1\n    S-&gt;&gt;C: ACK=1, ack=x+1\n    Note over C: Estado: FIN_WAIT_2\n    S-&gt;&gt;C: FIN=1, ACK=1, seq=y\n    Note over S: Estado: LAST_ACK\n    C-&gt;&gt;S: ACK=1, ack=y+1\n    Note over C: Estado: TIME_WAIT\n    Note over C: Espera 2*MSL\n    Note over C,S: CLOSED\n\n\n\n\n\n\n\n\n\nCada extremo debe enviar su propio FIN y recibir confirmación, permitiendo cierre unidireccional (half-close).\nEl cliente espera 2*MSL para asegurar que su último ACK llegó y manejar retransmisiones tardías antes del cierre definitivo."
+    "text": "Terminación de Conexión\n\n\n\n\n\n\n\n\nsequenceDiagram\n    participant C as Cliente\n    participant S as Servidor\n    \n    Note over C,S: Conexión establecida\n    C-&gt;&gt;S: FIN=1, seq=x\n    Note over C: Estado: FIN_WAIT_1\n    S-&gt;&gt;C: ACK=1, ack=x+1\n    Note over C: Estado: FIN_WAIT_2\n    S-&gt;&gt;C: FIN=1, ACK=1, seq=y\n    Note over S: Estado: LAST_ACK\n    C-&gt;&gt;S: ACK=1, ack=y+1\n    Note over C: Estado: TIME_WAIT\n    Note over C: Espera 2*MSL\n    Note over C,S: CLOSED\n\n\n\n\n\n\n\n\n\nCada extremo debe enviar su propio FIN y recibir confirmación,\npermitiendo cierre unidireccional (half-close).\nEl cliente espera 2*MSL para asegurar que su último ACK llegó,\nmanejando retransmisiones tardías antes del cierre definitivo."
   },
   {
     "objectID": "ch1_p4_transport.html#equidad-y-coexistencia",
     "href": "ch1_p4_transport.html#equidad-y-coexistencia",
     "title": "Capa de Transporte",
     "section": "Equidad y Coexistencia",
-    "text": "Equidad y Coexistencia\nTCP es “fair”:\n\nN conexiones TCP comparten enlace equitativamente\nCada una obtiene ~R/N del ancho de banda R\n\nLimitaciones:\n\nUDP no implementa control → puede monopolizar\nAplicaciones con múltiples conexiones TCP\nConexiones con menor RTT tienen ventaja"
+    "text": "Equidad y Coexistencia\nTCP es “fair”:\n\nN conexiones TCP comparten enlace equitativamente\nCada una obtiene ~R/N del ancho de banda R\nVer ejemplos en jergames (Bandwidth distribution)\n\nLimitaciones:\n\nUDP no implementa control → puede monopolizar\nAplicaciones con múltiples conexiones TCP\nConexiones con menor RTT tienen ventaja"
   },
   {
     "objectID": "ch1_p4_transport.html#cuándo-usar",
