@@ -291,7 +291,7 @@
         "\n",
         "De ~4 dispositivos (1969) a >100.000 millones (2025) en 50 años."
       ],
-      "id": "e1dfb221"
+      "id": "70c4f482"
     },
     {
       "cell_type": "code",
@@ -309,7 +309,7 @@
         "plt.ylim(0, 12)\n",
         "plt.show()"
       ],
-      "id": "861d71c3",
+      "id": "6756eef0",
       "execution_count": null,
       "outputs": []
     },
@@ -996,15 +996,15 @@
         "- **Aplicaciones críticas**: Videojuegos requieren <50ms para competitivo\n",
         ":::"
       ],
-      "id": "5b445cd4"
+      "id": "4dfb1ed0"
     }
   ],
   "metadata": {
     "kernelspec": {
-      "name": "python3",
+      "name": "jer",
       "language": "python",
-      "display_name": "Python 3 (ipykernel)",
-      "path": "/Users/rubenrodriguez/miniconda3/envs/jer/share/jupyter/kernels/python3"
+      "display_name": "Python (JER)",
+      "path": "/Users/rubenrodriguez/Library/Jupyter/kernels/jer"
     }
   },
   "nbformat": 4,

@@ -358,13 +358,13 @@ Rubén Rodríguez Fernández (@rrunix)
 </div>
 </div>
 </section>
-<section id="conceptos-clave-introducidos" class="slide level2">
-<h2>Conceptos Clave Introducidos</h2>
-<ol type="1">
-<li class="fragment"><strong>Protocolos de capa de aplicación</strong>: Definen cómo las aplicaciones intercambian datos</li>
-<li class="fragment"><strong>Arquitectura de aplicaciones en red</strong>: Cliente-servidor, P2P, híbrida</li>
-<li class="fragment"><strong>Sockets</strong>: Interfaz entre capa de aplicación y capa de transporte</li>
-</ol>
+<section id="conceptos-clave" class="slide level2">
+<h2>Conceptos Clave</h2>
+<ul>
+<li><strong>Protocolos de capa de aplicación</strong>: Definen cómo las aplicaciones intercambian datos</li>
+<li><strong>Arquitectura de aplicaciones en red</strong>: Cliente-servidor, P2P, híbrida</li>
+<li><strong>Sockets</strong>: Interfaz entre capa de aplicación y capa de transporte</li>
+</ul>
 </section></section>
 <section>
 <section id="sockets" class="title-slide slide level1 center">
@@ -387,8 +387,17 @@ Rubén Rodríguez Fernández (@rrunix)
 </ul>
 </div><div class="column" style="width:50%;">
 <p><strong>Identificación de procesos:</strong></p>
-<p>Para identificar un proceso necesitamos: - <strong>IP del host</strong>: Dirección única (32 bits IPv4) - <strong>Número de puerto</strong>: Asociado al proceso</p>
-<p>Ejemplos de puertos: - HTTP: 80 - HTTPS: 443 - DNS: 53</p>
+<p>Para identificar un proceso necesitamos:</p>
+<ul>
+<li><strong>IP del host</strong>: Dirección única (32 bits IPv4)</li>
+<li><strong>Número de puerto</strong>: Asociado al proceso</li>
+</ul>
+<p>Ejemplos de puertos:</p>
+<ul>
+<li>HTTP: 80</li>
+<li>HTTPS: 443</li>
+<li>DNS: 53</li>
+</ul>
 </div></div>
 </section>
 <section id="sockets-tcp" class="slide level2">
@@ -566,7 +575,7 @@ Rubén Rodríguez Fernández (@rrunix)
 <td>Moderada</td>
 <td>Elástica</td>
 <td>Sí (HTTPS)</td>
-<td>UDP (HTTP/3) / TCP</td>
+<td>UDP / TCP</td>
 </tr>
 <tr class="even">
 <td><strong>Streaming video</strong></td>
@@ -749,14 +758,15 @@ Rubén Rodríguez Fernández (@rrunix)
 </section>
 <section id="topologías-p2p" class="slide level2">
 <h2>Topologías P2P</h2>
-<div class="quarto-layout-panel" data-layout="[[33, 33, 33], [100]]">
-<div class="quarto-layout-row">
-<div class="cell quarto-layout-cell" data-reveal="true" data-fig-height="4" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="columns">
+<div class="column" style="width:25%;">
+<div style="width: 12vw; text-align: center; margin: 0 auto;">
+<div class="cell" data-reveal="true" data-fig-height="4" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class=""><p></p>
 <div>
-<pre class="mermaid mermaid-js">graph TB
+<pre class="mermaid mermaid-js">graph TD
     P1((Peer 1))
     P2((Peer 2))
     P3((Peer 3))
@@ -780,16 +790,19 @@ Rubén Rodríguez Fernández (@rrunix)
     class P1,P2,P3,P4,P5 peerNode
 </pre>
 </div>
-<p></p><figcaption> A) Full Mesh</figcaption> </figure><p></p>
+<p></p></figure><p></p>
 </div>
 </div>
 </div>
-<div class="cell quarto-layout-cell" data-reveal="true" data-fig-height="4" style="flex-basis: 33.3%;justify-content: flex-start;">
+</div>
+</div><div class="column" style="width:25%;">
+<div style="width: 5vw; text-align: center; margin: 0 auto;">
+<div class="cell" data-reveal="true" data-fig-height="4" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class=""><p></p>
 <div>
-<pre class="mermaid mermaid-js">graph TB   
+<pre class="mermaid mermaid-js">graph TD   
     R1((Peer 1))
     R2((Peer 2))
     R3((Peer 3))
@@ -807,16 +820,19 @@ Rubén Rodríguez Fernández (@rrunix)
     class R1,R2,R3,R4,R5 peerNode
 </pre>
 </div>
-<p></p><figcaption> B) Ring</figcaption> </figure><p></p>
+<p></p></figure><p></p>
 </div>
 </div>
 </div>
-<div class="cell quarto-layout-cell" data-reveal="true" data-fig-height="4" style="flex-basis: 33.3%;justify-content: flex-start;">
+</div>
+</div><div class="column" style="width:25%;">
+<div style="width: 20vw; text-align: center; margin: 0 auto;">
+<div class="cell" data-reveal="true" data-fig-height="4" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class=""><p></p>
 <div>
-<pre class="mermaid mermaid-js">graph TB
+<pre class="mermaid mermaid-js">graph TD
     S1((Host/Hub))
     S2((Peer 2))
     S3((Peer 3))
@@ -835,18 +851,19 @@ Rubén Rodríguez Fernández (@rrunix)
     class S1 hubNode
 </pre>
 </div>
-<p></p><figcaption> C) Star</figcaption> </figure><p></p>
+<p></p></figure><p></p>
 </div>
 </div>
 </div>
 </div>
-<div class="quarto-layout-row">
-<div class="cell quarto-layout-cell" data-reveal="true" data-fig-height="4" style="flex-basis: 100.0%;justify-content: flex-start;">
+</div><div class="column" style="width:25%;">
+<div style="width: 5vw; text-align: center; margin: 0 auto;">
+<div class="cell" data-reveal="true" data-fig-height="4" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class=""><p></p>
 <div>
-<pre class="mermaid mermaid-js">graph TB
+<pre class="mermaid mermaid-js">graph TD
     H1((Hub))
     H2((Peer 2))
     H3((Peer 3))
@@ -869,12 +886,12 @@ Rubén Rodríguez Fernández (@rrunix)
     class H1 hubNode
 </pre>
 </div>
-<p></p><figcaption> D) Hybrid</figcaption> </figure><p></p>
+<p></p></figure><p></p>
 </div>
 </div>
 </div>
 </div>
-</div>
+</div></div>
 <div class="columns">
 <div class="column" style="width:25%;">
 <p><strong>Full Mesh</strong>: Máxima redundancia, no escalable</p>
@@ -905,7 +922,12 @@ Rubén Rodríguez Fernández (@rrunix)
 <li>Sin estado (stateless)</li>
 </ul>
 <p><strong>URL estructura:</strong></p>
-<p><code>https://www.ejemplo.com/pagina.html</code> - Protocolo: https - Host: www.ejemplo.com - Recurso: /pagina.html</p>
+<p><code>https://www.ejemplo.com/pagina.html</code></p>
+<ul>
+<li>Protocolo: https</li>
+<li>Host: www.ejemplo.com</li>
+<li>Recurso: /pagina.html</li>
+</ul>
 </div><div class="column" style="width:50%;">
 <p><strong>Verbos HTTP:</strong></p>
 <ul>
@@ -928,9 +950,10 @@ Rubén Rodríguez Fernández (@rrunix)
 <section id="evolución-de-http" class="slide level2">
 <h2>Evolución de HTTP</h2>
 <h3 id="conexiones-persistentes-vs-no-persistentes">Conexiones persistentes vs no persistentes</h3>
-<div class="quarto-layout-panel" data-layout="[[50,50]]">
-<div class="quarto-layout-row">
-<div class="cell quarto-layout-cell" data-reveal="true" data-fig-height="4" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="columns">
+<div class="column" style="width:50%;">
+<div style="width: 20vw; text-align: center; margin: 0 auto;">
+<div class="cell" data-reveal="true" data-fig-height="4" data-layout-align="default">
 <div class="cell-output-display">
 <div id="no-persistent-http">
 <div>
@@ -963,7 +986,10 @@ Rubén Rodríguez Fernández (@rrunix)
 </div>
 </div>
 </div>
-<div class="cell quarto-layout-cell" data-reveal="true" data-fig-height="4" style="flex-basis: 50.0%;justify-content: flex-start;">
+</div>
+</div><div class="column" style="width:50%;">
+<div style="width: 23vw; text-align: center; margin: 0 auto;">
+<div class="cell" data-reveal="true" data-fig-height="4" data-layout-align="default">
 <div class="cell-output-display">
 <div id="persistent-http">
 <div>
@@ -992,7 +1018,7 @@ Rubén Rodríguez Fernández (@rrunix)
 </div>
 </div>
 </div>
-</div>
+</div></div>
 <ul>
 <li><strong>HTTP/1.0</strong>: 2 RTT por objeto, nueva conexión cada vez</li>
 <li><strong>HTTP/1.1</strong>: 1 RTT por objeto, conexión persistente</li>
@@ -1065,6 +1091,7 @@ Rubén Rodríguez Fernández (@rrunix)
 </section>
 <section id="proceso-dns---ejemplo" class="slide level2">
 <h2>Proceso DNS - Ejemplo</h2>
+<div style="width: 60vw; text-align: center; margin: 0 auto;">
 <div class="cell" data-reveal="true" data-fig-height="4" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -1102,6 +1129,7 @@ Rubén Rodríguez Fernández (@rrunix)
 </pre>
 </div>
 <p></p></figure><p></p>
+</div>
 </div>
 </div>
 </div>
@@ -1284,38 +1312,6 @@ Rubén Rodríguez Fernández (@rrunix)
 <li class="fragment"><strong>CDNs</strong>: Redes de distribución que acercan contenido a usuarios</li>
 <li class="fragment">Podemos crear <strong>protocolos propios</strong> en esta capa</li>
 </ul>
-</section>
-<section id="conceptos-para-recordar" class="slide level2">
-<h2>Conceptos para Recordar</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><strong>Elección de transporte:</strong></p>
-<ul>
-<li><strong>TCP</strong>: Confiabilidad crítica</li>
-<li><strong>UDP</strong>: Baja latencia prioritaria</li>
-<li><strong>QUIC</strong>: Mejor de ambos mundos</li>
-</ul>
-<p><strong>Identificación de procesos:</strong></p>
-<ul>
-<li>IP del host + Puerto</li>
-<li>Ejemplos: HTTP(80), HTTPS(443), DNS(53)</li>
-</ul>
-</div><div class="column" style="width:50%;">
-<p><strong>Servicios requeridos:</strong></p>
-<ul>
-<li>Transferencia confiable</li>
-<li>Temporización</li>
-<li>Ancho de banda</li>
-<li>Seguridad</li>
-</ul>
-<p><strong>Verbos HTTP principales:</strong></p>
-<ul>
-<li>GET (obtener)</li>
-<li>POST (enviar)</li>
-<li>PUT (actualizar)</li>
-<li>DELETE (eliminar)</li>
-</ul>
-</div></div>
 
 
 <div class="reveal-header">
