@@ -497,6 +497,7 @@ graph LR
 :::
 ::: {.column width="50%"}
 
+::: {style="width: 15vw; text-align: center; margin: 0 auto;"}
 ```{mermaid}
 graph TD
     C1["🌐 Capa 1<br/>Frontend<br/><small>Javascript, HTML, CSS</small>"]
@@ -514,7 +515,7 @@ graph TD
     class C2 backend
     class C3 database
 ```
-
+:::
 :::
 :::
 
