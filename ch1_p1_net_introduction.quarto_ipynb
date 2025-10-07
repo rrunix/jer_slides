@@ -291,7 +291,7 @@
         "\n",
         "De ~4 dispositivos (1969) a >100.000 millones (2025) en 50 años."
       ],
-      "id": "70c4f482"
+      "id": "ef1df3b9"
     },
     {
       "cell_type": "code",
@@ -309,7 +309,7 @@
         "plt.ylim(0, 12)\n",
         "plt.show()"
       ],
-      "id": "6756eef0",
+      "id": "abc98bd7",
       "execution_count": null,
       "outputs": []
     },
@@ -515,6 +515,7 @@
         ":::\n",
         "::: {.column width=\"50%\"}\n",
         "\n",
+        "::: {style=\"width: 15vw; text-align: center; margin: 0 auto;\"}\n",
         "```{mermaid}\n",
         "graph TD\n",
         "    C1[\"🌐 Capa 1<br/>Frontend<br/><small>Javascript, HTML, CSS</small>\"]\n",
@@ -532,7 +533,7 @@
         "    class C2 backend\n",
         "    class C3 database\n",
         "```\n",
-        "\n",
+        ":::\n",
         ":::\n",
         ":::\n",
         "\n",
@@ -996,7 +997,7 @@
         "- **Aplicaciones críticas**: Videojuegos requieren <50ms para competitivo\n",
         ":::"
       ],
-      "id": "4dfb1ed0"
+      "id": "44cceb44"
     }
   ],
   "metadata": {
