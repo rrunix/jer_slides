@@ -1,0 +1,313 @@
+---
+title: "Desarrollo en el cliente"
+subtitle: "Introducción a POO en JavaScript"
+author: "Rubén Rodríguez Fernández (&#64;rrunix)"
+date: "10/10/2025"
+aliases: 
+  - ch2_p2.html
+  
+css: ojs_interactive.css
+mermaid:
+  theme: default
+  themeVariables:
+    background: "#ffffff"
+---
+
+# Orientación a Objetos
+
+## Prototipos vs Clases
+
+JavaScript tradicionalmente usa **prototipos**, no clases como Java.
+
+- Cualquier objeto puede ser prototipo de otros
+- Cadena de herencia flexible
+- ES2015+ añadió sintaxis de clases (azúcar sintáctico)
+
+
+
+## Objeto Literal Simple
+
+```javascript
+const enemigo = {
+    vida: 100,
+    damage: 15,
+    atacar() {
+        return `Enemigo ataca causando ${this.damage} puntos`;
+    }
+};
+
+// Crear basado en prototipo
+const goblin = Object.create(enemigo);
+goblin.vida = 50;
+goblin.damage = 8;
+
+console.log(goblin.atacar()); 
+// "Enemigo ataca causando 8 puntos"
+```
+
+
+
+## Herencia con Prototipos
+
+```javascript
+const personajeBase = {
+    mover(x, y) {
+        this.x += x;
+        this.y += y;
+    }
+};
+
+const protottipoJugador = Object.create(personajeBase);
+protottipoJugador.atacar = function(objetivo) {
+    return `${this.nombre} ataca a ${objetivo.nombre}`;
+};
+
+const jugador = Object.create(protottipoJugador);
+jugador.nombre = "Aragorn";
+jugador.x = 0;
+jugador.y = 0;
+```
+
+
+
+## Acceso a Propiedades
+
+```javascript
+const config = {
+    sonido: true,
+    volumen: 0.8,
+    idioma: "es"
+};
+
+// Notación punto (recomendado)
+console.log(config.sonido);
+config.volumen = 0.5;
+
+// Notación corchetes (propiedades dinámicas)
+console.log(config["idioma"]);
+const propiedad = "volumen";
+console.log(config[propiedad]);
+
+// Añadir propiedades dinámicamente
+config.dificultad = "normal";
+```
+
+
+
+## Iteración sobre Propiedades
+
+```javascript
+const inventario = {
+    espada: 1,
+    pocion: 5,
+    oro: 150
+};
+
+// Iterar sobre propiedades
+for (let item in inventario) {
+    console.log(`${item}: ${inventario[item]}`);
+}
+
+// Verificar existencia
+if ("oro" in inventario) {
+    console.log("El jugador tiene oro");
+}
+
+// Arrays de claves y valores
+const items = Object.keys(inventario);
+const cantidades = Object.values(inventario);
+```
+
+
+
+## null vs undefined
+
+```javascript
+let jugador = null;        // Ausencia intencional
+let powerUp;              // undefined - no inicializada
+
+// Verificación segura
+if (jugador) {
+    jugador.mover(5, 0);
+}
+
+// Operador optional chaining (ES2020+)
+jugador?.mover?.(5, 0);
+```
+
+
+
+## Función Constructor
+
+```javascript
+function Jugador(nombre, x, y) {
+    this.nombre = nombre;
+    this.x = x;
+    this.y = y;
+    this.vida = 100;
+}
+
+// Métodos en el prototipo
+Jugador.prototype.mover = function(deltaX, deltaY) {
+    this.x += deltaX;
+    this.y += deltaY;
+};
+
+// Uso (siempre con 'new')
+const player1 = new Jugador("Aragorn", 10, 20);
+player1.mover(2, 3);
+```
+
+
+
+## Herencia con Constructor
+
+```javascript
+function Personaje(nombre, vida) {
+    this.nombre = nombre;
+    this.vida = vida;
+}
+
+Personaje.prototype.saludar = function() {
+    return `Hola, soy ${this.nombre}`;
+};
+
+function Guerrero(nombre, vida, fuerza) {
+    Personaje.call(this, nombre, vida);
+    this.fuerza = fuerza;
+}
+
+Guerrero.prototype = Object.create(Personaje.prototype);
+Guerrero.prototype.constructor = Guerrero;
+
+const conan = new Guerrero("Conan", 150, 25);
+```
+
+
+
+## Clases ES2015+ (Sintaxis Moderna)
+
+```javascript
+class GameObject {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.activo = true;
+    }
+
+    actualizar(deltaTime) {
+        if (!this.activo) return;
+    }
+
+    destruir() {
+        this.activo = false;
+    }
+}
+```
+
+
+
+## Herencia con Clases
+
+```javascript
+class Enemigo extends GameObject {
+    constructor(x, y, tipo) {
+        super(x, y);  // Llamada al constructor padre
+        this.tipo = tipo;
+        this.vida = 50;
+        this.velocidad = 2;
+    }
+
+    actualizar(deltaTime) {
+        super.actualizar(deltaTime);
+        if (this.vida > 0) {
+            this.x += this.velocidad;
+        }
+    }
+}
+```
+
+
+
+## Getters y Setters
+
+```javascript
+class Enemigo extends GameObject {
+    constructor(x, y, tipo) {
+        super(x, y);
+        this._vida = 50;
+    }
+
+    get estaVivo() {
+        return this._vida > 0;
+    }
+
+    set vida(valor) {
+        this._vida = Math.max(0, valor);
+        if (this._vida === 0) {
+            this.destruir();
+        }
+    }
+
+    get vida() {
+        return this._vida;
+    }
+}
+```
+
+
+
+## Métodos Estáticos
+
+```javascript
+class Enemigo extends GameObject {
+    // Método estático
+    static crearOrc() {
+        const orc = new Enemigo(0, 0, "Orc");
+        orc.vida = 80;
+        orc.velocidad = 1.5;
+        return orc;
+    }
+}
+
+// Uso
+const orc = Enemigo.crearOrc();
+```
+
+
+
+## Uso de Clases
+
+```javascript
+// Constructor normal
+const goblin = new Enemigo(10, 20, "Goblin");
+goblin.vida = 30;
+
+// Usar getter (sin paréntesis)
+if (goblin.estaVivo) {
+    console.log("El goblin sigue vivo");
+}
+
+// Método estático
+const orc = Enemigo.crearOrc();
+
+// Polimorfismo
+const enemigos = [goblin, orc];
+enemigos.forEach(enemigo => {
+    enemigo.actualizar(16);
+});
+```
+
+
+
+## Ventajas de Clases ES2015+
+
+1. **Sintaxis más clara**: Más familiar para otros lenguajes OO
+2. **Herencia simplificada**: `extends` y `super()` más directos
+3. **Getters y setters integrados**: Validación y cálculo
+4. **Métodos estáticos**: Para funciones de clase
+5. **Mejor soporte de herramientas**: IDEs y linters
+
+::: {.callout-tip}
+La sintaxis de clases es la **recomendada** para proyectos nuevos
+:::
