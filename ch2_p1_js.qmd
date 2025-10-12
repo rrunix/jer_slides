@@ -13,7 +13,8 @@ mermaid:
     background: "#ffffff"
 ---
 
-## Introducción a JavaScript
+# Introducción a JavaScript
+## Introducción
 
 JavaScript es el lenguaje fundamental para desarrollo web interactivo y videojuegos web.
 
@@ -38,9 +39,9 @@ JavaScript es el lenguaje fundamental para desarrollo web interactivo y videojue
 ::::
 
 
-
 ## Versiones de ECMAScript
 
+- Primera versión en 10 días (1995).
 - **ES5 (2011)**: Base sólida que estableció JavaScript moderno en todos los navegadores
 - **ES6/ES2015**: Revolución del lenguaje - introdujo sintaxis moderna que cambió cómo programamos
 - **Actualizaciones anuales**: Cada año se añaden mejoras sin romper código existente (compatibilidad hacia atrás)
@@ -301,6 +302,7 @@ module.exports = {
 - **Prohíbe sintaxis peligrosa**: Variables sin declarar, duplicar parámetros, etc.
 - **Mejor rendimiento**: Permite optimizaciones del motor JavaScript
 - **En módulos ES2015+ ya está activo**: No necesitas añadirlo manualmente
+- También se puede utiliziar `node --use_strict` en node.
 
 ```javascript
 // Activar modo estricto (poner al inicio del archivo o función)
@@ -363,6 +365,8 @@ console.log('Jugador:', { nombre: 'Juan', vida: 100 });
 
 
 ## Comentarios
+
+- Igual que en Java.
 
 ```javascript
 // Comentario de una línea - se ignora al ejecutar
@@ -583,6 +587,9 @@ JavaScript considera **falso** (falsy):
 - `0` - cero numérico
 - `NaN` - "Not a Number"
 
+##  Utiliza siempre ===
+
+![](resources/bad-table.png)
 
 # Arrays
 
