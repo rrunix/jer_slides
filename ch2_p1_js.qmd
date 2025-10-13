@@ -13,7 +13,8 @@ mermaid:
     background: "#ffffff"
 ---
 
-## Introducción a JavaScript
+# Introducción a JavaScript
+## Introducción
 
 JavaScript es el lenguaje fundamental para desarrollo web interactivo y videojuegos web.
 
@@ -38,9 +39,9 @@ JavaScript es el lenguaje fundamental para desarrollo web interactivo y videojue
 ::::
 
 
-
 ## Versiones de ECMAScript
 
+- Primera versión en 10 días (1995).
 - **ES5 (2011)**: Base sólida que estableció JavaScript moderno en todos los navegadores
 - **ES6/ES2015**: Revolución del lenguaje - introdujo sintaxis moderna que cambió cómo programamos
 - **Actualizaciones anuales**: Cada año se añaden mejoras sin romper código existente (compatibilidad hacia atrás)
@@ -93,17 +94,19 @@ Aunque la sintaxis recuerda a Java, son lenguajes **completamente diferentes**.
 
 ## Librerías JavaScript
 
-**Para videojuegos:**
+**Para videojuegos**:
 
-- **Phaser**: Framework completo para juegos 2D - maneja física, colisiones, animaciones
-- **Three.js**: Biblioteca para gráficos 3D con WebGL - crea escenas 3D en el navegador
-- **Babylon.js**: Motor 3D completo con física y efectos avanzados
-- **PixiJS**: Renderizador 2D ultra rápido - ideal para sprites y animaciones
+- Phaser: Framework completo para juegos 2D - maneja física, colisiones, animaciones
 
-**Propósito general:**
+**Herramientas de desarrollo**:
 
-- **Lodash**: Utilidades para trabajar con arrays, objetos y funciones de forma eficiente
-- **Axios**: Cliente HTTP moderno para hacer peticiones al servidor (reemplazo de fetch)
+- Webpack: Empaquetador de módulos - combina y optimiza tu código JavaScript y assets
+- Babel: Transpilador - convierte código JavaScript moderno a versiones compatibles con navegadores antiguos
+
+**Backend y comunicación**:
+
+- Express.js: Framework minimalista para crear servidores web y APIs en Node.js
+- WS (ws.js): Biblioteca para WebSockets - permite comunicación en tiempo real bidireccional
 
 
 
@@ -301,6 +304,7 @@ module.exports = {
 - **Prohíbe sintaxis peligrosa**: Variables sin declarar, duplicar parámetros, etc.
 - **Mejor rendimiento**: Permite optimizaciones del motor JavaScript
 - **En módulos ES2015+ ya está activo**: No necesitas añadirlo manualmente
+- También se puede utiliziar `node --use_strict` en node.
 
 ```javascript
 // Activar modo estricto (poner al inicio del archivo o función)
@@ -363,6 +367,8 @@ console.log('Jugador:', { nombre: 'Juan', vida: 100 });
 
 
 ## Comentarios
+
+- Igual que en Java.
 
 ```javascript
 // Comentario de una línea - se ignora al ejecutar
@@ -583,6 +589,9 @@ JavaScript considera **falso** (falsy):
 - `0` - cero numérico
 - `NaN` - "Not a Number"
 
+##  Utiliza siempre ===
+
+![](resources/bad-table.png)
 
 # Arrays
 

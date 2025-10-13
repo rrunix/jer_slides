@@ -213,6 +213,7 @@ Rubén Rodríguez Fernández (@rrunix)
 <nav role="doc-toc"> 
 <h2 id="toc-title">Tabla de contenidos</h2>
 <ul>
+<li><a href="#/introducción-a-javascript" id="/toc-introducción-a-javascript">Introducción a JavaScript</a></li>
 <li><a href="#/configuración-del-entorno" id="/toc-configuración-del-entorno">Configuración del Entorno</a></li>
 <li><a href="#/el-lenguaje-javascript" id="/toc-el-lenguaje-javascript">El Lenguaje JavaScript</a></li>
 <li><a href="#/arrays" id="/toc-arrays">Arrays</a></li>
@@ -223,8 +224,13 @@ Rubén Rodríguez Fernández (@rrunix)
 </ul>
 </nav>
 </section>
-<section id="introducción-a-javascript" class="slide level2">
-<h2>Introducción a JavaScript</h2>
+<section>
+<section id="introducción-a-javascript" class="title-slide slide level1 center">
+<h1>Introducción a JavaScript</h1>
+
+</section>
+<section id="introducción" class="slide level2">
+<h2>Introducción</h2>
 <p>JavaScript es el lenguaje fundamental para desarrollo web interactivo y videojuegos web.</p>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -248,6 +254,7 @@ Rubén Rodríguez Fernández (@rrunix)
 <section id="versiones-de-ecmascript" class="slide level2">
 <h2>Versiones de ECMAScript</h2>
 <ul>
+<li>Primera versión en 10 días (1995).</li>
 <li><strong>ES5 (2011)</strong>: Base sólida que estableció JavaScript moderno en todos los navegadores</li>
 <li><strong>ES6/ES2015</strong>: Revolución del lenguaje - introdujo sintaxis moderna que cambió cómo programamos</li>
 <li><strong>Actualizaciones anuales</strong>: Cada año se añaden mejoras sin romper código existente (compatibilidad hacia atrás)</li>
@@ -335,19 +342,21 @@ Rubén Rodríguez Fernández (@rrunix)
 </section>
 <section id="librerías-javascript" class="slide level2">
 <h2>Librerías JavaScript</h2>
-<p><strong>Para videojuegos:</strong></p>
+<p><strong>Para videojuegos</strong>:</p>
 <ul>
-<li><strong>Phaser</strong>: Framework completo para juegos 2D - maneja física, colisiones, animaciones</li>
-<li><strong>Three.js</strong>: Biblioteca para gráficos 3D con WebGL - crea escenas 3D en el navegador</li>
-<li><strong>Babylon.js</strong>: Motor 3D completo con física y efectos avanzados</li>
-<li><strong>PixiJS</strong>: Renderizador 2D ultra rápido - ideal para sprites y animaciones</li>
+<li>Phaser: Framework completo para juegos 2D - maneja física, colisiones, animaciones</li>
 </ul>
-<p><strong>Propósito general:</strong></p>
+<p><strong>Herramientas de desarrollo</strong>:</p>
 <ul>
-<li><strong>Lodash</strong>: Utilidades para trabajar con arrays, objetos y funciones de forma eficiente</li>
-<li><strong>Axios</strong>: Cliente HTTP moderno para hacer peticiones al servidor (reemplazo de fetch)</li>
+<li>Webpack: Empaquetador de módulos - combina y optimiza tu código JavaScript y assets</li>
+<li>Babel: Transpilador - convierte código JavaScript moderno a versiones compatibles con navegadores antiguos</li>
 </ul>
-</section>
+<p><strong>Backend y comunicación</strong>:</p>
+<ul>
+<li>Express.js: Framework minimalista para crear servidores web y APIs en Node.js</li>
+<li>WS (ws.js): Biblioteca para WebSockets - permite comunicación en tiempo real bidireccional</li>
+</ul>
+</section></section>
 <section>
 <section id="configuración-del-entorno" class="title-slide slide level1 center">
 <h1>Configuración del Entorno</h1>
@@ -523,6 +532,7 @@ Rubén Rodríguez Fernández (@rrunix)
 <li><strong>Prohíbe sintaxis peligrosa</strong>: Variables sin declarar, duplicar parámetros, etc.</li>
 <li><strong>Mejor rendimiento</strong>: Permite optimizaciones del motor JavaScript</li>
 <li><strong>En módulos ES2015+ ya está activo</strong>: No necesitas añadirlo manualmente</li>
+<li>También se puede utiliziar <code>node --use_strict</code> en node.</li>
 </ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a></a><span class="co">// Activar modo estricto (poner al inicio del archivo o función)</span></span>
 <span id="cb8-2"><a></a><span class="st">"use strict"</span><span class="op">;</span></span>
@@ -577,6 +587,9 @@ Rubén Rodríguez Fernández (@rrunix)
 </section>
 <section id="comentarios" class="slide level2">
 <h2>Comentarios</h2>
+<ul>
+<li>Igual que en Java.</li>
+</ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb11-1"><a></a><span class="co">// Comentario de una línea - se ignora al ejecutar</span></span>
 <span id="cb11-2"><a></a></span>
 <span id="cb11-3"><a></a><span class="co">/*</span></span>
@@ -776,7 +789,11 @@ Rubén Rodríguez Fernández (@rrunix)
 <li><code>0</code> - cero numérico</li>
 <li><code>NaN</code> - “Not a Number”</li>
 </ul>
-</section></section>
+</section>
+<section id="utiliza-siempre" class="slide level2">
+<h2>Utiliza siempre ===</h2>
+
+<img data-src="resources/bad-table.png" class="r-stretch"></section></section>
 <section>
 <section id="arrays" class="title-slide slide level1 center">
 <h1>Arrays</h1>
