@@ -12,3 +12,4 @@ slides/
 renv/
 freeze/
 **/*.quarto_ipynb
+_freeze/
