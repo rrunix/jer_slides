@@ -9,7 +9,7 @@
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.8.24">
 
-  <meta name="author" content="Rubén Rodríguez Fernández (@rrunix)">
+  <meta name="author" content="Rubén Rodríguez Fernández ((rrunix?))">
   <meta name="dcterms.date" content="2025-10-10">
   <title>Desarrollo en el cliente</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -203,7 +203,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Rubén Rodríguez Fernández (@rrunix) 
+Rubén Rodríguez Fernández (<span class="citation" data-cites="rrunix">(<a href="" role="doc-biblioref" onclick="return false;"><strong>rrunix?</strong></a>)</span>) 
 </div>
 </div>
 </div>
@@ -224,249 +224,572 @@ Rubén Rodríguez Fernández (@rrunix)
 </section>
 <section id="prototipos-vs-clases" class="slide level2">
 <h2>Prototipos vs Clases</h2>
-<p>JavaScript tradicionalmente usa <strong>prototipos</strong>, no clases como Java.</p>
+<p><strong>JavaScript usa herencia prototípica, no clases tradicionales</strong></p>
 <ul>
-<li>Cualquier objeto puede ser prototipo de otros</li>
-<li>Cadena de herencia flexible</li>
-<li>ES2015+ añadió sintaxis de clases (azúcar sintáctico)</li>
+<li>Cualquier objeto puede ser prototipo de otros objetos</li>
+<li>Los objetos heredan directamente de otros objetos</li>
+<li>Cadena de herencia flexible y dinámica</li>
+<li>ES2015+ añadió sintaxis de clases (azúcar sintáctico sobre prototipos)</li>
 </ul>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Nota</strong></p>
+</div>
+<div class="callout-content">
+<p>A diferencia de Java o C++, JavaScript no tiene clases “reales” en su núcleo</p>
+</div>
+</div>
+</div>
 </section>
 <section id="objeto-literal-simple" class="slide level2">
 <h2>Objeto Literal Simple</h2>
+<p><strong>La forma más directa de crear objetos</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb1-1"><a></a><span class="kw">const</span> enemigo <span class="op">=</span> {</span>
 <span id="cb1-2"><a></a>    <span class="dt">vida</span><span class="op">:</span> <span class="dv">100</span><span class="op">,</span></span>
 <span id="cb1-3"><a></a>    <span class="dt">damage</span><span class="op">:</span> <span class="dv">15</span><span class="op">,</span></span>
 <span id="cb1-4"><a></a>    <span class="fu">atacar</span>() {</span>
 <span id="cb1-5"><a></a>        <span class="cf">return</span> <span class="vs">`Enemigo ataca causando </span><span class="sc">${</span><span class="kw">this</span><span class="op">.</span><span class="at">damage</span><span class="sc">}</span><span class="vs"> puntos`</span><span class="op">;</span></span>
 <span id="cb1-6"><a></a>    }</span>
-<span id="cb1-7"><a></a>}<span class="op">;</span></span>
-<span id="cb1-8"><a></a></span>
-<span id="cb1-9"><a></a><span class="co">// Crear basado en prototipo</span></span>
-<span id="cb1-10"><a></a><span class="kw">const</span> goblin <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">create</span>(enemigo)<span class="op">;</span></span>
-<span id="cb1-11"><a></a>goblin<span class="op">.</span><span class="at">vida</span> <span class="op">=</span> <span class="dv">50</span><span class="op">;</span></span>
-<span id="cb1-12"><a></a>goblin<span class="op">.</span><span class="at">damage</span> <span class="op">=</span> <span class="dv">8</span><span class="op">;</span></span>
-<span id="cb1-13"><a></a></span>
-<span id="cb1-14"><a></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(goblin<span class="op">.</span><span class="fu">atacar</span>())<span class="op">;</span> </span>
-<span id="cb1-15"><a></a><span class="co">// "Enemigo ataca causando 8 puntos"</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-7"><a></a>}<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Definimos propiedades y métodos directamente</li>
+<li>Sintaxis clara y concisa</li>
+<li>Ideal para objetos únicos o configuraciones</li>
+</ul>
 </section>
-<section id="herencia-con-prototipos" class="slide level2">
-<h2>Herencia con Prototipos</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a></a><span class="kw">const</span> personajeBase <span class="op">=</span> {</span>
-<span id="cb2-2"><a></a>    <span class="fu">mover</span>(x<span class="op">,</span> y) {</span>
-<span id="cb2-3"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">x</span> <span class="op">+=</span> x<span class="op">;</span></span>
-<span id="cb2-4"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">y</span> <span class="op">+=</span> y<span class="op">;</span></span>
-<span id="cb2-5"><a></a>    }</span>
-<span id="cb2-6"><a></a>}<span class="op">;</span></span>
-<span id="cb2-7"><a></a></span>
-<span id="cb2-8"><a></a><span class="kw">const</span> protottipoJugador <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">create</span>(personajeBase)<span class="op">;</span></span>
-<span id="cb2-9"><a></a>protottipoJugador<span class="op">.</span><span class="at">atacar</span> <span class="op">=</span> <span class="kw">function</span>(objetivo) {</span>
-<span id="cb2-10"><a></a>    <span class="cf">return</span> <span class="vs">`</span><span class="sc">${</span><span class="kw">this</span><span class="op">.</span><span class="at">nombre</span><span class="sc">}</span><span class="vs"> ataca a </span><span class="sc">${</span>objetivo<span class="op">.</span><span class="at">nombre</span><span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
-<span id="cb2-11"><a></a>}<span class="op">;</span></span>
-<span id="cb2-12"><a></a></span>
-<span id="cb2-13"><a></a><span class="kw">const</span> jugador <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">create</span>(protottipoJugador)<span class="op">;</span></span>
-<span id="cb2-14"><a></a>jugador<span class="op">.</span><span class="at">nombre</span> <span class="op">=</span> <span class="st">"Aragorn"</span><span class="op">;</span></span>
-<span id="cb2-15"><a></a>jugador<span class="op">.</span><span class="at">x</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb2-16"><a></a>jugador<span class="op">.</span><span class="at">y</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="creación-basada-en-prototipos" class="slide level2">
+<h2>Creación Basada en Prototipos</h2>
+<p><strong>Usando <code>Object.create()</code> para heredar</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a></a><span class="kw">const</span> goblin <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">create</span>(enemigo)<span class="op">;</span></span>
+<span id="cb2-2"><a></a>goblin<span class="op">.</span><span class="at">vida</span> <span class="op">=</span> <span class="dv">50</span><span class="op">;</span></span>
+<span id="cb2-3"><a></a>goblin<span class="op">.</span><span class="at">damage</span> <span class="op">=</span> <span class="dv">8</span><span class="op">;</span></span>
+<span id="cb2-4"><a></a></span>
+<span id="cb2-5"><a></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(goblin<span class="op">.</span><span class="fu">atacar</span>())<span class="op">;</span> </span>
+<span id="cb2-6"><a></a><span class="co">// "Enemigo ataca causando 8 puntos"</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><code>goblin</code> hereda el método <code>atacar()</code> de <code>enemigo</code></li>
+<li>Las propiedades propias sobrescriben las heredadas</li>
+<li><code>this</code> se refiere al objeto que invoca el método</li>
+</ul>
+</section>
+<section id="herencia-con-prototipos---concepto" class="slide level2">
+<h2>Herencia con Prototipos - Concepto</h2>
+<p><strong>Creando cadenas de herencia</strong></p>
+<ul>
+<li>Cada objeto puede heredar de otro objeto</li>
+<li>Se forma una cadena de prototipos</li>
+<li>JavaScript busca propiedades/métodos en la cadena hasta encontrarlos</li>
+<li>Permite estructurar jerarquías de objetos</li>
+</ul>
+</section>
+<section id="herencia-con-prototipos---base" class="slide level2">
+<h2>Herencia con Prototipos - Base</h2>
+<p><strong>Creando el objeto base</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a></a><span class="kw">const</span> personajeBase <span class="op">=</span> {</span>
+<span id="cb3-2"><a></a>    <span class="fu">mover</span>(x<span class="op">,</span> y) {</span>
+<span id="cb3-3"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">x</span> <span class="op">+=</span> x<span class="op">;</span></span>
+<span id="cb3-4"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">y</span> <span class="op">+=</span> y<span class="op">;</span></span>
+<span id="cb3-5"><a></a>    }</span>
+<span id="cb3-6"><a></a>}<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Define comportamiento común</li>
+<li>Puede ser heredado por múltiples objetos</li>
+<li>Los métodos usan <code>this</code> para acceder a propiedades</li>
+</ul>
+</section>
+<section id="herencia-con-prototipos---extensión" class="slide level2">
+<h2>Herencia con Prototipos - Extensión</h2>
+<p><strong>Creando un prototipo intermedio</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a></a><span class="kw">const</span> protottipoJugador <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">create</span>(personajeBase)<span class="op">;</span></span>
+<span id="cb4-2"><a></a>protottipoJugador<span class="op">.</span><span class="at">atacar</span> <span class="op">=</span> <span class="kw">function</span>(objetivo) {</span>
+<span id="cb4-3"><a></a>    <span class="cf">return</span> <span class="vs">`</span><span class="sc">${</span><span class="kw">this</span><span class="op">.</span><span class="at">nombre</span><span class="sc">}</span><span class="vs"> ataca a </span><span class="sc">${</span>objetivo<span class="op">.</span><span class="at">nombre</span><span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb4-4"><a></a>}<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Hereda de <code>personajeBase</code></li>
+<li>Añade funcionalidad específica</li>
+<li>Forma el segundo eslabón de la cadena</li>
+</ul>
+</section>
+<section id="herencia-con-prototipos---instancia" class="slide level2">
+<h2>Herencia con Prototipos - Instancia</h2>
+<p><strong>Creando la instancia final</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a></a><span class="kw">const</span> jugador <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">create</span>(protottipoJugador)<span class="op">;</span></span>
+<span id="cb5-2"><a></a>jugador<span class="op">.</span><span class="at">nombre</span> <span class="op">=</span> <span class="st">"Aragorn"</span><span class="op">;</span></span>
+<span id="cb5-3"><a></a>jugador<span class="op">.</span><span class="at">x</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb5-4"><a></a>jugador<span class="op">.</span><span class="at">y</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Tiene acceso a <code>mover()</code> y <code>atacar()</code></li>
+<li>Define sus propias propiedades</li>
+<li>Completa la cadena de herencia</li>
+</ul>
 </section>
 <section id="acceso-a-propiedades" class="slide level2">
 <h2>Acceso a Propiedades</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a></a><span class="kw">const</span> config <span class="op">=</span> {</span>
-<span id="cb3-2"><a></a>    <span class="dt">sonido</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
-<span id="cb3-3"><a></a>    <span class="dt">volumen</span><span class="op">:</span> <span class="fl">0.8</span><span class="op">,</span></span>
-<span id="cb3-4"><a></a>    <span class="dt">idioma</span><span class="op">:</span> <span class="st">"es"</span></span>
-<span id="cb3-5"><a></a>}<span class="op">;</span></span>
-<span id="cb3-6"><a></a></span>
-<span id="cb3-7"><a></a><span class="co">// Notación punto (recomendado)</span></span>
-<span id="cb3-8"><a></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(config<span class="op">.</span><span class="at">sonido</span>)<span class="op">;</span></span>
-<span id="cb3-9"><a></a>config<span class="op">.</span><span class="at">volumen</span> <span class="op">=</span> <span class="fl">0.5</span><span class="op">;</span></span>
-<span id="cb3-10"><a></a></span>
-<span id="cb3-11"><a></a><span class="co">// Notación corchetes (propiedades dinámicas)</span></span>
-<span id="cb3-12"><a></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(config[<span class="st">"idioma"</span>])<span class="op">;</span></span>
-<span id="cb3-13"><a></a><span class="kw">const</span> propiedad <span class="op">=</span> <span class="st">"volumen"</span><span class="op">;</span></span>
-<span id="cb3-14"><a></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(config[propiedad])<span class="op">;</span></span>
-<span id="cb3-15"><a></a></span>
-<span id="cb3-16"><a></a><span class="co">// Añadir propiedades dinámicamente</span></span>
-<span id="cb3-17"><a></a>config<span class="op">.</span><span class="at">dificultad</span> <span class="op">=</span> <span class="st">"normal"</span><span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="notación-punto">Notación punto</h3>
+<p><strong>La forma más común y legible</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a></a><span class="kw">const</span> config <span class="op">=</span> {</span>
+<span id="cb6-2"><a></a>    <span class="dt">sonido</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb6-3"><a></a>    <span class="dt">volumen</span><span class="op">:</span> <span class="fl">0.8</span><span class="op">,</span></span>
+<span id="cb6-4"><a></a>    <span class="dt">idioma</span><span class="op">:</span> <span class="st">"es"</span></span>
+<span id="cb6-5"><a></a>}<span class="op">;</span></span>
+<span id="cb6-6"><a></a></span>
+<span id="cb6-7"><a></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(config<span class="op">.</span><span class="at">sonido</span>)<span class="op">;</span></span>
+<span id="cb6-8"><a></a>config<span class="op">.</span><span class="at">volumen</span> <span class="op">=</span> <span class="fl">0.5</span><span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Sintaxis clara: <code>objeto.propiedad</code></li>
+<li>Recomendada cuando el nombre es conocido</li>
+<li>No funciona con nombres dinámicos ::: {.columns} ::: {.column width=“50%”} ### Notación corchetes <strong>Para propiedades dinámicas o especiales</strong></li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(config[<span class="st">"idioma"</span>])<span class="op">;</span></span>
+<span id="cb7-2"><a></a></span>
+<span id="cb7-3"><a></a><span class="kw">const</span> propiedad <span class="op">=</span> <span class="st">"volumen"</span><span class="op">;</span></span>
+<span id="cb7-4"><a></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(config[propiedad])<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Permite nombres de propiedad dinámicos</li>
+<li>Útil con variables o bucles</li>
+<li>Necesaria para nombres con espacios o caracteres especiales</li>
+</ul>
+</div></div>
 </section>
-<section id="iteración-sobre-propiedades" class="slide level2">
-<h2>Iteración sobre Propiedades</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a></a><span class="kw">const</span> inventario <span class="op">=</span> {</span>
-<span id="cb4-2"><a></a>    <span class="dt">espada</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
-<span id="cb4-3"><a></a>    <span class="dt">pocion</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span></span>
-<span id="cb4-4"><a></a>    <span class="dt">oro</span><span class="op">:</span> <span class="dv">150</span></span>
-<span id="cb4-5"><a></a>}<span class="op">;</span></span>
-<span id="cb4-6"><a></a></span>
-<span id="cb4-7"><a></a><span class="co">// Iterar sobre propiedades</span></span>
-<span id="cb4-8"><a></a><span class="cf">for</span> (<span class="kw">let</span> item <span class="kw">in</span> inventario) {</span>
-<span id="cb4-9"><a></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`</span><span class="sc">${</span>item<span class="sc">}</span><span class="vs">: </span><span class="sc">${</span>inventario[item]<span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></span>
-<span id="cb4-10"><a></a>}</span>
-<span id="cb4-11"><a></a></span>
-<span id="cb4-12"><a></a><span class="co">// Verificar existencia</span></span>
-<span id="cb4-13"><a></a><span class="cf">if</span> (<span class="st">"oro"</span> <span class="kw">in</span> inventario) {</span>
-<span id="cb4-14"><a></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">"El jugador tiene oro"</span>)<span class="op">;</span></span>
-<span id="cb4-15"><a></a>}</span>
-<span id="cb4-16"><a></a></span>
-<span id="cb4-17"><a></a><span class="co">// Arrays de claves y valores</span></span>
-<span id="cb4-18"><a></a><span class="kw">const</span> items <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(inventario)<span class="op">;</span></span>
-<span id="cb4-19"><a></a><span class="kw">const</span> cantidades <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">values</span>(inventario)<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="añadir-propiedades-dinámicamente" class="slide level2">
+<h2>Añadir Propiedades Dinámicamente</h2>
+<p><strong>JavaScript permite modificar objetos en tiempo de ejecución</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a></a>config<span class="op">.</span><span class="at">dificultad</span> <span class="op">=</span> <span class="st">"normal"</span><span class="op">;</span></span>
+<span id="cb8-2"><a></a>config[<span class="st">"nivel-maximo"</span>] <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Se pueden añadir propiedades después de crear el objeto</li>
+<li>Característica de la naturaleza dinámica de JavaScript</li>
+<li>Útil pero puede complicar el seguimiento del código</li>
+</ul>
 </section>
-<section id="null-vs-undefined" class="slide level2">
-<h2>null vs undefined</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a></a><span class="kw">let</span> jugador <span class="op">=</span> <span class="kw">null</span><span class="op">;</span>        <span class="co">// Ausencia intencional</span></span>
-<span id="cb5-2"><a></a><span class="kw">let</span> powerUp<span class="op">;</span>              <span class="co">// undefined - no inicializada</span></span>
-<span id="cb5-3"><a></a></span>
-<span id="cb5-4"><a></a><span class="co">// Verificación segura</span></span>
-<span id="cb5-5"><a></a><span class="cf">if</span> (jugador) {</span>
-<span id="cb5-6"><a></a>    jugador<span class="op">.</span><span class="fu">mover</span>(<span class="dv">5</span><span class="op">,</span> <span class="dv">0</span>)<span class="op">;</span></span>
-<span id="cb5-7"><a></a>}</span>
-<span id="cb5-8"><a></a></span>
-<span id="cb5-9"><a></a><span class="co">// Operador optional chaining (ES2020+)</span></span>
-<span id="cb5-10"><a></a>jugador<span class="op">?.</span><span class="at">mover</span><span class="op">?.</span>(<span class="dv">5</span><span class="op">,</span> <span class="dv">0</span>)<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="iteración-sobre-propiedades---forin" class="slide level2">
+<h2>Iteración sobre Propiedades - For…in</h2>
+<p><strong>Recorriendo todas las propiedades</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb9-1"><a></a><span class="kw">const</span> inventario <span class="op">=</span> {</span>
+<span id="cb9-2"><a></a>    <span class="dt">espada</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb9-3"><a></a>    <span class="dt">pocion</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span></span>
+<span id="cb9-4"><a></a>    <span class="dt">oro</span><span class="op">:</span> <span class="dv">150</span></span>
+<span id="cb9-5"><a></a>}<span class="op">;</span></span>
+<span id="cb9-6"><a></a></span>
+<span id="cb9-7"><a></a><span class="cf">for</span> (<span class="kw">let</span> item <span class="kw">in</span> inventario) {</span>
+<span id="cb9-8"><a></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`</span><span class="sc">${</span>item<span class="sc">}</span><span class="vs">: </span><span class="sc">${</span>inventario[item]<span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></span>
+<span id="cb9-9"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Itera sobre propiedades enumerables</li>
+<li>Incluye propiedades heredadas del prototipo</li>
+<li>La variable toma el nombre de cada propiedad</li>
+</ul>
 </section>
-<section id="función-constructor" class="slide level2">
-<h2>Función Constructor</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a></a><span class="kw">function</span> <span class="fu">Jugador</span>(nombre<span class="op">,</span> x<span class="op">,</span> y) {</span>
-<span id="cb6-2"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">nombre</span> <span class="op">=</span> nombre<span class="op">;</span></span>
-<span id="cb6-3"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">x</span> <span class="op">=</span> x<span class="op">;</span></span>
-<span id="cb6-4"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">y</span> <span class="op">=</span> y<span class="op">;</span></span>
-<span id="cb6-5"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">vida</span> <span class="op">=</span> <span class="dv">100</span><span class="op">;</span></span>
-<span id="cb6-6"><a></a>}</span>
-<span id="cb6-7"><a></a></span>
-<span id="cb6-8"><a></a><span class="co">// Métodos en el prototipo</span></span>
-<span id="cb6-9"><a></a>Jugador<span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">mover</span> <span class="op">=</span> <span class="kw">function</span>(deltaX<span class="op">,</span> deltaY) {</span>
-<span id="cb6-10"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">x</span> <span class="op">+=</span> deltaX<span class="op">;</span></span>
-<span id="cb6-11"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">y</span> <span class="op">+=</span> deltaY<span class="op">;</span></span>
-<span id="cb6-12"><a></a>}<span class="op">;</span></span>
-<span id="cb6-13"><a></a></span>
-<span id="cb6-14"><a></a><span class="co">// Uso (siempre con 'new')</span></span>
-<span id="cb6-15"><a></a><span class="kw">const</span> player1 <span class="op">=</span> <span class="kw">new</span> <span class="fu">Jugador</span>(<span class="st">"Aragorn"</span><span class="op">,</span> <span class="dv">10</span><span class="op">,</span> <span class="dv">20</span>)<span class="op">;</span></span>
-<span id="cb6-16"><a></a>player1<span class="op">.</span><span class="fu">mover</span>(<span class="dv">2</span><span class="op">,</span> <span class="dv">3</span>)<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="iteración-sobre-propiedades---verificación" class="slide level2">
+<h2>Iteración sobre Propiedades - Verificación</h2>
+<p><strong>Comprobando existencia de propiedades</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb10-1"><a></a><span class="cf">if</span> (<span class="st">"oro"</span> <span class="kw">in</span> inventario) {</span>
+<span id="cb10-2"><a></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">"El jugador tiene oro"</span>)<span class="op">;</span></span>
+<span id="cb10-3"><a></a>}</span>
+<span id="cb10-4"><a></a></span>
+<span id="cb10-5"><a></a><span class="cf">if</span> (inventario<span class="op">.</span><span class="fu">hasOwnProperty</span>(<span class="st">"espada"</span>)) {</span>
+<span id="cb10-6"><a></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">"Propiedad propia, no heredada"</span>)<span class="op">;</span></span>
+<span id="cb10-7"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><code>in</code> verifica si existe la propiedad (propia o heredada)</li>
+<li><code>hasOwnProperty()</code> verifica solo propiedades propias</li>
+<li>No necesitamos acceder al valor para verificar</li>
+</ul>
 </section>
-<section id="herencia-con-constructor" class="slide level2">
-<h2>Herencia con Constructor</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a></a><span class="kw">function</span> <span class="fu">Personaje</span>(nombre<span class="op">,</span> vida) {</span>
-<span id="cb7-2"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">nombre</span> <span class="op">=</span> nombre<span class="op">;</span></span>
-<span id="cb7-3"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">vida</span> <span class="op">=</span> vida<span class="op">;</span></span>
-<span id="cb7-4"><a></a>}</span>
-<span id="cb7-5"><a></a></span>
-<span id="cb7-6"><a></a>Personaje<span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">saludar</span> <span class="op">=</span> <span class="kw">function</span>() {</span>
-<span id="cb7-7"><a></a>    <span class="cf">return</span> <span class="vs">`Hola, soy </span><span class="sc">${</span><span class="kw">this</span><span class="op">.</span><span class="at">nombre</span><span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
-<span id="cb7-8"><a></a>}<span class="op">;</span></span>
-<span id="cb7-9"><a></a></span>
-<span id="cb7-10"><a></a><span class="kw">function</span> <span class="fu">Guerrero</span>(nombre<span class="op">,</span> vida<span class="op">,</span> fuerza) {</span>
-<span id="cb7-11"><a></a>    Personaje<span class="op">.</span><span class="fu">call</span>(<span class="kw">this</span><span class="op">,</span> nombre<span class="op">,</span> vida)<span class="op">;</span></span>
-<span id="cb7-12"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">fuerza</span> <span class="op">=</span> fuerza<span class="op">;</span></span>
-<span id="cb7-13"><a></a>}</span>
-<span id="cb7-14"><a></a></span>
-<span id="cb7-15"><a></a>Guerrero<span class="op">.</span><span class="at">prototype</span> <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">create</span>(Personaje<span class="op">.</span><span class="at">prototype</span>)<span class="op">;</span></span>
-<span id="cb7-16"><a></a>Guerrero<span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">constructor</span> <span class="op">=</span> Guerrero<span class="op">;</span></span>
-<span id="cb7-17"><a></a></span>
-<span id="cb7-18"><a></a><span class="kw">const</span> conan <span class="op">=</span> <span class="kw">new</span> <span class="fu">Guerrero</span>(<span class="st">"Conan"</span><span class="op">,</span> <span class="dv">150</span><span class="op">,</span> <span class="dv">25</span>)<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="iteración-sobre-propiedades---arrays" class="slide level2">
+<h2>Iteración sobre Propiedades - Arrays</h2>
+<p><strong>Obteniendo claves y valores como arrays</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb11-1"><a></a><span class="kw">const</span> items <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(inventario)<span class="op">;</span></span>
+<span id="cb11-2"><a></a><span class="co">// ["espada", "pocion", "oro"]</span></span>
+<span id="cb11-3"><a></a></span>
+<span id="cb11-4"><a></a><span class="kw">const</span> cantidades <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">values</span>(inventario)<span class="op">;</span></span>
+<span id="cb11-5"><a></a><span class="co">// [1, 5, 150]</span></span>
+<span id="cb11-6"><a></a></span>
+<span id="cb11-7"><a></a><span class="kw">const</span> pares <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">entries</span>(inventario)<span class="op">;</span></span>
+<span id="cb11-8"><a></a><span class="co">// [["espada", 1], ["pocion", 5], ["oro", 150]]</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Útil para trabajar con métodos de array (map, filter, etc.)</li>
+<li>Solo devuelven propiedades propias enumerables</li>
+</ul>
 </section>
-<section id="clases-es2015-sintaxis-moderna" class="slide level2">
-<h2>Clases ES2015+ (Sintaxis Moderna)</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a></a><span class="kw">class</span> GameObject {</span>
-<span id="cb8-2"><a></a>    <span class="fu">constructor</span>(x<span class="op">,</span> y) {</span>
-<span id="cb8-3"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">x</span> <span class="op">=</span> x<span class="op">;</span></span>
-<span id="cb8-4"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">y</span> <span class="op">=</span> y<span class="op">;</span></span>
-<span id="cb8-5"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">activo</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
-<span id="cb8-6"><a></a>    }</span>
-<span id="cb8-7"><a></a></span>
-<span id="cb8-8"><a></a>    <span class="fu">actualizar</span>(deltaTime) {</span>
-<span id="cb8-9"><a></a>        <span class="cf">if</span> (<span class="op">!</span><span class="kw">this</span><span class="op">.</span><span class="at">activo</span>) <span class="cf">return</span><span class="op">;</span></span>
-<span id="cb8-10"><a></a>    }</span>
-<span id="cb8-11"><a></a></span>
-<span id="cb8-12"><a></a>    <span class="fu">destruir</span>() {</span>
-<span id="cb8-13"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">activo</span> <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
-<span id="cb8-14"><a></a>    }</span>
-<span id="cb8-15"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="función-constructor---definición" class="slide level2">
+<h2>Función Constructor - Definición</h2>
+<p><strong>El patrón clásico pre-ES2015</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a></a><span class="kw">function</span> <span class="fu">Jugador</span>(nombre<span class="op">,</span> x<span class="op">,</span> y) {</span>
+<span id="cb12-2"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">nombre</span> <span class="op">=</span> nombre<span class="op">;</span></span>
+<span id="cb12-3"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">x</span> <span class="op">=</span> x<span class="op">;</span></span>
+<span id="cb12-4"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">y</span> <span class="op">=</span> y<span class="op">;</span></span>
+<span id="cb12-5"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">vida</span> <span class="op">=</span> <span class="dv">100</span><span class="op">;</span></span>
+<span id="cb12-6"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Se invoca con <code>new</code> para crear instancias</li>
+<li><code>this</code> se refiere al nuevo objeto creado</li>
+<li>Inicializa las propiedades de la instancia</li>
+<li>Por convención, nombre en PascalCase</li>
+</ul>
 </section>
-<section id="herencia-con-clases" class="slide level2">
-<h2>Herencia con Clases</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb9-1"><a></a><span class="kw">class</span> Enemigo <span class="kw">extends</span> GameObject {</span>
-<span id="cb9-2"><a></a>    <span class="fu">constructor</span>(x<span class="op">,</span> y<span class="op">,</span> tipo) {</span>
-<span id="cb9-3"><a></a>        <span class="kw">super</span>(x<span class="op">,</span> y)<span class="op">;</span>  <span class="co">// Llamada al constructor padre</span></span>
-<span id="cb9-4"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">tipo</span> <span class="op">=</span> tipo<span class="op">;</span></span>
-<span id="cb9-5"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">vida</span> <span class="op">=</span> <span class="dv">50</span><span class="op">;</span></span>
-<span id="cb9-6"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">velocidad</span> <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></span>
-<span id="cb9-7"><a></a>    }</span>
-<span id="cb9-8"><a></a></span>
-<span id="cb9-9"><a></a>    <span class="fu">actualizar</span>(deltaTime) {</span>
-<span id="cb9-10"><a></a>        <span class="kw">super</span><span class="op">.</span><span class="fu">actualizar</span>(deltaTime)<span class="op">;</span></span>
-<span id="cb9-11"><a></a>        <span class="cf">if</span> (<span class="kw">this</span><span class="op">.</span><span class="at">vida</span> <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb9-12"><a></a>            <span class="kw">this</span><span class="op">.</span><span class="at">x</span> <span class="op">+=</span> <span class="kw">this</span><span class="op">.</span><span class="at">velocidad</span><span class="op">;</span></span>
-<span id="cb9-13"><a></a>        }</span>
-<span id="cb9-14"><a></a>    }</span>
-<span id="cb9-15"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="función-constructor---métodos" class="slide level2">
+<h2>Función Constructor - Métodos</h2>
+<p><strong>Añadiendo métodos al prototipo</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb13-1"><a></a>Jugador<span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">mover</span> <span class="op">=</span> <span class="kw">function</span>(deltaX<span class="op">,</span> deltaY) {</span>
+<span id="cb13-2"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">x</span> <span class="op">+=</span> deltaX<span class="op">;</span></span>
+<span id="cb13-3"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">y</span> <span class="op">+=</span> deltaY<span class="op">;</span></span>
+<span id="cb13-4"><a></a>}<span class="op">;</span></span>
+<span id="cb13-5"><a></a></span>
+<span id="cb13-6"><a></a>Jugador<span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">mostrarPosicion</span> <span class="op">=</span> <span class="kw">function</span>() {</span>
+<span id="cb13-7"><a></a>    <span class="cf">return</span> <span class="vs">`</span><span class="sc">${</span><span class="kw">this</span><span class="op">.</span><span class="at">nombre</span><span class="sc">}</span><span class="vs"> está en (</span><span class="sc">${</span><span class="kw">this</span><span class="op">.</span><span class="at">x</span><span class="sc">}</span><span class="vs">, </span><span class="sc">${</span><span class="kw">this</span><span class="op">.</span><span class="at">y</span><span class="sc">}</span><span class="vs">)`</span><span class="op">;</span></span>
+<span id="cb13-8"><a></a>}<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Los métodos van en el prototipo, no en el constructor</li>
+<li>Se comparten entre todas las instancias (ahorra memoria)</li>
+<li>Tienen acceso a <code>this</code> de la instancia</li>
+</ul>
 </section>
-<section id="getters-y-setters" class="slide level2">
-<h2>Getters y Setters</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb10-1"><a></a><span class="kw">class</span> Enemigo <span class="kw">extends</span> GameObject {</span>
-<span id="cb10-2"><a></a>    <span class="fu">constructor</span>(x<span class="op">,</span> y<span class="op">,</span> tipo) {</span>
-<span id="cb10-3"><a></a>        <span class="kw">super</span>(x<span class="op">,</span> y)<span class="op">;</span></span>
-<span id="cb10-4"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">_vida</span> <span class="op">=</span> <span class="dv">50</span><span class="op">;</span></span>
-<span id="cb10-5"><a></a>    }</span>
-<span id="cb10-6"><a></a></span>
-<span id="cb10-7"><a></a>    <span class="kw">get</span> <span class="fu">estaVivo</span>() {</span>
-<span id="cb10-8"><a></a>        <span class="cf">return</span> <span class="kw">this</span><span class="op">.</span><span class="at">_vida</span> <span class="op">&gt;</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb10-9"><a></a>    }</span>
-<span id="cb10-10"><a></a></span>
-<span id="cb10-11"><a></a>    <span class="kw">set</span> <span class="fu">vida</span>(valor) {</span>
-<span id="cb10-12"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">_vida</span> <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="dv">0</span><span class="op">,</span> valor)<span class="op">;</span></span>
-<span id="cb10-13"><a></a>        <span class="cf">if</span> (<span class="kw">this</span><span class="op">.</span><span class="at">_vida</span> <span class="op">===</span> <span class="dv">0</span>) {</span>
-<span id="cb10-14"><a></a>            <span class="kw">this</span><span class="op">.</span><span class="fu">destruir</span>()<span class="op">;</span></span>
-<span id="cb10-15"><a></a>        }</span>
-<span id="cb10-16"><a></a>    }</span>
-<span id="cb10-17"><a></a></span>
-<span id="cb10-18"><a></a>    <span class="kw">get</span> <span class="fu">vida</span>() {</span>
-<span id="cb10-19"><a></a>        <span class="cf">return</span> <span class="kw">this</span><span class="op">.</span><span class="at">_vida</span><span class="op">;</span></span>
-<span id="cb10-20"><a></a>    }</span>
-<span id="cb10-21"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="función-constructor---uso" class="slide level2">
+<h2>Función Constructor - Uso</h2>
+<p><strong>Creando instancias</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb14-1"><a></a><span class="kw">const</span> player1 <span class="op">=</span> <span class="kw">new</span> <span class="fu">Jugador</span>(<span class="st">"Aragorn"</span><span class="op">,</span> <span class="dv">10</span><span class="op">,</span> <span class="dv">20</span>)<span class="op">;</span></span>
+<span id="cb14-2"><a></a><span class="kw">const</span> player2 <span class="op">=</span> <span class="kw">new</span> <span class="fu">Jugador</span>(<span class="st">"Legolas"</span><span class="op">,</span> <span class="dv">15</span><span class="op">,</span> <span class="dv">25</span>)<span class="op">;</span></span>
+<span id="cb14-3"><a></a></span>
+<span id="cb14-4"><a></a>player1<span class="op">.</span><span class="fu">mover</span>(<span class="dv">2</span><span class="op">,</span> <span class="dv">3</span>)<span class="op">;</span></span>
+<span id="cb14-5"><a></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(player1<span class="op">.</span><span class="fu">mostrarPosicion</span>())<span class="op">;</span></span>
+<span id="cb14-6"><a></a><span class="co">// "Aragorn está en (12, 23)"</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><strong>Siempre usar <code>new</code></strong> para invocar constructores</li>
+<li>Cada instancia tiene sus propias propiedades</li>
+<li>Los métodos son compartidos vía prototipo</li>
+</ul>
 </section>
-<section id="métodos-estáticos" class="slide level2">
-<h2>Métodos Estáticos</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb11-1"><a></a><span class="kw">class</span> Enemigo <span class="kw">extends</span> GameObject {</span>
-<span id="cb11-2"><a></a>    <span class="co">// Método estático</span></span>
-<span id="cb11-3"><a></a>    <span class="kw">static</span> <span class="fu">crearOrc</span>() {</span>
-<span id="cb11-4"><a></a>        <span class="kw">const</span> orc <span class="op">=</span> <span class="kw">new</span> <span class="fu">Enemigo</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="st">"Orc"</span>)<span class="op">;</span></span>
-<span id="cb11-5"><a></a>        orc<span class="op">.</span><span class="at">vida</span> <span class="op">=</span> <span class="dv">80</span><span class="op">;</span></span>
-<span id="cb11-6"><a></a>        orc<span class="op">.</span><span class="at">velocidad</span> <span class="op">=</span> <span class="fl">1.5</span><span class="op">;</span></span>
-<span id="cb11-7"><a></a>        <span class="cf">return</span> orc<span class="op">;</span></span>
-<span id="cb11-8"><a></a>    }</span>
-<span id="cb11-9"><a></a>}</span>
-<span id="cb11-10"><a></a></span>
-<span id="cb11-11"><a></a><span class="co">// Uso</span></span>
-<span id="cb11-12"><a></a><span class="kw">const</span> orc <span class="op">=</span> Enemigo<span class="op">.</span><span class="fu">crearOrc</span>()<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="herencia-con-constructor---clase-base" class="slide level2">
+<h2>Herencia con Constructor - Clase Base</h2>
+<p><strong>Definiendo el constructor padre</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb15-1"><a></a><span class="kw">function</span> <span class="fu">Personaje</span>(nombre<span class="op">,</span> vida) {</span>
+<span id="cb15-2"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">nombre</span> <span class="op">=</span> nombre<span class="op">;</span></span>
+<span id="cb15-3"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">vida</span> <span class="op">=</span> vida<span class="op">;</span></span>
+<span id="cb15-4"><a></a>}</span>
+<span id="cb15-5"><a></a></span>
+<span id="cb15-6"><a></a>Personaje<span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">saludar</span> <span class="op">=</span> <span class="kw">function</span>() {</span>
+<span id="cb15-7"><a></a>    <span class="cf">return</span> <span class="vs">`Hola, soy </span><span class="sc">${</span><span class="kw">this</span><span class="op">.</span><span class="at">nombre</span><span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb15-8"><a></a>}<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Constructor base con propiedades comunes</li>
+<li>Métodos compartidos en el prototipo</li>
+</ul>
 </section>
-<section id="uso-de-clases" class="slide level2">
-<h2>Uso de Clases</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a></a><span class="co">// Constructor normal</span></span>
-<span id="cb12-2"><a></a><span class="kw">const</span> goblin <span class="op">=</span> <span class="kw">new</span> <span class="fu">Enemigo</span>(<span class="dv">10</span><span class="op">,</span> <span class="dv">20</span><span class="op">,</span> <span class="st">"Goblin"</span>)<span class="op">;</span></span>
-<span id="cb12-3"><a></a>goblin<span class="op">.</span><span class="at">vida</span> <span class="op">=</span> <span class="dv">30</span><span class="op">;</span></span>
-<span id="cb12-4"><a></a></span>
-<span id="cb12-5"><a></a><span class="co">// Usar getter (sin paréntesis)</span></span>
-<span id="cb12-6"><a></a><span class="cf">if</span> (goblin<span class="op">.</span><span class="at">estaVivo</span>) {</span>
-<span id="cb12-7"><a></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">"El goblin sigue vivo"</span>)<span class="op">;</span></span>
-<span id="cb12-8"><a></a>}</span>
-<span id="cb12-9"><a></a></span>
-<span id="cb12-10"><a></a><span class="co">// Método estático</span></span>
-<span id="cb12-11"><a></a><span class="kw">const</span> orc <span class="op">=</span> Enemigo<span class="op">.</span><span class="fu">crearOrc</span>()<span class="op">;</span></span>
-<span id="cb12-12"><a></a></span>
-<span id="cb12-13"><a></a><span class="co">// Polimorfismo</span></span>
-<span id="cb12-14"><a></a><span class="kw">const</span> enemigos <span class="op">=</span> [goblin<span class="op">,</span> orc]<span class="op">;</span></span>
-<span id="cb12-15"><a></a>enemigos<span class="op">.</span><span class="fu">forEach</span>(enemigo <span class="kw">=&gt;</span> {</span>
-<span id="cb12-16"><a></a>    enemigo<span class="op">.</span><span class="fu">actualizar</span>(<span class="dv">16</span>)<span class="op">;</span></span>
-<span id="cb12-17"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="herencia-con-constructor---clase-hija" class="slide level2">
+<h2>Herencia con Constructor - Clase Hija</h2>
+<p><strong>Extendiendo la funcionalidad</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb16-1"><a></a><span class="kw">function</span> <span class="fu">Guerrero</span>(nombre<span class="op">,</span> vida<span class="op">,</span> fuerza) {</span>
+<span id="cb16-2"><a></a>    Personaje<span class="op">.</span><span class="fu">call</span>(<span class="kw">this</span><span class="op">,</span> nombre<span class="op">,</span> vida)<span class="op">;</span></span>
+<span id="cb16-3"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">fuerza</span> <span class="op">=</span> fuerza<span class="op">;</span></span>
+<span id="cb16-4"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><code>Personaje.call(this, ...)</code> llama al constructor padre</li>
+<li>Inicializa las propiedades heredadas</li>
+<li>Añade propiedades específicas de <code>Guerrero</code></li>
+</ul>
+</section>
+<section id="herencia-con-constructor---cadena-de-prototipos" class="slide level2">
+<h2>Herencia con Constructor - Cadena de Prototipos</h2>
+<p><strong>Estableciendo la herencia correctamente</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb17-1"><a></a>Guerrero<span class="op">.</span><span class="at">prototype</span> <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">create</span>(Personaje<span class="op">.</span><span class="at">prototype</span>)<span class="op">;</span></span>
+<span id="cb17-2"><a></a>Guerrero<span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">constructor</span> <span class="op">=</span> Guerrero<span class="op">;</span></span>
+<span id="cb17-3"><a></a></span>
+<span id="cb17-4"><a></a>Guerrero<span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">atacar</span> <span class="op">=</span> <span class="kw">function</span>() {</span>
+<span id="cb17-5"><a></a>    <span class="cf">return</span> <span class="vs">`</span><span class="sc">${</span><span class="kw">this</span><span class="op">.</span><span class="at">nombre</span><span class="sc">}</span><span class="vs"> ataca con fuerza </span><span class="sc">${</span><span class="kw">this</span><span class="op">.</span><span class="at">fuerza</span><span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb17-6"><a></a>}<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><code>Object.create()</code> establece el prototipo correcto</li>
+<li>Restauramos la propiedad <code>constructor</code></li>
+<li>Ahora podemos añadir métodos específicos</li>
+</ul>
+</section>
+<section id="herencia-con-constructor---resultado" class="slide level2">
+<h2>Herencia con Constructor - Resultado</h2>
+<p><strong>Usando la herencia completa</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb18-1"><a></a><span class="kw">const</span> conan <span class="op">=</span> <span class="kw">new</span> <span class="fu">Guerrero</span>(<span class="st">"Conan"</span><span class="op">,</span> <span class="dv">150</span><span class="op">,</span> <span class="dv">25</span>)<span class="op">;</span></span>
+<span id="cb18-2"><a></a></span>
+<span id="cb18-3"><a></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(conan<span class="op">.</span><span class="fu">saludar</span>())<span class="op">;</span></span>
+<span id="cb18-4"><a></a><span class="co">// "Hola, soy Conan" (heredado de Personaje)</span></span>
+<span id="cb18-5"><a></a></span>
+<span id="cb18-6"><a></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(conan<span class="op">.</span><span class="fu">atacar</span>())<span class="op">;</span></span>
+<span id="cb18-7"><a></a><span class="co">// "Conan ataca con fuerza 25" (propio de Guerrero)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><code>conan</code> tiene acceso a métodos de ambos constructores</li>
+<li>Patrón verboso y propenso a errores</li>
+</ul>
+</section>
+<section id="clases-es2015---introducción" class="slide level2">
+<h2>Clases ES2015+ - Introducción</h2>
+<p><strong>Sintaxis moderna y clara</strong></p>
+<ul>
+<li>Introducida en ES2015 (ES6)</li>
+<li>Azúcar sintáctico sobre prototipos</li>
+<li>Más familiar para desarrolladores de otros lenguajes OO</li>
+<li>Sintaxis más estructurada y menos propensa a errores</li>
+</ul>
+</section>
+<section id="clases-es2015---definición-básica" class="slide level2">
+<h2>Clases ES2015+ - Definición Básica</h2>
+<p><strong>Declarando una clase</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb19-1"><a></a><span class="kw">class</span> GameObject {</span>
+<span id="cb19-2"><a></a>    <span class="fu">constructor</span>(x<span class="op">,</span> y) {</span>
+<span id="cb19-3"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">x</span> <span class="op">=</span> x<span class="op">;</span></span>
+<span id="cb19-4"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">y</span> <span class="op">=</span> y<span class="op">;</span></span>
+<span id="cb19-5"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">activo</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb19-6"><a></a>    }</span>
+<span id="cb19-7"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Palabra clave <code>class</code> seguida del nombre</li>
+<li>Método <code>constructor()</code> se ejecuta al crear instancias</li>
+<li>Inicializa las propiedades del objeto</li>
+</ul>
+</section>
+<section id="clases-es2015---métodos" class="slide level2">
+<h2>Clases ES2015+ - Métodos</h2>
+<p><strong>Añadiendo comportamiento</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb20-1"><a></a><span class="kw">class</span> GameObject {</span>
+<span id="cb20-2"><a></a>    <span class="fu">constructor</span>(x<span class="op">,</span> y) {</span>
+<span id="cb20-3"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">x</span> <span class="op">=</span> x<span class="op">;</span></span>
+<span id="cb20-4"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">y</span> <span class="op">=</span> y<span class="op">;</span></span>
+<span id="cb20-5"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">activo</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb20-6"><a></a>    }</span>
+<span id="cb20-7"><a></a></span>
+<span id="cb20-8"><a></a>    <span class="fu">actualizar</span>(deltaTime) {</span>
+<span id="cb20-9"><a></a>        <span class="cf">if</span> (<span class="op">!</span><span class="kw">this</span><span class="op">.</span><span class="at">activo</span>) <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb20-10"><a></a>        <span class="co">// Lógica de actualización</span></span>
+<span id="cb20-11"><a></a>    }</span>
+<span id="cb20-12"><a></a></span>
+<span id="cb20-13"><a></a>    <span class="fu">destruir</span>() {</span>
+<span id="cb20-14"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">activo</span> <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb20-15"><a></a>    }</span>
+<span id="cb20-16"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Los métodos se definen dentro de la clase</li>
+<li>No se usa <code>function</code> keyword</li>
+<li>Automáticamente se añaden al prototipo</li>
+</ul>
+</section>
+<section id="herencia-con-clases---extends" class="slide level2">
+<h2>Herencia con Clases - Extends</h2>
+<p><strong>Creando subclases</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb21-1"><a></a><span class="kw">class</span> Enemigo <span class="kw">extends</span> GameObject {</span>
+<span id="cb21-2"><a></a>    <span class="fu">constructor</span>(x<span class="op">,</span> y<span class="op">,</span> tipo) {</span>
+<span id="cb21-3"><a></a>        <span class="kw">super</span>(x<span class="op">,</span> y)<span class="op">;</span>  <span class="co">// Llamada al constructor padre</span></span>
+<span id="cb21-4"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">tipo</span> <span class="op">=</span> tipo<span class="op">;</span></span>
+<span id="cb21-5"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">vida</span> <span class="op">=</span> <span class="dv">50</span><span class="op">;</span></span>
+<span id="cb21-6"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">velocidad</span> <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb21-7"><a></a>    }</span>
+<span id="cb21-8"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><code>extends</code> establece la herencia</li>
+<li><code>super()</code> llama al constructor de la clase padre</li>
+<li>Debe ser la primera línea del constructor hijo</li>
+</ul>
+</section>
+<section id="herencia-con-clases---sobrescritura" class="slide level2">
+<h2>Herencia con Clases - Sobrescritura</h2>
+<p><strong>Extendiendo métodos heredados</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb22-1"><a></a><span class="kw">class</span> Enemigo <span class="kw">extends</span> GameObject {</span>
+<span id="cb22-2"><a></a>    <span class="co">// ... constructor ...</span></span>
+<span id="cb22-3"><a></a></span>
+<span id="cb22-4"><a></a>    <span class="fu">actualizar</span>(deltaTime) {</span>
+<span id="cb22-5"><a></a>        <span class="kw">super</span><span class="op">.</span><span class="fu">actualizar</span>(deltaTime)<span class="op">;</span></span>
+<span id="cb22-6"><a></a>        <span class="cf">if</span> (<span class="kw">this</span><span class="op">.</span><span class="at">vida</span> <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb22-7"><a></a>            <span class="kw">this</span><span class="op">.</span><span class="at">x</span> <span class="op">+=</span> <span class="kw">this</span><span class="op">.</span><span class="at">velocidad</span><span class="op">;</span></span>
+<span id="cb22-8"><a></a>        }</span>
+<span id="cb22-9"><a></a>    }</span>
+<span id="cb22-10"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Podemos sobrescribir métodos del padre</li>
+<li><code>super.nombreMetodo()</code> llama a la versión del padre</li>
+<li>Permite extender sin reemplazar completamente</li>
+</ul>
+</section>
+<section id="getters-y-setters---concepto" class="slide level2">
+<h2>Getters y Setters - Concepto</h2>
+<p><strong>Propiedades calculadas y validación</strong></p>
+<ul>
+<li>Getters: propiedades de solo lectura o calculadas</li>
+<li>Setters: validación al asignar valores</li>
+<li>Se usan como propiedades normales (sin paréntesis)</li>
+<li>Permiten encapsular lógica de acceso</li>
+</ul>
+</section>
+<section id="getters-y-setters---getter" class="slide level2">
+<h2>Getters y Setters - Getter</h2>
+<p><strong>Propiedades de solo lectura</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb23-1"><a></a><span class="kw">class</span> Enemigo <span class="kw">extends</span> GameObject {</span>
+<span id="cb23-2"><a></a>    <span class="fu">constructor</span>(x<span class="op">,</span> y<span class="op">,</span> tipo) {</span>
+<span id="cb23-3"><a></a>        <span class="kw">super</span>(x<span class="op">,</span> y)<span class="op">;</span></span>
+<span id="cb23-4"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">_vida</span> <span class="op">=</span> <span class="dv">50</span><span class="op">;</span></span>
+<span id="cb23-5"><a></a>    }</span>
+<span id="cb23-6"><a></a></span>
+<span id="cb23-7"><a></a>    <span class="kw">get</span> <span class="fu">estaVivo</span>() {</span>
+<span id="cb23-8"><a></a>        <span class="cf">return</span> <span class="kw">this</span><span class="op">.</span><span class="at">_vida</span> <span class="op">&gt;</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb23-9"><a></a>    }</span>
+<span id="cb23-10"><a></a>}</span>
+<span id="cb23-11"><a></a></span>
+<span id="cb23-12"><a></a><span class="kw">const</span> orc <span class="op">=</span> <span class="kw">new</span> <span class="fu">Enemigo</span>(<span class="dv">10</span><span class="op">,</span> <span class="dv">20</span><span class="op">,</span> <span class="st">"Orc"</span>)<span class="op">;</span></span>
+<span id="cb23-13"><a></a><span class="cf">if</span> (orc<span class="op">.</span><span class="at">estaVivo</span>) { <span class="co">// Sin paréntesis</span></span>
+<span id="cb23-14"><a></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">"El enemigo sigue vivo"</span>)<span class="op">;</span></span>
+<span id="cb23-15"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Palabra clave <code>get</code> antes del nombre</li>
+<li>Se accede como propiedad, no como método</li>
+<li>Útil para valores derivados</li>
+</ul>
+</section>
+<section id="getters-y-setters---setter" class="slide level2">
+<h2>Getters y Setters - Setter</h2>
+<p><strong>Validación al asignar</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb24-1"><a></a><span class="kw">class</span> Enemigo <span class="kw">extends</span> GameObject {</span>
+<span id="cb24-2"><a></a>    <span class="co">// ... constructor ...</span></span>
+<span id="cb24-3"><a></a></span>
+<span id="cb24-4"><a></a>    <span class="kw">set</span> <span class="fu">vida</span>(valor) {</span>
+<span id="cb24-5"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">_vida</span> <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="dv">0</span><span class="op">,</span> valor)<span class="op">;</span></span>
+<span id="cb24-6"><a></a>        <span class="cf">if</span> (<span class="kw">this</span><span class="op">.</span><span class="at">_vida</span> <span class="op">===</span> <span class="dv">0</span>) {</span>
+<span id="cb24-7"><a></a>            <span class="kw">this</span><span class="op">.</span><span class="fu">destruir</span>()<span class="op">;</span></span>
+<span id="cb24-8"><a></a>        }</span>
+<span id="cb24-9"><a></a>    }</span>
+<span id="cb24-10"><a></a></span>
+<span id="cb24-11"><a></a>    <span class="kw">get</span> <span class="fu">vida</span>() {</span>
+<span id="cb24-12"><a></a>        <span class="cf">return</span> <span class="kw">this</span><span class="op">.</span><span class="at">_vida</span><span class="op">;</span></span>
+<span id="cb24-13"><a></a>    }</span>
+<span id="cb24-14"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Palabra clave <code>set</code> antes del nombre</li>
+<li>Permite validar y ejecutar lógica adicional</li>
+<li>Por convención, la propiedad real usa <code>_</code> como prefijo</li>
+</ul>
+</section>
+<section id="getters-y-setters---uso" class="slide level2">
+<h2>Getters y Setters - Uso</h2>
+<p><strong>Asignación transparente</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb25-1"><a></a><span class="kw">const</span> goblin <span class="op">=</span> <span class="kw">new</span> <span class="fu">Enemigo</span>(<span class="dv">5</span><span class="op">,</span> <span class="dv">10</span><span class="op">,</span> <span class="st">"Goblin"</span>)<span class="op">;</span></span>
+<span id="cb25-2"><a></a></span>
+<span id="cb25-3"><a></a>goblin<span class="op">.</span><span class="at">vida</span> <span class="op">=</span> <span class="dv">30</span><span class="op">;</span>      <span class="co">// Usa el setter</span></span>
+<span id="cb25-4"><a></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(goblin<span class="op">.</span><span class="at">vida</span>)<span class="op">;</span> <span class="co">// Usa el getter</span></span>
+<span id="cb25-5"><a></a></span>
+<span id="cb25-6"><a></a>goblin<span class="op">.</span><span class="at">vida</span> <span class="op">=</span> <span class="op">-</span><span class="dv">10</span><span class="op">;</span>     <span class="co">// Setter lo convierte a 0</span></span>
+<span id="cb25-7"><a></a><span class="co">// El setter también llama a destruir()</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Sintaxis de propiedad normal</li>
+<li>El setter ejecuta validación automáticamente</li>
+<li>Transparente para el código que usa la clase</li>
+</ul>
+</section>
+<section id="métodos-estáticos---concepto" class="slide level2">
+<h2>Métodos Estáticos - Concepto</h2>
+<p><strong>Métodos de la clase, no de instancias</strong></p>
+<ul>
+<li>Pertenecen a la clase, no a objetos individuales</li>
+<li>Se invocan sobre la clase misma</li>
+<li>No tienen acceso a <code>this</code> de instancia</li>
+<li>Útiles para funciones de utilidad o métodos factoría</li>
+</ul>
+</section>
+<section id="métodos-estáticos---definición" class="slide level2">
+<h2>Métodos Estáticos - Definición</h2>
+<p><strong>Palabra clave <code>static</code></strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb26-1"><a></a><span class="kw">class</span> Enemigo <span class="kw">extends</span> GameObject {</span>
+<span id="cb26-2"><a></a>    <span class="co">// ... resto del código ...</span></span>
+<span id="cb26-3"><a></a></span>
+<span id="cb26-4"><a></a>    <span class="kw">static</span> <span class="fu">crearOrc</span>() {</span>
+<span id="cb26-5"><a></a>        <span class="kw">const</span> orc <span class="op">=</span> <span class="kw">new</span> <span class="fu">Enemigo</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="st">"Orc"</span>)<span class="op">;</span></span>
+<span id="cb26-6"><a></a>        orc<span class="op">.</span><span class="at">vida</span> <span class="op">=</span> <span class="dv">80</span><span class="op">;</span></span>
+<span id="cb26-7"><a></a>        orc<span class="op">.</span><span class="at">velocidad</span> <span class="op">=</span> <span class="fl">1.5</span><span class="op">;</span></span>
+<span id="cb26-8"><a></a>        <span class="cf">return</span> orc<span class="op">;</span></span>
+<span id="cb26-9"><a></a>    }</span>
+<span id="cb26-10"><a></a></span>
+<span id="cb26-11"><a></a>    <span class="kw">static</span> <span class="fu">crearGoblin</span>() {</span>
+<span id="cb26-12"><a></a>        <span class="kw">const</span> goblin <span class="op">=</span> <span class="kw">new</span> <span class="fu">Enemigo</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="st">"Goblin"</span>)<span class="op">;</span></span>
+<span id="cb26-13"><a></a>        goblin<span class="op">.</span><span class="at">vida</span> <span class="op">=</span> <span class="dv">30</span><span class="op">;</span></span>
+<span id="cb26-14"><a></a>        goblin<span class="op">.</span><span class="at">velocidad</span> <span class="op">=</span> <span class="dv">3</span><span class="op">;</span></span>
+<span id="cb26-15"><a></a>        <span class="cf">return</span> goblin<span class="op">;</span></span>
+<span id="cb26-16"><a></a>    }</span>
+<span id="cb26-17"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Prefijo <code>static</code> antes del método</li>
+<li>Patrón factoría para crear instancias preconfiguradas</li>
+</ul>
+</section>
+<section id="métodos-estáticos---uso" class="slide level2">
+<h2>Métodos Estáticos - Uso</h2>
+<p><strong>Invocación sobre la clase</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb27-1"><a></a><span class="kw">const</span> orc <span class="op">=</span> Enemigo<span class="op">.</span><span class="fu">crearOrc</span>()<span class="op">;</span></span>
+<span id="cb27-2"><a></a><span class="kw">const</span> goblin <span class="op">=</span> Enemigo<span class="op">.</span><span class="fu">crearGoblin</span>()<span class="op">;</span></span>
+<span id="cb27-3"><a></a></span>
+<span id="cb27-4"><a></a><span class="co">// NO se puede llamar sobre instancias</span></span>
+<span id="cb27-5"><a></a><span class="kw">const</span> enemigo <span class="op">=</span> <span class="kw">new</span> <span class="fu">Enemigo</span>(<span class="dv">5</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="st">"Slime"</span>)<span class="op">;</span></span>
+<span id="cb27-6"><a></a><span class="co">// enemigo.crearOrc(); // ❌ Error</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Se llaman con <code>NombreClase.metodoEstatico()</code></li>
+<li>No están disponibles en las instancias</li>
+<li>Similares a métodos de clase en Java/C++</li>
+</ul>
+</section>
+<section id="uso-de-clases---creación" class="slide level2">
+<h2>Uso de Clases - Creación</h2>
+<p><strong>Instanciando objetos</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb28-1"><a></a><span class="kw">const</span> goblin <span class="op">=</span> <span class="kw">new</span> <span class="fu">Enemigo</span>(<span class="dv">10</span><span class="op">,</span> <span class="dv">20</span><span class="op">,</span> <span class="st">"Goblin"</span>)<span class="op">;</span></span>
+<span id="cb28-2"><a></a>goblin<span class="op">.</span><span class="at">vida</span> <span class="op">=</span> <span class="dv">30</span><span class="op">;</span></span>
+<span id="cb28-3"><a></a></span>
+<span id="cb28-4"><a></a><span class="kw">const</span> orc <span class="op">=</span> Enemigo<span class="op">.</span><span class="fu">crearOrc</span>()<span class="op">;</span> <span class="co">// Método estático</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Constructor normal con <code>new</code></li>
+<li>Podemos usar setters para asignar valores</li>
+<li>Los métodos estáticos crean instancias preconfiguradas</li>
+</ul>
+</section>
+<section id="uso-de-clases---getters" class="slide level2">
+<h2>Uso de Clases - Getters</h2>
+<p><strong>Acceso a propiedades calculadas</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb29-1"><a></a><span class="cf">if</span> (goblin<span class="op">.</span><span class="at">estaVivo</span>) {</span>
+<span id="cb29-2"><a></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">"El goblin sigue vivo"</span>)<span class="op">;</span></span>
+<span id="cb29-3"><a></a>}</span>
+<span id="cb29-4"><a></a></span>
+<span id="cb29-5"><a></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`Vida actual: </span><span class="sc">${</span>goblin<span class="op">.</span><span class="at">vida</span><span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Sin paréntesis, como propiedades normales</li>
+<li>Transparentes para el código cliente</li>
+<li>Pueden ejecutar cálculos o validaciones</li>
+</ul>
+</section>
+<section id="uso-de-clases---polimorfismo" class="slide level2">
+<h2>Uso de Clases - Polimorfismo</h2>
+<p><strong>Tratamiento uniforme de objetos diferentes</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb30-1"><a></a><span class="kw">const</span> enemigos <span class="op">=</span> [goblin<span class="op">,</span> orc]<span class="op">;</span></span>
+<span id="cb30-2"><a></a></span>
+<span id="cb30-3"><a></a>enemigos<span class="op">.</span><span class="fu">forEach</span>(enemigo <span class="kw">=&gt;</span> {</span>
+<span id="cb30-4"><a></a>    enemigo<span class="op">.</span><span class="fu">actualizar</span>(<span class="dv">16</span>)<span class="op">;</span></span>
+<span id="cb30-5"><a></a>    <span class="cf">if</span> (enemigo<span class="op">.</span><span class="at">estaVivo</span>) {</span>
+<span id="cb30-6"><a></a>        enemigo<span class="op">.</span><span class="fu">mover</span>(<span class="dv">1</span><span class="op">,</span> <span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb30-7"><a></a>    }</span>
+<span id="cb30-8"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Todos los enemigos comparten la misma interfaz</li>
+<li>Podemos tratarlos de forma uniforme</li>
+<li>Cada uno puede tener comportamiento específico</li>
+</ul>
 </section>
 <section id="ventajas-de-clases-es2015" class="slide level2">
 <h2>Ventajas de Clases ES2015+</h2>
-<ol type="1">
-<li><strong>Sintaxis más clara</strong>: Más familiar para otros lenguajes OO</li>
+<p><strong>Por qué usar la sintaxis moderna</strong></p>
+<ul>
+<li><strong>Sintaxis más clara</strong>: Familiar para otros lenguajes OO</li>
 <li><strong>Herencia simplificada</strong>: <code>extends</code> y <code>super()</code> más directos</li>
-<li><strong>Getters y setters integrados</strong>: Validación y cálculo</li>
-<li><strong>Métodos estáticos</strong>: Para funciones de clase</li>
-<li><strong>Mejor soporte de herramientas</strong>: IDEs y linters</li>
-</ol>
+<li><strong>Menos errores</strong>: Estructura más rígida previene problemas comunes</li>
+<li><strong>Getters y setters integrados</strong>: Encapsulación natural</li>
+<li><strong>Métodos estáticos</strong>: Organización clara de funciones de utilidad</li>
+<li><strong>Mejor soporte de herramientas</strong>: IDEs y linters funcionan mejor</li>
+</ul>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -477,6 +800,54 @@ Rubén Rodríguez Fernández (@rrunix)
 </div>
 <div class="callout-content">
 <p>La sintaxis de clases es la <strong>recomendada</strong> para proyectos nuevos</p>
+</div>
+</div>
+</div>
+</section>
+<section id="resumen-prototipos-vs-clases" class="slide level2">
+<h2>Resumen: Prototipos vs Clases</h2>
+<p><strong>Dos formas, mismo resultado</strong></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Aspecto</th>
+<th>Prototipos</th>
+<th>Clases ES2015+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sintaxis</td>
+<td>Verbosa y manual</td>
+<td>Clara y estructurada</td>
+</tr>
+<tr class="even">
+<td>Herencia</td>
+<td><code>Object.create()</code> y <code>call()</code></td>
+<td><code>extends</code> y <code>super()</code></td>
+</tr>
+<tr class="odd">
+<td>Métodos</td>
+<td><code>Funcion.prototype.metodo</code></td>
+<td>Dentro de la clase</td>
+</tr>
+<tr class="even">
+<td>Uso actual</td>
+<td>Legacy code</td>
+<td><strong>Recomendado</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Importante</strong></p>
+</div>
+<div class="callout-content">
+<p>Las clases son azúcar sintáctico: por debajo siguen usando prototipos</p>
 </div>
 </div>
 </div>

@@ -1,0 +1,2084 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-html/tabby.min.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
+
+  <meta name="author" content="Rubén Rodríguez Fernández (@rrunix)">
+  <meta name="dcterms.date" content="2026-02-10">
+  <title>Introducción a Phaser 3</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-ed81c1eb8156b6dfccbd5cf511d4619a.css">
+  <link rel="stylesheet" href="ojs_interactive.css">
+  <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-background-image="theme_images/background_fronpage.png" data-background-position="center 70%" data-background-size="33%" class="quarto-title-block center">
+  <h1 class="title">Introducción a Phaser 3</h1>
+  <p class="subtitle">Framework para Videojuegos Web</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Rubén Rodríguez Fernández (@rrunix) 
+</div>
+</div>
+</div>
+
+  <p class="date">2026-02-10</p>
+</section><section id="TOC">
+<nav role="doc-toc"> 
+<h2 id="toc-title">Tabla de contenidos</h2>
+<ul>
+<li><a href="#/introducción-a-phaser-3" id="/toc-introducción-a-phaser-3">Introducción a Phaser 3</a></li>
+<li><a href="#/estructura-básica" id="/toc-estructura-básica">Estructura Básica</a></li>
+<li><a href="#/gestión-de-escenas" id="/toc-gestión-de-escenas">Gestión de Escenas</a></li>
+<li><a href="#/trabajo-con-imágenes" id="/toc-trabajo-con-imágenes">Trabajo con Imágenes</a></li>
+<li><a href="#/motores-de-físicas" id="/toc-motores-de-físicas">Motores de Físicas</a></li>
+<li><a href="#/sistema-de-entrada" id="/toc-sistema-de-entrada">Sistema de Entrada</a></li>
+<li><a href="#/detección-de-colisiones" id="/toc-detección-de-colisiones">Detección de Colisiones</a></li>
+<li><a href="#/patrón-command" id="/toc-patrón-command">Patrón Command</a></li>
+<li><a href="#/resumen" id="/toc-resumen">Resumen</a></li>
+</ul>
+</nav>
+</section>
+<section>
+<section id="introducción-a-phaser-3" class="title-slide slide level1 center">
+<h1>Introducción a Phaser 3</h1>
+
+</section>
+<section id="qué-es-phaser-3" class="slide level2">
+<h2>¿Qué es Phaser 3?</h2>
+<p><strong>Framework open source de HTML5 para videojuegos</strong></p>
+<ul>
+<li>Juegos que se ejecutan <strong>directamente en navegadores web</strong></li>
+<li>Liberado en <strong>2018</strong> - evolución de versiones anteriores</li>
+<li>Enfocado en <strong>juegos 2D</strong> multiplataforma</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Ventajas:</strong></p>
+<ul>
+<li>Sin instalación para usuarios finales</li>
+<li>Multiplataforma (desktop + móvil)</li>
+<li>Distribución simple vía web</li>
+<li>Basado en tecnologías estándar</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><strong>Tecnologías:</strong></p>
+<ul>
+<li>HTML5 Canvas</li>
+<li>JavaScript/TypeScript</li>
+<li>Canvas API / WebGL</li>
+</ul>
+</div></div>
+</section>
+<section id="sistemas-de-renderizado" class="slide level2">
+<h2>Sistemas de Renderizado</h2>
+<p><strong>Dos opciones disponibles:</strong></p>
+<ul>
+<li><strong>Canvas (por defecto)</strong>: Mayor compatibilidad, menos exigente</li>
+<li><strong>WebGL</strong>: Gráficos avanzados, mejor rendimiento, requiere soporte GPU</li>
+</ul>
+<p><strong>¿Cuándo usar cada uno?</strong></p>
+<ul>
+<li>Canvas: Juegos simples, máxima compatibilidad</li>
+<li>WebGL: Muchos objetos, efectos visuales complejos</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb1-1"><a></a><span class="co">// Configurar tipo de renderizado</span></span>
+<span id="cb1-2"><a></a><span class="kw">const</span> config <span class="op">=</span> {</span>
+<span id="cb1-3"><a></a>    <span class="dt">type</span><span class="op">:</span> Phaser<span class="op">.</span><span class="at">AUTO</span><span class="op">,</span>  <span class="co">// Elige el mejor disponible</span></span>
+<span id="cb1-4"><a></a>    <span class="co">// type: Phaser.CANVAS,  // Forzar Canvas</span></span>
+<span id="cb1-5"><a></a>    <span class="co">// type: Phaser.WEBGL,   // Forzar WebGL</span></span>
+<span id="cb1-6"><a></a>}<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="requisitos-para-empezar" class="slide level2">
+<h2>Requisitos para Empezar</h2>
+<p><strong>Navegador moderno:</strong></p>
+<ul>
+<li>Chrome (recomendado - mejores DevTools)</li>
+<li>Firefox, Safari, Edge u Opera</li>
+</ul>
+<p><strong>Obtener Phaser 3:</strong></p>
+<ul>
+<li><strong>CDN</strong> (más rápido)</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb2-1"><a></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> src</span><span class="op">=</span><span class="st">"//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><p><strong>Descarga directa</strong> <a href="https://phaser.io/download/stable">phaser.io/download/stable</a></p></li>
+<li><p><strong>GitHub</strong> <a href="https://github.com/photonstorm/phaser">github.com/photonstorm/phaser</a></p></li>
+<li><p><strong>Node</strong> <code>npm install phaser</code></p></li>
+</ul>
+</section></section>
+<section>
+<section id="estructura-básica" class="title-slide slide level1 center">
+<h1>Estructura Básica</h1>
+
+</section>
+<section id="el-elemento-canvas" class="slide level2">
+<h2>El Elemento Canvas</h2>
+<p><strong>¿Qué es el Canvas?</strong></p>
+<ul>
+<li>Etiqueta HTML5 (<code>&lt;canvas&gt;</code>) para dibujar gráficos</li>
+<li>Funciona como un <strong>lienzo en blanco</strong></li>
+<li>Se manipula mediante JavaScript</li>
+</ul>
+<p><strong>Sistema de coordenadas:</strong></p>
+<ul>
+<li>Origen <strong>(0,0)</strong> en esquina superior izquierda</li>
+<li>Eje X positivo → derecha</li>
+<li>Eje Y positivo → abajo (inverso a matemáticas)</li>
+<li>Dimensiones por defecto: 300x300 píxeles</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb3-1"><a></a><span class="dt">&lt;</span><span class="kw">canvas</span><span class="ot"> id</span><span class="op">=</span><span class="st">"game"</span><span class="ot"> width</span><span class="op">=</span><span class="st">"800"</span><span class="ot"> height</span><span class="op">=</span><span class="st">"600"</span><span class="dt">&gt;&lt;/</span><span class="kw">canvas</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="configuración-inicial" class="slide level2">
+<h2>Configuración Inicial</h2>
+<p><strong>Objeto de configuración define parámetros fundamentales:</strong></p>
+<ul>
+<li>Tipo de renderizado (AUTO/CANVAS/WEBGL)</li>
+<li>Dimensiones del juego</li>
+<li>Motor de físicas y gravedad</li>
+<li>Funciones principales del juego</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a></a><span class="kw">const</span> config <span class="op">=</span> {</span>
+<span id="cb4-2"><a></a>    <span class="dt">type</span><span class="op">:</span> Phaser<span class="op">.</span><span class="at">AUTO</span><span class="op">,</span>      <span class="co">// Renderizado automático</span></span>
+<span id="cb4-3"><a></a>    <span class="dt">width</span><span class="op">:</span> <span class="dv">800</span><span class="op">,</span>             <span class="co">// Ancho del canvas</span></span>
+<span id="cb4-4"><a></a>    <span class="dt">height</span><span class="op">:</span> <span class="dv">600</span><span class="op">,</span>            <span class="co">// Alto del canvas</span></span>
+<span id="cb4-5"><a></a>    <span class="dt">physics</span><span class="op">:</span> {</span>
+<span id="cb4-6"><a></a>        <span class="cf">default</span><span class="op">:</span> <span class="st">'arcade'</span><span class="op">,</span>  <span class="co">// Motor de físicas</span></span>
+<span id="cb4-7"><a></a>        <span class="dt">arcade</span><span class="op">:</span> {</span>
+<span id="cb4-8"><a></a>            <span class="dt">gravity</span><span class="op">:</span> { <span class="dt">y</span><span class="op">:</span> <span class="dv">300</span> }  <span class="co">// Gravedad vertical</span></span>
+<span id="cb4-9"><a></a>        }</span>
+<span id="cb4-10"><a></a>    }<span class="op">,</span></span>
+<span id="cb4-11"><a></a>    <span class="dt">scene</span><span class="op">:</span> {</span>
+<span id="cb4-12"><a></a>        <span class="dt">preload</span><span class="op">:</span> preload<span class="op">,</span>   <span class="co">// Función de carga</span></span>
+<span id="cb4-13"><a></a>        <span class="dt">create</span><span class="op">:</span> create<span class="op">,</span>     <span class="co">// Función de creación</span></span>
+<span id="cb4-14"><a></a>        <span class="dt">update</span><span class="op">:</span> update      <span class="co">// Función de actualización</span></span>
+<span id="cb4-15"><a></a>    }</span>
+<span id="cb4-16"><a></a>}<span class="op">;</span></span>
+<span id="cb4-17"><a></a></span>
+<span id="cb4-18"><a></a><span class="kw">const</span> game <span class="op">=</span> <span class="kw">new</span> Phaser<span class="op">.</span><span class="fu">Game</span>(config)<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="las-tres-funciones-principales" class="slide level2">
+<h2>Las Tres Funciones Principales</h2>
+<p><strong>preload() - Cargar recursos</strong></p>
+<ul>
+<li><strong>Cuándo</strong>: Se ejecuta primero, solo una vez</li>
+<li><strong>Para qué</strong>: Cargar imágenes, sonidos, sprites</li>
+<li><strong>Importante</strong>: Phaser espera a que todo se cargue antes de continuar</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a></a><span class="kw">function</span> <span class="fu">preload</span>() {</span>
+<span id="cb5-2"><a></a>    <span class="co">// Cargar recursos con identificadores únicos</span></span>
+<span id="cb5-3"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">load</span><span class="op">.</span><span class="fu">image</span>(<span class="st">'cielo'</span><span class="op">,</span> <span class="st">'assets/cielo.png'</span>)<span class="op">;</span></span>
+<span id="cb5-4"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">load</span><span class="op">.</span><span class="fu">image</span>(<span class="st">'suelo'</span><span class="op">,</span> <span class="st">'assets/plataforma.png'</span>)<span class="op">;</span></span>
+<span id="cb5-5"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">load</span><span class="op">.</span><span class="fu">image</span>(<span class="st">'estrella'</span><span class="op">,</span> <span class="st">'assets/estrella.png'</span>)<span class="op">;</span></span>
+<span id="cb5-6"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Nota</strong></p>
+</div>
+<div class="callout-content">
+<p>El primer parámetro es el <strong>identificador</strong> que usaremos después</p>
+</div>
+</div>
+</div>
+</section>
+<section id="las-tres-funciones-principales-2" class="slide level2">
+<h2>Las Tres Funciones Principales (2)</h2>
+<p><strong>create() - Crear objetos del juego</strong></p>
+<ul>
+<li><strong>Cuándo</strong>: Se ejecuta después de preload()</li>
+<li><strong>Para qué</strong>: Inicializar y posicionar elementos</li>
+<li><strong>Importante</strong>: El orden de creación determina el orden de renderizado</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a></a><span class="kw">function</span> <span class="fu">create</span>() {</span>
+<span id="cb6-2"><a></a>    <span class="co">// Añadir imagen de fondo centrada</span></span>
+<span id="cb6-3"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">image</span>(<span class="dv">400</span><span class="op">,</span> <span class="dv">300</span><span class="op">,</span> <span class="st">'cielo'</span>)<span class="op">;</span></span>
+<span id="cb6-4"><a></a>    </span>
+<span id="cb6-5"><a></a>    <span class="co">// Crear plataforma con físicas</span></span>
+<span id="cb6-6"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">plataforma</span> <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">physics</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">image</span>(<span class="dv">400</span><span class="op">,</span> <span class="dv">500</span><span class="op">,</span> <span class="st">'suelo'</span>)<span class="op">;</span></span>
+<span id="cb6-7"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">plataforma</span><span class="op">.</span><span class="fu">setImmovable</span>(<span class="kw">true</span>)<span class="op">;</span>  <span class="co">// No se mueve</span></span>
+<span id="cb6-8"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="las-tres-funciones-principales-3" class="slide level2">
+<h2>Las Tres Funciones Principales (3)</h2>
+<p><strong>update(time, delta) - Bucle del juego</strong></p>
+<ul>
+<li><strong>Cuándo</strong>: Se ejecuta constantemente (~60 veces/segundo)</li>
+<li><strong>Para qué</strong>: Lógica que debe actualizarse continuamente</li>
+<li><strong>Parámetros</strong>: <code>time</code> (tiempo total), <code>delta</code> (desde último frame)</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a></a><span class="kw">function</span> <span class="fu">update</span>(time<span class="op">,</span> delta) {</span>
+<span id="cb7-2"><a></a>    <span class="co">// Mover jugador con teclado</span></span>
+<span id="cb7-3"><a></a>    <span class="cf">if</span> (<span class="kw">this</span><span class="op">.</span><span class="at">cursors</span><span class="op">.</span><span class="at">left</span><span class="op">.</span><span class="at">isDown</span>) {</span>
+<span id="cb7-4"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">jugador</span><span class="op">.</span><span class="at">x</span> <span class="op">-=</span> <span class="dv">5</span><span class="op">;</span>  <span class="co">// Mover izquierda</span></span>
+<span id="cb7-5"><a></a>    }</span>
+<span id="cb7-6"><a></a>    <span class="cf">if</span> (<span class="kw">this</span><span class="op">.</span><span class="at">cursors</span><span class="op">.</span><span class="at">right</span><span class="op">.</span><span class="at">isDown</span>) {</span>
+<span id="cb7-7"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">jugador</span><span class="op">.</span><span class="at">x</span> <span class="op">+=</span> <span class="dv">5</span><span class="op">;</span>  <span class="co">// Mover derecha</span></span>
+<span id="cb7-8"><a></a>    }</span>
+<span id="cb7-9"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>Usar <code>delta</code> para movimiento consistente en diferentes dispositivos</p>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="gestión-de-escenas" class="title-slide slide level1 center">
+<h1>Gestión de Escenas</h1>
+
+</section>
+<section id="concepto-de-escena" class="slide level2">
+<h2>Concepto de Escena</h2>
+<p><strong>¿Qué es una escena?</strong></p>
+<ul>
+<li>Pantalla o estado independiente del juego</li>
+<li>Tiene su propio flujo de ejecución (preload, create, update)</li>
+<li>Mantiene sus propios recursos y objetos</li>
+<li>Permite organización modular del código</li>
+</ul>
+<p><strong>Ejemplos comunes:</strong></p>
+<ul>
+<li>Menú principal</li>
+<li>Pantalla de gameplay</li>
+<li>Menú de pausa</li>
+<li>Pantalla de game over</li>
+<li>Tutorial</li>
+<li>Pantalla de créditos</li>
+</ul>
+</section>
+<section id="escena-implícita-vs-explícita" class="slide level2">
+<h2>Escena Implícita vs Explícita</h2>
+<p><strong>Forma implícita (simple):</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a></a><span class="co">// Crea una escena anónima automáticamente</span></span>
+<span id="cb8-2"><a></a><span class="kw">const</span> config <span class="op">=</span> {</span>
+<span id="cb8-3"><a></a>    <span class="dt">scene</span><span class="op">:</span> {</span>
+<span id="cb8-4"><a></a>        <span class="dt">preload</span><span class="op">:</span> preload<span class="op">,</span></span>
+<span id="cb8-5"><a></a>        <span class="dt">create</span><span class="op">:</span> create<span class="op">,</span></span>
+<span id="cb8-6"><a></a>        <span class="dt">update</span><span class="op">:</span> update</span>
+<span id="cb8-7"><a></a>    }</span>
+<span id="cb8-8"><a></a>}<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Forma explícita (recomendada):</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb9-1"><a></a><span class="kw">class</span> MiEscena <span class="kw">extends</span> Phaser<span class="op">.</span><span class="at">Scene</span> {</span>
+<span id="cb9-2"><a></a>    <span class="fu">preload</span>() { <span class="co">/* ... */</span> }</span>
+<span id="cb9-3"><a></a>    <span class="fu">create</span>() { <span class="co">/* ... */</span> }</span>
+<span id="cb9-4"><a></a>    <span class="fu">update</span>() { <span class="co">/* ... */</span> }</span>
+<span id="cb9-5"><a></a>}</span>
+<span id="cb9-6"><a></a></span>
+<span id="cb9-7"><a></a><span class="kw">const</span> config <span class="op">=</span> {</span>
+<span id="cb9-8"><a></a>    <span class="dt">scene</span><span class="op">:</span> [MiEscena<span class="op">,</span> OtraEscena]</span>
+<span id="cb9-9"><a></a>}<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Nota</strong></p>
+</div>
+<div class="callout-content">
+<p>Las funciones preload/create/update <strong>siempre</strong> están dentro de una escena</p>
+</div>
+</div>
+</div>
+</section>
+<section id="scenemanager---métodos-disponibles" class="slide level2">
+<h2>SceneManager - Métodos Disponibles</h2>
+<p><strong>Cambiar entre escenas:</strong></p>
+<ul>
+<li><code>start()</code>: Inicia escena y <strong>detiene la actual</strong></li>
+<li><code>launch()</code>: Inicia escena <strong>en paralelo</strong> (mantiene actual)</li>
+<li><code>stop()</code>: Detiene completamente una escena</li>
+</ul>
+<p><strong>Controlar estado:</strong></p>
+<ul>
+<li><code>pause()</code> / <code>resume()</code>: Pausar/reanudar (sigue visible)</li>
+<li><code>sleep()</code> / <code>wake()</code>: Dormir/despertar (no visible)</li>
+</ul>
+<p><strong>Gestionar orden:</strong></p>
+<ul>
+<li><code>bringToTop()</code> / <code>sendToBack()</code>: Mover al frente/fondo</li>
+<li><code>moveAbove()</code> / <code>moveBelow()</code>: Posicionar relativamente</li>
+</ul>
+</section>
+<section id="configurar-múltiples-escenas" class="slide level2">
+<h2>Configurar Múltiples Escenas</h2>
+<p><strong>Definir escenas en el array de configuración:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb10-1"><a></a><span class="co">// La primera escena del array se inicia automáticamente</span></span>
+<span id="cb10-2"><a></a><span class="kw">const</span> config <span class="op">=</span> {</span>
+<span id="cb10-3"><a></a>    <span class="dt">scene</span><span class="op">:</span> [MenuPrincipal<span class="op">,</span> Juego<span class="op">,</span> GameOver]</span>
+<span id="cb10-4"><a></a>}<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Añadir/eliminar dinámicamente:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb11-1"><a></a><span class="co">// Añadir nueva escena en tiempo de ejecución</span></span>
+<span id="cb11-2"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">scene</span><span class="op">.</span><span class="fu">add</span>(<span class="st">'clave'</span><span class="op">,</span> ConfigEscena<span class="op">,</span> autoStart<span class="op">,</span> datos)<span class="op">;</span></span>
+<span id="cb11-3"><a></a></span>
+<span id="cb11-4"><a></a><span class="co">// Eliminar una escena</span></span>
+<span id="cb11-5"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">scene</span><span class="op">.</span><span class="fu">remove</span>(<span class="st">'clave'</span>)<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="cambiar-entre-escenas" class="slide level2">
+<h2>Cambiar Entre Escenas</h2>
+<p><strong>start() vs launch():</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a></a><span class="co">// start: Detiene la actual y cambia</span></span>
+<span id="cb12-2"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">scene</span><span class="op">.</span><span class="fu">start</span>(<span class="st">'Juego'</span><span class="op">,</span> { <span class="dt">nivel</span><span class="op">:</span> <span class="dv">1</span> })<span class="op">;</span></span>
+<span id="cb12-3"><a></a></span>
+<span id="cb12-4"><a></a><span class="co">// launch: Ejecuta en paralelo (útil para HUDs)</span></span>
+<span id="cb12-5"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">scene</span><span class="op">.</span><span class="fu">launch</span>(<span class="st">'MenuPausa'</span><span class="op">,</span> { <span class="dt">origenEscena</span><span class="op">:</span> <span class="st">'Juego'</span> })<span class="op">;</span></span>
+<span id="cb12-6"><a></a></span>
+<span id="cb12-7"><a></a><span class="co">// stop: Detiene completamente</span></span>
+<span id="cb12-8"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">scene</span><span class="op">.</span><span class="fu">stop</span>(<span class="st">'MenuPausa'</span>)<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Importante</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>Diferencia clave:</strong> <code>start</code> reemplaza, <code>launch</code> superpone escenas</p>
+</div>
+</div>
+</div>
+</section>
+<section id="pausar-y-reanudar" class="slide level2">
+<h2>Pausar y Reanudar</h2>
+<p><strong>pause() / resume():</strong></p>
+<ul>
+<li>Detiene <code>update()</code> pero sigue renderizando</li>
+<li>Útil para pausar el juego manteniéndolo visible</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb13-1"><a></a><span class="co">// Pausar (sigue visible, no actualiza)</span></span>
+<span id="cb13-2"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">scene</span><span class="op">.</span><span class="fu">pause</span>(<span class="st">'Juego'</span>)<span class="op">;</span></span>
+<span id="cb13-3"><a></a></span>
+<span id="cb13-4"><a></a><span class="co">// Reanudar</span></span>
+<span id="cb13-5"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">scene</span><span class="op">.</span><span class="fu">resume</span>(<span class="st">'Juego'</span>)<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>sleep() / wake():</strong></p>
+<ul>
+<li>Detiene <code>update()</code> y renderizado</li>
+<li>Más eficiente que pause</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb14-1"><a></a><span class="co">// Dormir (no visible, no actualiza)</span></span>
+<span id="cb14-2"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">scene</span><span class="op">.</span><span class="fu">sleep</span>(<span class="st">'Fondo'</span>)<span class="op">;</span></span>
+<span id="cb14-3"><a></a></span>
+<span id="cb14-4"><a></a><span class="co">// Despertar</span></span>
+<span id="cb14-5"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">scene</span><span class="op">.</span><span class="fu">wake</span>(<span class="st">'Fondo'</span>)<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="sistema-de-pausa---ejemplo" class="slide level2">
+<h2>Sistema de Pausa - Ejemplo</h2>
+<p><strong>Escena principal del juego:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb15-1"><a></a><span class="kw">class</span> Juego <span class="kw">extends</span> Phaser<span class="op">.</span><span class="at">Scene</span> {</span>
+<span id="cb15-2"><a></a>    <span class="fu">constructor</span>() {</span>
+<span id="cb15-3"><a></a>        <span class="kw">super</span>(<span class="st">'Juego'</span>)<span class="op">;</span></span>
+<span id="cb15-4"><a></a>    }</span>
+<span id="cb15-5"><a></a>    </span>
+<span id="cb15-6"><a></a>    <span class="fu">create</span>() {</span>
+<span id="cb15-7"><a></a>        <span class="co">// Configurar juego...</span></span>
+<span id="cb15-8"><a></a>        </span>
+<span id="cb15-9"><a></a>        <span class="co">// Detectar tecla ESC para pausar</span></span>
+<span id="cb15-10"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">input</span><span class="op">.</span><span class="at">keyboard</span><span class="op">.</span><span class="fu">on</span>(<span class="st">'keydown-ESC'</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb15-11"><a></a>            <span class="kw">this</span><span class="op">.</span><span class="at">scene</span><span class="op">.</span><span class="fu">pause</span>()<span class="op">;</span>          <span class="co">// Pausar juego</span></span>
+<span id="cb15-12"><a></a>            <span class="kw">this</span><span class="op">.</span><span class="at">scene</span><span class="op">.</span><span class="fu">launch</span>(<span class="st">'MenuPausa'</span><span class="op">,</span> {</span>
+<span id="cb15-13"><a></a>                <span class="dt">escenaOrigen</span><span class="op">:</span> <span class="st">'Juego'</span></span>
+<span id="cb15-14"><a></a>            })<span class="op">;</span></span>
+<span id="cb15-15"><a></a>        })<span class="op">;</span></span>
+<span id="cb15-16"><a></a>    }</span>
+<span id="cb15-17"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="sistema-de-pausa---ejemplo-2" class="slide level2">
+<h2>Sistema de Pausa - Ejemplo (2)</h2>
+<p><strong>Escena del menú de pausa:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb16-1"><a></a><span class="kw">class</span> MenuPausa <span class="kw">extends</span> Phaser<span class="op">.</span><span class="at">Scene</span> {</span>
+<span id="cb16-2"><a></a>    <span class="fu">constructor</span>() {</span>
+<span id="cb16-3"><a></a>        <span class="kw">super</span>(<span class="st">'MenuPausa'</span>)<span class="op">;</span></span>
+<span id="cb16-4"><a></a>    }</span>
+<span id="cb16-5"><a></a>    </span>
+<span id="cb16-6"><a></a>    <span class="fu">create</span>(datos) {</span>
+<span id="cb16-7"><a></a>        <span class="co">// Recibir datos de la escena que pausó</span></span>
+<span id="cb16-8"><a></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">'Pausado desde:'</span><span class="op">,</span> datos<span class="op">.</span><span class="at">escenaOrigen</span>)<span class="op">;</span></span>
+<span id="cb16-9"><a></a>        </span>
+<span id="cb16-10"><a></a>        <span class="co">// Crear fondo semitransparente</span></span>
+<span id="cb16-11"><a></a>        <span class="kw">let</span> overlay <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">rectangle</span>(<span class="dv">400</span><span class="op">,</span> <span class="dv">300</span><span class="op">,</span> <span class="dv">800</span><span class="op">,</span> <span class="dv">600</span><span class="op">,</span> <span class="bn">0x000000</span><span class="op">,</span> <span class="fl">0.7</span>)<span class="op">;</span></span>
+<span id="cb16-12"><a></a>        </span>
+<span id="cb16-13"><a></a>        <span class="co">// Botón continuar</span></span>
+<span id="cb16-14"><a></a>        <span class="kw">let</span> botonContinuar <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">text</span>(<span class="dv">400</span><span class="op">,</span> <span class="dv">300</span><span class="op">,</span> <span class="st">'Continuar'</span><span class="op">,</span> {</span>
+<span id="cb16-15"><a></a>            <span class="dt">fontSize</span><span class="op">:</span> <span class="st">'32px'</span></span>
+<span id="cb16-16"><a></a>        })<span class="op">.</span><span class="fu">setOrigin</span>(<span class="fl">0.5</span>)<span class="op">;</span></span>
+<span id="cb16-17"><a></a>        botonContinuar<span class="op">.</span><span class="fu">setInteractive</span>()<span class="op">;</span></span>
+<span id="cb16-18"><a></a>        </span>
+<span id="cb16-19"><a></a>        botonContinuar<span class="op">.</span><span class="fu">on</span>(<span class="st">'pointerdown'</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb16-20"><a></a>            <span class="kw">this</span><span class="op">.</span><span class="at">scene</span><span class="op">.</span><span class="fu">stop</span>()<span class="op">;</span>                 <span class="co">// Cerrar menú</span></span>
+<span id="cb16-21"><a></a>            <span class="kw">this</span><span class="op">.</span><span class="at">scene</span><span class="op">.</span><span class="fu">resume</span>(datos<span class="op">.</span><span class="at">escenaOrigen</span>)<span class="op">;</span>  <span class="co">// Reanudar juego</span></span>
+<span id="cb16-22"><a></a>        })<span class="op">;</span></span>
+<span id="cb16-23"><a></a>    }</span>
+<span id="cb16-24"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="pasar-datos-entre-escenas" class="slide level2">
+<h2>Pasar Datos Entre Escenas</h2>
+<p><strong>Enviar datos al cambiar de escena:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb17-1"><a></a><span class="co">// Pasar datos al iniciar una escena</span></span>
+<span id="cb17-2"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">scene</span><span class="op">.</span><span class="fu">start</span>(<span class="st">'SiguienteEscena'</span><span class="op">,</span> {</span>
+<span id="cb17-3"><a></a>    <span class="dt">puntuacion</span><span class="op">:</span> <span class="dv">100</span><span class="op">,</span></span>
+<span id="cb17-4"><a></a>    <span class="dt">nivel</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span></span>
+<span id="cb17-5"><a></a>    <span class="dt">nombre</span><span class="op">:</span> <span class="st">'Jugador1'</span></span>
+<span id="cb17-6"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Recibir datos en la escena destino:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb18-1"><a></a><span class="kw">class</span> SiguienteEscena <span class="kw">extends</span> Phaser<span class="op">.</span><span class="at">Scene</span> {</span>
+<span id="cb18-2"><a></a>    <span class="fu">create</span>(datos) {</span>
+<span id="cb18-3"><a></a>        <span class="co">// Recibir los datos como parámetro</span></span>
+<span id="cb18-4"><a></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(datos<span class="op">.</span><span class="at">puntuacion</span>)<span class="op">;</span>  <span class="co">// 100</span></span>
+<span id="cb18-5"><a></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(datos<span class="op">.</span><span class="at">nivel</span>)<span class="op">;</span>       <span class="co">// 2</span></span>
+<span id="cb18-6"><a></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(datos<span class="op">.</span><span class="at">nombre</span>)<span class="op">;</span>      <span class="co">// 'Jugador1'</span></span>
+<span id="cb18-7"><a></a>        </span>
+<span id="cb18-8"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">text</span>(<span class="dv">100</span><span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="vs">`Puntuación: </span><span class="sc">${</span>datos<span class="op">.</span><span class="at">puntuacion</span><span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></span>
+<span id="cb18-9"><a></a>    }</span>
+<span id="cb18-10"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="pasar-datos---otros-métodos" class="slide level2">
+<h2>Pasar Datos - Otros Métodos</h2>
+<p><strong>También funciona con launch() y otros:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb19-1"><a></a><span class="co">// Con launch (escena en paralelo)</span></span>
+<span id="cb19-2"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">scene</span><span class="op">.</span><span class="fu">launch</span>(<span class="st">'MenuPausa'</span><span class="op">,</span> {</span>
+<span id="cb19-3"><a></a>    <span class="dt">juegoActual</span><span class="op">:</span> <span class="st">'Nivel1'</span><span class="op">,</span></span>
+<span id="cb19-4"><a></a>    <span class="dt">tiempoTranscurrido</span><span class="op">:</span> <span class="dv">120</span></span>
+<span id="cb19-5"><a></a>})<span class="op">;</span></span>
+<span id="cb19-6"><a></a></span>
+<span id="cb19-7"><a></a><span class="co">// Con transition</span></span>
+<span id="cb19-8"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">scene</span><span class="op">.</span><span class="fu">transition</span>({</span>
+<span id="cb19-9"><a></a>    <span class="dt">target</span><span class="op">:</span> <span class="st">'GameOver'</span><span class="op">,</span></span>
+<span id="cb19-10"><a></a>    <span class="dt">duration</span><span class="op">:</span> <span class="dv">1000</span><span class="op">,</span></span>
+<span id="cb19-11"><a></a>    <span class="dt">data</span><span class="op">:</span> {</span>
+<span id="cb19-12"><a></a>        <span class="dt">puntuacionFinal</span><span class="op">:</span> <span class="kw">this</span><span class="op">.</span><span class="at">puntuacion</span><span class="op">,</span></span>
+<span id="cb19-13"><a></a>        <span class="dt">tiempoJugado</span><span class="op">:</span> <span class="kw">this</span><span class="op">.</span><span class="at">tiempo</span></span>
+<span id="cb19-14"><a></a>    }</span>
+<span id="cb19-15"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="transiciones-entre-escenas" class="slide level2">
+<h2>Transiciones Entre Escenas</h2>
+<p><strong>Crear efectos visuales suaves:</strong></p>
+<ul>
+<li><code>duration</code>: Tiempo en milisegundos</li>
+<li><code>onUpdate</code>: Callback durante transición</li>
+<li><code>progress</code>: Valor de 0 a 1</li>
+<li><code>data</code>: Objeto con datos para la escena destino</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb20-1"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">scene</span><span class="op">.</span><span class="fu">transition</span>({</span>
+<span id="cb20-2"><a></a>    <span class="dt">target</span><span class="op">:</span> <span class="st">'SiguienteEscena'</span><span class="op">,</span></span>
+<span id="cb20-3"><a></a>    <span class="dt">duration</span><span class="op">:</span> <span class="dv">1000</span><span class="op">,</span>             <span class="co">// 1 segundo</span></span>
+<span id="cb20-4"><a></a>    <span class="dt">moveBelow</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb20-5"><a></a>    <span class="dt">data</span><span class="op">:</span> {                     <span class="co">// Datos a pasar</span></span>
+<span id="cb20-6"><a></a>        <span class="dt">puntuacion</span><span class="op">:</span> <span class="kw">this</span><span class="op">.</span><span class="at">puntos</span><span class="op">,</span></span>
+<span id="cb20-7"><a></a>        <span class="dt">nivel</span><span class="op">:</span> <span class="kw">this</span><span class="op">.</span><span class="at">nivelActual</span></span>
+<span id="cb20-8"><a></a>    }<span class="op">,</span></span>
+<span id="cb20-9"><a></a>    <span class="dt">onUpdate</span><span class="op">:</span> (progress) <span class="kw">=&gt;</span> {</span>
+<span id="cb20-10"><a></a>        <span class="co">// Crear efectos de fundido</span></span>
+<span id="cb20-11"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">cameras</span><span class="op">.</span><span class="at">main</span><span class="op">.</span><span class="fu">setAlpha</span>(<span class="dv">1</span> <span class="op">-</span> progress)<span class="op">;</span></span>
+<span id="cb20-12"><a></a>    }</span>
+<span id="cb20-13"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="reordenar-escenas" class="slide level2">
+<h2>Reordenar Escenas</h2>
+<p><strong>Control del orden de renderizado:</strong></p>
+<ul>
+<li>Valores mayores se dibujan encima</li>
+<li>Útil para HUDs y menús superpuestos</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb21-1"><a></a><span class="co">// Operaciones básicas</span></span>
+<span id="cb21-2"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">scene</span><span class="op">.</span><span class="fu">bringToTop</span>(<span class="st">'HUD'</span>)<span class="op">;</span></span>
+<span id="cb21-3"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">scene</span><span class="op">.</span><span class="fu">sendToBack</span>(<span class="st">'Fondo'</span>)<span class="op">;</span></span>
+<span id="cb21-4"><a></a></span>
+<span id="cb21-5"><a></a><span class="co">// Movimiento relativo</span></span>
+<span id="cb21-6"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">scene</span><span class="op">.</span><span class="fu">moveAbove</span>(<span class="st">'A'</span><span class="op">,</span> <span class="st">'B'</span>)<span class="op">;</span>   <span class="co">// A encima de B</span></span>
+<span id="cb21-7"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">scene</span><span class="op">.</span><span class="fu">moveBelow</span>(<span class="st">'A'</span><span class="op">,</span> <span class="st">'B'</span>)<span class="op">;</span>   <span class="co">// A debajo de B</span></span>
+<span id="cb21-8"><a></a></span>
+<span id="cb21-9"><a></a><span class="co">// Movimiento incremental</span></span>
+<span id="cb21-10"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">scene</span><span class="op">.</span><span class="fu">moveUp</span>(<span class="st">'Escena'</span>)<span class="op">;</span></span>
+<span id="cb21-11"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">scene</span><span class="op">.</span><span class="fu">moveDown</span>(<span class="st">'Escena'</span>)<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section></section>
+<section>
+<section id="trabajo-con-imágenes" class="title-slide slide level1 center">
+<h1>Trabajo con Imágenes</h1>
+
+</section>
+<section id="cargar-y-mostrar" class="slide level2">
+<h2>Cargar y Mostrar</h2>
+<p><strong>Proceso en dos pasos:</strong></p>
+<ol type="1">
+<li><strong>Cargar</strong> en <code>preload()</code> con identificador único</li>
+<li><strong>Mostrar</strong> en <code>create()</code> usando el identificador</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb22-1"><a></a><span class="kw">function</span> <span class="fu">preload</span>() {</span>
+<span id="cb22-2"><a></a>    <span class="co">// Cargar con identificador único</span></span>
+<span id="cb22-3"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">load</span><span class="op">.</span><span class="fu">image</span>(<span class="st">'personaje'</span><span class="op">,</span> <span class="st">'assets/personaje.png'</span>)<span class="op">;</span></span>
+<span id="cb22-4"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">load</span><span class="op">.</span><span class="fu">image</span>(<span class="st">'fondo'</span><span class="op">,</span> <span class="st">'assets/fondo.jpg'</span>)<span class="op">;</span></span>
+<span id="cb22-5"><a></a>}</span>
+<span id="cb22-6"><a></a></span>
+<span id="cb22-7"><a></a><span class="kw">function</span> <span class="fu">create</span>() {</span>
+<span id="cb22-8"><a></a>    <span class="co">// Añadir al canvas en posición (x, y)</span></span>
+<span id="cb22-9"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">image</span>(<span class="dv">400</span><span class="op">,</span> <span class="dv">300</span><span class="op">,</span> <span class="st">'fondo'</span>)<span class="op">;</span></span>
+<span id="cb22-10"><a></a>    <span class="kw">let</span> sprite <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">image</span>(<span class="dv">200</span><span class="op">,</span> <span class="dv">150</span><span class="op">,</span> <span class="st">'personaje'</span>)<span class="op">;</span></span>
+<span id="cb22-11"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Advertencia</strong></p>
+</div>
+<div class="callout-content">
+<p>Siempre cargar en <code>preload()</code> antes de usar en <code>create()</code></p>
+</div>
+</div>
+</div>
+</section>
+<section id="sistema-de-coordenadas-y-origen" class="slide level2">
+<h2>Sistema de Coordenadas y Origen</h2>
+<p><strong>Origen por defecto: centro de la imagen</strong></p>
+<ul>
+<li>Valores de 0 a 1</li>
+<li>(0, 0) = esquina superior izquierda</li>
+<li>(0.5, 0.5) = centro (defecto)</li>
+<li>(1, 1) = esquina inferior derecha</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb23-1"><a></a><span class="co">// Cambiar punto de origen</span></span>
+<span id="cb23-2"><a></a><span class="kw">let</span> imagen <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">image</span>(<span class="dv">100</span><span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="st">'personaje'</span>)</span>
+<span id="cb23-3"><a></a>    <span class="op">.</span><span class="fu">setOrigin</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">0</span>)<span class="op">;</span>  <span class="co">// Esquina superior izquierda</span></span>
+<span id="cb23-4"><a></a></span>
+<span id="cb23-5"><a></a>imagen<span class="op">.</span><span class="fu">setOrigin</span>(<span class="fl">0.5</span><span class="op">,</span> <span class="dv">1</span>)<span class="op">;</span>  <span class="co">// Centro inferior</span></span>
+<span id="cb23-6"><a></a>imagen<span class="op">.</span><span class="fu">setOrigin</span>(<span class="dv">1</span><span class="op">,</span> <span class="dv">0</span>)<span class="op">;</span>     <span class="co">// Esquina superior derecha</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>Cambiar origen útil para alinear objetos o rotaciones específicas</p>
+</div>
+</div>
+</div>
+</section>
+<section id="transformaciones-básicas" class="slide level2">
+<h2>Transformaciones Básicas</h2>
+<p><strong>Escalar, voltear y rotar:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb24-1"><a></a><span class="kw">let</span> jugador <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">image</span>(<span class="dv">400</span><span class="op">,</span> <span class="dv">300</span><span class="op">,</span> <span class="st">'personaje'</span>)<span class="op">;</span></span>
+<span id="cb24-2"><a></a></span>
+<span id="cb24-3"><a></a><span class="co">// Escalar uniformemente</span></span>
+<span id="cb24-4"><a></a>jugador<span class="op">.</span><span class="fu">setScale</span>(<span class="fl">1.5</span>)<span class="op">;</span>      <span class="co">// 150% del tamaño</span></span>
+<span id="cb24-5"><a></a></span>
+<span id="cb24-6"><a></a><span class="co">// Escalar independientemente</span></span>
+<span id="cb24-7"><a></a>jugador<span class="op">.</span><span class="fu">setScale</span>(<span class="dv">2</span><span class="op">,</span> <span class="fl">0.5</span>)<span class="op">;</span>   <span class="co">// Ancho x2, alto x0.5</span></span>
+<span id="cb24-8"><a></a></span>
+<span id="cb24-9"><a></a><span class="co">// Voltear</span></span>
+<span id="cb24-10"><a></a>jugador<span class="op">.</span><span class="at">flipX</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span>       <span class="co">// Espejo horizontal</span></span>
+<span id="cb24-11"><a></a>jugador<span class="op">.</span><span class="at">flipY</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span>       <span class="co">// Espejo vertical</span></span>
+<span id="cb24-12"><a></a></span>
+<span id="cb24-13"><a></a><span class="co">// Rotar (en radianes)</span></span>
+<span id="cb24-14"><a></a>jugador<span class="op">.</span><span class="at">rotation</span> <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="cn">PI</span> <span class="op">/</span> <span class="dv">4</span><span class="op">;</span>  <span class="co">// 45 grados</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Nota</strong></p>
+</div>
+<div class="callout-content">
+<p>π radianes = 180 grados</p>
+</div>
+</div>
+</div>
+</section>
+<section id="profundidad-y-capas" class="slide level2">
+<h2>Profundidad y Capas</h2>
+<p><strong>Controlar qué se dibuja encima:</strong></p>
+<ul>
+<li>La propiedad <code>depth</code> funciona como capas</li>
+<li>Valores mayores se dibujan sobre valores menores</li>
+<li>Por defecto todas tienen depth = 0</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb25-1"><a></a><span class="kw">let</span> fondo <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">image</span>(<span class="dv">400</span><span class="op">,</span> <span class="dv">300</span><span class="op">,</span> <span class="st">'cielo'</span>)<span class="op">;</span></span>
+<span id="cb25-2"><a></a>fondo<span class="op">.</span><span class="at">depth</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>  <span class="co">// Atrás</span></span>
+<span id="cb25-3"><a></a></span>
+<span id="cb25-4"><a></a><span class="kw">let</span> jugador <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">image</span>(<span class="dv">400</span><span class="op">,</span> <span class="dv">300</span><span class="op">,</span> <span class="st">'personaje'</span>)<span class="op">;</span></span>
+<span id="cb25-5"><a></a>jugador<span class="op">.</span><span class="at">depth</span> <span class="op">=</span> <span class="dv">10</span><span class="op">;</span>  <span class="co">// Encima del fondo</span></span>
+<span id="cb25-6"><a></a></span>
+<span id="cb25-7"><a></a><span class="kw">let</span> hud <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">image</span>(<span class="dv">400</span><span class="op">,</span> <span class="dv">50</span><span class="op">,</span> <span class="st">'interfaz'</span>)<span class="op">;</span></span>
+<span id="cb25-8"><a></a>hud<span class="op">.</span><span class="at">depth</span> <span class="op">=</span> <span class="dv">100</span><span class="op">;</span>  <span class="co">// Encima de todo</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section></section>
+<section>
+<section id="motores-de-físicas" class="title-slide slide level1 center">
+<h1>Motores de Físicas</h1>
+
+</section>
+<section id="tres-motores-disponibles" class="slide level2">
+<h2>Tres Motores Disponibles</h2>
+<p><strong>Arcade Physics:</strong></p>
+<ul>
+<li>Más simple y rápido</li>
+<li>Solo rectángulos y círculos</li>
+<li>Ideal para juegos arcade/plataformas</li>
+</ul>
+<p><strong>Impact Physics:</strong></p>
+<ul>
+<li>Soporta pendientes en tiles</li>
+<li>Más complejo que Arcade</li>
+<li>Ideal para plataformas con terreno inclinado</li>
+</ul>
+<p><strong>Matter Physics:</strong></p>
+<ul>
+<li>Más avanzado y realista</li>
+<li>Formas complejas y polígonos</li>
+<li>Mayor costo de rendimiento</li>
+<li>Ideal para puzzles físicos</li>
+</ul>
+</section>
+<section id="configurar-arcade-physics" class="slide level2">
+<h2>Configurar Arcade Physics</h2>
+<p><strong>Configuración en el objeto config:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb26-1"><a></a><span class="kw">const</span> config <span class="op">=</span> {</span>
+<span id="cb26-2"><a></a>    <span class="dt">physics</span><span class="op">:</span> {</span>
+<span id="cb26-3"><a></a>        <span class="cf">default</span><span class="op">:</span> <span class="st">'arcade'</span><span class="op">,</span></span>
+<span id="cb26-4"><a></a>        <span class="dt">arcade</span><span class="op">:</span> {</span>
+<span id="cb26-5"><a></a>            <span class="dt">gravity</span><span class="op">:</span> { <span class="dt">y</span><span class="op">:</span> <span class="dv">300</span> }<span class="op">,</span>  <span class="co">// Gravedad en píxeles/s²</span></span>
+<span id="cb26-6"><a></a>            <span class="dt">debug</span><span class="op">:</span> <span class="kw">false</span>          <span class="co">// Mostrar contornos físicos</span></span>
+<span id="cb26-7"><a></a>        }</span>
+<span id="cb26-8"><a></a>    }</span>
+<span id="cb26-9"><a></a>}<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>Activar <code>debug: true</code> durante desarrollo para ver colisiones</p>
+</div>
+</div>
+</div>
+</section>
+<section id="añadir-físicas-a-objetos" class="slide level2">
+<h2>Añadir Físicas a Objetos</h2>
+<p><strong>Diferencia entre objetos con y sin físicas:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb27-1"><a></a><span class="co">// Sin físicas (imagen estática)</span></span>
+<span id="cb27-2"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">image</span>(<span class="dv">400</span><span class="op">,</span> <span class="dv">300</span><span class="op">,</span> <span class="st">'fondo'</span>)<span class="op">;</span></span>
+<span id="cb27-3"><a></a></span>
+<span id="cb27-4"><a></a><span class="co">// Con físicas (puede moverse, colisionar, etc.)</span></span>
+<span id="cb27-5"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">jugador</span> <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">physics</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">image</span>(<span class="dv">100</span><span class="op">,</span> <span class="dv">450</span><span class="op">,</span> <span class="st">'personaje'</span>)<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Importante</strong></p>
+</div>
+<div class="callout-content">
+<p>Usar <code>physics.add</code> en lugar de solo <code>add</code> para habilitar físicas</p>
+</div>
+</div>
+</div>
+</section>
+<section id="propiedades-físicas" class="slide level2">
+<h2>Propiedades Físicas</h2>
+<p><strong>Configurar comportamiento físico:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb28-1"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">jugador</span> <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">physics</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">image</span>(<span class="dv">100</span><span class="op">,</span> <span class="dv">450</span><span class="op">,</span> <span class="st">'personaje'</span>)<span class="op">;</span></span>
+<span id="cb28-2"><a></a></span>
+<span id="cb28-3"><a></a><span class="co">// No salir de los límites del canvas</span></span>
+<span id="cb28-4"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">jugador</span><span class="op">.</span><span class="fu">setCollideWorldBounds</span>(<span class="kw">true</span>)<span class="op">;</span></span>
+<span id="cb28-5"><a></a></span>
+<span id="cb28-6"><a></a><span class="co">// Rebote al chocar (0 = no rebota, 1 = rebote perfecto)</span></span>
+<span id="cb28-7"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">jugador</span><span class="op">.</span><span class="fu">setBounce</span>(<span class="fl">0.3</span>)<span class="op">;</span></span>
+<span id="cb28-8"><a></a></span>
+<span id="cb28-9"><a></a><span class="co">// Velocidad inicial (píxeles/segundo)</span></span>
+<span id="cb28-10"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">jugador</span><span class="op">.</span><span class="fu">setVelocity</span>(<span class="dv">100</span><span class="op">,</span> <span class="op">-</span><span class="dv">50</span>)<span class="op">;</span></span>
+<span id="cb28-11"><a></a></span>
+<span id="cb28-12"><a></a><span class="co">// Aceleración (píxeles/segundo²)</span></span>
+<span id="cb28-13"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">jugador</span><span class="op">.</span><span class="fu">setAcceleration</span>(<span class="dv">50</span><span class="op">,</span> <span class="dv">0</span>)<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section></section>
+<section>
+<section id="sistema-de-entrada" class="title-slide slide level1 center">
+<h1>Sistema de Entrada</h1>
+
+</section>
+<section id="teclado---eventos" class="slide level2">
+<h2>Teclado - Eventos</h2>
+<p><strong>Detectar teclas específicas:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb29-1"><a></a><span class="kw">function</span> <span class="fu">create</span>() {</span>
+<span id="cb29-2"><a></a>    <span class="co">// Detectar cuando se presiona</span></span>
+<span id="cb29-3"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">input</span><span class="op">.</span><span class="at">keyboard</span><span class="op">.</span><span class="fu">on</span>(<span class="st">'keydown-SPACE'</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb29-4"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">jugador</span><span class="op">.</span><span class="fu">setVelocityY</span>(<span class="op">-</span><span class="dv">330</span>)<span class="op">;</span> <span class="co">// Saltar</span></span>
+<span id="cb29-5"><a></a>    })<span class="op">;</span></span>
+<span id="cb29-6"><a></a>    </span>
+<span id="cb29-7"><a></a>    <span class="co">// Detectar cuando se suelta</span></span>
+<span id="cb29-8"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">input</span><span class="op">.</span><span class="at">keyboard</span><span class="op">.</span><span class="fu">on</span>(<span class="st">'keyup-SPACE'</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb29-9"><a></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">'Tecla soltada'</span>)<span class="op">;</span></span>
+<span id="cb29-10"><a></a>    })<span class="op">;</span></span>
+<span id="cb29-11"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Nota</strong></p>
+</div>
+<div class="callout-content">
+<p><code>keydown</code> se dispara al presionar, <code>keyup</code> al soltar</p>
+</div>
+</div>
+</div>
+</section>
+<section id="teclado---modificadores" class="slide level2">
+<h2>Teclado - Modificadores</h2>
+<p><strong>Detectar combinaciones de teclas:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb30-1"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">input</span><span class="op">.</span><span class="at">keyboard</span><span class="op">.</span><span class="fu">on</span>(<span class="st">'keydown-A'</span><span class="op">,</span> (<span class="bu">event</span>) <span class="kw">=&gt;</span> {</span>
+<span id="cb30-2"><a></a>    <span class="cf">if</span> (<span class="bu">event</span><span class="op">.</span><span class="at">ctrlKey</span>) {</span>
+<span id="cb30-3"><a></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">'CTRL + A'</span>)<span class="op">;</span></span>
+<span id="cb30-4"><a></a>    } <span class="cf">else</span> <span class="cf">if</span> (<span class="bu">event</span><span class="op">.</span><span class="at">shiftKey</span>) {</span>
+<span id="cb30-5"><a></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">'SHIFT + A'</span>)<span class="op">;</span></span>
+<span id="cb30-6"><a></a>    } <span class="cf">else</span> <span class="cf">if</span> (<span class="bu">event</span><span class="op">.</span><span class="at">altKey</span>) {</span>
+<span id="cb30-7"><a></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">'ALT + A'</span>)<span class="op">;</span></span>
+<span id="cb30-8"><a></a>    } <span class="cf">else</span> {</span>
+<span id="cb30-9"><a></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">'Solo A'</span>)<span class="op">;</span></span>
+<span id="cb30-10"><a></a>    }</span>
+<span id="cb30-11"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="teclado---cursores" class="slide level2">
+<h2>Teclado - Cursores</h2>
+<p><strong>Objeto para flechas, espacio y shift:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb31-1"><a></a><span class="kw">function</span> <span class="fu">create</span>() {</span>
+<span id="cb31-2"><a></a>    <span class="co">// Crear objeto de cursores</span></span>
+<span id="cb31-3"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">cursors</span> <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">input</span><span class="op">.</span><span class="at">keyboard</span><span class="op">.</span><span class="fu">createCursorKeys</span>()<span class="op">;</span></span>
+<span id="cb31-4"><a></a>}</span>
+<span id="cb31-5"><a></a></span>
+<span id="cb31-6"><a></a><span class="kw">function</span> <span class="fu">update</span>() {</span>
+<span id="cb31-7"><a></a>    <span class="co">// Resetear velocidad</span></span>
+<span id="cb31-8"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">jugador</span><span class="op">.</span><span class="fu">setVelocityX</span>(<span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb31-9"><a></a>    </span>
+<span id="cb31-10"><a></a>    <span class="co">// Comprobar teclas presionadas</span></span>
+<span id="cb31-11"><a></a>    <span class="cf">if</span> (<span class="kw">this</span><span class="op">.</span><span class="at">cursors</span><span class="op">.</span><span class="at">left</span><span class="op">.</span><span class="at">isDown</span>) {</span>
+<span id="cb31-12"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">jugador</span><span class="op">.</span><span class="fu">setVelocityX</span>(<span class="op">-</span><span class="dv">160</span>)<span class="op">;</span></span>
+<span id="cb31-13"><a></a>    } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">this</span><span class="op">.</span><span class="at">cursors</span><span class="op">.</span><span class="at">right</span><span class="op">.</span><span class="at">isDown</span>) {</span>
+<span id="cb31-14"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">jugador</span><span class="op">.</span><span class="fu">setVelocityX</span>(<span class="dv">160</span>)<span class="op">;</span></span>
+<span id="cb31-15"><a></a>    }</span>
+<span id="cb31-16"><a></a>    </span>
+<span id="cb31-17"><a></a>    <span class="co">// Saltar solo si está en el suelo</span></span>
+<span id="cb31-18"><a></a>    <span class="cf">if</span> (<span class="kw">this</span><span class="op">.</span><span class="at">cursors</span><span class="op">.</span><span class="at">up</span><span class="op">.</span><span class="at">isDown</span> <span class="op">&amp;&amp;</span> <span class="kw">this</span><span class="op">.</span><span class="at">jugador</span><span class="op">.</span><span class="at">body</span><span class="op">.</span><span class="at">touching</span><span class="op">.</span><span class="at">down</span>) {</span>
+<span id="cb31-19"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">jugador</span><span class="op">.</span><span class="fu">setVelocityY</span>(<span class="op">-</span><span class="dv">330</span>)<span class="op">;</span></span>
+<span id="cb31-20"><a></a>    }</span>
+<span id="cb31-21"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="teclado---combos" class="slide level2">
+<h2>Teclado - Combos</h2>
+<p><strong>Detectar secuencias de teclas:</strong></p>
+<ul>
+<li>Útil para códigos secretos o trucos</li>
+<li>Detecta automáticamente la secuencia correcta</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb32-1"><a></a><span class="kw">function</span> <span class="fu">create</span>() {</span>
+<span id="cb32-2"><a></a>    <span class="co">// Combo con letras</span></span>
+<span id="cb32-3"><a></a>    <span class="kw">let</span> combo1 <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">input</span><span class="op">.</span><span class="at">keyboard</span><span class="op">.</span><span class="fu">createCombo</span>(<span class="st">'KONAMI'</span>)<span class="op">;</span></span>
+<span id="cb32-4"><a></a>    </span>
+<span id="cb32-5"><a></a>    <span class="co">// Combo Konami: ↑ ↑ ↓ ↓ ← → ← →</span></span>
+<span id="cb32-6"><a></a>    <span class="kw">let</span> combo2 <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">input</span><span class="op">.</span><span class="at">keyboard</span><span class="op">.</span><span class="fu">createCombo</span>(</span>
+<span id="cb32-7"><a></a>        [<span class="dv">38</span><span class="op">,</span> <span class="dv">38</span><span class="op">,</span> <span class="dv">40</span><span class="op">,</span> <span class="dv">40</span><span class="op">,</span> <span class="dv">37</span><span class="op">,</span> <span class="dv">39</span><span class="op">,</span> <span class="dv">37</span><span class="op">,</span> <span class="dv">39</span>]</span>
+<span id="cb32-8"><a></a>    )<span class="op">;</span></span>
+<span id="cb32-9"><a></a>    </span>
+<span id="cb32-10"><a></a>    <span class="co">// Detectar cuando se completa</span></span>
+<span id="cb32-11"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">input</span><span class="op">.</span><span class="at">keyboard</span><span class="op">.</span><span class="fu">on</span>(<span class="st">'keycombomatch'</span><span class="op">,</span> (combo) <span class="kw">=&gt;</span> {</span>
+<span id="cb32-12"><a></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">'¡Código secreto desbloqueado!'</span>)<span class="op">;</span></span>
+<span id="cb32-13"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="fu">activarModoEspecial</span>()<span class="op">;</span></span>
+<span id="cb32-14"><a></a>    })<span class="op">;</span></span>
+<span id="cb32-15"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="ratón-y-táctil" class="slide level2">
+<h2>Ratón y Táctil</h2>
+<p><strong>API unificada para ratón y pantallas táctiles:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb33-1"><a></a><span class="kw">function</span> <span class="fu">create</span>() {</span>
+<span id="cb33-2"><a></a>    <span class="co">// Detectar clic/toque</span></span>
+<span id="cb33-3"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">input</span><span class="op">.</span><span class="fu">on</span>(<span class="st">'pointerdown'</span><span class="op">,</span> (pointer) <span class="kw">=&gt;</span> {</span>
+<span id="cb33-4"><a></a>        <span class="cf">if</span> (pointer<span class="op">.</span><span class="fu">leftButtonDown</span>()) {</span>
+<span id="cb33-5"><a></a>            <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">'Clic izquierdo:'</span><span class="op">,</span> pointer<span class="op">.</span><span class="at">x</span><span class="op">,</span> pointer<span class="op">.</span><span class="at">y</span>)<span class="op">;</span></span>
+<span id="cb33-6"><a></a>        }</span>
+<span id="cb33-7"><a></a>        <span class="cf">if</span> (pointer<span class="op">.</span><span class="fu">rightButtonDown</span>()) {</span>
+<span id="cb33-8"><a></a>            <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">'Clic derecho'</span>)<span class="op">;</span></span>
+<span id="cb33-9"><a></a>        }</span>
+<span id="cb33-10"><a></a>    })<span class="op">;</span></span>
+<span id="cb33-11"><a></a>    </span>
+<span id="cb33-12"><a></a>    <span class="co">// Detectar cuando se suelta</span></span>
+<span id="cb33-13"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">input</span><span class="op">.</span><span class="fu">on</span>(<span class="st">'pointerup'</span><span class="op">,</span> (pointer) <span class="kw">=&gt;</span> {</span>
+<span id="cb33-14"><a></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">'Botón soltado'</span>)<span class="op">;</span></span>
+<span id="cb33-15"><a></a>    })<span class="op">;</span></span>
+<span id="cb33-16"><a></a>    </span>
+<span id="cb33-17"><a></a>    <span class="co">// Detectar movimiento</span></span>
+<span id="cb33-18"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">input</span><span class="op">.</span><span class="fu">on</span>(<span class="st">'pointermove'</span><span class="op">,</span> (pointer) <span class="kw">=&gt;</span> {</span>
+<span id="cb33-19"><a></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">'Posición:'</span><span class="op">,</span> pointer<span class="op">.</span><span class="at">x</span><span class="op">,</span> pointer<span class="op">.</span><span class="at">y</span>)<span class="op">;</span></span>
+<span id="cb33-20"><a></a>    })<span class="op">;</span></span>
+<span id="cb33-21"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section></section>
+<section>
+<section id="detección-de-colisiones" class="title-slide slide level1 center">
+<h1>Detección de Colisiones</h1>
+
+</section>
+<section id="collider-vs-overlap" class="slide level2">
+<h2>Collider vs Overlap</h2>
+<p><strong>Dos formas de detectar interacciones:</strong></p>
+<p><strong>Collider:</strong></p>
+<ul>
+<li>Detecta <strong>y resuelve</strong> colisiones físicamente</li>
+<li>Separa objetos automáticamente</li>
+<li>Aplica masa, velocidad, rebote</li>
+</ul>
+<p><strong>Overlap:</strong></p>
+<ul>
+<li>Solo <strong>detecta</strong> superposición espacial</li>
+<li>Los objetos pueden atravesarse</li>
+<li>Sin resolución física</li>
+</ul>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>Collider para plataformas, Overlap para coleccionables</p>
+</div>
+</div>
+</div>
+</section>
+<section id="ejemplos-de-uso" class="slide level2">
+<h2>Ejemplos de Uso</h2>
+<p><strong>Collider para plataformas:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb34-1"><a></a><span class="kw">function</span> <span class="fu">create</span>() {</span>
+<span id="cb34-2"><a></a>    <span class="kw">let</span> jugador <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">physics</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">image</span>(<span class="dv">100</span><span class="op">,</span> <span class="dv">450</span><span class="op">,</span> <span class="st">'personaje'</span>)<span class="op">;</span></span>
+<span id="cb34-3"><a></a>    </span>
+<span id="cb34-4"><a></a>    <span class="kw">let</span> plataforma <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">physics</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">image</span>(<span class="dv">400</span><span class="op">,</span> <span class="dv">500</span><span class="op">,</span> <span class="st">'suelo'</span>)<span class="op">;</span></span>
+<span id="cb34-5"><a></a>    plataforma<span class="op">.</span><span class="fu">setImmovable</span>(<span class="kw">true</span>)<span class="op">;</span>  <span class="co">// No se mueve al impacto</span></span>
+<span id="cb34-6"><a></a>    </span>
+<span id="cb34-7"><a></a>    <span class="co">// Colisión con resolución física</span></span>
+<span id="cb34-8"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">physics</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">collider</span>(jugador<span class="op">,</span> plataforma)<span class="op">;</span></span>
+<span id="cb34-9"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Overlap para coleccionables:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb35-1"><a></a><span class="kw">let</span> estrella <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">physics</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">image</span>(<span class="dv">200</span><span class="op">,</span> <span class="dv">200</span><span class="op">,</span> <span class="st">'estrella'</span>)<span class="op">;</span></span>
+<span id="cb35-2"><a></a></span>
+<span id="cb35-3"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">physics</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">overlap</span>(jugador<span class="op">,</span> estrella<span class="op">,</span> (j<span class="op">,</span> e) <span class="kw">=&gt;</span> {</span>
+<span id="cb35-4"><a></a>    e<span class="op">.</span><span class="fu">destroy</span>()<span class="op">;</span>  <span class="co">// Eliminar estrella</span></span>
+<span id="cb35-5"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">puntuacion</span> <span class="op">+=</span> <span class="dv">10</span><span class="op">;</span></span>
+<span id="cb35-6"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="grupos-estáticos" class="slide level2">
+<h2>Grupos Estáticos</h2>
+<p><strong>Para objetos inmóviles (plataformas, paredes):</strong></p>
+<ul>
+<li>Más eficientes que objetos dinámicos</li>
+<li>No se mueven ni responden a físicas</li>
+<li>Ideales para nivel/escenario</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb36-1"><a></a><span class="kw">function</span> <span class="fu">create</span>() {</span>
+<span id="cb36-2"><a></a>    <span class="co">// Crear grupo estático</span></span>
+<span id="cb36-3"><a></a>    <span class="kw">let</span> plataformas <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">physics</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">staticGroup</span>()<span class="op">;</span></span>
+<span id="cb36-4"><a></a>    </span>
+<span id="cb36-5"><a></a>    <span class="co">// Añadir plataformas</span></span>
+<span id="cb36-6"><a></a>    plataformas<span class="op">.</span><span class="fu">create</span>(<span class="dv">400</span><span class="op">,</span> <span class="dv">568</span><span class="op">,</span> <span class="st">'suelo'</span>)</span>
+<span id="cb36-7"><a></a>        <span class="op">.</span><span class="fu">setScale</span>(<span class="dv">2</span>)</span>
+<span id="cb36-8"><a></a>        <span class="op">.</span><span class="fu">refreshBody</span>()<span class="op">;</span>  <span class="co">// Actualizar tras modificar</span></span>
+<span id="cb36-9"><a></a>    </span>
+<span id="cb36-10"><a></a>    plataformas<span class="op">.</span><span class="fu">create</span>(<span class="dv">600</span><span class="op">,</span> <span class="dv">400</span><span class="op">,</span> <span class="st">'suelo'</span>)<span class="op">;</span></span>
+<span id="cb36-11"><a></a>    plataformas<span class="op">.</span><span class="fu">create</span>(<span class="dv">50</span><span class="op">,</span> <span class="dv">250</span><span class="op">,</span> <span class="st">'suelo'</span>)<span class="op">;</span></span>
+<span id="cb36-12"><a></a>    </span>
+<span id="cb36-13"><a></a>    <span class="co">// Colisión con todas</span></span>
+<span id="cb36-14"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">physics</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">collider</span>(<span class="kw">this</span><span class="op">.</span><span class="at">jugador</span><span class="op">,</span> plataformas)<span class="op">;</span></span>
+<span id="cb36-15"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Advertencia</strong></p>
+</div>
+<div class="callout-content">
+<p>Llamar a <code>refreshBody()</code> tras modificar objetos estáticos</p>
+</div>
+</div>
+</div>
+</section>
+<section id="grupos-dinámicos" class="slide level2">
+<h2>Grupos Dinámicos</h2>
+<p><strong>Para objetos con físicas completas:</strong></p>
+<ul>
+<li>Se mueven y responden a gravedad</li>
+<li>Pueden colisionar entre sí</li>
+<li>Más costosos computacionalmente</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb37-1"><a></a><span class="co">// Crear 12 estrellas espaciadas</span></span>
+<span id="cb37-2"><a></a><span class="kw">let</span> estrellas <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">physics</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">group</span>({</span>
+<span id="cb37-3"><a></a>    <span class="dt">key</span><span class="op">:</span> <span class="st">'estrella'</span><span class="op">,</span></span>
+<span id="cb37-4"><a></a>    <span class="dt">repeat</span><span class="op">:</span> <span class="dv">11</span><span class="op">,</span>  <span class="co">// 1 + 11 = 12 total</span></span>
+<span id="cb37-5"><a></a>    <span class="dt">setXY</span><span class="op">:</span> { <span class="dt">x</span><span class="op">:</span> <span class="dv">12</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">stepX</span><span class="op">:</span> <span class="dv">70</span> }  <span class="co">// Cada 70px</span></span>
+<span id="cb37-6"><a></a>})<span class="op">;</span></span>
+<span id="cb37-7"><a></a></span>
+<span id="cb37-8"><a></a><span class="co">// Aplicar propiedades a cada una</span></span>
+<span id="cb37-9"><a></a>estrellas<span class="op">.</span><span class="at">children</span><span class="op">.</span><span class="fu">iterate</span>((estrella) <span class="kw">=&gt;</span> {</span>
+<span id="cb37-10"><a></a>    estrella<span class="op">.</span><span class="fu">setBounceY</span>(Phaser<span class="op">.</span><span class="at">Math</span><span class="op">.</span><span class="fu">FloatBetween</span>(<span class="fl">0.4</span><span class="op">,</span> <span class="fl">0.8</span>))<span class="op">;</span></span>
+<span id="cb37-11"><a></a>})<span class="op">;</span></span>
+<span id="cb37-12"><a></a></span>
+<span id="cb37-13"><a></a><span class="co">// Overlap para recogerlas</span></span>
+<span id="cb37-14"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">physics</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">overlap</span>(<span class="kw">this</span><span class="op">.</span><span class="at">jugador</span><span class="op">,</span> estrellas<span class="op">,</span> (j<span class="op">,</span> e) <span class="kw">=&gt;</span> {</span>
+<span id="cb37-15"><a></a>    e<span class="op">.</span><span class="fu">disableBody</span>(<span class="kw">true</span><span class="op">,</span> <span class="kw">true</span>)<span class="op">;</span>  <span class="co">// Desactivar</span></span>
+<span id="cb37-16"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">puntuacion</span> <span class="op">+=</span> <span class="dv">10</span><span class="op">;</span></span>
+<span id="cb37-17"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="callbacks-de-colisión" class="slide level2">
+<h2>Callbacks de Colisión</h2>
+<p><strong>Ejecutar código cuando ocurre colisión:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb38-1"><a></a><span class="co">// Callback básico</span></span>
+<span id="cb38-2"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">physics</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">collider</span>(jugador<span class="op">,</span> enemigo<span class="op">,</span> (j<span class="op">,</span> e) <span class="kw">=&gt;</span> {</span>
+<span id="cb38-3"><a></a>    <span class="co">// Se ejecuta cada vez que colisionan</span></span>
+<span id="cb38-4"><a></a>    j<span class="op">.</span><span class="fu">setTint</span>(<span class="bn">0xff0000</span>)<span class="op">;</span>      <span class="co">// Jugador en rojo</span></span>
+<span id="cb38-5"><a></a>    j<span class="op">.</span><span class="fu">setVelocityX</span>(<span class="op">-</span><span class="dv">200</span>)<span class="op">;</span>     <span class="co">// Retroceder</span></span>
+<span id="cb38-6"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Process callback (condición):</strong></p>
+<ul>
+<li>Decide si procesar la colisión</li>
+<li>Retorna <code>true</code> para procesar, <code>false</code> para ignorar</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb39-1"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">physics</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">collider</span>(</span>
+<span id="cb39-2"><a></a>    jugador<span class="op">,</span> </span>
+<span id="cb39-3"><a></a>    enemigo<span class="op">,</span></span>
+<span id="cb39-4"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">dañar</span><span class="op">,</span>              <span class="co">// Si procesa</span></span>
+<span id="cb39-5"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">puedeRecibirDaño</span><span class="op">,</span>   <span class="co">// Condición</span></span>
+<span id="cb39-6"><a></a>    <span class="kw">this</span></span>
+<span id="cb39-7"><a></a>)<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="sistema-de-invulnerabilidad" class="slide level2">
+<h2>Sistema de Invulnerabilidad</h2>
+<p><strong>Ejemplo: no recibir daño temporalmente</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb40-1"><a></a><span class="kw">function</span> <span class="fu">puedeRecibirDaño</span>(jugador<span class="op">,</span> enemigo) {</span>
+<span id="cb40-2"><a></a>    <span class="co">// Solo procesar si no es invulnerable</span></span>
+<span id="cb40-3"><a></a>    <span class="cf">return</span> <span class="op">!</span>jugador<span class="op">.</span><span class="at">invulnerable</span><span class="op">;</span></span>
+<span id="cb40-4"><a></a>}</span>
+<span id="cb40-5"><a></a></span>
+<span id="cb40-6"><a></a><span class="kw">function</span> <span class="fu">dañar</span>(jugador<span class="op">,</span> enemigo) {</span>
+<span id="cb40-7"><a></a>    jugador<span class="op">.</span><span class="at">invulnerable</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb40-8"><a></a>    jugador<span class="op">.</span><span class="fu">setTint</span>(<span class="bn">0xff0000</span>)<span class="op">;</span>  <span class="co">// Rojo</span></span>
+<span id="cb40-9"><a></a>    </span>
+<span id="cb40-10"><a></a>    <span class="co">// Volver vulnerable tras 2 segundos</span></span>
+<span id="cb40-11"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">time</span><span class="op">.</span><span class="fu">delayedCall</span>(<span class="dv">2000</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb40-12"><a></a>        jugador<span class="op">.</span><span class="at">invulnerable</span> <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb40-13"><a></a>        jugador<span class="op">.</span><span class="fu">clearTint</span>()<span class="op">;</span></span>
+<span id="cb40-14"><a></a>    })<span class="op">;</span></span>
+<span id="cb40-15"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="detectar-contacto-con-superficies" class="slide level2">
+<h2>Detectar Contacto con Superficies</h2>
+<p><strong>Propiedades útiles para mecánicas:</strong></p>
+<ul>
+<li><code>touching.down</code>: Tocando suelo</li>
+<li><code>touching.up</code>: Tocando techo</li>
+<li><code>touching.left/right</code>: Tocando paredes</li>
+<li><code>blocked.*</code>: Similar pero solo objetos inmóviles</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb41-1"><a></a><span class="kw">function</span> <span class="fu">update</span>() {</span>
+<span id="cb41-2"><a></a>    <span class="co">// Verificar si toca el suelo</span></span>
+<span id="cb41-3"><a></a>    <span class="cf">if</span> (<span class="kw">this</span><span class="op">.</span><span class="at">jugador</span><span class="op">.</span><span class="at">body</span><span class="op">.</span><span class="at">touching</span><span class="op">.</span><span class="at">down</span>) {</span>
+<span id="cb41-4"><a></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">'En el suelo'</span>)<span class="op">;</span></span>
+<span id="cb41-5"><a></a>    }</span>
+<span id="cb41-6"><a></a>    </span>
+<span id="cb41-7"><a></a>    <span class="co">// Saltar solo si está en el suelo</span></span>
+<span id="cb41-8"><a></a>    <span class="cf">if</span> (<span class="kw">this</span><span class="op">.</span><span class="at">cursors</span><span class="op">.</span><span class="at">up</span><span class="op">.</span><span class="at">isDown</span> <span class="op">&amp;&amp;</span> </span>
+<span id="cb41-9"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">jugador</span><span class="op">.</span><span class="at">body</span><span class="op">.</span><span class="at">touching</span><span class="op">.</span><span class="at">down</span>) {</span>
+<span id="cb41-10"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">jugador</span><span class="op">.</span><span class="fu">setVelocityY</span>(<span class="op">-</span><span class="dv">330</span>)<span class="op">;</span></span>
+<span id="cb41-11"><a></a>    }</span>
+<span id="cb41-12"><a></a>    </span>
+<span id="cb41-13"><a></a>    <span class="co">// Detectar si está contra pared</span></span>
+<span id="cb41-14"><a></a>    <span class="cf">if</span> (<span class="kw">this</span><span class="op">.</span><span class="at">jugador</span><span class="op">.</span><span class="at">body</span><span class="op">.</span><span class="at">touching</span><span class="op">.</span><span class="at">left</span>) {</span>
+<span id="cb41-15"><a></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">'Pared izquierda'</span>)<span class="op">;</span></span>
+<span id="cb41-16"><a></a>    }</span>
+<span id="cb41-17"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section></section>
+<section>
+<section id="patrón-command" class="title-slide slide level1 center">
+<h1>Patrón Command</h1>
+
+</section>
+<section id="qué-es-el-patrón-command" class="slide level2">
+<h2>¿Qué es el Patrón Command?</h2>
+<p><strong>Problema en juegos multijugador:</strong></p>
+<ul>
+<li>Capturar acciones del jugador (input)</li>
+<li>Ejecutar localmente (respuesta inmediata)</li>
+<li>Transmitir por red a otros jugadores</li>
+<li>Reproducir acciones recibidas</li>
+</ul>
+<p><strong>Solución: Patrón Command</strong></p>
+<ul>
+<li>Encapsula cada acción como un objeto</li>
+<li>Separa input, lógica y networking</li>
+<li>Facilita testing y debugging</li>
+</ul>
+</section>
+<section id="beneficios-del-patrón" class="slide level2">
+<h2>Beneficios del Patrón</h2>
+<p><strong>Ventajas principales:</strong></p>
+<ul>
+<li><strong>Separación de responsabilidades</strong>: Input, lógica y red independientes</li>
+<li><strong>Testabilidad</strong>: Probar comandos sin juego completo</li>
+<li><strong>Flexibilidad</strong>: Añadir comandos sin modificar código existente</li>
+<li><strong>Networking transparente</strong>: Mismo comando para local y red</li>
+<li><strong>Debugging</strong>: Registrar/reproducir todas las acciones</li>
+<li><strong>Predicción cliente</strong>: Respuesta inmediata + reconciliación servidor</li>
+</ul>
+</section>
+<section id="estructura-base---command" class="slide level2">
+<h2>Estructura Base - Command</h2>
+<p><strong>Clase abstracta con interfaz común:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb42-1"><a></a><span class="kw">class</span> Command {</span>
+<span id="cb42-2"><a></a>    <span class="fu">execute</span>() {</span>
+<span id="cb42-3"><a></a>        <span class="co">// Implementar en subclases</span></span>
+<span id="cb42-4"><a></a>        <span class="co">// Ejecuta la acción en el juego</span></span>
+<span id="cb42-5"><a></a>    }</span>
+<span id="cb42-6"><a></a>    </span>
+<span id="cb42-7"><a></a>    <span class="fu">serialize</span>() {</span>
+<span id="cb42-8"><a></a>        <span class="co">// Convertir a JSON para enviar por red</span></span>
+<span id="cb42-9"><a></a>        <span class="cf">return</span> {}<span class="op">;</span></span>
+<span id="cb42-10"><a></a>    }</span>
+<span id="cb42-11"><a></a>    </span>
+<span id="cb42-12"><a></a>    <span class="fu">getPlayer</span>() {</span>
+<span id="cb42-13"><a></a>        <span class="co">// Retorna la entidad asociada</span></span>
+<span id="cb42-14"><a></a>        <span class="cf">return</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb42-15"><a></a>    }</span>
+<span id="cb42-16"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Nota</strong></p>
+</div>
+<div class="callout-content">
+<p>Esta es la base que heredarán todos los comandos específicos</p>
+</div>
+</div>
+</div>
+</section>
+<section id="comando-concreto---constructor" class="slide level2">
+<h2>Comando Concreto - Constructor</h2>
+<p><strong>Definir el comando específico:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb43-1"><a></a><span class="kw">class</span> MovePaddleCommand <span class="kw">extends</span> Command {</span>
+<span id="cb43-2"><a></a>    <span class="fu">constructor</span>(paddle<span class="op">,</span> direction) {</span>
+<span id="cb43-3"><a></a>        <span class="kw">super</span>()<span class="op">;</span></span>
+<span id="cb43-4"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">paddle</span> <span class="op">=</span> paddle<span class="op">;</span>        <span class="co">// Referencia al objeto</span></span>
+<span id="cb43-5"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">direction</span> <span class="op">=</span> direction<span class="op">;</span>  <span class="co">// 'up', 'down', 'stop'</span></span>
+<span id="cb43-6"><a></a>    }</span>
+<span id="cb43-7"><a></a>    </span>
+<span id="cb43-8"><a></a>    <span class="co">// Métodos en siguientes slides...</span></span>
+<span id="cb43-9"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>Cada comando guarda toda la información necesaria para ejecutarse</p>
+</div>
+</div>
+</div>
+</section>
+<section id="comando-concreto---ejecutar" class="slide level2">
+<h2>Comando Concreto - Ejecutar</h2>
+<p><strong>Implementar la lógica del comando:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb44-1"><a></a><span class="kw">class</span> MovePaddleCommand <span class="kw">extends</span> Command {</span>
+<span id="cb44-2"><a></a>    <span class="co">// ... constructor ...</span></span>
+<span id="cb44-3"><a></a>    </span>
+<span id="cb44-4"><a></a>    <span class="fu">execute</span>() {</span>
+<span id="cb44-5"><a></a>        <span class="kw">const</span> speed <span class="op">=</span> <span class="dv">300</span><span class="op">;</span>  <span class="co">// Píxeles por segundo</span></span>
+<span id="cb44-6"><a></a>        </span>
+<span id="cb44-7"><a></a>        <span class="cf">if</span> (<span class="kw">this</span><span class="op">.</span><span class="at">direction</span> <span class="op">===</span> <span class="st">'up'</span>) {</span>
+<span id="cb44-8"><a></a>            <span class="kw">this</span><span class="op">.</span><span class="at">paddle</span><span class="op">.</span><span class="fu">setVelocityY</span>(<span class="op">-</span>speed)<span class="op">;</span></span>
+<span id="cb44-9"><a></a>        } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">this</span><span class="op">.</span><span class="at">direction</span> <span class="op">===</span> <span class="st">'down'</span>) {</span>
+<span id="cb44-10"><a></a>            <span class="kw">this</span><span class="op">.</span><span class="at">paddle</span><span class="op">.</span><span class="fu">setVelocityY</span>(speed)<span class="op">;</span></span>
+<span id="cb44-11"><a></a>        } <span class="cf">else</span> {  <span class="co">// 'stop'</span></span>
+<span id="cb44-12"><a></a>            <span class="kw">this</span><span class="op">.</span><span class="at">paddle</span><span class="op">.</span><span class="fu">setVelocityY</span>(<span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb44-13"><a></a>        }</span>
+<span id="cb44-14"><a></a>    }</span>
+<span id="cb44-15"><a></a>    </span>
+<span id="cb44-16"><a></a>    <span class="co">// Métodos serialize() y getPlayer() en siguiente slide...</span></span>
+<span id="cb44-17"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="comando-concreto---serializar" class="slide level2">
+<h2>Comando Concreto - Serializar</h2>
+<p><strong>Preparar para transmisión por red:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb45-1"><a></a><span class="kw">class</span> MovePaddleCommand <span class="kw">extends</span> Command {</span>
+<span id="cb45-2"><a></a>    <span class="co">// ... constructor y execute() ...</span></span>
+<span id="cb45-3"><a></a>    </span>
+<span id="cb45-4"><a></a>    <span class="fu">serialize</span>() {</span>
+<span id="cb45-5"><a></a>        <span class="co">// Convertir a formato JSON simple</span></span>
+<span id="cb45-6"><a></a>        <span class="cf">return</span> {</span>
+<span id="cb45-7"><a></a>            <span class="dt">type</span><span class="op">:</span> <span class="st">'MOVE_PADDLE'</span><span class="op">,</span></span>
+<span id="cb45-8"><a></a>            <span class="dt">playerId</span><span class="op">:</span> <span class="kw">this</span><span class="op">.</span><span class="at">paddle</span><span class="op">.</span><span class="at">id</span><span class="op">,</span></span>
+<span id="cb45-9"><a></a>            <span class="dt">direction</span><span class="op">:</span> <span class="kw">this</span><span class="op">.</span><span class="at">direction</span></span>
+<span id="cb45-10"><a></a>        }<span class="op">;</span></span>
+<span id="cb45-11"><a></a>    }</span>
+<span id="cb45-12"><a></a>    </span>
+<span id="cb45-13"><a></a>    <span class="fu">getPlayer</span>() {</span>
+<span id="cb45-14"><a></a>        <span class="cf">return</span> <span class="kw">this</span><span class="op">.</span><span class="at">paddle</span><span class="op">;</span></span>
+<span id="cb45-15"><a></a>    }</span>
+<span id="cb45-16"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Nota</strong></p>
+</div>
+<div class="callout-content">
+<p>Solo se envían datos esenciales, no referencias a objetos</p>
+</div>
+</div>
+</div>
+</section>
+<section id="commandprocessor---estructura" class="slide level2">
+<h2>CommandProcessor - Estructura</h2>
+<p><strong>Coordina comandos locales y remotos:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb46-1"><a></a><span class="kw">class</span> CommandProcessor {</span>
+<span id="cb46-2"><a></a>    <span class="fu">constructor</span>() {</span>
+<span id="cb46-3"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">players</span> <span class="op">=</span> <span class="kw">new</span> <span class="bu">Map</span>()<span class="op">;</span>  <span class="co">// Registro de jugadores</span></span>
+<span id="cb46-4"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">network</span> <span class="op">=</span> <span class="kw">null</span><span class="op">;</span>       <span class="co">// Gestor de red</span></span>
+<span id="cb46-5"><a></a>    }</span>
+<span id="cb46-6"><a></a>    </span>
+<span id="cb46-7"><a></a>    <span class="fu">setNetwork</span>(networkManager) {</span>
+<span id="cb46-8"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">network</span> <span class="op">=</span> networkManager<span class="op">;</span></span>
+<span id="cb46-9"><a></a>    }</span>
+<span id="cb46-10"><a></a>    </span>
+<span id="cb46-11"><a></a>    <span class="co">// Métodos process() y receiveCommand() en siguientes slides...</span></span>
+<span id="cb46-12"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="commandprocessor---procesar-local" class="slide level2">
+<h2>CommandProcessor - Procesar Local</h2>
+<p><strong>Ejecutar comandos del jugador local:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb47-1"><a></a><span class="kw">class</span> CommandProcessor {</span>
+<span id="cb47-2"><a></a>    <span class="co">// ... constructor ...</span></span>
+<span id="cb47-3"><a></a>    </span>
+<span id="cb47-4"><a></a>    <span class="bu">process</span>(command) {</span>
+<span id="cb47-5"><a></a>        <span class="kw">const</span> player <span class="op">=</span> command<span class="op">.</span><span class="fu">getPlayer</span>()<span class="op">;</span></span>
+<span id="cb47-6"><a></a>        </span>
+<span id="cb47-7"><a></a>        <span class="co">// Solo ejecutar si es jugador local</span></span>
+<span id="cb47-8"><a></a>        <span class="cf">if</span> (player <span class="op">&amp;&amp;</span> player<span class="op">.</span><span class="at">authority</span> <span class="op">===</span> <span class="st">'LOCAL'</span>) {</span>
+<span id="cb47-9"><a></a>            command<span class="op">.</span><span class="fu">execute</span>()<span class="op">;</span>  <span class="co">// Respuesta inmediata</span></span>
+<span id="cb47-10"><a></a>            </span>
+<span id="cb47-11"><a></a>            <span class="co">// Transmitir a otros jugadores</span></span>
+<span id="cb47-12"><a></a>            <span class="cf">if</span> (<span class="kw">this</span><span class="op">.</span><span class="at">network</span> <span class="op">&amp;&amp;</span> <span class="kw">this</span><span class="op">.</span><span class="at">network</span><span class="op">.</span><span class="fu">isConnected</span>()) {</span>
+<span id="cb47-13"><a></a>                <span class="kw">this</span><span class="op">.</span><span class="at">network</span><span class="op">.</span><span class="fu">send</span>(command<span class="op">.</span><span class="fu">serialize</span>())<span class="op">;</span></span>
+<span id="cb47-14"><a></a>            }</span>
+<span id="cb47-15"><a></a>        }</span>
+<span id="cb47-16"><a></a>    }</span>
+<span id="cb47-17"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Importante</strong></p>
+</div>
+<div class="callout-content">
+<p>La autoridad <code>LOCAL</code> evita ejecutar el comando dos veces</p>
+</div>
+</div>
+</div>
+</section>
+<section id="commandprocessor---recibir-remoto" class="slide level2">
+<h2>CommandProcessor - Recibir Remoto</h2>
+<p><strong>Procesar comandos de otros jugadores:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb48-1"><a></a><span class="kw">class</span> CommandProcessor {</span>
+<span id="cb48-2"><a></a>    <span class="co">// ... process() ...</span></span>
+<span id="cb48-3"><a></a>    </span>
+<span id="cb48-4"><a></a>    <span class="fu">receiveCommand</span>(data) {</span>
+<span id="cb48-5"><a></a>        <span class="kw">const</span> player <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">players</span><span class="op">.</span><span class="fu">get</span>(data<span class="op">.</span><span class="at">playerId</span>)<span class="op">;</span></span>
+<span id="cb48-6"><a></a>        </span>
+<span id="cb48-7"><a></a>        <span class="co">// Solo ejecutar si es jugador remoto</span></span>
+<span id="cb48-8"><a></a>        <span class="cf">if</span> (player <span class="op">&amp;&amp;</span> player<span class="op">.</span><span class="at">authority</span> <span class="op">===</span> <span class="st">'REMOTE'</span>) {</span>
+<span id="cb48-9"><a></a>            <span class="kw">const</span> command <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="fu">deserialize</span>(data<span class="op">,</span> player)<span class="op">;</span></span>
+<span id="cb48-10"><a></a>            <span class="cf">if</span> (command) {</span>
+<span id="cb48-11"><a></a>                command<span class="op">.</span><span class="fu">execute</span>()<span class="op">;</span></span>
+<span id="cb48-12"><a></a>            }</span>
+<span id="cb48-13"><a></a>        }</span>
+<span id="cb48-14"><a></a>    }</span>
+<span id="cb48-15"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Nota</strong></p>
+</div>
+<div class="callout-content">
+<p>Comandos remotos solo se ejecutan al recibirlos por red</p>
+</div>
+</div>
+</div>
+</section>
+<section id="commandprocessor---deserializar" class="slide level2">
+<h2>CommandProcessor - Deserializar</h2>
+<p><strong>Reconstruir comandos desde JSON:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb49-1"><a></a><span class="kw">class</span> CommandProcessor {</span>
+<span id="cb49-2"><a></a>    <span class="co">// ... receiveCommand() ...</span></span>
+<span id="cb49-3"><a></a>    </span>
+<span id="cb49-4"><a></a>    <span class="fu">deserialize</span>(data<span class="op">,</span> player) {</span>
+<span id="cb49-5"><a></a>        <span class="cf">switch</span>(data<span class="op">.</span><span class="at">type</span>) {</span>
+<span id="cb49-6"><a></a>            <span class="cf">case</span> <span class="st">'MOVE_PADDLE'</span><span class="op">:</span></span>
+<span id="cb49-7"><a></a>                <span class="cf">return</span> <span class="kw">new</span> <span class="fu">MovePaddleCommand</span>(player<span class="op">,</span> data<span class="op">.</span><span class="at">direction</span>)<span class="op">;</span></span>
+<span id="cb49-8"><a></a>            </span>
+<span id="cb49-9"><a></a>            <span class="cf">case</span> <span class="st">'SHOOT'</span><span class="op">:</span></span>
+<span id="cb49-10"><a></a>                <span class="cf">return</span> <span class="kw">new</span> <span class="fu">ShootCommand</span>(player<span class="op">,</span> data<span class="op">.</span><span class="at">x</span><span class="op">,</span> data<span class="op">.</span><span class="at">y</span>)<span class="op">;</span></span>
+<span id="cb49-11"><a></a>            </span>
+<span id="cb49-12"><a></a>            <span class="cf">default</span><span class="op">:</span></span>
+<span id="cb49-13"><a></a>                <span class="bu">console</span><span class="op">.</span><span class="fu">warn</span>(<span class="st">'Comando desconocido:'</span><span class="op">,</span> data<span class="op">.</span><span class="at">type</span>)<span class="op">;</span></span>
+<span id="cb49-14"><a></a>                <span class="cf">return</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb49-15"><a></a>        }</span>
+<span id="cb49-16"><a></a>    }</span>
+<span id="cb49-17"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="integración-en-phaser---create" class="slide level2">
+<h2>Integración en Phaser - Create</h2>
+<p><strong>Configurar escena con autoridad:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb50-1"><a></a><span class="kw">class</span> GameScene <span class="kw">extends</span> Phaser<span class="op">.</span><span class="at">Scene</span> {</span>
+<span id="cb50-2"><a></a>    <span class="fu">constructor</span>() {</span>
+<span id="cb50-3"><a></a>        <span class="kw">super</span>(<span class="st">'GameScene'</span>)<span class="op">;</span></span>
+<span id="cb50-4"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">commandProcessor</span> <span class="op">=</span> <span class="kw">new</span> <span class="fu">CommandProcessor</span>()<span class="op">;</span></span>
+<span id="cb50-5"><a></a>    }</span>
+<span id="cb50-6"><a></a>    </span>
+<span id="cb50-7"><a></a>    <span class="fu">create</span>() {</span>
+<span id="cb50-8"><a></a>        <span class="co">// Paleta local (controlada por este jugador)</span></span>
+<span id="cb50-9"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">localPaddle</span> <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">physics</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">image</span>(<span class="dv">50</span><span class="op">,</span> <span class="dv">300</span><span class="op">,</span> <span class="st">'paddle'</span>)<span class="op">;</span></span>
+<span id="cb50-10"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">localPaddle</span><span class="op">.</span><span class="at">id</span> <span class="op">=</span> <span class="st">'player1'</span><span class="op">;</span></span>
+<span id="cb50-11"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">localPaddle</span><span class="op">.</span><span class="at">authority</span> <span class="op">=</span> <span class="st">'LOCAL'</span><span class="op">;</span></span>
+<span id="cb50-12"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">localPaddle</span><span class="op">.</span><span class="fu">setCollideWorldBounds</span>(<span class="kw">true</span>)<span class="op">;</span></span>
+<span id="cb50-13"><a></a>        </span>
+<span id="cb50-14"><a></a>        <span class="co">// Continúa en siguiente slide...</span></span>
+<span id="cb50-15"><a></a>    }</span>
+<span id="cb50-16"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="integración-en-phaser---create-2" class="slide level2">
+<h2>Integración en Phaser - Create (2)</h2>
+<p><strong>Configurar paleta remota y registrar:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb51-1"><a></a><span class="fu">create</span>() {</span>
+<span id="cb51-2"><a></a>    <span class="co">// ... localPaddle ...</span></span>
+<span id="cb51-3"><a></a>    </span>
+<span id="cb51-4"><a></a>    <span class="co">// Paleta remota (controlada por otro jugador)</span></span>
+<span id="cb51-5"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">remotePaddle</span> <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">physics</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">image</span>(<span class="dv">750</span><span class="op">,</span> <span class="dv">300</span><span class="op">,</span> <span class="st">'paddle'</span>)<span class="op">;</span></span>
+<span id="cb51-6"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">remotePaddle</span><span class="op">.</span><span class="at">id</span> <span class="op">=</span> <span class="st">'player2'</span><span class="op">;</span></span>
+<span id="cb51-7"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">remotePaddle</span><span class="op">.</span><span class="at">authority</span> <span class="op">=</span> <span class="st">'REMOTE'</span><span class="op">;</span></span>
+<span id="cb51-8"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">remotePaddle</span><span class="op">.</span><span class="fu">setCollideWorldBounds</span>(<span class="kw">true</span>)<span class="op">;</span></span>
+<span id="cb51-9"><a></a>    </span>
+<span id="cb51-10"><a></a>    <span class="co">// Registrar ambos jugadores</span></span>
+<span id="cb51-11"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">commandProcessor</span><span class="op">.</span><span class="at">players</span><span class="op">.</span><span class="fu">set</span>(<span class="st">'player1'</span><span class="op">,</span> <span class="kw">this</span><span class="op">.</span><span class="at">localPaddle</span>)<span class="op">;</span></span>
+<span id="cb51-12"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">commandProcessor</span><span class="op">.</span><span class="at">players</span><span class="op">.</span><span class="fu">set</span>(<span class="st">'player2'</span><span class="op">,</span> <span class="kw">this</span><span class="op">.</span><span class="at">remotePaddle</span>)<span class="op">;</span></span>
+<span id="cb51-13"><a></a>    </span>
+<span id="cb51-14"><a></a>    <span class="co">// Configurar input</span></span>
+<span id="cb51-15"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">cursors</span> <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">input</span><span class="op">.</span><span class="at">keyboard</span><span class="op">.</span><span class="fu">createCursorKeys</span>()<span class="op">;</span></span>
+<span id="cb51-16"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="integración-en-phaser---update" class="slide level2">
+<h2>Integración en Phaser - Update</h2>
+<p><strong>Convertir input a comandos:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb52"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb52-1"><a></a><span class="fu">update</span>() {</span>
+<span id="cb52-2"><a></a>    <span class="co">// Crear comando según tecla presionada</span></span>
+<span id="cb52-3"><a></a>    <span class="kw">let</span> command<span class="op">;</span></span>
+<span id="cb52-4"><a></a>    </span>
+<span id="cb52-5"><a></a>    <span class="cf">if</span> (<span class="kw">this</span><span class="op">.</span><span class="at">cursors</span><span class="op">.</span><span class="at">up</span><span class="op">.</span><span class="at">isDown</span>) {</span>
+<span id="cb52-6"><a></a>        command <span class="op">=</span> <span class="kw">new</span> <span class="fu">MovePaddleCommand</span>(<span class="kw">this</span><span class="op">.</span><span class="at">localPaddle</span><span class="op">,</span> <span class="st">'up'</span>)<span class="op">;</span></span>
+<span id="cb52-7"><a></a>    } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">this</span><span class="op">.</span><span class="at">cursors</span><span class="op">.</span><span class="at">down</span><span class="op">.</span><span class="at">isDown</span>) {</span>
+<span id="cb52-8"><a></a>        command <span class="op">=</span> <span class="kw">new</span> <span class="fu">MovePaddleCommand</span>(<span class="kw">this</span><span class="op">.</span><span class="at">localPaddle</span><span class="op">,</span> <span class="st">'down'</span>)<span class="op">;</span></span>
+<span id="cb52-9"><a></a>    } <span class="cf">else</span> {</span>
+<span id="cb52-10"><a></a>        command <span class="op">=</span> <span class="kw">new</span> <span class="fu">MovePaddleCommand</span>(<span class="kw">this</span><span class="op">.</span><span class="at">localPaddle</span><span class="op">,</span> <span class="st">'stop'</span>)<span class="op">;</span></span>
+<span id="cb52-11"><a></a>    }</span>
+<span id="cb52-12"><a></a>    </span>
+<span id="cb52-13"><a></a>    <span class="co">// Procesar (ejecuta local y envía a red)</span></span>
+<span id="cb52-14"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">commandProcessor</span><span class="op">.</span><span class="fu">process</span>(command)<span class="op">;</span></span>
+<span id="cb52-15"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="flujo-completo-del-patrón" class="slide level2">
+<h2>Flujo Completo del Patrón</h2>
+<p><strong>Jugador Local:</strong></p>
+<ol type="1">
+<li>Presiona tecla en <code>update()</code></li>
+<li>Crea <code>MovePaddleCommand</code></li>
+<li><code>CommandProcessor.process()</code> ejecuta inmediatamente</li>
+<li>Serializa y envía por red</li>
+</ol>
+<p><strong>Jugador Remoto:</strong></p>
+<ol type="1">
+<li>Recibe datos JSON por red</li>
+<li><code>CommandProcessor.receiveCommand()</code> deserializa</li>
+<li>Crea <code>MovePaddleCommand</code> con datos recibidos</li>
+<li>Ejecuta el comando</li>
+</ol>
+</section>
+<section id="ventajas-en-arquitectura" class="slide level2">
+<h2>Ventajas en Arquitectura</h2>
+<p><strong>Transparencia de red:</strong></p>
+<ul>
+<li>Mismo código para local y remoto</li>
+<li>Solo cambia la autoridad (LOCAL/REMOTE)</li>
+</ul>
+<p><strong>Preparado para evolución:</strong></p>
+<ul>
+<li>Fácil cambiar de REST a WebSockets</li>
+<li>Solo modificar NetworkManager</li>
+<li>Comandos permanecen iguales</li>
+</ul>
+<p><strong>Escalabilidad:</strong></p>
+<ul>
+<li>Añadir nuevos comandos = nueva clase</li>
+<li>No modificar código existente</li>
+<li>Principio Open/Closed</li>
+</ul>
+</section></section>
+<section>
+<section id="resumen" class="title-slide slide level1 center">
+<h1>Resumen</h1>
+
+</section>
+<section id="conceptos-clave-de-phaser" class="slide level2">
+<h2>Conceptos Clave de Phaser</h2>
+<p><strong>Estructura básica:</strong></p>
+<ul>
+<li>Canvas con coordenadas (0,0 arriba-izquierda)</li>
+<li>Tres funciones: <code>preload</code>, <code>create</code>, <code>update</code> (dentro de escenas)</li>
+<li>SceneManager para múltiples pantallas</li>
+<li>Pasar datos entre escenas con parámetro en <code>create()</code></li>
+</ul>
+<p><strong>Físicas:</strong></p>
+<ul>
+<li>Arcade Physics (simple y rápido)</li>
+<li>Collider (con física) vs Overlap (sin física)</li>
+<li>Grupos estáticos y dinámicos</li>
+</ul>
+<p><strong>Input:</strong></p>
+<ul>
+<li>Eventos de teclado, cursores, combos</li>
+<li>Sistema unificado ratón/táctil</li>
+</ul>
+</section>
+<section id="conceptos-clave-del-patrón-command" class="slide level2">
+<h2>Conceptos Clave del Patrón Command</h2>
+<p><strong>Arquitectura:</strong></p>
+<ul>
+<li>Command: Encapsula cada acción</li>
+<li>CommandProcessor: Coordina local y red</li>
+<li>Autoridad LOCAL/REMOTE</li>
+</ul>
+<p><strong>Beneficios:</strong></p>
+<ul>
+<li>Separación input/lógica/red</li>
+<li>Testing simplificado</li>
+<li>Debugging con registro de comandos</li>
+<li>Preparado para networking</li>
+</ul>
+
+
+<div class="reveal-header">
+<div class="header-title">
+<p> </p>
+</div>
+<div class="header-logo">
+<img data-src="">
+</div>
+</div>
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="theme_images/URJClogo.png" class="slide-logo"></p>
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'pdfMaxPagesPerSlide': 1,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true,"openSlideNumber":false,"openOnInit":false,"keyboard":false,"titleSelector":"","width":"third"},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 720,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.15,
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script>
+    // Override Quarto's Mermaid responsive behavior to prevent pagination
+    window.addEventListener('load', function() {
+      // Wait for Quarto's mermaid initialization to complete
+      setTimeout(function() {
+        // Override the makeResponsive function to do nothing
+        if (window._quartoMermaid) {
+          window._quartoMermaid.makeResponsive = function(svg) {
+            // Do nothing - prevent responsive behavior that causes pagination
+          };
+          
+          // Override setSvgSize to not restrict sizes
+          window._quartoMermaid.setSvgSize = function(svg) {
+            // Remove any size restrictions
+            svg.style.maxWidth = 'none';
+            svg.style.maxHeight = 'none';
+            svg.style.width = 'auto';
+            svg.style.height = 'auto';
+            
+            // Force the slide section to allow overflow for this diagram
+            const section = svg.closest('section');
+            if (section) {
+              section.style.overflow = 'visible';
+              section.style.height = 'auto';
+              section.style.minHeight = '100vh';
+            }
+            
+            // Force parent containers to allow full height
+            let parent = svg.parentElement;
+            while (parent && !parent.classList.contains('reveal')) {
+              parent.style.maxHeight = 'none';
+              parent.style.height = 'auto';
+              parent.style.overflow = 'visible';
+              parent = parent.parentElement;
+            }
+          };
+          
+          // Reprocess all existing mermaid diagrams
+          const mermaidSvgs = document.querySelectorAll('svg.mermaid-js');
+          mermaidSvgs.forEach(svg => {
+            svg.style.maxWidth = 'none';
+            svg.style.maxHeight = 'none';
+            svg.style.width = 'auto';
+            svg.style.height = 'auto';
+            
+            // Remove any width/height attributes that might cause pagination
+            svg.removeAttribute('width');
+            svg.removeAttribute('height');
+            
+            // Force containers to allow full height
+            const section = svg.closest('section');
+            if (section) {
+              section.style.overflow = 'visible';
+              section.style.height = 'auto';
+              section.style.minHeight = '100vh';
+            }
+            
+            let parent = svg.parentElement;
+            while (parent && !parent.classList.contains('reveal')) {
+              parent.style.maxHeight = 'none';
+              parent.style.height = 'auto';
+              parent.style.overflow = 'visible';
+              parent = parent.parentElement;
+            }
+          });
+        }
+      }, 1000);
+    }, false);
+    </script>
+
+    <style>
+    /* Additional CSS to ensure Mermaid diagrams are not restricted */
+    .mermaid, .mermaid svg, svg.mermaid-js {
+      max-width: none !important;
+      max-height: none !important;
+      width: auto !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    /* Ensure containers don't restrict Mermaid */
+    .cell-output-display .mermaid,
+    .reveal .slides section .mermaid {
+      max-width: none !important;
+      max-height: none !important;
+      overflow: visible !important;
+    }
+
+    /* Force sections with Mermaid to allow overflow and full height */
+    .reveal .slides section:has(.mermaid),
+    .reveal .slides section:has(svg.mermaid-js) {
+      overflow: visible !important;
+      height: auto !important;
+      min-height: 100vh !important;
+    }
+
+    /* Remove height restrictions from all parent containers of Mermaid */
+    .reveal .slides section .cell-output-display:has(.mermaid),
+    .reveal .slides section .cell-output-display:has(svg.mermaid-js),
+    .reveal .slides section .cell:has(.mermaid),
+    .reveal .slides section .cell:has(svg.mermaid-js) {
+      max-height: none !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    /* Ensure the reveal slides container itself doesn't restrict height */
+    .reveal .slides {
+      overflow: visible !important;
+    }
+    </style>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copiado");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copiado");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp("https:\/\/rrunix\.github\.io\/jer_slides\/");
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+<script src="site_libs/quarto-contrib/metropolis-beamer-1.0.0/add_header.js" defer="true"></script>
+</body></html>

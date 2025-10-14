@@ -434,538 +434,6 @@
     "text": "Introducción a las redes de computadores\nCapa de acceso a la red\nCapa de red\nCapa de transporte\nCapa de aplicación"
   },
   {
-    "objectID": "ch1_p2_access_layer.html#qué-es-la-capa-de-acceso-a-la-red",
-    "href": "ch1_p2_access_layer.html#qué-es-la-capa-de-acceso-a-la-red",
-    "title": "Capa de Acceso a la Red",
-    "section": "¿Qué es la Capa de Acceso a la Red?",
-    "text": "¿Qué es la Capa de Acceso a la Red?\n\nLa Capa de Acceso a la Red se encarga de la transmisión física de datos entre dispositivos directamente conectados en una red local\n\n\n\n¿Qué hace?\n\nManeja los aspectos físicos de la transmisión\nControla el acceso al medio compartido\nSe ejecuta en el host y en el nucleo de la red\nGarantiza transmisión confiable entre nodos adyacentes\n\n\nPosición en los modelos:\n\n\n\n\n\n\nblock-beta\n    columns 1\n    \n    A[\"&lt;b&gt;Capa de Aplicación&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;HTTP, HTTPS, FTP, SMTP&lt;br/&gt;DNS, DHCP, Telnet, SSH\"]\n    \n    B[\"&lt;b&gt;Capa de Transporte&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;TCP, UDP&lt;br/&gt;Control de flujo y errores\"]\n    \n    C[\"&lt;b&gt;Capa de Internet&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;IP, ICMP, ARP&lt;br/&gt;Enrutamiento, Direccionamiento\"]\n    \n    D[\"&lt;b&gt;Capa de Acceso a la Red&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Ethernet, WiFi, PPP&lt;br/&gt;Frames, MAC Address&lt;br/&gt;Control de acceso al medio\"]\n    \n    classDef highlight fill:#ff9999,stroke:#cc0000,stroke-width:4px,color:#000\n    classDef normal fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#000\n    \n    class D highlight\n    class A,B,C normal\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nImportante\n\n\nResponsabilidad principal: Garantizar que los datos puedan transmitirse de manera confiable entre nodos adyacentes en la red"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#ejemplo-comunicación-en-red-local",
-    "href": "ch1_p2_access_layer.html#ejemplo-comunicación-en-red-local",
-    "title": "Capa de Acceso a la Red",
-    "section": "Ejemplo: Comunicación en Red Local",
-    "text": "Ejemplo: Comunicación en Red Local\n\n\n\n\n\n\nsequenceDiagram\n    participant A as Computadora A&lt;br/&gt;(00:1A:2B:3C:4D:5E)\n    participant S as Switch&lt;br/&gt;(Tabla MAC)\n    participant C as Computadora C&lt;br/&gt;(00:3C:4D:5E:6F:70)\n\n    Note over S: Tabla MAC vacía\n\n    Note over A,C: FASE 1: Descubrimiento ARP\n    \n    A-&gt;&gt;S: ARP Request&lt;br/&gt;¿Quién tiene la IP de C?&lt;br/&gt;Destino: Broadcast\n    \n    Note over S: Aprende: Puerto 1 → MAC de A\n    \n    S-&gt;&gt;C: ARP Request (Flooding)\n    \n    C-&gt;&gt;S: ARP Response&lt;br/&gt;Mi MAC es 00:3C:4D:5E:6F:70\n    \n    Note over S: Aprende: Puerto 3 → MAC de C\n    \n    S-&gt;&gt;A: ARP Response (Unicast)\n\n    Note over A,C: FASE 2: Comunicación Directa\n    \n    A-&gt;&gt;S: Datos para C\n    \n    Note over S: Consulta tabla MAC\n    \n    S-&gt;&gt;C: Datos (Solo puerto 3)"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#control-de-acceso-al-medio-mac",
-    "href": "ch1_p2_access_layer.html#control-de-acceso-al-medio-mac",
-    "title": "Capa de Acceso a la Red",
-    "section": "1. Control de Acceso al Medio (MAC)",
-    "text": "1. Control de Acceso al Medio (MAC)\n\nCoordina cómo múltiples dispositivos comparten un medio de transmisión común\n\n\n\nEthernet Half-Duplex: CSMA/CD\nCarrier Sense Multiple Access with Collision Detection\n\nEscuchar el medio antes de transmitir\nSi está libre → transmitir\nSi hay colisión → detectar\nAplicar backoff exponencial\nReintentar transmisión\n\nSolo puede transmitir en una dirección a la vez. En Full-Duplex no necesitaríamos realizar controles.\n\nRedes Inalámbricas: CSMA/CA\n Carrier Sense Multiple Access with Collision Avoidance\n\nEsperar tiempo aleatorio antes de transmitir\nUsar acknowledgments para confirmar recepción\nProtocolo RTS/CTS para problema del nodo oculto\n\nLa detección de colisiones es impráctica en radio"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#direccionamiento-físico",
-    "href": "ch1_p2_access_layer.html#direccionamiento-físico",
-    "title": "Capa de Acceso a la Red",
-    "section": "2. Direccionamiento Físico",
-    "text": "2. Direccionamiento Físico\n\nOpera a nivel de hardware, independiente de protocolos superiores, usando direcciones MAC únicas\n\n\n\n\n\n\n\ngraph LR\n    subgraph \"Dirección MAC: 00:1A:2B:3C:4D:5E (48 bits)\"\n        OUI[\"00:1A:2B&lt;br/&gt;OUI&lt;br/&gt;(Organizationally Unique Identifier)&lt;br/&gt;Asignado por IEEE\"]\n        NIC[\"3C:4D:5E&lt;br/&gt;Identificador del Dispositivo&lt;br/&gt;Asignado por el fabricante\"]\n    end\n    \n    style OUI fill:#e3f2fd,stroke:#1976d2,stroke-width:2px\n    style NIC fill:#fff3e0,stroke:#f57c00,stroke-width:2px\n\n\n\n\n\n\n\n\n\nUnicast\n\nUn único destinatario\nDirección específica del dispositivo\n\n\nBroadcast\n\nTodos los dispositivos\nFF:FF:FF:FF:FF:FF\n\n\nMulticast\n\nGrupo específico\nPrimer bit = 1\n\n\n\n\n\n\n\n\nTip\n\n\nLas direcciones MAC son como el DNI del dispositivo: únicas, estáticas y cada dispositivo tiene una"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#detección-y-corrección-de-errores",
-    "href": "ch1_p2_access_layer.html#detección-y-corrección-de-errores",
-    "title": "Capa de Acceso a la Red",
-    "section": "3. Detección y Corrección de Errores",
-    "text": "3. Detección y Corrección de Errores\n\nGarantiza la integridad de los datos transmitidos a través del medio físico\n\nCódigos de Redundancia Cíclica (CRC)\n\n\nProceso CRC:\n\nGenerar polinomio matemático sobre datos\nAgregar Frame Check Sequence (FCS) al final\nReceptor recalcula el CRC\nComparar con el recibido\nDetectar errores de 1 bit y múltiples bits\n\nChecksums simples:\n\nSuma aritmética de bytes\nMenos robusto pero más rápido\n\n\nForward Error Correction (FEC):\n\nNo solo detecta, también corrige errores\nCódigos Hamming: errores de 1 bit\nReed-Solomon: errores en ráfagas\nEspecialmente importante en medios inalámbricos"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#detección-y-corrección-de-errores-ejemplo",
-    "href": "ch1_p2_access_layer.html#detección-y-corrección-de-errores-ejemplo",
-    "title": "Capa de Acceso a la Red",
-    "section": "3. Detección y Corrección de Errores (Ejemplo)",
-    "text": "3. Detección y Corrección de Errores (Ejemplo)\nIntroducir un mensaje de 4 bits (1011) y os saldrá a le derecha el mensaje codificado\n\n\n\n// Input: 4-bit message\nviewof msg4 = Inputs.text({label: \"Mensaje (4 bits)\", placeholder: \"e.g. 1011\"})\n\n\n\n\n\n\n\n\n\nfunction hamming74_encode(bits4) {\n  if (!/^[01]{4}$/.test(bits4)) return \"\";\n  const [d1, d2, d3, d4] = bits4.split(\"\").map(b =&gt; +b);\n  \n  // parity bits\n  const p1 = d1 ^ d2 ^ d4;\n  const p2 = d1 ^ d3 ^ d4;\n  const p3 = d2 ^ d3 ^ d4;\n  \n  // Codeword positions: p1 p2 d1 p3 d2 d3 d4\n  const code = [p1, p2, d1, p3, d2, d3, d4];\n  return code.join(\"\");\n}\n\nencoded = hamming74_encode(msg4)\nencoded\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAquí podréis meter el mensaje codificado y saber si ha habido cambios en un bit y corregirlos (Hamming).\n\n\n\n// Input: 7-bit codeword\nviewof code7 = Inputs.text({label: \"Codeword (7 bits)\", placeholder: \"e.g. 0110011\"})\n\n\n\n\n\n\n\n\n\nfunction hamming74_decode(code) {\n  if (!/^[01]{7}$/.test(code)) return \"Enter exactly 7 bits\";\n  const bits = code.split(\"\").map(b =&gt; +b);\n  const [p1, p2, d1, p3, d2, d3, d4] = bits;\n\n  // syndrome bits\n  const s1 = p1 ^ d1 ^ d2 ^ d4;\n  const s2 = p2 ^ d1 ^ d3 ^ d4;\n  const s3 = p3 ^ d2 ^ d3 ^ d4;\n  \n  const syndrome = (s3 &lt;&lt; 2) | (s2 &lt;&lt; 1) | s1; // binary → position (1-7)\n\n  let corrected = [...bits];\n  let msg = [d1, d2, d3, d4].join(\"\");\n  \n  if (syndrome === 0) {\n    return `✅ Valid codeword, message = ${msg}`;\n  } else {\n    // correct bit if single error\n    corrected[syndrome - 1] ^= 1; \n    const [cp1, cp2, cd1, cp3, cd2, cd3, cd4] = corrected;\n    const corrected_msg = [cd1, cd2, cd3, cd4].join(\"\");\n    return `❌ Error at position ${syndrome}. Corrected codeword = ${corrected.join(\"\")}, message = ${corrected_msg}`;\n  }\n}\n\nresult = hamming74_decode(code7)\nresult"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#control-de-tamaño",
-    "href": "ch1_p2_access_layer.html#control-de-tamaño",
-    "title": "Capa de Acceso a la Red",
-    "section": "4. Control de Tamaño",
-    "text": "4. Control de Tamaño\n\nManeja las limitaciones de tamaño impuestas por diferentes tecnologías de red\n\nMaximum Transmission Unit (MTU)\n\n\n\nTecnología\nMTU (bytes)\nCaracterísticas\n\n\n\n\nEthernet\n1500\nEstándar más común en LAN\n\n\nToken Ring\n4464\nTecnología legacy\n\n\nFDDI\n4352\nFiber Distributed Data Interface\n\n\nPPP\nVariable (~1500)\nPara compatibilidad con Ethernet\n\n\n\n\n\n\n\n\n\nAdvertencia\n\n\nSi datos &gt; MTU → La Capa de Acceso a la Red descarta automáticamente el paquete\n\n\n\n\nNota: El MTU determina el tamaño máximo de datos que puede transportar una sola trama"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#sincronización-y-temporización",
-    "href": "ch1_p2_access_layer.html#sincronización-y-temporización",
-    "title": "Capa de Acceso a la Red",
-    "section": "5. Sincronización y Temporización",
-    "text": "5. Sincronización y Temporización\n\nCoordina el timing entre dispositivos para asegurar la correcta interpretación de señales digitales\n\nNiveles de sincronización\n\n\nTipos de sincronización:\n\nSincronización de bit: Determina límites temporales de cada bit\nSincronización de trama: Identifica inicio y fin de cada trama\nSincronización de símbolo: Para modulaciones complejas (QAM)\n\n\n¿Por qué es crítica?\n\nEn redes de alta velocidad, pequeñas diferencias causan errores\nEstablece marcos de tiempo comunes\nPermite interpretación correcta de señales\nEsencial para comunicación digital confiable"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#gestión-de-topología",
-    "href": "ch1_p2_access_layer.html#gestión-de-topología",
-    "title": "Capa de Acceso a la Red",
-    "section": "6. Gestión de Topología",
-    "text": "6. Gestión de Topología\n\nDescubre y mantiene información sobre la estructura física de la red\n\nComponentes principales\n\n\nMantenimiento de enlaces:\n\nKeepalive messages\nDetección proactiva de fallos\nAntes de afectar tráfico de usuarios\n\nProtocolos de detección:\n\nCDP (Cisco Discovery Protocol)\nLLDP (Link Layer Discovery Protocol)\nDispositivos se identifican mutuamente\nComparten información de capacidades\n\n\nPrevención de bucles:\n\nSpanning Tree Protocol (STP)\nPreviene bucles en topologías redundantes\nEvita tormentas de broadcast\n\nAdaptación automática:\n\nDetecta cambios en la topología\nResponde a fallos de enlaces\nIncorpora nuevos dispositivos"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#control-de-calidad-de-servicio-qos",
-    "href": "ch1_p2_access_layer.html#control-de-calidad-de-servicio-qos",
-    "title": "Capa de Acceso a la Red",
-    "section": "7. Control de Calidad de Servicio (QoS)",
-    "text": "7. Control de Calidad de Servicio (QoS)\n\nPrioriza diferentes tipos de tráfico según su importancia y requisitos de rendimiento\n\nMecanismos de gestión\n\n\nGestión de buffers:\n\nWeighted Fair Queuing: Recursos proporcionales según importancia\nPriority Queuing: Tráfico crítico tiene precedencia\nRandom Early Detection: Descarta proactivamente antes de saturación\n\n\nAplicaciones beneficiadas:\n\n🎥 Video en tiempo real\n📞 VoIP (Voz sobre IP)\n🎮 Gaming online\n💼 Aplicaciones críticas de negocio\n\nFundamental para aplicaciones sensibles al tiempo\n\n\n\n\n\n\n\nTip\n\n\nQoS garantiza que aplicaciones críticas reciban el ancho de banda necesario incluso en momentos de congestión"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#switches-evolución-y-tipos",
-    "href": "ch1_p2_access_layer.html#switches-evolución-y-tipos",
-    "title": "Capa de Acceso a la Red",
-    "section": "Switches: Evolución y Tipos",
-    "text": "Switches: Evolución y Tipos\n\n\nSwitches No Gestionados\n\nPlug-and-play\nAprendizaje MAC automático\nRedes pequeñas/domésticas\nSin configuración\n\n\nSwitches Gestionados\n\nVLANs y segmentación\nQoS y priorización\nSNMP para monitorización\nSeguridad 802.1X"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#dominios-de-colisión-switch-vs-hub",
-    "href": "ch1_p2_access_layer.html#dominios-de-colisión-switch-vs-hub",
-    "title": "Capa de Acceso a la Red",
-    "section": "Dominios de Colisión: Switch vs Hub",
-    "text": "Dominios de Colisión: Switch vs Hub\n\n\n\n\n\ngraph TB\n    subgraph \"HUB - Medio Compartido\"\n        H1[Hub]\n        SHARED((Medio&lt;br/&gt;Compartido))\n        PC1[PC1] --- SHARED\n        PC2[PC2] --- SHARED\n        PC3[PC3] --- SHARED\n        PC4[PC4] --- SHARED\n        SHARED --- H1\n    end\n    \n    subgraph \"SWITCH - Dominios Separados\"\n        S1[Switch]\n        PC5[PC5] --- S1\n        PC6[PC6] --- S1\n        PC7[PC7] --- S1\n        PC8[PC8] --- S1\n    end\n    \n    classDef collision fill:#ffcdd2,stroke:#d32f2f\n    classDef nocollision fill:#c8e6c9,stroke:#388e3c\n    classDef shared fill:#fff3e0,stroke:#f57c00\n    \n    class H1,PC1,PC2,PC3,PC4 collision\n    class S1,PC5,PC6,PC7,PC8 nocollision\n    class SHARED shared\n\n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nLos switches crean dominios de colisión separados para cada puerto, evitando colisiones entre dispositivos en diferentes puertos"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#otros-dispositivos-de-acceso",
-    "href": "ch1_p2_access_layer.html#otros-dispositivos-de-acceso",
-    "title": "Capa de Acceso a la Red",
-    "section": "Otros Dispositivos de Acceso",
-    "text": "Otros Dispositivos de Acceso\n\n\n\n\n\n\n\n\n\nDispositivo\nFunción\nCaracterísticas\nAplicación\n\n\n\n\nAccess Points\nWiFi ↔︎ Cableado\nCSMA/CA, Beamforming\nRedes inalámbricas\n\n\nRepetidores\nExtensión alcance\nRegeneración señal\nSuperar distancia\n\n\nMedia Converters\nCambio de medio\nFibra ↔︎ Cobre\nMigración gradual\n\n\nTransceivers\nModular\nSFP/SFP+/QSFP\nFlexibilidad\n\n\n\n\n\n\n\n\n\ngraph LR\n    PC[\"💻 PC\"]\n    AP[\"📡 Access Point\"]\n    SW[\"🔌 Switch\"]\n    MC1[\"🔄 Media Converter\"]\n    FO[\"🌟 Fibra Óptica\"]\n    MC2[\"🔄 Media Converter\"]\n    RT[\"🌐 Router\"]\n    \n    PC &lt;-.-&gt;|\"WiFi\"| AP\n    AP &lt;--&gt;|\"Ethernet\"| SW\n    SW &lt;--&gt;|\"Cobre\"| MC1\n    MC1 &lt;--&gt;|\"Fibra\"| FO\n    FO &lt;--&gt;|\"Fibra\"| MC2\n    MC2 &lt;--&gt;|\"Ethernet\"| RT"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#ethernet-ieee-802.3",
-    "href": "ch1_p2_access_layer.html#ethernet-ieee-802.3",
-    "title": "Capa de Acceso a la Red",
-    "section": "Ethernet (IEEE 802.3)",
-    "text": "Ethernet (IEEE 802.3)\nEstructura de Trama Ethernet\n\n\n\n\n\n\npacket-beta\n    0-31: \"Preámbulo\"\n    32-47: \"Preámbulo\"\n    48-55: \"Preámbulo\"\n    56-63: \"SFD\"\n    64-111: \"MAC Destino (6 bytes)\"\n    112-159: \"MAC Origen (6 bytes)\"\n    160-175: \"Tipo/Longitud\"\n    176-191: \"Datos\"\n    192-207: \"Datos\"\n    208-223: \"Datos (Payload)\"\n    224-239: \"...\"\n    240-255: \"Datos\"\n    256-287: \"FCS (4 bytes)\"\n\n\n\n\n\n\n\n\n\nCampos principales:\n\nPreámbulo: Sincronización\nMACs: Identificación única\nTipo: Protocolo superior (IPv4: 0x0800)\nPayload: Datos + padding si &lt; 46 bytes\n\n\nEvolución de velocidades:\n\n10Base-T: 10 Mbps\nFast Ethernet: 100 Mbps\nGigabit: 1 Gbps\n10G/40G/100G Ethernet"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#wifi-ieee-802.11",
-    "href": "ch1_p2_access_layer.html#wifi-ieee-802.11",
-    "title": "Capa de Acceso a la Red",
-    "section": "WiFi (IEEE 802.11)",
-    "text": "WiFi (IEEE 802.11)\nTrama WiFi: Mayor complejidad\n\n\n\n\n\n\npacket-beta\n    0-15: \"Frame Control\"\n    16-31: \"Duration/ID\"\n    32-79: \"Address 1 (Receptor)\"\n    80-127: \"Address 2 (Transmisor)\"\n    128-175: \"Address 3 (BSSID/AP)\"\n    176-191: \"Sequence Control\"\n    192-239: \"Address 4 (opcional)\"\n    240-255: \"QoS Control (opcional)\"\n    256-287: \"Datos ...\"\n    288-303: \"Datos ...\"\n    304-319: \"FCS (4 bytes)\"\n\n\n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nLa trama es considerablemente más compleja debido a que estamos en un medio compartido y puede haber repetidores, así como comunicaciones directas."
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#evolución-de-estándares-wifi",
-    "href": "ch1_p2_access_layer.html#evolución-de-estándares-wifi",
-    "title": "Capa de Acceso a la Red",
-    "section": "Evolución de Estándares WiFi",
-    "text": "Evolución de Estándares WiFi\n\n\n\nGeneración\nEstándar\nVelocidad Max\nBandas\nAño\n\n\n\n\nWiFi 4\n802.11n\n600 Mbps\n2.4/5 GHz\n2009\n\n\nWiFi 5\n802.11ac\n3.5 Gbps\n5 GHz\n2014\n\n\nWiFi 6\n802.11ax\n9.6 Gbps\n2.4/5 GHz\n2019\n\n\nWiFi 6E\n802.11ax\n9.6 Gbps\n+ 6 GHz\n2020\n\n\nWiFi 7\n802.11be\n46 Gbps\n2.4/5/6 GHz\n2024\n\n\n\n\n\nMejoras clave:\n\nMIMO (múltiples antenas)\nOFDMA (mejor uso espectro)\nBeamforming direccional (dirigir hacia un punto en concreto)\n\n\nTrade-offs de bandas:\n\n2.4 GHz: Mayor alcance, menor velocidad\n5 GHz: Mayor velocidad, menor alcance\n6 GHz: Máxima velocidad, mínimo alcance"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#ppp-y-frame-relay",
-    "href": "ch1_p2_access_layer.html#ppp-y-frame-relay",
-    "title": "Capa de Acceso a la Red",
-    "section": "PPP y Frame Relay",
-    "text": "PPP y Frame Relay\n\n\nPoint-to-Point Protocol (PPP)\nCaracterísticas:\n\nEnlaces punto a punto\nDetección de errores\nAutenticación (PAP/CHAP)\nConfiguración IP automática\n\nUso actual:\n\nEnlaces de respaldo\nConexiones satelitales\nAlgunas VPNs\n\n\nFrame Relay\nCaracterísticas:\n\nWAN con circuitos virtuales\nConmutación de tramas\nControl de congestión\n\n\nEstado:\n\nReemplazado por MPLS\nLegacy en empresas antiguas\nConceptos aún relevantes"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#arp-address-resolution-protocol",
-    "href": "ch1_p2_access_layer.html#arp-address-resolution-protocol",
-    "title": "Capa de Acceso a la Red",
-    "section": "ARP: Address Resolution Protocol",
-    "text": "ARP: Address Resolution Protocol\nTraducción IP → MAC\n\n\n\n\n\n\nsequenceDiagram\n    participant A as Host A&lt;br/&gt;IP: 192.168.1.10&lt;br/&gt;MAC: AA:BB:CC:DD:EE:FF\n    participant N as Red Local&lt;br/&gt;(Broadcast)\n    participant B as Host B&lt;br/&gt;IP: 192.168.1.20&lt;br/&gt;MAC: 11:22:33:44:55:66\n    \n    Note over A: Necesito MAC de 192.168.1.20\n    \n    A-&gt;&gt;N: ARP Request (Broadcast)&lt;br/&gt;¿Quién tiene 192.168.1.20?\n    N-&gt;&gt;B: ARP Request\n    \n    Note over B: ¡Esa es mi IP!\n    \n    B-&gt;&gt;A: ARP Reply (Unicast)&lt;br/&gt;192.168.1.20 = 11:22:33:44:55:66\n    \n    Note over A: Guardo en caché ARP\n\n\n\n\n\n\n\n\n\nProceso ARP:\n\nBroadcast preguntando por IP\nDispositivo con esa IP responde\nSe guarda en caché local\nTemporizador elimina entradas viejas\n\n\nTipos de ARP:\n\nDinámico: Aprendizaje automático\nEstático: Entradas manuales permanentes\nProxy ARP: Router responde por otros\nGratuitous: Anuncio proactivo"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#límites-físicos-y-distancias",
-    "href": "ch1_p2_access_layer.html#límites-físicos-y-distancias",
-    "title": "Capa de Acceso a la Red",
-    "section": "Límites Físicos y Distancias",
-    "text": "Límites Físicos y Distancias\nCable de Cobre (UTP/STP)\n\n\nCausas de la limitación:\n\nAtenuación de señal\nInterferencia electromagnética\nCrosstalk entre pares\nDegradación con distancia\n\n\nSoluciones:\n\nSwitches cada 100m\nRepetidores/Extensores\nFibra óptica (kilómetros)\nEnlaces inalámbricos\n\n\nComparación de Medios\n\n\n\nMedio\nDistancia Max\nVelocidad\nInterferencia\n\n\n\n\nUTP Cat5e\n100m\n1 Gbps\nAlta\n\n\nUTP Cat6a\n100m\n10 Gbps\nMedia\n\n\nFibra MM\n2 km\n10 Gbps\nNula\n\n\nFibra SM\n100+ km\n100 Gbps\nNula"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#ejemplo-práctico-verificación-de-configuración",
-    "href": "ch1_p2_access_layer.html#ejemplo-práctico-verificación-de-configuración",
-    "title": "Capa de Acceso a la Red",
-    "section": "Ejemplo Práctico: Verificación de Configuración",
-    "text": "Ejemplo Práctico: Verificación de Configuración\nComandos útiles para verificar la capa de acceso\n\n\nVer información de red:\n# Linux/Mac - Ver dirección MAC\nifconfig\n\n# Windows - Ver dirección MAC\nipconfig /all\n\n# Ver tabla ARP\narp -a\n\nEjemplo de salida ARP:\n192.168.1.1   00:1a:2b:3c:4d:5e\n192.168.1.10  00:2b:3c:4d:5e:6f\n192.168.1.20  00:3c:4d:5e:6f:70\nMuestra las asociaciones IP-MAC en la caché local"
-  },
-  {
-    "objectID": "ch1_p2_access_layer.html#puntos-clave",
-    "href": "ch1_p2_access_layer.html#puntos-clave",
-    "title": "Capa de Acceso a la Red",
-    "section": "Puntos Clave",
-    "text": "Puntos Clave\n\nLa Capa de Acceso a la Red maneja la transmisión física y el control de acceso al medio compartido\nCombina las funciones de las capas física y de enlace del modelo OSI\nControl de acceso al medio: CSMA/CD (Ethernet) vs CSMA/CA (WiFi)\nDirecciones MAC: 48 bits, únicas por dispositivo (OUI + ID dispositivo)\nSwitches evolucionaron desde hubs, creando dominios de colisión independientes\nDetección de errores mediante CRC y técnicas FEC\nMTU define el tamaño máximo de trama (Ethernet: 1500 bytes)\nARP resuelve la traducción entre direcciones IP y MAC"
-  },
-  {
-    "objectID": "ch1_p4_transport.html#qué-es-la-capa-de-transporte",
-    "href": "ch1_p4_transport.html#qué-es-la-capa-de-transporte",
-    "title": "Capa de Transporte",
-    "section": "¿Qué es la Capa de Transporte?",
-    "text": "¿Qué es la Capa de Transporte?\n\nLa capa de transporte proporciona comunicación lógica entre procesos de aplicación que se ejecutan en diferentes hosts\n\n\n\nFunción principal:\n\nSe ejecuta en hosts finales\nNo en el núcleo de la red\nDivide mensajes en segmentos\nRecompone segmentos en el receptor\n\nProtocolos principales:\n\nUDP: Protocolo minimalista\nTCP: Protocolo complejo con garantías\n\n\n\n\n\n\n\n\nblock-beta\n    columns 1\n    \n    A[\"&lt;b&gt;Capa de Aplicación&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;HTTP, HTTPS, FTP, SMTP&lt;br/&gt;DNS, DHCP, Telnet, SSH\"]\n    \n    B[\"&lt;b&gt;Capa de Transporte&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;TCP, UDP&lt;br/&gt;Control de flujo y errores\"]\n    \n    C[\"&lt;b&gt;Capa de Internet&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;IP, ICMP, ARP&lt;br/&gt;Enrutamiento, Direccionamiento\"]\n    \n    D[\"&lt;b&gt;Capa de Acceso a la Red&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Ethernet, WiFi, PPP&lt;br/&gt;Frames, MAC Address&lt;br/&gt;Control de acceso al medio\"]\n    \n    classDef highlight fill:#ff9999,stroke:#cc0000,stroke-width:4px,color:#000\n    classDef normal fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#000\n    \n    class B highlight\n    class A,C,D normal"
-  },
-  {
-    "objectID": "ch1_p4_transport.html#ejemplo-cliente-servidor-con-udp",
-    "href": "ch1_p4_transport.html#ejemplo-cliente-servidor-con-udp",
-    "title": "Capa de Transporte",
-    "section": "Ejemplo: Cliente-Servidor con UDP",
-    "text": "Ejemplo: Cliente-Servidor con UDP\n\n\n\n\n\n\nsequenceDiagram\n    participant A as Client A\n    participant I as The Internet\n    participant B as Server B\n        \n    A-&gt;&gt;I: Paquete UDP 1 (IP destino: 8.8.8.8, puerto: 80)\n    I-&gt;&gt;B: Paquete 1 entregado\n    \n    A-&gt;&gt;I: Paquete UDP 2 (IP destino: 8.8.8.8, puerto:80)\n    I-&gt;&gt;B: Paquete 2 entregado\n    \n    A-&gt;&gt;I: Paquete UDP 3 (IP destino: 8.8.8.8, puerto:80)\n    \n    A-&gt;&gt;I: Paquete UDP 4 (IP destino: 8.8.8.8, puerto:80)\n    I-&gt;&gt;B: Paquete 4 entregado (llega primero!)\n    A-&gt;&gt;I: Paquete UDP 5 (IP destino: 8.8.8.8, puerto:80)\n    I-&gt;&gt;B: Paquete 3 entregado (llega tarde!)\n\n\n\n\n\n\n\n\nPaquete 5: perdido (~1% pérdida normal)\nPaquete 4 llega antes que el 3\nUDP no corrige orden ni pérdidas"
-  },
-  {
-    "objectID": "ch1_p4_transport.html#multiplexación-y-demultiplexación",
-    "href": "ch1_p4_transport.html#multiplexación-y-demultiplexación",
-    "title": "Capa de Transporte",
-    "section": "1. Multiplexación y Demultiplexación",
-    "text": "1. Multiplexación y Demultiplexación\nMultiplexación: Recoger información de diferentes sockets y enviarla por un único medio.\nDemultiplexación: Recibir segmentos y enviarlos a los sockets correspondientes.\n\n\nIdentificación de sockets:\n\nTCP: (IP y Puerto origen, IP y puerto destino)\nUDP: (IP y puerto origen, IP y puerto destino)\n\n\nPuertos: Identificadores numéricos (1-65535)\n\nServidores: asignación manual y fija\nClientes: asignación aleatoria\n\n\n\n\n\n\n\ngraph LR\n    subgraph \"MULTIPLEXACIÓN\"\n        A1[Socket 1&lt;br/&gt;App A] --&gt; M[Multiplexor&lt;br/&gt;Capa de Transporte]\n        A2[Socket 2&lt;br/&gt;App B] --&gt; M\n        A3[Socket 3&lt;br/&gt;App C] --&gt; M\n        M --&gt; N[Red&lt;br/&gt;Medio único]\n    end\n    \n    subgraph \"DEMULTIPLEXACIÓN\"\n        N2[Red&lt;br/&gt;Segmentos entrantes] --&gt; D[Demultiplexor&lt;br/&gt;Capa de Transporte]\n        D --&gt; B1[Socket 1&lt;br/&gt;App A]\n        D --&gt; B2[Socket 2&lt;br/&gt;App B]\n        D --&gt; B3[Socket 3&lt;br/&gt;App C]\n    end\n    \n    N -.-&gt;|Transmisión| N2\n    \n    classDef appClass fill:#e1f5fe,stroke:#0277bd,stroke-width:2px\n    classDef muxClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px\n    classDef netClass fill:#fff3e0,stroke:#f57c00,stroke-width:2px\n    \n    class A1,A2,A3,B1,B2,B3 appClass\n    class M,D muxClass\n    class N,N2 netClass"
-  },
-  {
-    "objectID": "ch1_p4_transport.html#transferencia-fiable",
-    "href": "ch1_p4_transport.html#transferencia-fiable",
-    "title": "Capa de Transporte",
-    "section": "2. Transferencia Fiable",
-    "text": "2. Transferencia Fiable\n\n\nCaracterísticas de una transferencia fiable:\n\nNo se corrompe ningún bit\nNo se pierde información (paquetes)\nLa información se entrega en orden correcto\n\n\nOpciones de implementación:\n\nUsar protocolos fiables existentes (TCP)\nImplementar características propias sobre protocolo no fiable (UDP + lógica aplicación)\n\n\n\n\n\n\n\ngraph LR\n    \n    E[EMISOR] --&gt; PC1[PROTOCOLO&lt;br/&gt;CONFIABILIDAD]\n    PC1 --&gt; MNF[MEDIO&lt;br/&gt;NO FIABLE&lt;br/&gt;&lt;br/&gt;• Puede corromper bits&lt;br/&gt;• Puede perder paquetes&lt;br/&gt;• Puede desordenar]\n    MNF --&gt; PC2[PROTOCOLO&lt;br/&gt;CONFIABILIDAD]\n    PC2 --&gt; R[RECEPTOR]\n    \n    PC1 -.-&gt;|Implementa| MECH[• Detección de errores&lt;br/&gt;• Retransmisión&lt;br/&gt;• Control de flujo&lt;br/&gt;• Secuenciación&lt;br/&gt;• ACK/NACK&lt;br/&gt;• Timeouts]\n    PC2 -.-&gt;|Implementa| MECH\n    \n    classDef endpointClass fill:#e3f2fd,stroke:#1976d2,stroke-width:2px\n    classDef protocolClass fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px\n    classDef unreliableClass fill:#ffebee,stroke:#d32f2f,stroke-width:2px\n    classDef reliableClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px\n    classDef mechClass fill:#fafafa,stroke:#616161,stroke-width:1px\n    \n    class E,R endpointClass\n    class PC1,PC2 protocolClass\n    class MNF unreliableClass\n    class MECH mechClass"
-  },
-  {
-    "objectID": "ch1_p4_transport.html#otros-conceptos",
-    "href": "ch1_p4_transport.html#otros-conceptos",
-    "title": "Capa de Transporte",
-    "section": "Otros conceptos",
-    "text": "Otros conceptos\n\nControl de flujo: Evita que el emisor sature al receptor limitando la velocidad de envío según la capacidad del destinatario\nControl de congestión: Ajusta la velocidad de transmisión para evitar saturar la red cuando detecta congestión\nTemporización: Proporciona el tiempo mínimo de entrega de datos entre emisor y receptor a través de la red\nTasa de transferencia mínima: Garantiza una velocidad mínima de transmisión de datos para aplicaciones que requieren ancho de banda constante"
-  },
-  {
-    "objectID": "ch1_p4_transport.html#características-de-udp",
-    "href": "ch1_p4_transport.html#características-de-udp",
-    "title": "Capa de Transporte",
-    "section": "Características de UDP",
-    "text": "Características de UDP\n\n\nProtocolo minimalista [RFC 768]:\n\nBasado en best-effort (Fire-and-forget)\nNo orientado a conexión\nEntrega no fiable y sin orden\nIntegridad básica (checksum)\nMultiplexación y demultiplexación\n\n\nLo que NO proporciona:\n\nControl de flujo\nControl de congestión\nTemporización\nTasa de transferencia mínima\nSeguridad\n\n\n\n\n\n\n\n\nsequenceDiagram\n    participant A as Client A\n    participant I as The Internet\n    participant B as Server B\n        \n    A-&gt;&gt;I: Paquete UDP 3 (IP destino: 8.8.8.8, puerto:80)\n    Note over I: Paquete UDP 3 se pierde\n    A-&gt;&gt;I: Paquete UDP 4 (IP destino: 8.8.8.8, puerto:80)\n    I-&gt;&gt;B: Paquete 4 entregado (llega primero!)\n    Note over B: No garantiza orden\n    A-&gt;&gt;I: Paquete UDP 5 (IP destino: 8.8.8.8, puerto:80)\n    I-&gt;&gt;B: Paquete 3 entregado (llega tarde!)"
-  },
-  {
-    "objectID": "ch1_p4_transport.html#estructura-del-paquete-udp",
-    "href": "ch1_p4_transport.html#estructura-del-paquete-udp",
-    "title": "Capa de Transporte",
-    "section": "Estructura del Paquete UDP",
-    "text": "Estructura del Paquete UDP\n\n\n\n\n\npacket-beta\n\n    0-15: \"Source Port\"\n    16-31: \"Destination Port\"\n    32-47: \"Length\"\n    48-63: \"Checksum\"\n\n\n\n\n\n\n\nLongitud: Hasta 65535 bytes (limitado por MTU)\nChecksum: Verificación de integridad\nEstructura simple comparada con otros protocolos\n8 bytes de cabecera fijos."
-  },
-  {
-    "objectID": "ch1_p4_transport.html#checksum-udp",
-    "href": "ch1_p4_transport.html#checksum-udp",
-    "title": "Capa de Transporte",
-    "section": "Checksum UDP",
-    "text": "Checksum UDP\nProceso de cálculo:\n\nPreparación: pseudo-cabecera IP + cabecera UDP + datos\nDivisión en palabras de 16 bits\nSuma usando aritmética de complemento a uno\nComplemento del resultado → campo checksum\n\nVerificación en receptor:\n\nMismo algoritmo incluyendo checksum recibido\nResultado esperado: 0xFFFF\nSi difiere: datagrama descartado silenciosamente"
-  },
-  {
-    "objectID": "ch1_p4_transport.html#casos-de-uso-de-udp",
-    "href": "ch1_p4_transport.html#casos-de-uso-de-udp",
-    "title": "Capa de Transporte",
-    "section": "Casos de Uso de UDP",
-    "text": "Casos de Uso de UDP\nAplicaciones ideales para UDP:\n\nMultimedia streaming: Tolerante a pérdidas, sensible a interrupciones\nDNS: Respuestas rápidas necesarias\nSNMP: Administración de red\nGaming online: Latencia baja crítica\nQUIC/HTTP3: Base para protocolos modernos optimizados\n\nEjemplo: Implementar protocolo propio sobre UDP para juegos\n\nAñadir número de paquete\nDescartar paquetes fuera de orden\nIgnorar duplicados\nSobrecarga mínima"
-  },
-  {
-    "objectID": "ch1_p4_transport.html#características-de-tcp",
-    "href": "ch1_p4_transport.html#características-de-tcp",
-    "title": "Capa de Transporte",
-    "section": "Características de TCP",
-    "text": "Características de TCP\n\n\nProtocolo confiable [RFC 793]:\n\nOrientado a conexión\nEntrega fiable y ordenada (confiabilidad)\nControl de flujo\nControl de congestión\nMultiplexación y demultiplexación\n\n\nLo que NO proporciona:\n\nTemporización específica\nTasa mínima garantizada\nSeguridad nativa (necesita TLS/SSL)\n\n\nTrade-off: Confiabilidad y orden sobre velocidad pura"
-  },
-  {
-    "objectID": "ch1_p4_transport.html#estructura-del-paquete-tcp",
-    "href": "ch1_p4_transport.html#estructura-del-paquete-tcp",
-    "title": "Capa de Transporte",
-    "section": "Estructura del Paquete TCP",
-    "text": "Estructura del Paquete TCP\n\n\n\n\n\n\npacket-beta\n  0-15: \"Source Port\"\n  16-31: \"Destination Port\"\n  32-63: \"Sequence Number\"\n  64-95: \"Acknowledgment Number\"\n  96-99: \"Data Offset\"\n  100-105: \"Reserved\"\n  106: \"URG\"\n  107: \"ACK\"\n  108: \"PSH\"\n  109: \"RST\"\n  110: \"SYN\"\n  111: \"FIN\"\n  112-127: \"Window\"\n  128-143: \"Checksum\"\n  144-159: \"Urgent Pointer\"\n  160-191: \"Options (variable)\"\n\n\n\n\n\n\n\n\nSequence number: Número que identifica la posición del primer byte de datos en el segmento dentro del flujo de datos.\nAck number: Indica el próximo número de secuencia que el receptor espera recibir. Confirma la recepción correcta de datos anteriores.\nWindow: Implementa control de flujo (bytes que receptor acepta)\nchecksum: Muy similar a UDP.\nTamaño variable de 20 a 60 bytes."
-  },
-  {
-    "objectID": "ch1_p4_transport.html#mecanismos-de-confiabilidad",
-    "href": "ch1_p4_transport.html#mecanismos-de-confiabilidad",
-    "title": "Capa de Transporte",
-    "section": "Mecanismos de Confiabilidad",
-    "text": "Mecanismos de Confiabilidad\n\nLos mecanismos de confiabilidad en TCP garantizan que los datos lleguen correctamente y en orden.\n\n\n\nNúmeros de secuencia y ACKs:\n\nCada byte tiene número único\nCuando enviamos información, está identificada por un número de secuencia (SEQ)\nAdemás, esperamos confirmación de que se ha recibido correctamente (ACK)\nACKs acumulativos (ACK para byte N confirma hasta N-1)\nLos ACKs y SEQs permite detectar datos perdidos, duplicados o desordenados\n\n\n\n\n\n\n\n\nsequenceDiagram\n    participant E as Emisor\n    participant R as Receptor\n    \n    Note over E,R: Conexión ya establecida, seq inicial=100\n    \n    E-&gt;&gt;R: seq=100, data=\"Hola\" (4 bytes)\n    Note over R: Recibe\n    R-&gt;&gt;E: ACK=104 (\"Espero byte 104\")\n    Note over R: Confirma\n    \n    E-&gt;&gt;R: seq=104, data=\" mundo!\" (7 bytes)  \n    R-&gt;&gt;E: ACK=111 (\"Espero byte 111\")\n    \n    E-&gt;&gt;R: seq=111, data=\" TCP\" (4 bytes)\n    E-&gt;&gt;R: seq=115, data=\" rocks\" (6 bytes)\n    Note over R: Recibe ambos correctamente\n    Note over R: ACK acumulativo confirma todo\n    R-&gt;&gt;E: ACK=121 (\"Recibí todo hasta byte 120\")"
-  },
-  {
-    "objectID": "ch1_p4_transport.html#detección-de-pérdidas",
-    "href": "ch1_p4_transport.html#detección-de-pérdidas",
-    "title": "Capa de Transporte",
-    "section": "Detección de pérdidas",
-    "text": "Detección de pérdidas\n\n\nPérdidas por timeout\n\n\n\n\n\n\nsequenceDiagram\n    participant E as Emisor\n    participant R as Receptor\n    E -&gt;&gt; X: seq=100, data=\"A\", Paquete perdido\n    Note over E: Timeout de seq:100, reenvio\n    E -&gt;&gt; R: seq=100, data=\"A\",\n\n\n\n\n\n\n\n\nSi no recibe ACK en tiempo determinado → asume pérdida y retransmite\n\n\nPérdidas por ACKs duplicados\n\n\n\n\n\n\nsequenceDiagram\n    participant E as Emisor\n    participant R as Receptor\n    E -&gt;&gt; X: seq=100, data=\"A\", Paquete perdido\n    E -&gt;&gt; R: seq=101, data=\"B\"\n    E -&gt;&gt; R: seq=102, data=\"C\"\n    E -&gt;&gt; R: seq=103, data=\"D\"\n    R -&gt;&gt; E: ACK=100\n    R -&gt;&gt; E: ACK=100\n    R -&gt;&gt; E: ACK=100\n    Note over E,R: Retransmisión rápida\n    E -&gt;&gt; R: seq=100, data=\"A\"\n\n\n\n\n\n\n\n\n3 ACKs duplicados → Fast Retransmit inmediato"
-  },
-  {
-    "objectID": "ch1_p4_transport.html#control-de-flujo",
-    "href": "ch1_p4_transport.html#control-de-flujo",
-    "title": "Capa de Transporte",
-    "section": "Control de Flujo",
-    "text": "Control de Flujo\n\nEl control de flujo en TCP es un mecanismo que evita que el emisor envíe más datos de los que el receptor puede procesar.\n\n\n\n\n\n\n\n\n\nsequenceDiagram\n    participant E as Emisor\n    participant R as Receptor\n    \n    Note over R: Buffer: 4KB libres\n    R-&gt;&gt;E: ACK=1000, Window=4096\n    E-&gt;&gt;R: seq=1000, data=2KB\n    Note over R: Buffer: 2KB libres\n    R-&gt;&gt;E: ACK=3000, Window=2048\n    E-&gt;&gt;R: seq=3000, data=2KB\n    Note over R: Buffer: 0KB libres (lleno)\n    R-&gt;&gt;E: ACK=5000, Window=0\n    Note over E: Detiene envío, inicia probe timer\n\n\n\n\n\n\n\n\n\nReceptor informa de su capacidad disponible, y se define:\nVentanaRecepcion = BufferRecepcion - (UltimoByteRecibido - UltimoByteLeido)\nEl emisor se limita a esta ventana\nSi la capacidad es 0, se espera un tiempo y se vuelve a probar."
-  },
-  {
-    "objectID": "ch1_p4_transport.html#control-de-congestión",
-    "href": "ch1_p4_transport.html#control-de-congestión",
-    "title": "Capa de Transporte",
-    "section": "Control de Congestión",
-    "text": "Control de Congestión\n\nEl control de congestión en TCP es un mecanismo que ajusta automáticamente la velocidad de envío (ventana de congestión) para evitar saturar la red cuando detecta pérdida de paquetes o retardos.\n\n\n\nVentana de congestión\n\nVariable del emisor\nBytes máximos en “el aire” (enviados sin ACK)\nTasa efectiva = min(VentanaCongestion, VentanaRecepcion)\n\n\nEventos de Congestión (Pérdidas)\n\nTimeout -&gt; Modo slow start\n\nPérdida severa\nVentana → 1 MSS\n\n3 ACKs duplicados -&gt; Modo congestion avoidance\n\nPérdida moderada\nVentana → mitad"
-  },
-  {
-    "objectID": "ch1_p4_transport.html#mecanismos-de-control-de-congestión",
-    "href": "ch1_p4_transport.html#mecanismos-de-control-de-congestión",
-    "title": "Capa de Transporte",
-    "section": "Mecanismos de control de congestión",
-    "text": "Mecanismos de control de congestión\n\n\nSlow start\n\n\n\n\n\n\nsequenceDiagram\n    participant E as Emisor\n    participant R as Receptor\n    \n    Note over E: Slow Start: cwnd=1 MSS\n    E-&gt;&gt;R: seq=1000, MSS=1KB\n    R-&gt;&gt;E: ACK=2000\n    Note over E: cwnd=2 MSS\n    E-&gt;&gt;R: seq=2000, MSS=1KB\n    E-&gt;&gt;R: seq=3000, MSS=1KB\n    R-&gt;&gt;E: ACK=4000\n    Note over E: cwnd=4 MSS (crecimiento exponencial)\n    Note over E: ... continúa hasta threshold o detectar pérdida ...\n\n\n\n\n\n\n\nDuplicar ventana por cada RTT\n\nCongestion Avoidance\n\n\n\n\n\n\nsequenceDiagram\n    participant E as Emisor\n    participant R as Receptor\n    \n    Note over E: Congestion Avoidance: cwnd=1 MSS\n\n    E-&gt;&gt;R: seq=1000, MSS=1KB\n    R-&gt;&gt;E: ACK=2000\n\n    Note over E: cwnd=2 MSS\n\n    E-&gt;&gt;R: seq=2000, MSS=1KB\n    E-&gt;&gt;R: seq=3000, MSS=1KB\n    R-&gt;&gt;E: ACK=4000\n\n    Note over E: cwnd=3 MSS (crecimiento lineal)\n    Note over E: ... continúa hasta detectar pérdida ...\n\n\n\n\n\n\n\nIncrementar en 1 la ventana en cada RTT"
-  },
-  {
-    "objectID": "ch1_p4_transport.html#handshake-de-tres-fases",
-    "href": "ch1_p4_transport.html#handshake-de-tres-fases",
-    "title": "Capa de Transporte",
-    "section": "Handshake de Tres Fases",
-    "text": "Handshake de Tres Fases\n\n\n\n\n\n\n\n\nsequenceDiagram\n    participant CS as Cliente Socket\n    participant SS as Server Socket (listen)\n    participant NS as Nuevo Socket\n    \n    Note over CS: Estado: CLOSED\n    Note over SS: Estado: LISTEN\n    CS-&gt;&gt;SS: SYN=1, seq=x\n    Note over CS: Estado: SYN_SENT\n    Note over SS: accept() crea nuevo socket\n    SS-&gt;&gt;NS: Deriva conexión\n    Note over NS: Estado: SYN_RCVD\n    NS-&gt;&gt;CS: SYN=1, ACK=1, seq=y, ack=x+1\n    Note over CS: Estado: ESTABLISHED\n    CS-&gt;&gt;NS: ACK=1, seq=x+1, ack=y+1\n\n\n\n\n\n\n\n\n\nSe negocian: MSS, opciones de ventana, extensiones TCP\nLos flags de las cabeceras también consumen bits.\nEl serverSocket está en el servidor,\nuna vez se establece la comunicación ambos sockets son iguales."
-  },
-  {
-    "objectID": "ch1_p4_transport.html#terminación-de-conexión",
-    "href": "ch1_p4_transport.html#terminación-de-conexión",
-    "title": "Capa de Transporte",
-    "section": "Terminación de Conexión",
-    "text": "Terminación de Conexión\n\n\n\n\n\n\n\n\nsequenceDiagram\n    participant C as Cliente\n    participant S as Servidor\n    \n    Note over C,S: Conexión establecida\n    C-&gt;&gt;S: FIN=1, seq=x\n    Note over C: Estado: FIN_WAIT_1\n    S-&gt;&gt;C: ACK=1, ack=x+1\n    Note over C: Estado: FIN_WAIT_2\n    S-&gt;&gt;C: FIN=1, ACK=1, seq=y\n    Note over S: Estado: LAST_ACK\n    C-&gt;&gt;S: ACK=1, ack=y+1\n    Note over C: Estado: TIME_WAIT\n    Note over C: Espera 2*MSL\n    Note over C,S: CLOSED\n\n\n\n\n\n\n\n\n\nCada extremo debe enviar su propio FIN y recibir confirmación,\npermitiendo cierre unidireccional (half-close).\nEl cliente espera 2*MSL para asegurar que su último ACK llegó,\nmanejando retransmisiones tardías antes del cierre definitivo."
-  },
-  {
-    "objectID": "ch1_p4_transport.html#equidad-y-coexistencia",
-    "href": "ch1_p4_transport.html#equidad-y-coexistencia",
-    "title": "Capa de Transporte",
-    "section": "Equidad y Coexistencia",
-    "text": "Equidad y Coexistencia\nTCP es “fair”:\n\nN conexiones TCP comparten enlace equitativamente\nCada una obtiene ~R/N del ancho de banda R\nVer ejemplos en jergames (Bandwidth distribution)\n\nLimitaciones:\n\nUDP no implementa control → puede monopolizar\nAplicaciones con múltiples conexiones TCP\nConexiones con menor RTT tienen ventaja"
-  },
-  {
-    "objectID": "ch1_p4_transport.html#cuándo-usar",
-    "href": "ch1_p4_transport.html#cuándo-usar",
-    "title": "Capa de Transporte",
-    "section": "Cuándo usar…",
-    "text": "Cuándo usar…\n\n\nUDP\nRequisitos para UDP:\n\nLatencias &lt; 50ms\nActualizaciones frecuentes\nInformación nueva más valiosa que la vieja\n\nVentajas:\n\nCabeceras pequeñas\nSin tráfico de control\nServidor necesita menos recursos\nNo mantiene estado\n\nEjemplos: Shooters (Counter Strike), juegos de lucha\n\nTCP\nRequisitos para TCP:\n\nTolerancia 100-200ms latencia\nEntrega ordenada garantizada\nDetección y corrección de errores\n\n Consideraciones:\n\nBloqueo cabeza de línea\nLatencias variables por retransmisiones\nMayor tráfico de red\n\n Ejemplos: MMORPGs (World of Warcraft), juegos por turnos"
-  },
-  {
-    "objectID": "ch1_p4_transport.html#ejemplos-concretos",
-    "href": "ch1_p4_transport.html#ejemplos-concretos",
-    "title": "Capa de Transporte",
-    "section": "Ejemplos Concretos",
-    "text": "Ejemplos Concretos\n\n\nWorld of Warcraft (TCP):\n\nHechizos necesitan entrega garantizada\nActualizaciones de inventario críticas\nEstado de misiones consistente\nMMORPGs toleran 100-200ms\n\n\nCounter Strike (UDP):\n\nRetroalimentación inmediata crítica\nActualizaciones posición/disparos\nTécnicas de interpolación en cliente\nMitiga efecto paquetes perdidos"
-  },
-  {
-    "objectID": "ch1_p4_transport.html#puntos-clave",
-    "href": "ch1_p4_transport.html#puntos-clave",
-    "title": "Capa de Transporte",
-    "section": "Puntos Clave",
-    "text": "Puntos Clave\n\nLa capa de transporte proporciona comunicación lógica entre procesos\nUDP: Minimalista, best-effort, no orientado a conexión\nTCP: Confiable, ordenado, orientado a conexión\nMultiplexación: Múltiples sockets por un medio\nControl de flujo: Evita saturar al receptor\nControl de congestión: Responde a condiciones de red\nTrade-off fundamental: Confiabilidad vs velocidad\nElección protocolo depende de requisitos aplicación"
-  },
-  {
-    "objectID": "ch2_p2_js_classes.html#prototipos-vs-clases",
-    "href": "ch2_p2_js_classes.html#prototipos-vs-clases",
-    "title": "Desarrollo en el cliente",
-    "section": "Prototipos vs Clases",
-    "text": "Prototipos vs Clases\nJavaScript tradicionalmente usa prototipos, no clases como Java.\n\nCualquier objeto puede ser prototipo de otros\nCadena de herencia flexible\nES2015+ añadió sintaxis de clases (azúcar sintáctico)"
-  },
-  {
-    "objectID": "ch2_p2_js_classes.html#objeto-literal-simple",
-    "href": "ch2_p2_js_classes.html#objeto-literal-simple",
-    "title": "Desarrollo en el cliente",
-    "section": "Objeto Literal Simple",
-    "text": "Objeto Literal Simple\nconst enemigo = {\n    vida: 100,\n    damage: 15,\n    atacar() {\n        return `Enemigo ataca causando ${this.damage} puntos`;\n    }\n};\n\n// Crear basado en prototipo\nconst goblin = Object.create(enemigo);\ngoblin.vida = 50;\ngoblin.damage = 8;\n\nconsole.log(goblin.atacar()); \n// \"Enemigo ataca causando 8 puntos\""
-  },
-  {
-    "objectID": "ch2_p2_js_classes.html#herencia-con-prototipos",
-    "href": "ch2_p2_js_classes.html#herencia-con-prototipos",
-    "title": "Desarrollo en el cliente",
-    "section": "Herencia con Prototipos",
-    "text": "Herencia con Prototipos\nconst personajeBase = {\n    mover(x, y) {\n        this.x += x;\n        this.y += y;\n    }\n};\n\nconst protottipoJugador = Object.create(personajeBase);\nprotottipoJugador.atacar = function(objetivo) {\n    return `${this.nombre} ataca a ${objetivo.nombre}`;\n};\n\nconst jugador = Object.create(protottipoJugador);\njugador.nombre = \"Aragorn\";\njugador.x = 0;\njugador.y = 0;"
-  },
-  {
-    "objectID": "ch2_p2_js_classes.html#acceso-a-propiedades",
-    "href": "ch2_p2_js_classes.html#acceso-a-propiedades",
-    "title": "Desarrollo en el cliente",
-    "section": "Acceso a Propiedades",
-    "text": "Acceso a Propiedades\nconst config = {\n    sonido: true,\n    volumen: 0.8,\n    idioma: \"es\"\n};\n\n// Notación punto (recomendado)\nconsole.log(config.sonido);\nconfig.volumen = 0.5;\n\n// Notación corchetes (propiedades dinámicas)\nconsole.log(config[\"idioma\"]);\nconst propiedad = \"volumen\";\nconsole.log(config[propiedad]);\n\n// Añadir propiedades dinámicamente\nconfig.dificultad = \"normal\";"
-  },
-  {
-    "objectID": "ch2_p2_js_classes.html#iteración-sobre-propiedades",
-    "href": "ch2_p2_js_classes.html#iteración-sobre-propiedades",
-    "title": "Desarrollo en el cliente",
-    "section": "Iteración sobre Propiedades",
-    "text": "Iteración sobre Propiedades\nconst inventario = {\n    espada: 1,\n    pocion: 5,\n    oro: 150\n};\n\n// Iterar sobre propiedades\nfor (let item in inventario) {\n    console.log(`${item}: ${inventario[item]}`);\n}\n\n// Verificar existencia\nif (\"oro\" in inventario) {\n    console.log(\"El jugador tiene oro\");\n}\n\n// Arrays de claves y valores\nconst items = Object.keys(inventario);\nconst cantidades = Object.values(inventario);"
-  },
-  {
-    "objectID": "ch2_p2_js_classes.html#null-vs-undefined",
-    "href": "ch2_p2_js_classes.html#null-vs-undefined",
-    "title": "Desarrollo en el cliente",
-    "section": "null vs undefined",
-    "text": "null vs undefined\nlet jugador = null;        // Ausencia intencional\nlet powerUp;              // undefined - no inicializada\n\n// Verificación segura\nif (jugador) {\n    jugador.mover(5, 0);\n}\n\n// Operador optional chaining (ES2020+)\njugador?.mover?.(5, 0);"
-  },
-  {
-    "objectID": "ch2_p2_js_classes.html#función-constructor",
-    "href": "ch2_p2_js_classes.html#función-constructor",
-    "title": "Desarrollo en el cliente",
-    "section": "Función Constructor",
-    "text": "Función Constructor\nfunction Jugador(nombre, x, y) {\n    this.nombre = nombre;\n    this.x = x;\n    this.y = y;\n    this.vida = 100;\n}\n\n// Métodos en el prototipo\nJugador.prototype.mover = function(deltaX, deltaY) {\n    this.x += deltaX;\n    this.y += deltaY;\n};\n\n// Uso (siempre con 'new')\nconst player1 = new Jugador(\"Aragorn\", 10, 20);\nplayer1.mover(2, 3);"
-  },
-  {
-    "objectID": "ch2_p2_js_classes.html#herencia-con-constructor",
-    "href": "ch2_p2_js_classes.html#herencia-con-constructor",
-    "title": "Desarrollo en el cliente",
-    "section": "Herencia con Constructor",
-    "text": "Herencia con Constructor\nfunction Personaje(nombre, vida) {\n    this.nombre = nombre;\n    this.vida = vida;\n}\n\nPersonaje.prototype.saludar = function() {\n    return `Hola, soy ${this.nombre}`;\n};\n\nfunction Guerrero(nombre, vida, fuerza) {\n    Personaje.call(this, nombre, vida);\n    this.fuerza = fuerza;\n}\n\nGuerrero.prototype = Object.create(Personaje.prototype);\nGuerrero.prototype.constructor = Guerrero;\n\nconst conan = new Guerrero(\"Conan\", 150, 25);"
-  },
-  {
-    "objectID": "ch2_p2_js_classes.html#clases-es2015-sintaxis-moderna",
-    "href": "ch2_p2_js_classes.html#clases-es2015-sintaxis-moderna",
-    "title": "Desarrollo en el cliente",
-    "section": "Clases ES2015+ (Sintaxis Moderna)",
-    "text": "Clases ES2015+ (Sintaxis Moderna)\nclass GameObject {\n    constructor(x, y) {\n        this.x = x;\n        this.y = y;\n        this.activo = true;\n    }\n\n    actualizar(deltaTime) {\n        if (!this.activo) return;\n    }\n\n    destruir() {\n        this.activo = false;\n    }\n}"
-  },
-  {
-    "objectID": "ch2_p2_js_classes.html#herencia-con-clases",
-    "href": "ch2_p2_js_classes.html#herencia-con-clases",
-    "title": "Desarrollo en el cliente",
-    "section": "Herencia con Clases",
-    "text": "Herencia con Clases\nclass Enemigo extends GameObject {\n    constructor(x, y, tipo) {\n        super(x, y);  // Llamada al constructor padre\n        this.tipo = tipo;\n        this.vida = 50;\n        this.velocidad = 2;\n    }\n\n    actualizar(deltaTime) {\n        super.actualizar(deltaTime);\n        if (this.vida &gt; 0) {\n            this.x += this.velocidad;\n        }\n    }\n}"
-  },
-  {
-    "objectID": "ch2_p2_js_classes.html#getters-y-setters",
-    "href": "ch2_p2_js_classes.html#getters-y-setters",
-    "title": "Desarrollo en el cliente",
-    "section": "Getters y Setters",
-    "text": "Getters y Setters\nclass Enemigo extends GameObject {\n    constructor(x, y, tipo) {\n        super(x, y);\n        this._vida = 50;\n    }\n\n    get estaVivo() {\n        return this._vida &gt; 0;\n    }\n\n    set vida(valor) {\n        this._vida = Math.max(0, valor);\n        if (this._vida === 0) {\n            this.destruir();\n        }\n    }\n\n    get vida() {\n        return this._vida;\n    }\n}"
-  },
-  {
-    "objectID": "ch2_p2_js_classes.html#métodos-estáticos",
-    "href": "ch2_p2_js_classes.html#métodos-estáticos",
-    "title": "Desarrollo en el cliente",
-    "section": "Métodos Estáticos",
-    "text": "Métodos Estáticos\nclass Enemigo extends GameObject {\n    // Método estático\n    static crearOrc() {\n        const orc = new Enemigo(0, 0, \"Orc\");\n        orc.vida = 80;\n        orc.velocidad = 1.5;\n        return orc;\n    }\n}\n\n// Uso\nconst orc = Enemigo.crearOrc();"
-  },
-  {
-    "objectID": "ch2_p2_js_classes.html#uso-de-clases",
-    "href": "ch2_p2_js_classes.html#uso-de-clases",
-    "title": "Desarrollo en el cliente",
-    "section": "Uso de Clases",
-    "text": "Uso de Clases\n// Constructor normal\nconst goblin = new Enemigo(10, 20, \"Goblin\");\ngoblin.vida = 30;\n\n// Usar getter (sin paréntesis)\nif (goblin.estaVivo) {\n    console.log(\"El goblin sigue vivo\");\n}\n\n// Método estático\nconst orc = Enemigo.crearOrc();\n\n// Polimorfismo\nconst enemigos = [goblin, orc];\nenemigos.forEach(enemigo =&gt; {\n    enemigo.actualizar(16);\n});"
-  },
-  {
-    "objectID": "ch2_p2_js_classes.html#ventajas-de-clases-es2015",
-    "href": "ch2_p2_js_classes.html#ventajas-de-clases-es2015",
-    "title": "Desarrollo en el cliente",
-    "section": "Ventajas de Clases ES2015+",
-    "text": "Ventajas de Clases ES2015+\n\nSintaxis más clara: Más familiar para otros lenguajes OO\nHerencia simplificada: extends y super() más directos\nGetters y setters integrados: Validación y cálculo\nMétodos estáticos: Para funciones de clase\nMejor soporte de herramientas: IDEs y linters\n\n\n\n\n\n\n\nTip\n\n\nLa sintaxis de clases es la recomendada para proyectos nuevos"
-  },
-  {
-    "objectID": "sub_introduction.html#prof.-rubén-rodríguez",
-    "href": "sub_introduction.html#prof.-rubén-rodríguez",
-    "title": "Presentación de Juegos en Red",
-    "section": "Prof. Rubén Rodríguez",
-    "text": "Prof. Rubén Rodríguez\nRubén Rodríguez Fernández\n\nE-mail: ruben.rodriguez@urjc.es. (Escribir por aula virtual).\nDespacho: 131, Ed. Departamental II (Campus de Móstoles).\nTutorias: Concertar por e-mail (aula virtual)."
-  },
-  {
-    "objectID": "sub_introduction.html#prof.-natalia-madrueño",
-    "href": "sub_introduction.html#prof.-natalia-madrueño",
-    "title": "Presentación de Juegos en Red",
-    "section": "Prof. Natalia Madrueño",
-    "text": "Prof. Natalia Madrueño\nNatalia Madrueño Sierro\n\nEmail: natalia.madrueno@urjc.es (Escribir por aula virtual).\nDespacho: 044, Ed. Departamental II (Campus de Móstoles).\nTutorias: Concertar por e-mail (aula virtual)."
-  },
-  {
-    "objectID": "sub_introduction.html#aplicaciones-en-red",
-    "href": "sub_introduction.html#aplicaciones-en-red",
-    "title": "Presentación de Juegos en Red",
-    "section": "Aplicaciones en red",
-    "text": "Aplicaciones en red\nLa gran mayoría de las aplicaciones actuales son aplicaciones basadas en red:\n\nAula Virtual\nGmail\nTwitter\nFacebook\nLa web de la Liga de Fútbol Profesional (LFP)\n…"
-  },
-  {
-    "objectID": "sub_introduction.html#muchos-juegos-también",
-    "href": "sub_introduction.html#muchos-juegos-también",
-    "title": "Presentación de Juegos en Red",
-    "section": "Muchos juegos también",
-    "text": "Muchos juegos también\n\nPlayerUnknown’s Battlegrounds (PUBG) / Fortnite / Destiny 2 / Overwatch / Quake Champions / Counter-Strike: Global Offensive (CS:GO) / League of Legends (LoL) / DOTA 2\nWorld of Warcraft\nFIFA / PES\nMario Kart / Project Cars / Rocket League\nJuegos de Facebook\n…"
-  },
-  {
-    "objectID": "sub_introduction.html#tema-1-introducción-a-los-juegos-en-red-y-a-las-redes-de-comunicaciones",
-    "href": "sub_introduction.html#tema-1-introducción-a-los-juegos-en-red-y-a-las-redes-de-comunicaciones",
-    "title": "Presentación de Juegos en Red",
-    "section": "Tema 1: Introducción a los juegos en red y a las redes de comunicaciones",
-    "text": "Tema 1: Introducción a los juegos en red y a las redes de comunicaciones\nSe presentan los retos de las aplicaciones en red y se introducen los principales conceptos necesarios para entender su funcionamiento:\n\nQué son y como funcionan las aplicaciones en red.\nProblemas propios de aplicaciones en red.\nConceptos fundamentales de comunicación en red entre aplicaciones.\nConsideraciones al desarrollar juegos en red."
-  },
-  {
-    "objectID": "sub_introduction.html#tema-2-desarrollo-en-el-lado-del-cliente.",
-    "href": "sub_introduction.html#tema-2-desarrollo-en-el-lado-del-cliente.",
-    "title": "Presentación de Juegos en Red",
-    "section": "Tema 2: Desarrollo en el lado del cliente.",
-    "text": "Tema 2: Desarrollo en el lado del cliente.\nSe estudia el lenguaje JavaScript para construir aplicaciones en el lado del cliente (browser). API REST.\n\nDesarrollo web en JavaScript, HTML y CSS\nUso de las API REST"
-  },
-  {
-    "objectID": "sub_introduction.html#tema-3-desarrollo-de-juegos-con-tecnología-web.",
-    "href": "sub_introduction.html#tema-3-desarrollo-de-juegos-con-tecnología-web.",
-    "title": "Presentación de Juegos en Red",
-    "section": "Tema 3: Desarrollo de juegos con tecnología web.",
-    "text": "Tema 3: Desarrollo de juegos con tecnología web.\nSe presenta el framework JavaScript Phaser para desarrollo de juegos en el cliente:\n\nPhaser 3 framework: https://phaser.io.\nAmplia galería de ejemplos: https://phaser.io/examples/"
-  },
-  {
-    "objectID": "sub_introduction.html#tema-4-desarrollo-en-el-lado-del-servidor.",
-    "href": "sub_introduction.html#tema-4-desarrollo-en-el-lado-del-servidor.",
-    "title": "Presentación de Juegos en Red",
-    "section": "Tema 4: Desarrollo en el lado del servidor.",
-    "text": "Tema 4: Desarrollo en el lado del servidor.\nSe estudia el framework express.js con JavaScript para desarrollar el lado del servidor. Implementación de API REST:\n\nIntroducción a express.js\nDesarrollo de comunicación cliente servidor a través de API REST."
-  },
-  {
-    "objectID": "sub_introduction.html#tema-5-comunicación-asíncrona-cliente---servidor",
-    "href": "sub_introduction.html#tema-5-comunicación-asíncrona-cliente---servidor",
-    "title": "Presentación de Juegos en Red",
-    "section": "Tema 5: Comunicación asíncrona cliente - servidor",
-    "text": "Tema 5: Comunicación asíncrona cliente - servidor\nSe estudia el uso de WebSockets para comunicación asíncrona entre nodos:\n\nIntroducción a la comunicación asíncrona con WebSockets.\nCreación de protocolos de mensajes.\nDesarrollo de comunicación asíncrona entre cliente y servidor con WebSockets."
-  },
-  {
-    "objectID": "sub_introduction.html#material-teórico",
-    "href": "sub_introduction.html#material-teórico",
-    "title": "Presentación de Juegos en Red",
-    "section": "Material teórico",
-    "text": "Material teórico\n\nEl material se irá publicando en el Aula Virtual a medida que avance el cuatrimestre.\nSe publicará como asignatura en abierto, todos los materiales son públicos.\nContará con diapositivas, apuntes, problemas y una guía de estudio."
-  },
-  {
-    "objectID": "sub_introduction.html#enunciado-de-la-práctica",
-    "href": "sub_introduction.html#enunciado-de-la-práctica",
-    "title": "Presentación de Juegos en Red",
-    "section": "Enunciado de la práctica",
-    "text": "Enunciado de la práctica\n\nLos enunciados de las prácticas se colgarán en el aula virtual."
-  },
-  {
-    "objectID": "sub_introduction.html#pruebas-de-evaluación",
-    "href": "sub_introduction.html#pruebas-de-evaluación",
-    "title": "Presentación de Juegos en Red",
-    "section": "Pruebas de evaluación:",
-    "text": "Pruebas de evaluación:\n\n40% Pruebas teórico-prácticas\n\nNota mínima: cada prueba &gt;=5\n\n40% Práctica\n\nNota mínima: cada prueba &gt;=5\n\n15% Resolución de problemas y casos prácticos\n\nNo tiene nota mínima\n\n5% Participación en clase y otras actividades\n\nNo tiene nota mínima\n\n\nHay que obtener al menos un 5 de media"
-  },
-  {
-    "objectID": "sub_introduction.html#pruebas-teórico-prácticas-40",
-    "href": "sub_introduction.html#pruebas-teórico-prácticas-40",
-    "title": "Presentación de Juegos en Red",
-    "section": "Pruebas teórico-prácticas (40 %)",
-    "text": "Pruebas teórico-prácticas (40 %)\n\n3 exámenes:\n\nExamen 1 (Tema 1): 35%.\nExamen 2 (Tema 2 y 3): 32.5%.\nExamen 3 (Tema 4): 32.5%.\n\nEjercicios online tipo test / preguntas cortas / ejercicios\nNota mínima en cada prueba 5\nRevaluable en convocatoria extraordinaria"
-  },
-  {
-    "objectID": "sub_introduction.html#práctica-40",
-    "href": "sub_introduction.html#práctica-40",
-    "title": "Presentación de Juegos en Red",
-    "section": "Práctica (40 %)",
-    "text": "Práctica (40 %)\n\nSe realiza en grupos de 4 personas\nCada alumno será evaluado individualmente\nSe desarrolla en parte en las sesiones prácticas\nConsta de 4 entregas (fases) obligatorias coonderaciones 10%, 35%, 25%, 30%.\nNota mínima en cada fase: 5 puntos\nCada fase es revaluable en convocatoria extraordinaria"
-  },
-  {
-    "objectID": "sub_introduction.html#resolución-de-problemas-15",
-    "href": "sub_introduction.html#resolución-de-problemas-15",
-    "title": "Presentación de Juegos en Red",
-    "section": "Resolución de problemas (15 %)",
-    "text": "Resolución de problemas (15 %)\n\nConsiste en una fase adicional al juego desarrollado (fase 5).\nConsistirá en una mejora sobre la práctica entregada y la publicación de la misma en plataformas online.\nNota mínima de 3.\nRevaluable en convocatoria extraordinaria."
-  },
-  {
-    "objectID": "sub_introduction.html#participación-en-clase-5",
-    "href": "sub_introduction.html#participación-en-clase-5",
-    "title": "Presentación de Juegos en Red",
-    "section": "Participación en clase (5 %)",
-    "text": "Participación en clase (5 %)\n\nEs opcional. No tiene nota mínima.\nConsiste en una serie de actividades que se irán realizando a lo largo del cuatrimestre.\nTambién se podrán obtener proponiendo mejoras o correcciones a los apuntes y diapositivas de la asignatura.\nNo es revaluable en convocatoria extraordinaria"
-  },
-  {
-    "objectID": "sub_introduction.html#dispensa-académica",
-    "href": "sub_introduction.html#dispensa-académica",
-    "title": "Presentación de Juegos en Red",
-    "section": "Dispensa académica",
-    "text": "Dispensa académica\nUn alumno con dispensa académica debe realizar los exámenes teóricos-prácticos.\nEstá obligado a hacer las 4 entregas presenciales de la parte práctica ya que son como exámenes.\nLas fechas de las pruebas serán anunciadas con anterioridad."
-  },
-  {
-    "objectID": "sub_introduction.html#no-presentado",
-    "href": "sub_introduction.html#no-presentado",
-    "title": "Presentación de Juegos en Red",
-    "section": "No presentado",
-    "text": "No presentado\nUn alumno obtendrá la calificación de no presentado únicamente si no se presenta a ninguna prueba evaluable (ya sea de teoría o práctica)."
-  },
-  {
-    "objectID": "sub_introduction.html#internet",
-    "href": "sub_introduction.html#internet",
-    "title": "Presentación de Juegos en Red",
-    "section": "Internet",
-    "text": "Internet\n\nPáginas oficiales de los estándares y tecnologías\nTutoriales, ejemplos y blogs realizados por la comunidad\nAplicaciones web de código abierto\n… y todo lo que Google encuentre :)"
-  },
-  {
     "objectID": "ch1_p3_network.html#qué-es-la-capa-de-red",
     "href": "ch1_p3_network.html#qué-es-la-capa-de-red",
     "title": "Capa de Red",
@@ -1153,6 +621,1091 @@
     "title": "Capa de Red",
     "section": "Puntos Clave",
     "text": "Puntos Clave\n\nLa Capa de Red proporciona comunicación end-to-end entre dispositivos en diferentes redes\nDos funciones principales: Enrutamiento (global) y Reenvío (local)\nModelos de servicio: Circuitos Virtuales vs Datagramas (Internet usa datagramas)\nIPv4: 32 bits, sistema de clases → CIDR para eficiencia\nIPv6: 128 bits, soluciona limitaciones de IPv4\nICMP: Herramientas de diagnóstico (ping, traceroute)\nNAT: Permite compartir IP pública, pero limita conectividad directa\nMTU: Define tamaño máximo, fragmentación si se excede\nLos routers operan con plano de control (enrutamiento) y plano de datos (reenvío)"
+  },
+  {
+    "objectID": "sub_introduction.html#prof.-rubén-rodríguez",
+    "href": "sub_introduction.html#prof.-rubén-rodríguez",
+    "title": "Presentación de Juegos en Red",
+    "section": "Prof. Rubén Rodríguez",
+    "text": "Prof. Rubén Rodríguez\nRubén Rodríguez Fernández\n\nE-mail: ruben.rodriguez@urjc.es. (Escribir por aula virtual).\nDespacho: 131, Ed. Departamental II (Campus de Móstoles).\nTutorias: Concertar por e-mail (aula virtual)."
+  },
+  {
+    "objectID": "sub_introduction.html#prof.-natalia-madrueño",
+    "href": "sub_introduction.html#prof.-natalia-madrueño",
+    "title": "Presentación de Juegos en Red",
+    "section": "Prof. Natalia Madrueño",
+    "text": "Prof. Natalia Madrueño\nNatalia Madrueño Sierro\n\nEmail: natalia.madrueno@urjc.es (Escribir por aula virtual).\nDespacho: 044, Ed. Departamental II (Campus de Móstoles).\nTutorias: Concertar por e-mail (aula virtual)."
+  },
+  {
+    "objectID": "sub_introduction.html#aplicaciones-en-red",
+    "href": "sub_introduction.html#aplicaciones-en-red",
+    "title": "Presentación de Juegos en Red",
+    "section": "Aplicaciones en red",
+    "text": "Aplicaciones en red\nLa gran mayoría de las aplicaciones actuales son aplicaciones basadas en red:\n\nAula Virtual\nGmail\nTwitter\nFacebook\nLa web de la Liga de Fútbol Profesional (LFP)\n…"
+  },
+  {
+    "objectID": "sub_introduction.html#muchos-juegos-también",
+    "href": "sub_introduction.html#muchos-juegos-también",
+    "title": "Presentación de Juegos en Red",
+    "section": "Muchos juegos también",
+    "text": "Muchos juegos también\n\nPlayerUnknown’s Battlegrounds (PUBG) / Fortnite / Destiny 2 / Overwatch / Quake Champions / Counter-Strike: Global Offensive (CS:GO) / League of Legends (LoL) / DOTA 2\nWorld of Warcraft\nFIFA / PES\nMario Kart / Project Cars / Rocket League\nJuegos de Facebook\n…"
+  },
+  {
+    "objectID": "sub_introduction.html#tema-1-introducción-a-los-juegos-en-red-y-a-las-redes-de-comunicaciones",
+    "href": "sub_introduction.html#tema-1-introducción-a-los-juegos-en-red-y-a-las-redes-de-comunicaciones",
+    "title": "Presentación de Juegos en Red",
+    "section": "Tema 1: Introducción a los juegos en red y a las redes de comunicaciones",
+    "text": "Tema 1: Introducción a los juegos en red y a las redes de comunicaciones\nSe presentan los retos de las aplicaciones en red y se introducen los principales conceptos necesarios para entender su funcionamiento:\n\nQué son y como funcionan las aplicaciones en red.\nProblemas propios de aplicaciones en red.\nConceptos fundamentales de comunicación en red entre aplicaciones.\nConsideraciones al desarrollar juegos en red."
+  },
+  {
+    "objectID": "sub_introduction.html#tema-2-desarrollo-en-el-lado-del-cliente.",
+    "href": "sub_introduction.html#tema-2-desarrollo-en-el-lado-del-cliente.",
+    "title": "Presentación de Juegos en Red",
+    "section": "Tema 2: Desarrollo en el lado del cliente.",
+    "text": "Tema 2: Desarrollo en el lado del cliente.\nSe estudia el lenguaje JavaScript para construir aplicaciones en el lado del cliente (browser). API REST.\n\nDesarrollo web en JavaScript, HTML y CSS\nUso de las API REST"
+  },
+  {
+    "objectID": "sub_introduction.html#tema-3-desarrollo-de-juegos-con-tecnología-web.",
+    "href": "sub_introduction.html#tema-3-desarrollo-de-juegos-con-tecnología-web.",
+    "title": "Presentación de Juegos en Red",
+    "section": "Tema 3: Desarrollo de juegos con tecnología web.",
+    "text": "Tema 3: Desarrollo de juegos con tecnología web.\nSe presenta el framework JavaScript Phaser para desarrollo de juegos en el cliente:\n\nPhaser 3 framework: https://phaser.io.\nAmplia galería de ejemplos: https://phaser.io/examples/"
+  },
+  {
+    "objectID": "sub_introduction.html#tema-4-desarrollo-en-el-lado-del-servidor.",
+    "href": "sub_introduction.html#tema-4-desarrollo-en-el-lado-del-servidor.",
+    "title": "Presentación de Juegos en Red",
+    "section": "Tema 4: Desarrollo en el lado del servidor.",
+    "text": "Tema 4: Desarrollo en el lado del servidor.\nSe estudia el framework express.js con JavaScript para desarrollar el lado del servidor. Implementación de API REST:\n\nIntroducción a express.js\nDesarrollo de comunicación cliente servidor a través de API REST."
+  },
+  {
+    "objectID": "sub_introduction.html#tema-5-comunicación-asíncrona-cliente---servidor",
+    "href": "sub_introduction.html#tema-5-comunicación-asíncrona-cliente---servidor",
+    "title": "Presentación de Juegos en Red",
+    "section": "Tema 5: Comunicación asíncrona cliente - servidor",
+    "text": "Tema 5: Comunicación asíncrona cliente - servidor\nSe estudia el uso de WebSockets para comunicación asíncrona entre nodos:\n\nIntroducción a la comunicación asíncrona con WebSockets.\nCreación de protocolos de mensajes.\nDesarrollo de comunicación asíncrona entre cliente y servidor con WebSockets."
+  },
+  {
+    "objectID": "sub_introduction.html#material-teórico",
+    "href": "sub_introduction.html#material-teórico",
+    "title": "Presentación de Juegos en Red",
+    "section": "Material teórico",
+    "text": "Material teórico\n\nEl material se irá publicando en el Aula Virtual a medida que avance el cuatrimestre.\nSe publicará como asignatura en abierto, todos los materiales son públicos.\nContará con diapositivas, apuntes, problemas y una guía de estudio."
+  },
+  {
+    "objectID": "sub_introduction.html#enunciado-de-la-práctica",
+    "href": "sub_introduction.html#enunciado-de-la-práctica",
+    "title": "Presentación de Juegos en Red",
+    "section": "Enunciado de la práctica",
+    "text": "Enunciado de la práctica\n\nLos enunciados de las prácticas se colgarán en el aula virtual."
+  },
+  {
+    "objectID": "sub_introduction.html#pruebas-de-evaluación",
+    "href": "sub_introduction.html#pruebas-de-evaluación",
+    "title": "Presentación de Juegos en Red",
+    "section": "Pruebas de evaluación:",
+    "text": "Pruebas de evaluación:\n\n40% Pruebas teórico-prácticas\n\nNota mínima: cada prueba &gt;=5\n\n40% Práctica\n\nNota mínima: cada prueba &gt;=5\n\n15% Resolución de problemas y casos prácticos\n\nNo tiene nota mínima\n\n5% Participación en clase y otras actividades\n\nNo tiene nota mínima\n\n\nHay que obtener al menos un 5 de media"
+  },
+  {
+    "objectID": "sub_introduction.html#pruebas-teórico-prácticas-40",
+    "href": "sub_introduction.html#pruebas-teórico-prácticas-40",
+    "title": "Presentación de Juegos en Red",
+    "section": "Pruebas teórico-prácticas (40 %)",
+    "text": "Pruebas teórico-prácticas (40 %)\n\n3 exámenes:\n\nExamen 1 (Tema 1): 35%.\nExamen 2 (Tema 2 y 3): 32.5%.\nExamen 3 (Tema 4): 32.5%.\n\nEjercicios online tipo test / preguntas cortas / ejercicios\nNota mínima en cada prueba 5\nRevaluable en convocatoria extraordinaria"
+  },
+  {
+    "objectID": "sub_introduction.html#práctica-40",
+    "href": "sub_introduction.html#práctica-40",
+    "title": "Presentación de Juegos en Red",
+    "section": "Práctica (40 %)",
+    "text": "Práctica (40 %)\n\nSe realiza en grupos de 4 personas\nCada alumno será evaluado individualmente\nSe desarrolla en parte en las sesiones prácticas\nConsta de 4 entregas (fases) obligatorias coonderaciones 10%, 35%, 25%, 30%.\nNota mínima en cada fase: 5 puntos\nCada fase es revaluable en convocatoria extraordinaria"
+  },
+  {
+    "objectID": "sub_introduction.html#resolución-de-problemas-15",
+    "href": "sub_introduction.html#resolución-de-problemas-15",
+    "title": "Presentación de Juegos en Red",
+    "section": "Resolución de problemas (15 %)",
+    "text": "Resolución de problemas (15 %)\n\nConsiste en una fase adicional al juego desarrollado (fase 5).\nConsistirá en una mejora sobre la práctica entregada y la publicación de la misma en plataformas online.\nNota mínima de 3.\nRevaluable en convocatoria extraordinaria."
+  },
+  {
+    "objectID": "sub_introduction.html#participación-en-clase-5",
+    "href": "sub_introduction.html#participación-en-clase-5",
+    "title": "Presentación de Juegos en Red",
+    "section": "Participación en clase (5 %)",
+    "text": "Participación en clase (5 %)\n\nEs opcional. No tiene nota mínima.\nConsiste en una serie de actividades que se irán realizando a lo largo del cuatrimestre.\nTambién se podrán obtener proponiendo mejoras o correcciones a los apuntes y diapositivas de la asignatura.\nNo es revaluable en convocatoria extraordinaria"
+  },
+  {
+    "objectID": "sub_introduction.html#dispensa-académica",
+    "href": "sub_introduction.html#dispensa-académica",
+    "title": "Presentación de Juegos en Red",
+    "section": "Dispensa académica",
+    "text": "Dispensa académica\nUn alumno con dispensa académica debe realizar los exámenes teóricos-prácticos.\nEstá obligado a hacer las 4 entregas presenciales de la parte práctica ya que son como exámenes.\nLas fechas de las pruebas serán anunciadas con anterioridad."
+  },
+  {
+    "objectID": "sub_introduction.html#no-presentado",
+    "href": "sub_introduction.html#no-presentado",
+    "title": "Presentación de Juegos en Red",
+    "section": "No presentado",
+    "text": "No presentado\nUn alumno obtendrá la calificación de no presentado únicamente si no se presenta a ninguna prueba evaluable (ya sea de teoría o práctica)."
+  },
+  {
+    "objectID": "sub_introduction.html#internet",
+    "href": "sub_introduction.html#internet",
+    "title": "Presentación de Juegos en Red",
+    "section": "Internet",
+    "text": "Internet\n\nPáginas oficiales de los estándares y tecnologías\nTutoriales, ejemplos y blogs realizados por la comunidad\nAplicaciones web de código abierto\n… y todo lo que Google encuentre :)"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#prototipos-vs-clases",
+    "href": "ch2_p2_js_classes.html#prototipos-vs-clases",
+    "title": "Desarrollo en el cliente",
+    "section": "Prototipos vs Clases",
+    "text": "Prototipos vs Clases\nJavaScript usa herencia prototípica, no clases tradicionales\n\nCualquier objeto puede ser prototipo de otros objetos\nLos objetos heredan directamente de otros objetos\nCadena de herencia flexible y dinámica\nES2015+ añadió sintaxis de clases (azúcar sintáctico sobre prototipos)\n\n\n\n\n\n\n\nNota\n\n\nA diferencia de Java o C++, JavaScript no tiene clases “reales” en su núcleo"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#objeto-literal-simple",
+    "href": "ch2_p2_js_classes.html#objeto-literal-simple",
+    "title": "Desarrollo en el cliente",
+    "section": "Objeto Literal Simple",
+    "text": "Objeto Literal Simple\nLa forma más directa de crear objetos\nconst enemigo = {\n    vida: 100,\n    damage: 15,\n    atacar() {\n        return `Enemigo ataca causando ${this.damage} puntos`;\n    }\n};\n\nDefinimos propiedades y métodos directamente\nSintaxis clara y concisa\nIdeal para objetos únicos o configuraciones"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#creación-basada-en-prototipos",
+    "href": "ch2_p2_js_classes.html#creación-basada-en-prototipos",
+    "title": "Desarrollo en el cliente",
+    "section": "Creación Basada en Prototipos",
+    "text": "Creación Basada en Prototipos\nUsando Object.create() para heredar\nconst goblin = Object.create(enemigo);\ngoblin.vida = 50;\ngoblin.damage = 8;\n\nconsole.log(goblin.atacar()); \n// \"Enemigo ataca causando 8 puntos\"\n\ngoblin hereda el método atacar() de enemigo\nLas propiedades propias sobrescriben las heredadas\nthis se refiere al objeto que invoca el método"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#herencia-con-prototipos---concepto",
+    "href": "ch2_p2_js_classes.html#herencia-con-prototipos---concepto",
+    "title": "Desarrollo en el cliente",
+    "section": "Herencia con Prototipos - Concepto",
+    "text": "Herencia con Prototipos - Concepto\nCreando cadenas de herencia\n\nCada objeto puede heredar de otro objeto\nSe forma una cadena de prototipos\nJavaScript busca propiedades/métodos en la cadena hasta encontrarlos\nPermite estructurar jerarquías de objetos"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#herencia-con-prototipos---base",
+    "href": "ch2_p2_js_classes.html#herencia-con-prototipos---base",
+    "title": "Desarrollo en el cliente",
+    "section": "Herencia con Prototipos - Base",
+    "text": "Herencia con Prototipos - Base\nCreando el objeto base\nconst personajeBase = {\n    mover(x, y) {\n        this.x += x;\n        this.y += y;\n    }\n};\n\nDefine comportamiento común\nPuede ser heredado por múltiples objetos\nLos métodos usan this para acceder a propiedades"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#herencia-con-prototipos---extensión",
+    "href": "ch2_p2_js_classes.html#herencia-con-prototipos---extensión",
+    "title": "Desarrollo en el cliente",
+    "section": "Herencia con Prototipos - Extensión",
+    "text": "Herencia con Prototipos - Extensión\nCreando un prototipo intermedio\nconst protottipoJugador = Object.create(personajeBase);\nprotottipoJugador.atacar = function(objetivo) {\n    return `${this.nombre} ataca a ${objetivo.nombre}`;\n};\n\nHereda de personajeBase\nAñade funcionalidad específica\nForma el segundo eslabón de la cadena"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#herencia-con-prototipos---instancia",
+    "href": "ch2_p2_js_classes.html#herencia-con-prototipos---instancia",
+    "title": "Desarrollo en el cliente",
+    "section": "Herencia con Prototipos - Instancia",
+    "text": "Herencia con Prototipos - Instancia\nCreando la instancia final\nconst jugador = Object.create(protottipoJugador);\njugador.nombre = \"Aragorn\";\njugador.x = 0;\njugador.y = 0;\n\nTiene acceso a mover() y atacar()\nDefine sus propias propiedades\nCompleta la cadena de herencia"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#acceso-a-propiedades",
+    "href": "ch2_p2_js_classes.html#acceso-a-propiedades",
+    "title": "Desarrollo en el cliente",
+    "section": "Acceso a Propiedades",
+    "text": "Acceso a Propiedades\n\n\nNotación punto\nLa forma más común y legible\nconst config = {\n    sonido: true,\n    volumen: 0.8,\n    idioma: \"es\"\n};\n\nconsole.log(config.sonido);\nconfig.volumen = 0.5;\n\nSintaxis clara: objeto.propiedad\nRecomendada cuando el nombre es conocido\nNo funciona con nombres dinámicos ::: {.columns} ::: {.column width=“50%”} ### Notación corchetes Para propiedades dinámicas o especiales\n\nconsole.log(config[\"idioma\"]);\n\nconst propiedad = \"volumen\";\nconsole.log(config[propiedad]);\n\nPermite nombres de propiedad dinámicos\nÚtil con variables o bucles\nNecesaria para nombres con espacios o caracteres especiales"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#añadir-propiedades-dinámicamente",
+    "href": "ch2_p2_js_classes.html#añadir-propiedades-dinámicamente",
+    "title": "Desarrollo en el cliente",
+    "section": "Añadir Propiedades Dinámicamente",
+    "text": "Añadir Propiedades Dinámicamente\nJavaScript permite modificar objetos en tiempo de ejecución\nconfig.dificultad = \"normal\";\nconfig[\"nivel-maximo\"] = 10;\n\nSe pueden añadir propiedades después de crear el objeto\nCaracterística de la naturaleza dinámica de JavaScript\nÚtil pero puede complicar el seguimiento del código"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#iteración-sobre-propiedades---forin",
+    "href": "ch2_p2_js_classes.html#iteración-sobre-propiedades---forin",
+    "title": "Desarrollo en el cliente",
+    "section": "Iteración sobre Propiedades - For…in",
+    "text": "Iteración sobre Propiedades - For…in\nRecorriendo todas las propiedades\nconst inventario = {\n    espada: 1,\n    pocion: 5,\n    oro: 150\n};\n\nfor (let item in inventario) {\n    console.log(`${item}: ${inventario[item]}`);\n}\n\nItera sobre propiedades enumerables\nIncluye propiedades heredadas del prototipo\nLa variable toma el nombre de cada propiedad"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#iteración-sobre-propiedades---verificación",
+    "href": "ch2_p2_js_classes.html#iteración-sobre-propiedades---verificación",
+    "title": "Desarrollo en el cliente",
+    "section": "Iteración sobre Propiedades - Verificación",
+    "text": "Iteración sobre Propiedades - Verificación\nComprobando existencia de propiedades\nif (\"oro\" in inventario) {\n    console.log(\"El jugador tiene oro\");\n}\n\nif (inventario.hasOwnProperty(\"espada\")) {\n    console.log(\"Propiedad propia, no heredada\");\n}\n\nin verifica si existe la propiedad (propia o heredada)\nhasOwnProperty() verifica solo propiedades propias\nNo necesitamos acceder al valor para verificar"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#iteración-sobre-propiedades---arrays",
+    "href": "ch2_p2_js_classes.html#iteración-sobre-propiedades---arrays",
+    "title": "Desarrollo en el cliente",
+    "section": "Iteración sobre Propiedades - Arrays",
+    "text": "Iteración sobre Propiedades - Arrays\nObteniendo claves y valores como arrays\nconst items = Object.keys(inventario);\n// [\"espada\", \"pocion\", \"oro\"]\n\nconst cantidades = Object.values(inventario);\n// [1, 5, 150]\n\nconst pares = Object.entries(inventario);\n// [[\"espada\", 1], [\"pocion\", 5], [\"oro\", 150]]\n\nÚtil para trabajar con métodos de array (map, filter, etc.)\nSolo devuelven propiedades propias enumerables"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#función-constructor---definición",
+    "href": "ch2_p2_js_classes.html#función-constructor---definición",
+    "title": "Desarrollo en el cliente",
+    "section": "Función Constructor - Definición",
+    "text": "Función Constructor - Definición\nEl patrón clásico pre-ES2015\nfunction Jugador(nombre, x, y) {\n    this.nombre = nombre;\n    this.x = x;\n    this.y = y;\n    this.vida = 100;\n}\n\nSe invoca con new para crear instancias\nthis se refiere al nuevo objeto creado\nInicializa las propiedades de la instancia\nPor convención, nombre en PascalCase"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#función-constructor---métodos",
+    "href": "ch2_p2_js_classes.html#función-constructor---métodos",
+    "title": "Desarrollo en el cliente",
+    "section": "Función Constructor - Métodos",
+    "text": "Función Constructor - Métodos\nAñadiendo métodos al prototipo\nJugador.prototype.mover = function(deltaX, deltaY) {\n    this.x += deltaX;\n    this.y += deltaY;\n};\n\nJugador.prototype.mostrarPosicion = function() {\n    return `${this.nombre} está en (${this.x}, ${this.y})`;\n};\n\nLos métodos van en el prototipo, no en el constructor\nSe comparten entre todas las instancias (ahorra memoria)\nTienen acceso a this de la instancia"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#función-constructor---uso",
+    "href": "ch2_p2_js_classes.html#función-constructor---uso",
+    "title": "Desarrollo en el cliente",
+    "section": "Función Constructor - Uso",
+    "text": "Función Constructor - Uso\nCreando instancias\nconst player1 = new Jugador(\"Aragorn\", 10, 20);\nconst player2 = new Jugador(\"Legolas\", 15, 25);\n\nplayer1.mover(2, 3);\nconsole.log(player1.mostrarPosicion());\n// \"Aragorn está en (12, 23)\"\n\nSiempre usar new para invocar constructores\nCada instancia tiene sus propias propiedades\nLos métodos son compartidos vía prototipo"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#herencia-con-constructor---clase-base",
+    "href": "ch2_p2_js_classes.html#herencia-con-constructor---clase-base",
+    "title": "Desarrollo en el cliente",
+    "section": "Herencia con Constructor - Clase Base",
+    "text": "Herencia con Constructor - Clase Base\nDefiniendo el constructor padre\nfunction Personaje(nombre, vida) {\n    this.nombre = nombre;\n    this.vida = vida;\n}\n\nPersonaje.prototype.saludar = function() {\n    return `Hola, soy ${this.nombre}`;\n};\n\nConstructor base con propiedades comunes\nMétodos compartidos en el prototipo"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#herencia-con-constructor---clase-hija",
+    "href": "ch2_p2_js_classes.html#herencia-con-constructor---clase-hija",
+    "title": "Desarrollo en el cliente",
+    "section": "Herencia con Constructor - Clase Hija",
+    "text": "Herencia con Constructor - Clase Hija\nExtendiendo la funcionalidad\nfunction Guerrero(nombre, vida, fuerza) {\n    Personaje.call(this, nombre, vida);\n    this.fuerza = fuerza;\n}\n\nPersonaje.call(this, ...) llama al constructor padre\nInicializa las propiedades heredadas\nAñade propiedades específicas de Guerrero"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#herencia-con-constructor---cadena-de-prototipos",
+    "href": "ch2_p2_js_classes.html#herencia-con-constructor---cadena-de-prototipos",
+    "title": "Desarrollo en el cliente",
+    "section": "Herencia con Constructor - Cadena de Prototipos",
+    "text": "Herencia con Constructor - Cadena de Prototipos\nEstableciendo la herencia correctamente\nGuerrero.prototype = Object.create(Personaje.prototype);\nGuerrero.prototype.constructor = Guerrero;\n\nGuerrero.prototype.atacar = function() {\n    return `${this.nombre} ataca con fuerza ${this.fuerza}`;\n};\n\nObject.create() establece el prototipo correcto\nRestauramos la propiedad constructor\nAhora podemos añadir métodos específicos"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#herencia-con-constructor---resultado",
+    "href": "ch2_p2_js_classes.html#herencia-con-constructor---resultado",
+    "title": "Desarrollo en el cliente",
+    "section": "Herencia con Constructor - Resultado",
+    "text": "Herencia con Constructor - Resultado\nUsando la herencia completa\nconst conan = new Guerrero(\"Conan\", 150, 25);\n\nconsole.log(conan.saludar());\n// \"Hola, soy Conan\" (heredado de Personaje)\n\nconsole.log(conan.atacar());\n// \"Conan ataca con fuerza 25\" (propio de Guerrero)\n\nconan tiene acceso a métodos de ambos constructores\nPatrón verboso y propenso a errores"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#clases-es2015---introducción",
+    "href": "ch2_p2_js_classes.html#clases-es2015---introducción",
+    "title": "Desarrollo en el cliente",
+    "section": "Clases ES2015+ - Introducción",
+    "text": "Clases ES2015+ - Introducción\nSintaxis moderna y clara\n\nIntroducida en ES2015 (ES6)\nAzúcar sintáctico sobre prototipos\nMás familiar para desarrolladores de otros lenguajes OO\nSintaxis más estructurada y menos propensa a errores"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#clases-es2015---definición-básica",
+    "href": "ch2_p2_js_classes.html#clases-es2015---definición-básica",
+    "title": "Desarrollo en el cliente",
+    "section": "Clases ES2015+ - Definición Básica",
+    "text": "Clases ES2015+ - Definición Básica\nDeclarando una clase\nclass GameObject {\n    constructor(x, y) {\n        this.x = x;\n        this.y = y;\n        this.activo = true;\n    }\n}\n\nPalabra clave class seguida del nombre\nMétodo constructor() se ejecuta al crear instancias\nInicializa las propiedades del objeto"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#clases-es2015---métodos",
+    "href": "ch2_p2_js_classes.html#clases-es2015---métodos",
+    "title": "Desarrollo en el cliente",
+    "section": "Clases ES2015+ - Métodos",
+    "text": "Clases ES2015+ - Métodos\nAñadiendo comportamiento\nclass GameObject {\n    constructor(x, y) {\n        this.x = x;\n        this.y = y;\n        this.activo = true;\n    }\n\n    actualizar(deltaTime) {\n        if (!this.activo) return;\n        // Lógica de actualización\n    }\n\n    destruir() {\n        this.activo = false;\n    }\n}\n\nLos métodos se definen dentro de la clase\nNo se usa function keyword\nAutomáticamente se añaden al prototipo"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#herencia-con-clases---extends",
+    "href": "ch2_p2_js_classes.html#herencia-con-clases---extends",
+    "title": "Desarrollo en el cliente",
+    "section": "Herencia con Clases - Extends",
+    "text": "Herencia con Clases - Extends\nCreando subclases\nclass Enemigo extends GameObject {\n    constructor(x, y, tipo) {\n        super(x, y);  // Llamada al constructor padre\n        this.tipo = tipo;\n        this.vida = 50;\n        this.velocidad = 2;\n    }\n}\n\nextends establece la herencia\nsuper() llama al constructor de la clase padre\nDebe ser la primera línea del constructor hijo"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#herencia-con-clases---sobrescritura",
+    "href": "ch2_p2_js_classes.html#herencia-con-clases---sobrescritura",
+    "title": "Desarrollo en el cliente",
+    "section": "Herencia con Clases - Sobrescritura",
+    "text": "Herencia con Clases - Sobrescritura\nExtendiendo métodos heredados\nclass Enemigo extends GameObject {\n    // ... constructor ...\n\n    actualizar(deltaTime) {\n        super.actualizar(deltaTime);\n        if (this.vida &gt; 0) {\n            this.x += this.velocidad;\n        }\n    }\n}\n\nPodemos sobrescribir métodos del padre\nsuper.nombreMetodo() llama a la versión del padre\nPermite extender sin reemplazar completamente"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#getters-y-setters---concepto",
+    "href": "ch2_p2_js_classes.html#getters-y-setters---concepto",
+    "title": "Desarrollo en el cliente",
+    "section": "Getters y Setters - Concepto",
+    "text": "Getters y Setters - Concepto\nPropiedades calculadas y validación\n\nGetters: propiedades de solo lectura o calculadas\nSetters: validación al asignar valores\nSe usan como propiedades normales (sin paréntesis)\nPermiten encapsular lógica de acceso"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#getters-y-setters---getter",
+    "href": "ch2_p2_js_classes.html#getters-y-setters---getter",
+    "title": "Desarrollo en el cliente",
+    "section": "Getters y Setters - Getter",
+    "text": "Getters y Setters - Getter\nPropiedades de solo lectura\nclass Enemigo extends GameObject {\n    constructor(x, y, tipo) {\n        super(x, y);\n        this._vida = 50;\n    }\n\n    get estaVivo() {\n        return this._vida &gt; 0;\n    }\n}\n\nconst orc = new Enemigo(10, 20, \"Orc\");\nif (orc.estaVivo) { // Sin paréntesis\n    console.log(\"El enemigo sigue vivo\");\n}\n\nPalabra clave get antes del nombre\nSe accede como propiedad, no como método\nÚtil para valores derivados"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#getters-y-setters---setter",
+    "href": "ch2_p2_js_classes.html#getters-y-setters---setter",
+    "title": "Desarrollo en el cliente",
+    "section": "Getters y Setters - Setter",
+    "text": "Getters y Setters - Setter\nValidación al asignar\nclass Enemigo extends GameObject {\n    // ... constructor ...\n\n    set vida(valor) {\n        this._vida = Math.max(0, valor);\n        if (this._vida === 0) {\n            this.destruir();\n        }\n    }\n\n    get vida() {\n        return this._vida;\n    }\n}\n\nPalabra clave set antes del nombre\nPermite validar y ejecutar lógica adicional\nPor convención, la propiedad real usa _ como prefijo"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#getters-y-setters---uso",
+    "href": "ch2_p2_js_classes.html#getters-y-setters---uso",
+    "title": "Desarrollo en el cliente",
+    "section": "Getters y Setters - Uso",
+    "text": "Getters y Setters - Uso\nAsignación transparente\nconst goblin = new Enemigo(5, 10, \"Goblin\");\n\ngoblin.vida = 30;      // Usa el setter\nconsole.log(goblin.vida); // Usa el getter\n\ngoblin.vida = -10;     // Setter lo convierte a 0\n// El setter también llama a destruir()\n\nSintaxis de propiedad normal\nEl setter ejecuta validación automáticamente\nTransparente para el código que usa la clase"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#métodos-estáticos---concepto",
+    "href": "ch2_p2_js_classes.html#métodos-estáticos---concepto",
+    "title": "Desarrollo en el cliente",
+    "section": "Métodos Estáticos - Concepto",
+    "text": "Métodos Estáticos - Concepto\nMétodos de la clase, no de instancias\n\nPertenecen a la clase, no a objetos individuales\nSe invocan sobre la clase misma\nNo tienen acceso a this de instancia\nÚtiles para funciones de utilidad o métodos factoría"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#métodos-estáticos---definición",
+    "href": "ch2_p2_js_classes.html#métodos-estáticos---definición",
+    "title": "Desarrollo en el cliente",
+    "section": "Métodos Estáticos - Definición",
+    "text": "Métodos Estáticos - Definición\nPalabra clave static\nclass Enemigo extends GameObject {\n    // ... resto del código ...\n\n    static crearOrc() {\n        const orc = new Enemigo(0, 0, \"Orc\");\n        orc.vida = 80;\n        orc.velocidad = 1.5;\n        return orc;\n    }\n\n    static crearGoblin() {\n        const goblin = new Enemigo(0, 0, \"Goblin\");\n        goblin.vida = 30;\n        goblin.velocidad = 3;\n        return goblin;\n    }\n}\n\nPrefijo static antes del método\nPatrón factoría para crear instancias preconfiguradas"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#métodos-estáticos---uso",
+    "href": "ch2_p2_js_classes.html#métodos-estáticos---uso",
+    "title": "Desarrollo en el cliente",
+    "section": "Métodos Estáticos - Uso",
+    "text": "Métodos Estáticos - Uso\nInvocación sobre la clase\nconst orc = Enemigo.crearOrc();\nconst goblin = Enemigo.crearGoblin();\n\n// NO se puede llamar sobre instancias\nconst enemigo = new Enemigo(5, 5, \"Slime\");\n// enemigo.crearOrc(); // ❌ Error\n\nSe llaman con NombreClase.metodoEstatico()\nNo están disponibles en las instancias\nSimilares a métodos de clase en Java/C++"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#uso-de-clases---creación",
+    "href": "ch2_p2_js_classes.html#uso-de-clases---creación",
+    "title": "Desarrollo en el cliente",
+    "section": "Uso de Clases - Creación",
+    "text": "Uso de Clases - Creación\nInstanciando objetos\nconst goblin = new Enemigo(10, 20, \"Goblin\");\ngoblin.vida = 30;\n\nconst orc = Enemigo.crearOrc(); // Método estático\n\nConstructor normal con new\nPodemos usar setters para asignar valores\nLos métodos estáticos crean instancias preconfiguradas"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#uso-de-clases---getters",
+    "href": "ch2_p2_js_classes.html#uso-de-clases---getters",
+    "title": "Desarrollo en el cliente",
+    "section": "Uso de Clases - Getters",
+    "text": "Uso de Clases - Getters\nAcceso a propiedades calculadas\nif (goblin.estaVivo) {\n    console.log(\"El goblin sigue vivo\");\n}\n\nconsole.log(`Vida actual: ${goblin.vida}`);\n\nSin paréntesis, como propiedades normales\nTransparentes para el código cliente\nPueden ejecutar cálculos o validaciones"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#uso-de-clases---polimorfismo",
+    "href": "ch2_p2_js_classes.html#uso-de-clases---polimorfismo",
+    "title": "Desarrollo en el cliente",
+    "section": "Uso de Clases - Polimorfismo",
+    "text": "Uso de Clases - Polimorfismo\nTratamiento uniforme de objetos diferentes\nconst enemigos = [goblin, orc];\n\nenemigos.forEach(enemigo =&gt; {\n    enemigo.actualizar(16);\n    if (enemigo.estaVivo) {\n        enemigo.mover(1, 0);\n    }\n});\n\nTodos los enemigos comparten la misma interfaz\nPodemos tratarlos de forma uniforme\nCada uno puede tener comportamiento específico"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#ventajas-de-clases-es2015",
+    "href": "ch2_p2_js_classes.html#ventajas-de-clases-es2015",
+    "title": "Desarrollo en el cliente",
+    "section": "Ventajas de Clases ES2015+",
+    "text": "Ventajas de Clases ES2015+\nPor qué usar la sintaxis moderna\n\nSintaxis más clara: Familiar para otros lenguajes OO\nHerencia simplificada: extends y super() más directos\nMenos errores: Estructura más rígida previene problemas comunes\nGetters y setters integrados: Encapsulación natural\nMétodos estáticos: Organización clara de funciones de utilidad\nMejor soporte de herramientas: IDEs y linters funcionan mejor\n\n\n\n\n\n\n\nTip\n\n\nLa sintaxis de clases es la recomendada para proyectos nuevos"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#resumen-prototipos-vs-clases",
+    "href": "ch2_p2_js_classes.html#resumen-prototipos-vs-clases",
+    "title": "Desarrollo en el cliente",
+    "section": "Resumen: Prototipos vs Clases",
+    "text": "Resumen: Prototipos vs Clases\nDos formas, mismo resultado\n\n\n\nAspecto\nPrototipos\nClases ES2015+\n\n\n\n\nSintaxis\nVerbosa y manual\nClara y estructurada\n\n\nHerencia\nObject.create() y call()\nextends y super()\n\n\nMétodos\nFuncion.prototype.metodo\nDentro de la clase\n\n\nUso actual\nLegacy code\nRecomendado\n\n\n\n\n\n\n\n\n\nImportante\n\n\nLas clases son azúcar sintáctico: por debajo siguen usando prototipos"
+  },
+  {
+    "objectID": "ch1_p4_transport.html#qué-es-la-capa-de-transporte",
+    "href": "ch1_p4_transport.html#qué-es-la-capa-de-transporte",
+    "title": "Capa de Transporte",
+    "section": "¿Qué es la Capa de Transporte?",
+    "text": "¿Qué es la Capa de Transporte?\n\nLa capa de transporte proporciona comunicación lógica entre procesos de aplicación que se ejecutan en diferentes hosts\n\n\n\nFunción principal:\n\nSe ejecuta en hosts finales\nNo en el núcleo de la red\nDivide mensajes en segmentos\nRecompone segmentos en el receptor\n\nProtocolos principales:\n\nUDP: Protocolo minimalista\nTCP: Protocolo complejo con garantías\n\n\n\n\n\n\n\n\nblock-beta\n    columns 1\n    \n    A[\"&lt;b&gt;Capa de Aplicación&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;HTTP, HTTPS, FTP, SMTP&lt;br/&gt;DNS, DHCP, Telnet, SSH\"]\n    \n    B[\"&lt;b&gt;Capa de Transporte&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;TCP, UDP&lt;br/&gt;Control de flujo y errores\"]\n    \n    C[\"&lt;b&gt;Capa de Internet&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;IP, ICMP, ARP&lt;br/&gt;Enrutamiento, Direccionamiento\"]\n    \n    D[\"&lt;b&gt;Capa de Acceso a la Red&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Ethernet, WiFi, PPP&lt;br/&gt;Frames, MAC Address&lt;br/&gt;Control de acceso al medio\"]\n    \n    classDef highlight fill:#ff9999,stroke:#cc0000,stroke-width:4px,color:#000\n    classDef normal fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#000\n    \n    class B highlight\n    class A,C,D normal"
+  },
+  {
+    "objectID": "ch1_p4_transport.html#ejemplo-cliente-servidor-con-udp",
+    "href": "ch1_p4_transport.html#ejemplo-cliente-servidor-con-udp",
+    "title": "Capa de Transporte",
+    "section": "Ejemplo: Cliente-Servidor con UDP",
+    "text": "Ejemplo: Cliente-Servidor con UDP\n\n\n\n\n\n\nsequenceDiagram\n    participant A as Client A\n    participant I as The Internet\n    participant B as Server B\n        \n    A-&gt;&gt;I: Paquete UDP 1 (IP destino: 8.8.8.8, puerto: 80)\n    I-&gt;&gt;B: Paquete 1 entregado\n    \n    A-&gt;&gt;I: Paquete UDP 2 (IP destino: 8.8.8.8, puerto:80)\n    I-&gt;&gt;B: Paquete 2 entregado\n    \n    A-&gt;&gt;I: Paquete UDP 3 (IP destino: 8.8.8.8, puerto:80)\n    \n    A-&gt;&gt;I: Paquete UDP 4 (IP destino: 8.8.8.8, puerto:80)\n    I-&gt;&gt;B: Paquete 4 entregado (llega primero!)\n    A-&gt;&gt;I: Paquete UDP 5 (IP destino: 8.8.8.8, puerto:80)\n    I-&gt;&gt;B: Paquete 3 entregado (llega tarde!)\n\n\n\n\n\n\n\n\nPaquete 5: perdido (~1% pérdida normal)\nPaquete 4 llega antes que el 3\nUDP no corrige orden ni pérdidas"
+  },
+  {
+    "objectID": "ch1_p4_transport.html#multiplexación-y-demultiplexación",
+    "href": "ch1_p4_transport.html#multiplexación-y-demultiplexación",
+    "title": "Capa de Transporte",
+    "section": "1. Multiplexación y Demultiplexación",
+    "text": "1. Multiplexación y Demultiplexación\nMultiplexación: Recoger información de diferentes sockets y enviarla por un único medio.\nDemultiplexación: Recibir segmentos y enviarlos a los sockets correspondientes.\n\n\nIdentificación de sockets:\n\nTCP: (IP y Puerto origen, IP y puerto destino)\nUDP: (IP y puerto origen, IP y puerto destino)\n\n\nPuertos: Identificadores numéricos (1-65535)\n\nServidores: asignación manual y fija\nClientes: asignación aleatoria\n\n\n\n\n\n\n\ngraph LR\n    subgraph \"MULTIPLEXACIÓN\"\n        A1[Socket 1&lt;br/&gt;App A] --&gt; M[Multiplexor&lt;br/&gt;Capa de Transporte]\n        A2[Socket 2&lt;br/&gt;App B] --&gt; M\n        A3[Socket 3&lt;br/&gt;App C] --&gt; M\n        M --&gt; N[Red&lt;br/&gt;Medio único]\n    end\n    \n    subgraph \"DEMULTIPLEXACIÓN\"\n        N2[Red&lt;br/&gt;Segmentos entrantes] --&gt; D[Demultiplexor&lt;br/&gt;Capa de Transporte]\n        D --&gt; B1[Socket 1&lt;br/&gt;App A]\n        D --&gt; B2[Socket 2&lt;br/&gt;App B]\n        D --&gt; B3[Socket 3&lt;br/&gt;App C]\n    end\n    \n    N -.-&gt;|Transmisión| N2\n    \n    classDef appClass fill:#e1f5fe,stroke:#0277bd,stroke-width:2px\n    classDef muxClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px\n    classDef netClass fill:#fff3e0,stroke:#f57c00,stroke-width:2px\n    \n    class A1,A2,A3,B1,B2,B3 appClass\n    class M,D muxClass\n    class N,N2 netClass"
+  },
+  {
+    "objectID": "ch1_p4_transport.html#transferencia-fiable",
+    "href": "ch1_p4_transport.html#transferencia-fiable",
+    "title": "Capa de Transporte",
+    "section": "2. Transferencia Fiable",
+    "text": "2. Transferencia Fiable\n\n\nCaracterísticas de una transferencia fiable:\n\nNo se corrompe ningún bit\nNo se pierde información (paquetes)\nLa información se entrega en orden correcto\n\n\nOpciones de implementación:\n\nUsar protocolos fiables existentes (TCP)\nImplementar características propias sobre protocolo no fiable (UDP + lógica aplicación)\n\n\n\n\n\n\n\ngraph LR\n    \n    E[EMISOR] --&gt; PC1[PROTOCOLO&lt;br/&gt;CONFIABILIDAD]\n    PC1 --&gt; MNF[MEDIO&lt;br/&gt;NO FIABLE&lt;br/&gt;&lt;br/&gt;• Puede corromper bits&lt;br/&gt;• Puede perder paquetes&lt;br/&gt;• Puede desordenar]\n    MNF --&gt; PC2[PROTOCOLO&lt;br/&gt;CONFIABILIDAD]\n    PC2 --&gt; R[RECEPTOR]\n    \n    PC1 -.-&gt;|Implementa| MECH[• Detección de errores&lt;br/&gt;• Retransmisión&lt;br/&gt;• Control de flujo&lt;br/&gt;• Secuenciación&lt;br/&gt;• ACK/NACK&lt;br/&gt;• Timeouts]\n    PC2 -.-&gt;|Implementa| MECH\n    \n    classDef endpointClass fill:#e3f2fd,stroke:#1976d2,stroke-width:2px\n    classDef protocolClass fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px\n    classDef unreliableClass fill:#ffebee,stroke:#d32f2f,stroke-width:2px\n    classDef reliableClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px\n    classDef mechClass fill:#fafafa,stroke:#616161,stroke-width:1px\n    \n    class E,R endpointClass\n    class PC1,PC2 protocolClass\n    class MNF unreliableClass\n    class MECH mechClass"
+  },
+  {
+    "objectID": "ch1_p4_transport.html#otros-conceptos",
+    "href": "ch1_p4_transport.html#otros-conceptos",
+    "title": "Capa de Transporte",
+    "section": "Otros conceptos",
+    "text": "Otros conceptos\n\nControl de flujo: Evita que el emisor sature al receptor limitando la velocidad de envío según la capacidad del destinatario\nControl de congestión: Ajusta la velocidad de transmisión para evitar saturar la red cuando detecta congestión\nTemporización: Proporciona el tiempo mínimo de entrega de datos entre emisor y receptor a través de la red\nTasa de transferencia mínima: Garantiza una velocidad mínima de transmisión de datos para aplicaciones que requieren ancho de banda constante"
+  },
+  {
+    "objectID": "ch1_p4_transport.html#características-de-udp",
+    "href": "ch1_p4_transport.html#características-de-udp",
+    "title": "Capa de Transporte",
+    "section": "Características de UDP",
+    "text": "Características de UDP\n\n\nProtocolo minimalista [RFC 768]:\n\nBasado en best-effort (Fire-and-forget)\nNo orientado a conexión\nEntrega no fiable y sin orden\nIntegridad básica (checksum)\nMultiplexación y demultiplexación\n\n\nLo que NO proporciona:\n\nControl de flujo\nControl de congestión\nTemporización\nTasa de transferencia mínima\nSeguridad\n\n\n\n\n\n\n\n\nsequenceDiagram\n    participant A as Client A\n    participant I as The Internet\n    participant B as Server B\n        \n    A-&gt;&gt;I: Paquete UDP 3 (IP destino: 8.8.8.8, puerto:80)\n    Note over I: Paquete UDP 3 se pierde\n    A-&gt;&gt;I: Paquete UDP 4 (IP destino: 8.8.8.8, puerto:80)\n    I-&gt;&gt;B: Paquete 4 entregado (llega primero!)\n    Note over B: No garantiza orden\n    A-&gt;&gt;I: Paquete UDP 5 (IP destino: 8.8.8.8, puerto:80)\n    I-&gt;&gt;B: Paquete 3 entregado (llega tarde!)"
+  },
+  {
+    "objectID": "ch1_p4_transport.html#estructura-del-paquete-udp",
+    "href": "ch1_p4_transport.html#estructura-del-paquete-udp",
+    "title": "Capa de Transporte",
+    "section": "Estructura del Paquete UDP",
+    "text": "Estructura del Paquete UDP\n\n\n\n\n\npacket-beta\n\n    0-15: \"Source Port\"\n    16-31: \"Destination Port\"\n    32-47: \"Length\"\n    48-63: \"Checksum\"\n\n\n\n\n\n\n\nLongitud: Hasta 65535 bytes (limitado por MTU)\nChecksum: Verificación de integridad\nEstructura simple comparada con otros protocolos\n8 bytes de cabecera fijos."
+  },
+  {
+    "objectID": "ch1_p4_transport.html#checksum-udp",
+    "href": "ch1_p4_transport.html#checksum-udp",
+    "title": "Capa de Transporte",
+    "section": "Checksum UDP",
+    "text": "Checksum UDP\nProceso de cálculo:\n\nPreparación: pseudo-cabecera IP + cabecera UDP + datos\nDivisión en palabras de 16 bits\nSuma usando aritmética de complemento a uno\nComplemento del resultado → campo checksum\n\nVerificación en receptor:\n\nMismo algoritmo incluyendo checksum recibido\nResultado esperado: 0xFFFF\nSi difiere: datagrama descartado silenciosamente"
+  },
+  {
+    "objectID": "ch1_p4_transport.html#casos-de-uso-de-udp",
+    "href": "ch1_p4_transport.html#casos-de-uso-de-udp",
+    "title": "Capa de Transporte",
+    "section": "Casos de Uso de UDP",
+    "text": "Casos de Uso de UDP\nAplicaciones ideales para UDP:\n\nMultimedia streaming: Tolerante a pérdidas, sensible a interrupciones\nDNS: Respuestas rápidas necesarias\nSNMP: Administración de red\nGaming online: Latencia baja crítica\nQUIC/HTTP3: Base para protocolos modernos optimizados\n\nEjemplo: Implementar protocolo propio sobre UDP para juegos\n\nAñadir número de paquete\nDescartar paquetes fuera de orden\nIgnorar duplicados\nSobrecarga mínima"
+  },
+  {
+    "objectID": "ch1_p4_transport.html#características-de-tcp",
+    "href": "ch1_p4_transport.html#características-de-tcp",
+    "title": "Capa de Transporte",
+    "section": "Características de TCP",
+    "text": "Características de TCP\n\n\nProtocolo confiable [RFC 793]:\n\nOrientado a conexión\nEntrega fiable y ordenada (confiabilidad)\nControl de flujo\nControl de congestión\nMultiplexación y demultiplexación\n\n\nLo que NO proporciona:\n\nTemporización específica\nTasa mínima garantizada\nSeguridad nativa (necesita TLS/SSL)\n\n\nTrade-off: Confiabilidad y orden sobre velocidad pura"
+  },
+  {
+    "objectID": "ch1_p4_transport.html#estructura-del-paquete-tcp",
+    "href": "ch1_p4_transport.html#estructura-del-paquete-tcp",
+    "title": "Capa de Transporte",
+    "section": "Estructura del Paquete TCP",
+    "text": "Estructura del Paquete TCP\n\n\n\n\n\n\npacket-beta\n  0-15: \"Source Port\"\n  16-31: \"Destination Port\"\n  32-63: \"Sequence Number\"\n  64-95: \"Acknowledgment Number\"\n  96-99: \"Data Offset\"\n  100-105: \"Reserved\"\n  106: \"URG\"\n  107: \"ACK\"\n  108: \"PSH\"\n  109: \"RST\"\n  110: \"SYN\"\n  111: \"FIN\"\n  112-127: \"Window\"\n  128-143: \"Checksum\"\n  144-159: \"Urgent Pointer\"\n  160-191: \"Options (variable)\"\n\n\n\n\n\n\n\n\nSequence number: Número que identifica la posición del primer byte de datos en el segmento dentro del flujo de datos.\nAck number: Indica el próximo número de secuencia que el receptor espera recibir. Confirma la recepción correcta de datos anteriores.\nWindow: Implementa control de flujo (bytes que receptor acepta)\nchecksum: Muy similar a UDP.\nTamaño variable de 20 a 60 bytes."
+  },
+  {
+    "objectID": "ch1_p4_transport.html#mecanismos-de-confiabilidad",
+    "href": "ch1_p4_transport.html#mecanismos-de-confiabilidad",
+    "title": "Capa de Transporte",
+    "section": "Mecanismos de Confiabilidad",
+    "text": "Mecanismos de Confiabilidad\n\nLos mecanismos de confiabilidad en TCP garantizan que los datos lleguen correctamente y en orden.\n\n\n\nNúmeros de secuencia y ACKs:\n\nCada byte tiene número único\nCuando enviamos información, está identificada por un número de secuencia (SEQ)\nAdemás, esperamos confirmación de que se ha recibido correctamente (ACK)\nACKs acumulativos (ACK para byte N confirma hasta N-1)\nLos ACKs y SEQs permite detectar datos perdidos, duplicados o desordenados\n\n\n\n\n\n\n\n\nsequenceDiagram\n    participant E as Emisor\n    participant R as Receptor\n    \n    Note over E,R: Conexión ya establecida, seq inicial=100\n    \n    E-&gt;&gt;R: seq=100, data=\"Hola\" (4 bytes)\n    Note over R: Recibe\n    R-&gt;&gt;E: ACK=104 (\"Espero byte 104\")\n    Note over R: Confirma\n    \n    E-&gt;&gt;R: seq=104, data=\" mundo!\" (7 bytes)  \n    R-&gt;&gt;E: ACK=111 (\"Espero byte 111\")\n    \n    E-&gt;&gt;R: seq=111, data=\" TCP\" (4 bytes)\n    E-&gt;&gt;R: seq=115, data=\" rocks\" (6 bytes)\n    Note over R: Recibe ambos correctamente\n    Note over R: ACK acumulativo confirma todo\n    R-&gt;&gt;E: ACK=121 (\"Recibí todo hasta byte 120\")"
+  },
+  {
+    "objectID": "ch1_p4_transport.html#detección-de-pérdidas",
+    "href": "ch1_p4_transport.html#detección-de-pérdidas",
+    "title": "Capa de Transporte",
+    "section": "Detección de pérdidas",
+    "text": "Detección de pérdidas\n\n\nPérdidas por timeout\n\n\n\n\n\n\nsequenceDiagram\n    participant E as Emisor\n    participant R as Receptor\n    E -&gt;&gt; X: seq=100, data=\"A\", Paquete perdido\n    Note over E: Timeout de seq:100, reenvio\n    E -&gt;&gt; R: seq=100, data=\"A\",\n\n\n\n\n\n\n\n\nSi no recibe ACK en tiempo determinado → asume pérdida y retransmite\n\n\nPérdidas por ACKs duplicados\n\n\n\n\n\n\nsequenceDiagram\n    participant E as Emisor\n    participant R as Receptor\n    E -&gt;&gt; X: seq=100, data=\"A\", Paquete perdido\n    E -&gt;&gt; R: seq=101, data=\"B\"\n    E -&gt;&gt; R: seq=102, data=\"C\"\n    E -&gt;&gt; R: seq=103, data=\"D\"\n    R -&gt;&gt; E: ACK=100\n    R -&gt;&gt; E: ACK=100\n    R -&gt;&gt; E: ACK=100\n    Note over E,R: Retransmisión rápida\n    E -&gt;&gt; R: seq=100, data=\"A\"\n\n\n\n\n\n\n\n\n3 ACKs duplicados → Fast Retransmit inmediato"
+  },
+  {
+    "objectID": "ch1_p4_transport.html#control-de-flujo",
+    "href": "ch1_p4_transport.html#control-de-flujo",
+    "title": "Capa de Transporte",
+    "section": "Control de Flujo",
+    "text": "Control de Flujo\n\nEl control de flujo en TCP es un mecanismo que evita que el emisor envíe más datos de los que el receptor puede procesar.\n\n\n\n\n\n\n\n\n\nsequenceDiagram\n    participant E as Emisor\n    participant R as Receptor\n    \n    Note over R: Buffer: 4KB libres\n    R-&gt;&gt;E: ACK=1000, Window=4096\n    E-&gt;&gt;R: seq=1000, data=2KB\n    Note over R: Buffer: 2KB libres\n    R-&gt;&gt;E: ACK=3000, Window=2048\n    E-&gt;&gt;R: seq=3000, data=2KB\n    Note over R: Buffer: 0KB libres (lleno)\n    R-&gt;&gt;E: ACK=5000, Window=0\n    Note over E: Detiene envío, inicia probe timer\n\n\n\n\n\n\n\n\n\nReceptor informa de su capacidad disponible, y se define:\nVentanaRecepcion = BufferRecepcion - (UltimoByteRecibido - UltimoByteLeido)\nEl emisor se limita a esta ventana\nSi la capacidad es 0, se espera un tiempo y se vuelve a probar."
+  },
+  {
+    "objectID": "ch1_p4_transport.html#control-de-congestión",
+    "href": "ch1_p4_transport.html#control-de-congestión",
+    "title": "Capa de Transporte",
+    "section": "Control de Congestión",
+    "text": "Control de Congestión\n\nEl control de congestión en TCP es un mecanismo que ajusta automáticamente la velocidad de envío (ventana de congestión) para evitar saturar la red cuando detecta pérdida de paquetes o retardos.\n\n\n\nVentana de congestión\n\nVariable del emisor\nBytes máximos en “el aire” (enviados sin ACK)\nTasa efectiva = min(VentanaCongestion, VentanaRecepcion)\n\n\nEventos de Congestión (Pérdidas)\n\nTimeout -&gt; Modo slow start\n\nPérdida severa\nVentana → 1 MSS\n\n3 ACKs duplicados -&gt; Modo congestion avoidance\n\nPérdida moderada\nVentana → mitad"
+  },
+  {
+    "objectID": "ch1_p4_transport.html#mecanismos-de-control-de-congestión",
+    "href": "ch1_p4_transport.html#mecanismos-de-control-de-congestión",
+    "title": "Capa de Transporte",
+    "section": "Mecanismos de control de congestión",
+    "text": "Mecanismos de control de congestión\n\n\nSlow start\n\n\n\n\n\n\nsequenceDiagram\n    participant E as Emisor\n    participant R as Receptor\n    \n    Note over E: Slow Start: cwnd=1 MSS\n    E-&gt;&gt;R: seq=1000, MSS=1KB\n    R-&gt;&gt;E: ACK=2000\n    Note over E: cwnd=2 MSS\n    E-&gt;&gt;R: seq=2000, MSS=1KB\n    E-&gt;&gt;R: seq=3000, MSS=1KB\n    R-&gt;&gt;E: ACK=4000\n    Note over E: cwnd=4 MSS (crecimiento exponencial)\n    Note over E: ... continúa hasta threshold o detectar pérdida ...\n\n\n\n\n\n\n\nDuplicar ventana por cada RTT\n\nCongestion Avoidance\n\n\n\n\n\n\nsequenceDiagram\n    participant E as Emisor\n    participant R as Receptor\n    \n    Note over E: Congestion Avoidance: cwnd=1 MSS\n\n    E-&gt;&gt;R: seq=1000, MSS=1KB\n    R-&gt;&gt;E: ACK=2000\n\n    Note over E: cwnd=2 MSS\n\n    E-&gt;&gt;R: seq=2000, MSS=1KB\n    E-&gt;&gt;R: seq=3000, MSS=1KB\n    R-&gt;&gt;E: ACK=4000\n\n    Note over E: cwnd=3 MSS (crecimiento lineal)\n    Note over E: ... continúa hasta detectar pérdida ...\n\n\n\n\n\n\n\nIncrementar en 1 la ventana en cada RTT"
+  },
+  {
+    "objectID": "ch1_p4_transport.html#handshake-de-tres-fases",
+    "href": "ch1_p4_transport.html#handshake-de-tres-fases",
+    "title": "Capa de Transporte",
+    "section": "Handshake de Tres Fases",
+    "text": "Handshake de Tres Fases\n\n\n\n\n\n\n\n\nsequenceDiagram\n    participant CS as Cliente Socket\n    participant SS as Server Socket (listen)\n    participant NS as Nuevo Socket\n    \n    Note over CS: Estado: CLOSED\n    Note over SS: Estado: LISTEN\n    CS-&gt;&gt;SS: SYN=1, seq=x\n    Note over CS: Estado: SYN_SENT\n    Note over SS: accept() crea nuevo socket\n    SS-&gt;&gt;NS: Deriva conexión\n    Note over NS: Estado: SYN_RCVD\n    NS-&gt;&gt;CS: SYN=1, ACK=1, seq=y, ack=x+1\n    Note over CS: Estado: ESTABLISHED\n    CS-&gt;&gt;NS: ACK=1, seq=x+1, ack=y+1\n\n\n\n\n\n\n\n\n\nSe negocian: MSS, opciones de ventana, extensiones TCP\nLos flags de las cabeceras también consumen bits.\nEl serverSocket está en el servidor,\nuna vez se establece la comunicación ambos sockets son iguales."
+  },
+  {
+    "objectID": "ch1_p4_transport.html#terminación-de-conexión",
+    "href": "ch1_p4_transport.html#terminación-de-conexión",
+    "title": "Capa de Transporte",
+    "section": "Terminación de Conexión",
+    "text": "Terminación de Conexión\n\n\n\n\n\n\n\n\nsequenceDiagram\n    participant C as Cliente\n    participant S as Servidor\n    \n    Note over C,S: Conexión establecida\n    C-&gt;&gt;S: FIN=1, seq=x\n    Note over C: Estado: FIN_WAIT_1\n    S-&gt;&gt;C: ACK=1, ack=x+1\n    Note over C: Estado: FIN_WAIT_2\n    S-&gt;&gt;C: FIN=1, ACK=1, seq=y\n    Note over S: Estado: LAST_ACK\n    C-&gt;&gt;S: ACK=1, ack=y+1\n    Note over C: Estado: TIME_WAIT\n    Note over C: Espera 2*MSL\n    Note over C,S: CLOSED\n\n\n\n\n\n\n\n\n\nCada extremo debe enviar su propio FIN y recibir confirmación,\npermitiendo cierre unidireccional (half-close).\nEl cliente espera 2*MSL para asegurar que su último ACK llegó,\nmanejando retransmisiones tardías antes del cierre definitivo."
+  },
+  {
+    "objectID": "ch1_p4_transport.html#equidad-y-coexistencia",
+    "href": "ch1_p4_transport.html#equidad-y-coexistencia",
+    "title": "Capa de Transporte",
+    "section": "Equidad y Coexistencia",
+    "text": "Equidad y Coexistencia\nTCP es “fair”:\n\nN conexiones TCP comparten enlace equitativamente\nCada una obtiene ~R/N del ancho de banda R\nVer ejemplos en jergames (Bandwidth distribution)\n\nLimitaciones:\n\nUDP no implementa control → puede monopolizar\nAplicaciones con múltiples conexiones TCP\nConexiones con menor RTT tienen ventaja"
+  },
+  {
+    "objectID": "ch1_p4_transport.html#cuándo-usar",
+    "href": "ch1_p4_transport.html#cuándo-usar",
+    "title": "Capa de Transporte",
+    "section": "Cuándo usar…",
+    "text": "Cuándo usar…\n\n\nUDP\nRequisitos para UDP:\n\nLatencias &lt; 50ms\nActualizaciones frecuentes\nInformación nueva más valiosa que la vieja\n\nVentajas:\n\nCabeceras pequeñas\nSin tráfico de control\nServidor necesita menos recursos\nNo mantiene estado\n\nEjemplos: Shooters (Counter Strike), juegos de lucha\n\nTCP\nRequisitos para TCP:\n\nTolerancia 100-200ms latencia\nEntrega ordenada garantizada\nDetección y corrección de errores\n\n Consideraciones:\n\nBloqueo cabeza de línea\nLatencias variables por retransmisiones\nMayor tráfico de red\n\n Ejemplos: MMORPGs (World of Warcraft), juegos por turnos"
+  },
+  {
+    "objectID": "ch1_p4_transport.html#ejemplos-concretos",
+    "href": "ch1_p4_transport.html#ejemplos-concretos",
+    "title": "Capa de Transporte",
+    "section": "Ejemplos Concretos",
+    "text": "Ejemplos Concretos\n\n\nWorld of Warcraft (TCP):\n\nHechizos necesitan entrega garantizada\nActualizaciones de inventario críticas\nEstado de misiones consistente\nMMORPGs toleran 100-200ms\n\n\nCounter Strike (UDP):\n\nRetroalimentación inmediata crítica\nActualizaciones posición/disparos\nTécnicas de interpolación en cliente\nMitiga efecto paquetes perdidos"
+  },
+  {
+    "objectID": "ch1_p4_transport.html#puntos-clave",
+    "href": "ch1_p4_transport.html#puntos-clave",
+    "title": "Capa de Transporte",
+    "section": "Puntos Clave",
+    "text": "Puntos Clave\n\nLa capa de transporte proporciona comunicación lógica entre procesos\nUDP: Minimalista, best-effort, no orientado a conexión\nTCP: Confiable, ordenado, orientado a conexión\nMultiplexación: Múltiples sockets por un medio\nControl de flujo: Evita saturar al receptor\nControl de congestión: Responde a condiciones de red\nTrade-off fundamental: Confiabilidad vs velocidad\nElección protocolo depende de requisitos aplicación"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#qué-es-la-capa-de-acceso-a-la-red",
+    "href": "ch1_p2_access_layer.html#qué-es-la-capa-de-acceso-a-la-red",
+    "title": "Capa de Acceso a la Red",
+    "section": "¿Qué es la Capa de Acceso a la Red?",
+    "text": "¿Qué es la Capa de Acceso a la Red?\n\nLa Capa de Acceso a la Red se encarga de la transmisión física de datos entre dispositivos directamente conectados en una red local\n\n\n\n¿Qué hace?\n\nManeja los aspectos físicos de la transmisión\nControla el acceso al medio compartido\nSe ejecuta en el host y en el nucleo de la red\nGarantiza transmisión confiable entre nodos adyacentes\n\n\nPosición en los modelos:\n\n\n\n\n\n\nblock-beta\n    columns 1\n    \n    A[\"&lt;b&gt;Capa de Aplicación&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;HTTP, HTTPS, FTP, SMTP&lt;br/&gt;DNS, DHCP, Telnet, SSH\"]\n    \n    B[\"&lt;b&gt;Capa de Transporte&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;TCP, UDP&lt;br/&gt;Control de flujo y errores\"]\n    \n    C[\"&lt;b&gt;Capa de Internet&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;IP, ICMP, ARP&lt;br/&gt;Enrutamiento, Direccionamiento\"]\n    \n    D[\"&lt;b&gt;Capa de Acceso a la Red&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Ethernet, WiFi, PPP&lt;br/&gt;Frames, MAC Address&lt;br/&gt;Control de acceso al medio\"]\n    \n    classDef highlight fill:#ff9999,stroke:#cc0000,stroke-width:4px,color:#000\n    classDef normal fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#000\n    \n    class D highlight\n    class A,B,C normal\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nImportante\n\n\nResponsabilidad principal: Garantizar que los datos puedan transmitirse de manera confiable entre nodos adyacentes en la red"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#ejemplo-comunicación-en-red-local",
+    "href": "ch1_p2_access_layer.html#ejemplo-comunicación-en-red-local",
+    "title": "Capa de Acceso a la Red",
+    "section": "Ejemplo: Comunicación en Red Local",
+    "text": "Ejemplo: Comunicación en Red Local\n\n\n\n\n\n\nsequenceDiagram\n    participant A as Computadora A&lt;br/&gt;(00:1A:2B:3C:4D:5E)\n    participant S as Switch&lt;br/&gt;(Tabla MAC)\n    participant C as Computadora C&lt;br/&gt;(00:3C:4D:5E:6F:70)\n\n    Note over S: Tabla MAC vacía\n\n    Note over A,C: FASE 1: Descubrimiento ARP\n    \n    A-&gt;&gt;S: ARP Request&lt;br/&gt;¿Quién tiene la IP de C?&lt;br/&gt;Destino: Broadcast\n    \n    Note over S: Aprende: Puerto 1 → MAC de A\n    \n    S-&gt;&gt;C: ARP Request (Flooding)\n    \n    C-&gt;&gt;S: ARP Response&lt;br/&gt;Mi MAC es 00:3C:4D:5E:6F:70\n    \n    Note over S: Aprende: Puerto 3 → MAC de C\n    \n    S-&gt;&gt;A: ARP Response (Unicast)\n\n    Note over A,C: FASE 2: Comunicación Directa\n    \n    A-&gt;&gt;S: Datos para C\n    \n    Note over S: Consulta tabla MAC\n    \n    S-&gt;&gt;C: Datos (Solo puerto 3)"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#control-de-acceso-al-medio-mac",
+    "href": "ch1_p2_access_layer.html#control-de-acceso-al-medio-mac",
+    "title": "Capa de Acceso a la Red",
+    "section": "1. Control de Acceso al Medio (MAC)",
+    "text": "1. Control de Acceso al Medio (MAC)\n\nCoordina cómo múltiples dispositivos comparten un medio de transmisión común\n\n\n\nEthernet Half-Duplex: CSMA/CD\nCarrier Sense Multiple Access with Collision Detection\n\nEscuchar el medio antes de transmitir\nSi está libre → transmitir\nSi hay colisión → detectar\nAplicar backoff exponencial\nReintentar transmisión\n\nSolo puede transmitir en una dirección a la vez. En Full-Duplex no necesitaríamos realizar controles.\n\nRedes Inalámbricas: CSMA/CA\n Carrier Sense Multiple Access with Collision Avoidance\n\nEsperar tiempo aleatorio antes de transmitir\nUsar acknowledgments para confirmar recepción\nProtocolo RTS/CTS para problema del nodo oculto\n\nLa detección de colisiones es impráctica en radio"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#direccionamiento-físico",
+    "href": "ch1_p2_access_layer.html#direccionamiento-físico",
+    "title": "Capa de Acceso a la Red",
+    "section": "2. Direccionamiento Físico",
+    "text": "2. Direccionamiento Físico\n\nOpera a nivel de hardware, independiente de protocolos superiores, usando direcciones MAC únicas\n\n\n\n\n\n\n\ngraph LR\n    subgraph \"Dirección MAC: 00:1A:2B:3C:4D:5E (48 bits)\"\n        OUI[\"00:1A:2B&lt;br/&gt;OUI&lt;br/&gt;(Organizationally Unique Identifier)&lt;br/&gt;Asignado por IEEE\"]\n        NIC[\"3C:4D:5E&lt;br/&gt;Identificador del Dispositivo&lt;br/&gt;Asignado por el fabricante\"]\n    end\n    \n    style OUI fill:#e3f2fd,stroke:#1976d2,stroke-width:2px\n    style NIC fill:#fff3e0,stroke:#f57c00,stroke-width:2px\n\n\n\n\n\n\n\n\n\nUnicast\n\nUn único destinatario\nDirección específica del dispositivo\n\n\nBroadcast\n\nTodos los dispositivos\nFF:FF:FF:FF:FF:FF\n\n\nMulticast\n\nGrupo específico\nPrimer bit = 1\n\n\n\n\n\n\n\n\nTip\n\n\nLas direcciones MAC son como el DNI del dispositivo: únicas, estáticas y cada dispositivo tiene una"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#detección-y-corrección-de-errores",
+    "href": "ch1_p2_access_layer.html#detección-y-corrección-de-errores",
+    "title": "Capa de Acceso a la Red",
+    "section": "3. Detección y Corrección de Errores",
+    "text": "3. Detección y Corrección de Errores\n\nGarantiza la integridad de los datos transmitidos a través del medio físico\n\nCódigos de Redundancia Cíclica (CRC)\n\n\nProceso CRC:\n\nGenerar polinomio matemático sobre datos\nAgregar Frame Check Sequence (FCS) al final\nReceptor recalcula el CRC\nComparar con el recibido\nDetectar errores de 1 bit y múltiples bits\n\nChecksums simples:\n\nSuma aritmética de bytes\nMenos robusto pero más rápido\n\n\nForward Error Correction (FEC):\n\nNo solo detecta, también corrige errores\nCódigos Hamming: errores de 1 bit\nReed-Solomon: errores en ráfagas\nEspecialmente importante en medios inalámbricos"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#detección-y-corrección-de-errores-ejemplo",
+    "href": "ch1_p2_access_layer.html#detección-y-corrección-de-errores-ejemplo",
+    "title": "Capa de Acceso a la Red",
+    "section": "3. Detección y Corrección de Errores (Ejemplo)",
+    "text": "3. Detección y Corrección de Errores (Ejemplo)\nIntroducir un mensaje de 4 bits (1011) y os saldrá a le derecha el mensaje codificado\n\n\n\n// Input: 4-bit message\nviewof msg4 = Inputs.text({label: \"Mensaje (4 bits)\", placeholder: \"e.g. 1011\"})\n\n\n\n\n\n\n\n\n\nfunction hamming74_encode(bits4) {\n  if (!/^[01]{4}$/.test(bits4)) return \"\";\n  const [d1, d2, d3, d4] = bits4.split(\"\").map(b =&gt; +b);\n  \n  // parity bits\n  const p1 = d1 ^ d2 ^ d4;\n  const p2 = d1 ^ d3 ^ d4;\n  const p3 = d2 ^ d3 ^ d4;\n  \n  // Codeword positions: p1 p2 d1 p3 d2 d3 d4\n  const code = [p1, p2, d1, p3, d2, d3, d4];\n  return code.join(\"\");\n}\n\nencoded = hamming74_encode(msg4)\nencoded\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAquí podréis meter el mensaje codificado y saber si ha habido cambios en un bit y corregirlos (Hamming).\n\n\n\n// Input: 7-bit codeword\nviewof code7 = Inputs.text({label: \"Codeword (7 bits)\", placeholder: \"e.g. 0110011\"})\n\n\n\n\n\n\n\n\n\nfunction hamming74_decode(code) {\n  if (!/^[01]{7}$/.test(code)) return \"Enter exactly 7 bits\";\n  const bits = code.split(\"\").map(b =&gt; +b);\n  const [p1, p2, d1, p3, d2, d3, d4] = bits;\n\n  // syndrome bits\n  const s1 = p1 ^ d1 ^ d2 ^ d4;\n  const s2 = p2 ^ d1 ^ d3 ^ d4;\n  const s3 = p3 ^ d2 ^ d3 ^ d4;\n  \n  const syndrome = (s3 &lt;&lt; 2) | (s2 &lt;&lt; 1) | s1; // binary → position (1-7)\n\n  let corrected = [...bits];\n  let msg = [d1, d2, d3, d4].join(\"\");\n  \n  if (syndrome === 0) {\n    return `✅ Valid codeword, message = ${msg}`;\n  } else {\n    // correct bit if single error\n    corrected[syndrome - 1] ^= 1; \n    const [cp1, cp2, cd1, cp3, cd2, cd3, cd4] = corrected;\n    const corrected_msg = [cd1, cd2, cd3, cd4].join(\"\");\n    return `❌ Error at position ${syndrome}. Corrected codeword = ${corrected.join(\"\")}, message = ${corrected_msg}`;\n  }\n}\n\nresult = hamming74_decode(code7)\nresult"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#control-de-tamaño",
+    "href": "ch1_p2_access_layer.html#control-de-tamaño",
+    "title": "Capa de Acceso a la Red",
+    "section": "4. Control de Tamaño",
+    "text": "4. Control de Tamaño\n\nManeja las limitaciones de tamaño impuestas por diferentes tecnologías de red\n\nMaximum Transmission Unit (MTU)\n\n\n\nTecnología\nMTU (bytes)\nCaracterísticas\n\n\n\n\nEthernet\n1500\nEstándar más común en LAN\n\n\nToken Ring\n4464\nTecnología legacy\n\n\nFDDI\n4352\nFiber Distributed Data Interface\n\n\nPPP\nVariable (~1500)\nPara compatibilidad con Ethernet\n\n\n\n\n\n\n\n\n\nAdvertencia\n\n\nSi datos &gt; MTU → La Capa de Acceso a la Red descarta automáticamente el paquete\n\n\n\n\nNota: El MTU determina el tamaño máximo de datos que puede transportar una sola trama"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#sincronización-y-temporización",
+    "href": "ch1_p2_access_layer.html#sincronización-y-temporización",
+    "title": "Capa de Acceso a la Red",
+    "section": "5. Sincronización y Temporización",
+    "text": "5. Sincronización y Temporización\n\nCoordina el timing entre dispositivos para asegurar la correcta interpretación de señales digitales\n\nNiveles de sincronización\n\n\nTipos de sincronización:\n\nSincronización de bit: Determina límites temporales de cada bit\nSincronización de trama: Identifica inicio y fin de cada trama\nSincronización de símbolo: Para modulaciones complejas (QAM)\n\n\n¿Por qué es crítica?\n\nEn redes de alta velocidad, pequeñas diferencias causan errores\nEstablece marcos de tiempo comunes\nPermite interpretación correcta de señales\nEsencial para comunicación digital confiable"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#gestión-de-topología",
+    "href": "ch1_p2_access_layer.html#gestión-de-topología",
+    "title": "Capa de Acceso a la Red",
+    "section": "6. Gestión de Topología",
+    "text": "6. Gestión de Topología\n\nDescubre y mantiene información sobre la estructura física de la red\n\nComponentes principales\n\n\nMantenimiento de enlaces:\n\nKeepalive messages\nDetección proactiva de fallos\nAntes de afectar tráfico de usuarios\n\nProtocolos de detección:\n\nCDP (Cisco Discovery Protocol)\nLLDP (Link Layer Discovery Protocol)\nDispositivos se identifican mutuamente\nComparten información de capacidades\n\n\nPrevención de bucles:\n\nSpanning Tree Protocol (STP)\nPreviene bucles en topologías redundantes\nEvita tormentas de broadcast\n\nAdaptación automática:\n\nDetecta cambios en la topología\nResponde a fallos de enlaces\nIncorpora nuevos dispositivos"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#control-de-calidad-de-servicio-qos",
+    "href": "ch1_p2_access_layer.html#control-de-calidad-de-servicio-qos",
+    "title": "Capa de Acceso a la Red",
+    "section": "7. Control de Calidad de Servicio (QoS)",
+    "text": "7. Control de Calidad de Servicio (QoS)\n\nPrioriza diferentes tipos de tráfico según su importancia y requisitos de rendimiento\n\nMecanismos de gestión\n\n\nGestión de buffers:\n\nWeighted Fair Queuing: Recursos proporcionales según importancia\nPriority Queuing: Tráfico crítico tiene precedencia\nRandom Early Detection: Descarta proactivamente antes de saturación\n\n\nAplicaciones beneficiadas:\n\n🎥 Video en tiempo real\n📞 VoIP (Voz sobre IP)\n🎮 Gaming online\n💼 Aplicaciones críticas de negocio\n\nFundamental para aplicaciones sensibles al tiempo\n\n\n\n\n\n\n\nTip\n\n\nQoS garantiza que aplicaciones críticas reciban el ancho de banda necesario incluso en momentos de congestión"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#switches-evolución-y-tipos",
+    "href": "ch1_p2_access_layer.html#switches-evolución-y-tipos",
+    "title": "Capa de Acceso a la Red",
+    "section": "Switches: Evolución y Tipos",
+    "text": "Switches: Evolución y Tipos\n\n\nSwitches No Gestionados\n\nPlug-and-play\nAprendizaje MAC automático\nRedes pequeñas/domésticas\nSin configuración\n\n\nSwitches Gestionados\n\nVLANs y segmentación\nQoS y priorización\nSNMP para monitorización\nSeguridad 802.1X"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#dominios-de-colisión-switch-vs-hub",
+    "href": "ch1_p2_access_layer.html#dominios-de-colisión-switch-vs-hub",
+    "title": "Capa de Acceso a la Red",
+    "section": "Dominios de Colisión: Switch vs Hub",
+    "text": "Dominios de Colisión: Switch vs Hub\n\n\n\n\n\ngraph TB\n    subgraph \"HUB - Medio Compartido\"\n        H1[Hub]\n        SHARED((Medio&lt;br/&gt;Compartido))\n        PC1[PC1] --- SHARED\n        PC2[PC2] --- SHARED\n        PC3[PC3] --- SHARED\n        PC4[PC4] --- SHARED\n        SHARED --- H1\n    end\n    \n    subgraph \"SWITCH - Dominios Separados\"\n        S1[Switch]\n        PC5[PC5] --- S1\n        PC6[PC6] --- S1\n        PC7[PC7] --- S1\n        PC8[PC8] --- S1\n    end\n    \n    classDef collision fill:#ffcdd2,stroke:#d32f2f\n    classDef nocollision fill:#c8e6c9,stroke:#388e3c\n    classDef shared fill:#fff3e0,stroke:#f57c00\n    \n    class H1,PC1,PC2,PC3,PC4 collision\n    class S1,PC5,PC6,PC7,PC8 nocollision\n    class SHARED shared\n\n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nLos switches crean dominios de colisión separados para cada puerto, evitando colisiones entre dispositivos en diferentes puertos"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#otros-dispositivos-de-acceso",
+    "href": "ch1_p2_access_layer.html#otros-dispositivos-de-acceso",
+    "title": "Capa de Acceso a la Red",
+    "section": "Otros Dispositivos de Acceso",
+    "text": "Otros Dispositivos de Acceso\n\n\n\n\n\n\n\n\n\nDispositivo\nFunción\nCaracterísticas\nAplicación\n\n\n\n\nAccess Points\nWiFi ↔︎ Cableado\nCSMA/CA, Beamforming\nRedes inalámbricas\n\n\nRepetidores\nExtensión alcance\nRegeneración señal\nSuperar distancia\n\n\nMedia Converters\nCambio de medio\nFibra ↔︎ Cobre\nMigración gradual\n\n\nTransceivers\nModular\nSFP/SFP+/QSFP\nFlexibilidad\n\n\n\n\n\n\n\n\n\ngraph LR\n    PC[\"💻 PC\"]\n    AP[\"📡 Access Point\"]\n    SW[\"🔌 Switch\"]\n    MC1[\"🔄 Media Converter\"]\n    FO[\"🌟 Fibra Óptica\"]\n    MC2[\"🔄 Media Converter\"]\n    RT[\"🌐 Router\"]\n    \n    PC &lt;-.-&gt;|\"WiFi\"| AP\n    AP &lt;--&gt;|\"Ethernet\"| SW\n    SW &lt;--&gt;|\"Cobre\"| MC1\n    MC1 &lt;--&gt;|\"Fibra\"| FO\n    FO &lt;--&gt;|\"Fibra\"| MC2\n    MC2 &lt;--&gt;|\"Ethernet\"| RT"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#ethernet-ieee-802.3",
+    "href": "ch1_p2_access_layer.html#ethernet-ieee-802.3",
+    "title": "Capa de Acceso a la Red",
+    "section": "Ethernet (IEEE 802.3)",
+    "text": "Ethernet (IEEE 802.3)\nEstructura de Trama Ethernet\n\n\n\n\n\n\npacket-beta\n    0-31: \"Preámbulo\"\n    32-47: \"Preámbulo\"\n    48-55: \"Preámbulo\"\n    56-63: \"SFD\"\n    64-111: \"MAC Destino (6 bytes)\"\n    112-159: \"MAC Origen (6 bytes)\"\n    160-175: \"Tipo/Longitud\"\n    176-191: \"Datos\"\n    192-207: \"Datos\"\n    208-223: \"Datos (Payload)\"\n    224-239: \"...\"\n    240-255: \"Datos\"\n    256-287: \"FCS (4 bytes)\"\n\n\n\n\n\n\n\n\n\nCampos principales:\n\nPreámbulo: Sincronización\nMACs: Identificación única\nTipo: Protocolo superior (IPv4: 0x0800)\nPayload: Datos + padding si &lt; 46 bytes\n\n\nEvolución de velocidades:\n\n10Base-T: 10 Mbps\nFast Ethernet: 100 Mbps\nGigabit: 1 Gbps\n10G/40G/100G Ethernet"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#wifi-ieee-802.11",
+    "href": "ch1_p2_access_layer.html#wifi-ieee-802.11",
+    "title": "Capa de Acceso a la Red",
+    "section": "WiFi (IEEE 802.11)",
+    "text": "WiFi (IEEE 802.11)\nTrama WiFi: Mayor complejidad\n\n\n\n\n\n\npacket-beta\n    0-15: \"Frame Control\"\n    16-31: \"Duration/ID\"\n    32-79: \"Address 1 (Receptor)\"\n    80-127: \"Address 2 (Transmisor)\"\n    128-175: \"Address 3 (BSSID/AP)\"\n    176-191: \"Sequence Control\"\n    192-239: \"Address 4 (opcional)\"\n    240-255: \"QoS Control (opcional)\"\n    256-287: \"Datos ...\"\n    288-303: \"Datos ...\"\n    304-319: \"FCS (4 bytes)\"\n\n\n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nLa trama es considerablemente más compleja debido a que estamos en un medio compartido y puede haber repetidores, así como comunicaciones directas."
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#evolución-de-estándares-wifi",
+    "href": "ch1_p2_access_layer.html#evolución-de-estándares-wifi",
+    "title": "Capa de Acceso a la Red",
+    "section": "Evolución de Estándares WiFi",
+    "text": "Evolución de Estándares WiFi\n\n\n\nGeneración\nEstándar\nVelocidad Max\nBandas\nAño\n\n\n\n\nWiFi 4\n802.11n\n600 Mbps\n2.4/5 GHz\n2009\n\n\nWiFi 5\n802.11ac\n3.5 Gbps\n5 GHz\n2014\n\n\nWiFi 6\n802.11ax\n9.6 Gbps\n2.4/5 GHz\n2019\n\n\nWiFi 6E\n802.11ax\n9.6 Gbps\n+ 6 GHz\n2020\n\n\nWiFi 7\n802.11be\n46 Gbps\n2.4/5/6 GHz\n2024\n\n\n\n\n\nMejoras clave:\n\nMIMO (múltiples antenas)\nOFDMA (mejor uso espectro)\nBeamforming direccional (dirigir hacia un punto en concreto)\n\n\nTrade-offs de bandas:\n\n2.4 GHz: Mayor alcance, menor velocidad\n5 GHz: Mayor velocidad, menor alcance\n6 GHz: Máxima velocidad, mínimo alcance"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#ppp-y-frame-relay",
+    "href": "ch1_p2_access_layer.html#ppp-y-frame-relay",
+    "title": "Capa de Acceso a la Red",
+    "section": "PPP y Frame Relay",
+    "text": "PPP y Frame Relay\n\n\nPoint-to-Point Protocol (PPP)\nCaracterísticas:\n\nEnlaces punto a punto\nDetección de errores\nAutenticación (PAP/CHAP)\nConfiguración IP automática\n\nUso actual:\n\nEnlaces de respaldo\nConexiones satelitales\nAlgunas VPNs\n\n\nFrame Relay\nCaracterísticas:\n\nWAN con circuitos virtuales\nConmutación de tramas\nControl de congestión\n\n\nEstado:\n\nReemplazado por MPLS\nLegacy en empresas antiguas\nConceptos aún relevantes"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#arp-address-resolution-protocol",
+    "href": "ch1_p2_access_layer.html#arp-address-resolution-protocol",
+    "title": "Capa de Acceso a la Red",
+    "section": "ARP: Address Resolution Protocol",
+    "text": "ARP: Address Resolution Protocol\nTraducción IP → MAC\n\n\n\n\n\n\nsequenceDiagram\n    participant A as Host A&lt;br/&gt;IP: 192.168.1.10&lt;br/&gt;MAC: AA:BB:CC:DD:EE:FF\n    participant N as Red Local&lt;br/&gt;(Broadcast)\n    participant B as Host B&lt;br/&gt;IP: 192.168.1.20&lt;br/&gt;MAC: 11:22:33:44:55:66\n    \n    Note over A: Necesito MAC de 192.168.1.20\n    \n    A-&gt;&gt;N: ARP Request (Broadcast)&lt;br/&gt;¿Quién tiene 192.168.1.20?\n    N-&gt;&gt;B: ARP Request\n    \n    Note over B: ¡Esa es mi IP!\n    \n    B-&gt;&gt;A: ARP Reply (Unicast)&lt;br/&gt;192.168.1.20 = 11:22:33:44:55:66\n    \n    Note over A: Guardo en caché ARP\n\n\n\n\n\n\n\n\n\nProceso ARP:\n\nBroadcast preguntando por IP\nDispositivo con esa IP responde\nSe guarda en caché local\nTemporizador elimina entradas viejas\n\n\nTipos de ARP:\n\nDinámico: Aprendizaje automático\nEstático: Entradas manuales permanentes\nProxy ARP: Router responde por otros\nGratuitous: Anuncio proactivo"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#límites-físicos-y-distancias",
+    "href": "ch1_p2_access_layer.html#límites-físicos-y-distancias",
+    "title": "Capa de Acceso a la Red",
+    "section": "Límites Físicos y Distancias",
+    "text": "Límites Físicos y Distancias\nCable de Cobre (UTP/STP)\n\n\nCausas de la limitación:\n\nAtenuación de señal\nInterferencia electromagnética\nCrosstalk entre pares\nDegradación con distancia\n\n\nSoluciones:\n\nSwitches cada 100m\nRepetidores/Extensores\nFibra óptica (kilómetros)\nEnlaces inalámbricos\n\n\nComparación de Medios\n\n\n\nMedio\nDistancia Max\nVelocidad\nInterferencia\n\n\n\n\nUTP Cat5e\n100m\n1 Gbps\nAlta\n\n\nUTP Cat6a\n100m\n10 Gbps\nMedia\n\n\nFibra MM\n2 km\n10 Gbps\nNula\n\n\nFibra SM\n100+ km\n100 Gbps\nNula"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#ejemplo-práctico-verificación-de-configuración",
+    "href": "ch1_p2_access_layer.html#ejemplo-práctico-verificación-de-configuración",
+    "title": "Capa de Acceso a la Red",
+    "section": "Ejemplo Práctico: Verificación de Configuración",
+    "text": "Ejemplo Práctico: Verificación de Configuración\nComandos útiles para verificar la capa de acceso\n\n\nVer información de red:\n# Linux/Mac - Ver dirección MAC\nifconfig\n\n# Windows - Ver dirección MAC\nipconfig /all\n\n# Ver tabla ARP\narp -a\n\nEjemplo de salida ARP:\n192.168.1.1   00:1a:2b:3c:4d:5e\n192.168.1.10  00:2b:3c:4d:5e:6f\n192.168.1.20  00:3c:4d:5e:6f:70\nMuestra las asociaciones IP-MAC en la caché local"
+  },
+  {
+    "objectID": "ch1_p2_access_layer.html#puntos-clave",
+    "href": "ch1_p2_access_layer.html#puntos-clave",
+    "title": "Capa de Acceso a la Red",
+    "section": "Puntos Clave",
+    "text": "Puntos Clave\n\nLa Capa de Acceso a la Red maneja la transmisión física y el control de acceso al medio compartido\nCombina las funciones de las capas física y de enlace del modelo OSI\nControl de acceso al medio: CSMA/CD (Ethernet) vs CSMA/CA (WiFi)\nDirecciones MAC: 48 bits, únicas por dispositivo (OUI + ID dispositivo)\nSwitches evolucionaron desde hubs, creando dominios de colisión independientes\nDetección de errores mediante CRC y técnicas FEC\nMTU define el tamaño máximo de trama (Ethernet: 1500 bytes)\nARP resuelve la traducción entre direcciones IP y MAC"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#qué-es-phaser-3",
+    "href": "ch3_p1_phaser.html#qué-es-phaser-3",
+    "title": "Introducción a Phaser 3",
+    "section": "¿Qué es Phaser 3?",
+    "text": "¿Qué es Phaser 3?\nFramework open source de HTML5 para videojuegos\n\nJuegos que se ejecutan directamente en navegadores web\nLiberado en 2018 - evolución de versiones anteriores\nEnfocado en juegos 2D multiplataforma\n\n\n\nVentajas:\n\nSin instalación para usuarios finales\nMultiplataforma (desktop + móvil)\nDistribución simple vía web\nBasado en tecnologías estándar\n\n\nTecnologías:\n\nHTML5 Canvas\nJavaScript/TypeScript\nCanvas API / WebGL"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#sistemas-de-renderizado",
+    "href": "ch3_p1_phaser.html#sistemas-de-renderizado",
+    "title": "Introducción a Phaser 3",
+    "section": "Sistemas de Renderizado",
+    "text": "Sistemas de Renderizado\nDos opciones disponibles:\n\nCanvas (por defecto): Mayor compatibilidad, menos exigente\nWebGL: Gráficos avanzados, mejor rendimiento, requiere soporte GPU\n\n¿Cuándo usar cada uno?\n\nCanvas: Juegos simples, máxima compatibilidad\nWebGL: Muchos objetos, efectos visuales complejos\n\n// Configurar tipo de renderizado\nconst config = {\n    type: Phaser.AUTO,  // Elige el mejor disponible\n    // type: Phaser.CANVAS,  // Forzar Canvas\n    // type: Phaser.WEBGL,   // Forzar WebGL\n};"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#requisitos-para-empezar",
+    "href": "ch3_p1_phaser.html#requisitos-para-empezar",
+    "title": "Introducción a Phaser 3",
+    "section": "Requisitos para Empezar",
+    "text": "Requisitos para Empezar\nNavegador moderno:\n\nChrome (recomendado - mejores DevTools)\nFirefox, Safari, Edge u Opera\n\nObtener Phaser 3:\n\nCDN (más rápido)\n\n&lt;script src=\"//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js\"&gt;&lt;/script&gt;\n\nDescarga directa phaser.io/download/stable\nGitHub github.com/photonstorm/phaser\nNode npm install phaser"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#el-elemento-canvas",
+    "href": "ch3_p1_phaser.html#el-elemento-canvas",
+    "title": "Introducción a Phaser 3",
+    "section": "El Elemento Canvas",
+    "text": "El Elemento Canvas\n¿Qué es el Canvas?\n\nEtiqueta HTML5 (&lt;canvas&gt;) para dibujar gráficos\nFunciona como un lienzo en blanco\nSe manipula mediante JavaScript\n\nSistema de coordenadas:\n\nOrigen (0,0) en esquina superior izquierda\nEje X positivo → derecha\nEje Y positivo → abajo (inverso a matemáticas)\nDimensiones por defecto: 300x300 píxeles\n\n&lt;canvas id=\"game\" width=\"800\" height=\"600\"&gt;&lt;/canvas&gt;"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#configuración-inicial",
+    "href": "ch3_p1_phaser.html#configuración-inicial",
+    "title": "Introducción a Phaser 3",
+    "section": "Configuración Inicial",
+    "text": "Configuración Inicial\nObjeto de configuración define parámetros fundamentales:\n\nTipo de renderizado (AUTO/CANVAS/WEBGL)\nDimensiones del juego\nMotor de físicas y gravedad\nFunciones principales del juego\n\nconst config = {\n    type: Phaser.AUTO,      // Renderizado automático\n    width: 800,             // Ancho del canvas\n    height: 600,            // Alto del canvas\n    physics: {\n        default: 'arcade',  // Motor de físicas\n        arcade: {\n            gravity: { y: 300 }  // Gravedad vertical\n        }\n    },\n    scene: {\n        preload: preload,   // Función de carga\n        create: create,     // Función de creación\n        update: update      // Función de actualización\n    }\n};\n\nconst game = new Phaser.Game(config);"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#las-tres-funciones-principales",
+    "href": "ch3_p1_phaser.html#las-tres-funciones-principales",
+    "title": "Introducción a Phaser 3",
+    "section": "Las Tres Funciones Principales",
+    "text": "Las Tres Funciones Principales\npreload() - Cargar recursos\n\nCuándo: Se ejecuta primero, solo una vez\nPara qué: Cargar imágenes, sonidos, sprites\nImportante: Phaser espera a que todo se cargue antes de continuar\n\nfunction preload() {\n    // Cargar recursos con identificadores únicos\n    this.load.image('cielo', 'assets/cielo.png');\n    this.load.image('suelo', 'assets/plataforma.png');\n    this.load.image('estrella', 'assets/estrella.png');\n}\n\n\n\n\n\n\nNota\n\n\nEl primer parámetro es el identificador que usaremos después"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#las-tres-funciones-principales-2",
+    "href": "ch3_p1_phaser.html#las-tres-funciones-principales-2",
+    "title": "Introducción a Phaser 3",
+    "section": "Las Tres Funciones Principales (2)",
+    "text": "Las Tres Funciones Principales (2)\ncreate() - Crear objetos del juego\n\nCuándo: Se ejecuta después de preload()\nPara qué: Inicializar y posicionar elementos\nImportante: El orden de creación determina el orden de renderizado\n\nfunction create() {\n    // Añadir imagen de fondo centrada\n    this.add.image(400, 300, 'cielo');\n    \n    // Crear plataforma con físicas\n    this.plataforma = this.physics.add.image(400, 500, 'suelo');\n    this.plataforma.setImmovable(true);  // No se mueve\n}"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#las-tres-funciones-principales-3",
+    "href": "ch3_p1_phaser.html#las-tres-funciones-principales-3",
+    "title": "Introducción a Phaser 3",
+    "section": "Las Tres Funciones Principales (3)",
+    "text": "Las Tres Funciones Principales (3)\nupdate(time, delta) - Bucle del juego\n\nCuándo: Se ejecuta constantemente (~60 veces/segundo)\nPara qué: Lógica que debe actualizarse continuamente\nParámetros: time (tiempo total), delta (desde último frame)\n\nfunction update(time, delta) {\n    // Mover jugador con teclado\n    if (this.cursors.left.isDown) {\n        this.jugador.x -= 5;  // Mover izquierda\n    }\n    if (this.cursors.right.isDown) {\n        this.jugador.x += 5;  // Mover derecha\n    }\n}\n\n\n\n\n\n\nTip\n\n\nUsar delta para movimiento consistente en diferentes dispositivos"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#concepto-de-escena",
+    "href": "ch3_p1_phaser.html#concepto-de-escena",
+    "title": "Introducción a Phaser 3",
+    "section": "Concepto de Escena",
+    "text": "Concepto de Escena\n¿Qué es una escena?\n\nPantalla o estado independiente del juego\nTiene su propio flujo de ejecución (preload, create, update)\nMantiene sus propios recursos y objetos\nPermite organización modular del código\n\nEjemplos comunes:\n\nMenú principal\nPantalla de gameplay\nMenú de pausa\nPantalla de game over\nTutorial\nPantalla de créditos"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#escena-implícita-vs-explícita",
+    "href": "ch3_p1_phaser.html#escena-implícita-vs-explícita",
+    "title": "Introducción a Phaser 3",
+    "section": "Escena Implícita vs Explícita",
+    "text": "Escena Implícita vs Explícita\nForma implícita (simple):\n// Crea una escena anónima automáticamente\nconst config = {\n    scene: {\n        preload: preload,\n        create: create,\n        update: update\n    }\n};\nForma explícita (recomendada):\nclass MiEscena extends Phaser.Scene {\n    preload() { /* ... */ }\n    create() { /* ... */ }\n    update() { /* ... */ }\n}\n\nconst config = {\n    scene: [MiEscena, OtraEscena]\n};\n\n\n\n\n\n\nNota\n\n\nLas funciones preload/create/update siempre están dentro de una escena"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#scenemanager---métodos-disponibles",
+    "href": "ch3_p1_phaser.html#scenemanager---métodos-disponibles",
+    "title": "Introducción a Phaser 3",
+    "section": "SceneManager - Métodos Disponibles",
+    "text": "SceneManager - Métodos Disponibles\nCambiar entre escenas:\n\nstart(): Inicia escena y detiene la actual\nlaunch(): Inicia escena en paralelo (mantiene actual)\nstop(): Detiene completamente una escena\n\nControlar estado:\n\npause() / resume(): Pausar/reanudar (sigue visible)\nsleep() / wake(): Dormir/despertar (no visible)\n\nGestionar orden:\n\nbringToTop() / sendToBack(): Mover al frente/fondo\nmoveAbove() / moveBelow(): Posicionar relativamente"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#configurar-múltiples-escenas",
+    "href": "ch3_p1_phaser.html#configurar-múltiples-escenas",
+    "title": "Introducción a Phaser 3",
+    "section": "Configurar Múltiples Escenas",
+    "text": "Configurar Múltiples Escenas\nDefinir escenas en el array de configuración:\n// La primera escena del array se inicia automáticamente\nconst config = {\n    scene: [MenuPrincipal, Juego, GameOver]\n};\nAñadir/eliminar dinámicamente:\n// Añadir nueva escena en tiempo de ejecución\nthis.scene.add('clave', ConfigEscena, autoStart, datos);\n\n// Eliminar una escena\nthis.scene.remove('clave');"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#cambiar-entre-escenas",
+    "href": "ch3_p1_phaser.html#cambiar-entre-escenas",
+    "title": "Introducción a Phaser 3",
+    "section": "Cambiar Entre Escenas",
+    "text": "Cambiar Entre Escenas\nstart() vs launch():\n// start: Detiene la actual y cambia\nthis.scene.start('Juego', { nivel: 1 });\n\n// launch: Ejecuta en paralelo (útil para HUDs)\nthis.scene.launch('MenuPausa', { origenEscena: 'Juego' });\n\n// stop: Detiene completamente\nthis.scene.stop('MenuPausa');\n\n\n\n\n\n\nImportante\n\n\nDiferencia clave: start reemplaza, launch superpone escenas"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#pausar-y-reanudar",
+    "href": "ch3_p1_phaser.html#pausar-y-reanudar",
+    "title": "Introducción a Phaser 3",
+    "section": "Pausar y Reanudar",
+    "text": "Pausar y Reanudar\npause() / resume():\n\nDetiene update() pero sigue renderizando\nÚtil para pausar el juego manteniéndolo visible\n\n// Pausar (sigue visible, no actualiza)\nthis.scene.pause('Juego');\n\n// Reanudar\nthis.scene.resume('Juego');\nsleep() / wake():\n\nDetiene update() y renderizado\nMás eficiente que pause\n\n// Dormir (no visible, no actualiza)\nthis.scene.sleep('Fondo');\n\n// Despertar\nthis.scene.wake('Fondo');"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#sistema-de-pausa---ejemplo",
+    "href": "ch3_p1_phaser.html#sistema-de-pausa---ejemplo",
+    "title": "Introducción a Phaser 3",
+    "section": "Sistema de Pausa - Ejemplo",
+    "text": "Sistema de Pausa - Ejemplo\nEscena principal del juego:\nclass Juego extends Phaser.Scene {\n    constructor() {\n        super('Juego');\n    }\n    \n    create() {\n        // Configurar juego...\n        \n        // Detectar tecla ESC para pausar\n        this.input.keyboard.on('keydown-ESC', () =&gt; {\n            this.scene.pause();          // Pausar juego\n            this.scene.launch('MenuPausa', {\n                escenaOrigen: 'Juego'\n            });\n        });\n    }\n}"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#sistema-de-pausa---ejemplo-2",
+    "href": "ch3_p1_phaser.html#sistema-de-pausa---ejemplo-2",
+    "title": "Introducción a Phaser 3",
+    "section": "Sistema de Pausa - Ejemplo (2)",
+    "text": "Sistema de Pausa - Ejemplo (2)\nEscena del menú de pausa:\nclass MenuPausa extends Phaser.Scene {\n    constructor() {\n        super('MenuPausa');\n    }\n    \n    create(datos) {\n        // Recibir datos de la escena que pausó\n        console.log('Pausado desde:', datos.escenaOrigen);\n        \n        // Crear fondo semitransparente\n        let overlay = this.add.rectangle(400, 300, 800, 600, 0x000000, 0.7);\n        \n        // Botón continuar\n        let botonContinuar = this.add.text(400, 300, 'Continuar', {\n            fontSize: '32px'\n        }).setOrigin(0.5);\n        botonContinuar.setInteractive();\n        \n        botonContinuar.on('pointerdown', () =&gt; {\n            this.scene.stop();                 // Cerrar menú\n            this.scene.resume(datos.escenaOrigen);  // Reanudar juego\n        });\n    }\n}"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#pasar-datos-entre-escenas",
+    "href": "ch3_p1_phaser.html#pasar-datos-entre-escenas",
+    "title": "Introducción a Phaser 3",
+    "section": "Pasar Datos Entre Escenas",
+    "text": "Pasar Datos Entre Escenas\nEnviar datos al cambiar de escena:\n// Pasar datos al iniciar una escena\nthis.scene.start('SiguienteEscena', {\n    puntuacion: 100,\n    nivel: 2,\n    nombre: 'Jugador1'\n});\nRecibir datos en la escena destino:\nclass SiguienteEscena extends Phaser.Scene {\n    create(datos) {\n        // Recibir los datos como parámetro\n        console.log(datos.puntuacion);  // 100\n        console.log(datos.nivel);       // 2\n        console.log(datos.nombre);      // 'Jugador1'\n        \n        this.add.text(100, 100, `Puntuación: ${datos.puntuacion}`);\n    }\n}"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#pasar-datos---otros-métodos",
+    "href": "ch3_p1_phaser.html#pasar-datos---otros-métodos",
+    "title": "Introducción a Phaser 3",
+    "section": "Pasar Datos - Otros Métodos",
+    "text": "Pasar Datos - Otros Métodos\nTambién funciona con launch() y otros:\n// Con launch (escena en paralelo)\nthis.scene.launch('MenuPausa', {\n    juegoActual: 'Nivel1',\n    tiempoTranscurrido: 120\n});\n\n// Con transition\nthis.scene.transition({\n    target: 'GameOver',\n    duration: 1000,\n    data: {\n        puntuacionFinal: this.puntuacion,\n        tiempoJugado: this.tiempo\n    }\n});"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#transiciones-entre-escenas",
+    "href": "ch3_p1_phaser.html#transiciones-entre-escenas",
+    "title": "Introducción a Phaser 3",
+    "section": "Transiciones Entre Escenas",
+    "text": "Transiciones Entre Escenas\nCrear efectos visuales suaves:\n\nduration: Tiempo en milisegundos\nonUpdate: Callback durante transición\nprogress: Valor de 0 a 1\ndata: Objeto con datos para la escena destino\n\nthis.scene.transition({\n    target: 'SiguienteEscena',\n    duration: 1000,             // 1 segundo\n    moveBelow: true,\n    data: {                     // Datos a pasar\n        puntuacion: this.puntos,\n        nivel: this.nivelActual\n    },\n    onUpdate: (progress) =&gt; {\n        // Crear efectos de fundido\n        this.cameras.main.setAlpha(1 - progress);\n    }\n});"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#reordenar-escenas",
+    "href": "ch3_p1_phaser.html#reordenar-escenas",
+    "title": "Introducción a Phaser 3",
+    "section": "Reordenar Escenas",
+    "text": "Reordenar Escenas\nControl del orden de renderizado:\n\nValores mayores se dibujan encima\nÚtil para HUDs y menús superpuestos\n\n// Operaciones básicas\nthis.scene.bringToTop('HUD');\nthis.scene.sendToBack('Fondo');\n\n// Movimiento relativo\nthis.scene.moveAbove('A', 'B');   // A encima de B\nthis.scene.moveBelow('A', 'B');   // A debajo de B\n\n// Movimiento incremental\nthis.scene.moveUp('Escena');\nthis.scene.moveDown('Escena');"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#cargar-y-mostrar",
+    "href": "ch3_p1_phaser.html#cargar-y-mostrar",
+    "title": "Introducción a Phaser 3",
+    "section": "Cargar y Mostrar",
+    "text": "Cargar y Mostrar\nProceso en dos pasos:\n\nCargar en preload() con identificador único\nMostrar en create() usando el identificador\n\nfunction preload() {\n    // Cargar con identificador único\n    this.load.image('personaje', 'assets/personaje.png');\n    this.load.image('fondo', 'assets/fondo.jpg');\n}\n\nfunction create() {\n    // Añadir al canvas en posición (x, y)\n    this.add.image(400, 300, 'fondo');\n    let sprite = this.add.image(200, 150, 'personaje');\n}\n\n\n\n\n\n\nAdvertencia\n\n\nSiempre cargar en preload() antes de usar en create()"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#sistema-de-coordenadas-y-origen",
+    "href": "ch3_p1_phaser.html#sistema-de-coordenadas-y-origen",
+    "title": "Introducción a Phaser 3",
+    "section": "Sistema de Coordenadas y Origen",
+    "text": "Sistema de Coordenadas y Origen\nOrigen por defecto: centro de la imagen\n\nValores de 0 a 1\n(0, 0) = esquina superior izquierda\n(0.5, 0.5) = centro (defecto)\n(1, 1) = esquina inferior derecha\n\n// Cambiar punto de origen\nlet imagen = this.add.image(100, 100, 'personaje')\n    .setOrigin(0, 0);  // Esquina superior izquierda\n\nimagen.setOrigin(0.5, 1);  // Centro inferior\nimagen.setOrigin(1, 0);     // Esquina superior derecha\n\n\n\n\n\n\nTip\n\n\nCambiar origen útil para alinear objetos o rotaciones específicas"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#transformaciones-básicas",
+    "href": "ch3_p1_phaser.html#transformaciones-básicas",
+    "title": "Introducción a Phaser 3",
+    "section": "Transformaciones Básicas",
+    "text": "Transformaciones Básicas\nEscalar, voltear y rotar:\nlet jugador = this.add.image(400, 300, 'personaje');\n\n// Escalar uniformemente\njugador.setScale(1.5);      // 150% del tamaño\n\n// Escalar independientemente\njugador.setScale(2, 0.5);   // Ancho x2, alto x0.5\n\n// Voltear\njugador.flipX = true;       // Espejo horizontal\njugador.flipY = true;       // Espejo vertical\n\n// Rotar (en radianes)\njugador.rotation = Math.PI / 4;  // 45 grados\n\n\n\n\n\n\nNota\n\n\nπ radianes = 180 grados"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#profundidad-y-capas",
+    "href": "ch3_p1_phaser.html#profundidad-y-capas",
+    "title": "Introducción a Phaser 3",
+    "section": "Profundidad y Capas",
+    "text": "Profundidad y Capas\nControlar qué se dibuja encima:\n\nLa propiedad depth funciona como capas\nValores mayores se dibujan sobre valores menores\nPor defecto todas tienen depth = 0\n\nlet fondo = this.add.image(400, 300, 'cielo');\nfondo.depth = 0;  // Atrás\n\nlet jugador = this.add.image(400, 300, 'personaje');\njugador.depth = 10;  // Encima del fondo\n\nlet hud = this.add.image(400, 50, 'interfaz');\nhud.depth = 100;  // Encima de todo"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#tres-motores-disponibles",
+    "href": "ch3_p1_phaser.html#tres-motores-disponibles",
+    "title": "Introducción a Phaser 3",
+    "section": "Tres Motores Disponibles",
+    "text": "Tres Motores Disponibles\nArcade Physics:\n\nMás simple y rápido\nSolo rectángulos y círculos\nIdeal para juegos arcade/plataformas\n\nImpact Physics:\n\nSoporta pendientes en tiles\nMás complejo que Arcade\nIdeal para plataformas con terreno inclinado\n\nMatter Physics:\n\nMás avanzado y realista\nFormas complejas y polígonos\nMayor costo de rendimiento\nIdeal para puzzles físicos"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#configurar-arcade-physics",
+    "href": "ch3_p1_phaser.html#configurar-arcade-physics",
+    "title": "Introducción a Phaser 3",
+    "section": "Configurar Arcade Physics",
+    "text": "Configurar Arcade Physics\nConfiguración en el objeto config:\nconst config = {\n    physics: {\n        default: 'arcade',\n        arcade: {\n            gravity: { y: 300 },  // Gravedad en píxeles/s²\n            debug: false          // Mostrar contornos físicos\n        }\n    }\n};\n\n\n\n\n\n\nTip\n\n\nActivar debug: true durante desarrollo para ver colisiones"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#añadir-físicas-a-objetos",
+    "href": "ch3_p1_phaser.html#añadir-físicas-a-objetos",
+    "title": "Introducción a Phaser 3",
+    "section": "Añadir Físicas a Objetos",
+    "text": "Añadir Físicas a Objetos\nDiferencia entre objetos con y sin físicas:\n// Sin físicas (imagen estática)\nthis.add.image(400, 300, 'fondo');\n\n// Con físicas (puede moverse, colisionar, etc.)\nthis.jugador = this.physics.add.image(100, 450, 'personaje');\n\n\n\n\n\n\nImportante\n\n\nUsar physics.add en lugar de solo add para habilitar físicas"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#propiedades-físicas",
+    "href": "ch3_p1_phaser.html#propiedades-físicas",
+    "title": "Introducción a Phaser 3",
+    "section": "Propiedades Físicas",
+    "text": "Propiedades Físicas\nConfigurar comportamiento físico:\nthis.jugador = this.physics.add.image(100, 450, 'personaje');\n\n// No salir de los límites del canvas\nthis.jugador.setCollideWorldBounds(true);\n\n// Rebote al chocar (0 = no rebota, 1 = rebote perfecto)\nthis.jugador.setBounce(0.3);\n\n// Velocidad inicial (píxeles/segundo)\nthis.jugador.setVelocity(100, -50);\n\n// Aceleración (píxeles/segundo²)\nthis.jugador.setAcceleration(50, 0);"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#teclado---eventos",
+    "href": "ch3_p1_phaser.html#teclado---eventos",
+    "title": "Introducción a Phaser 3",
+    "section": "Teclado - Eventos",
+    "text": "Teclado - Eventos\nDetectar teclas específicas:\nfunction create() {\n    // Detectar cuando se presiona\n    this.input.keyboard.on('keydown-SPACE', () =&gt; {\n        this.jugador.setVelocityY(-330); // Saltar\n    });\n    \n    // Detectar cuando se suelta\n    this.input.keyboard.on('keyup-SPACE', () =&gt; {\n        console.log('Tecla soltada');\n    });\n}\n\n\n\n\n\n\nNota\n\n\nkeydown se dispara al presionar, keyup al soltar"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#teclado---modificadores",
+    "href": "ch3_p1_phaser.html#teclado---modificadores",
+    "title": "Introducción a Phaser 3",
+    "section": "Teclado - Modificadores",
+    "text": "Teclado - Modificadores\nDetectar combinaciones de teclas:\nthis.input.keyboard.on('keydown-A', (event) =&gt; {\n    if (event.ctrlKey) {\n        console.log('CTRL + A');\n    } else if (event.shiftKey) {\n        console.log('SHIFT + A');\n    } else if (event.altKey) {\n        console.log('ALT + A');\n    } else {\n        console.log('Solo A');\n    }\n});"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#teclado---cursores",
+    "href": "ch3_p1_phaser.html#teclado---cursores",
+    "title": "Introducción a Phaser 3",
+    "section": "Teclado - Cursores",
+    "text": "Teclado - Cursores\nObjeto para flechas, espacio y shift:\nfunction create() {\n    // Crear objeto de cursores\n    this.cursors = this.input.keyboard.createCursorKeys();\n}\n\nfunction update() {\n    // Resetear velocidad\n    this.jugador.setVelocityX(0);\n    \n    // Comprobar teclas presionadas\n    if (this.cursors.left.isDown) {\n        this.jugador.setVelocityX(-160);\n    } else if (this.cursors.right.isDown) {\n        this.jugador.setVelocityX(160);\n    }\n    \n    // Saltar solo si está en el suelo\n    if (this.cursors.up.isDown && this.jugador.body.touching.down) {\n        this.jugador.setVelocityY(-330);\n    }\n}"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#teclado---combos",
+    "href": "ch3_p1_phaser.html#teclado---combos",
+    "title": "Introducción a Phaser 3",
+    "section": "Teclado - Combos",
+    "text": "Teclado - Combos\nDetectar secuencias de teclas:\n\nÚtil para códigos secretos o trucos\nDetecta automáticamente la secuencia correcta\n\nfunction create() {\n    // Combo con letras\n    let combo1 = this.input.keyboard.createCombo('KONAMI');\n    \n    // Combo Konami: ↑ ↑ ↓ ↓ ← → ← →\n    let combo2 = this.input.keyboard.createCombo(\n        [38, 38, 40, 40, 37, 39, 37, 39]\n    );\n    \n    // Detectar cuando se completa\n    this.input.keyboard.on('keycombomatch', (combo) =&gt; {\n        console.log('¡Código secreto desbloqueado!');\n        this.activarModoEspecial();\n    });\n}"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#ratón-y-táctil",
+    "href": "ch3_p1_phaser.html#ratón-y-táctil",
+    "title": "Introducción a Phaser 3",
+    "section": "Ratón y Táctil",
+    "text": "Ratón y Táctil\nAPI unificada para ratón y pantallas táctiles:\nfunction create() {\n    // Detectar clic/toque\n    this.input.on('pointerdown', (pointer) =&gt; {\n        if (pointer.leftButtonDown()) {\n            console.log('Clic izquierdo:', pointer.x, pointer.y);\n        }\n        if (pointer.rightButtonDown()) {\n            console.log('Clic derecho');\n        }\n    });\n    \n    // Detectar cuando se suelta\n    this.input.on('pointerup', (pointer) =&gt; {\n        console.log('Botón soltado');\n    });\n    \n    // Detectar movimiento\n    this.input.on('pointermove', (pointer) =&gt; {\n        console.log('Posición:', pointer.x, pointer.y);\n    });\n}"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#collider-vs-overlap",
+    "href": "ch3_p1_phaser.html#collider-vs-overlap",
+    "title": "Introducción a Phaser 3",
+    "section": "Collider vs Overlap",
+    "text": "Collider vs Overlap\nDos formas de detectar interacciones:\nCollider:\n\nDetecta y resuelve colisiones físicamente\nSepara objetos automáticamente\nAplica masa, velocidad, rebote\n\nOverlap:\n\nSolo detecta superposición espacial\nLos objetos pueden atravesarse\nSin resolución física\n\n\n\n\n\n\n\nTip\n\n\nCollider para plataformas, Overlap para coleccionables"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#ejemplos-de-uso",
+    "href": "ch3_p1_phaser.html#ejemplos-de-uso",
+    "title": "Introducción a Phaser 3",
+    "section": "Ejemplos de Uso",
+    "text": "Ejemplos de Uso\nCollider para plataformas:\nfunction create() {\n    let jugador = this.physics.add.image(100, 450, 'personaje');\n    \n    let plataforma = this.physics.add.image(400, 500, 'suelo');\n    plataforma.setImmovable(true);  // No se mueve al impacto\n    \n    // Colisión con resolución física\n    this.physics.add.collider(jugador, plataforma);\n}\nOverlap para coleccionables:\nlet estrella = this.physics.add.image(200, 200, 'estrella');\n\nthis.physics.add.overlap(jugador, estrella, (j, e) =&gt; {\n    e.destroy();  // Eliminar estrella\n    this.puntuacion += 10;\n});"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#grupos-estáticos",
+    "href": "ch3_p1_phaser.html#grupos-estáticos",
+    "title": "Introducción a Phaser 3",
+    "section": "Grupos Estáticos",
+    "text": "Grupos Estáticos\nPara objetos inmóviles (plataformas, paredes):\n\nMás eficientes que objetos dinámicos\nNo se mueven ni responden a físicas\nIdeales para nivel/escenario\n\nfunction create() {\n    // Crear grupo estático\n    let plataformas = this.physics.add.staticGroup();\n    \n    // Añadir plataformas\n    plataformas.create(400, 568, 'suelo')\n        .setScale(2)\n        .refreshBody();  // Actualizar tras modificar\n    \n    plataformas.create(600, 400, 'suelo');\n    plataformas.create(50, 250, 'suelo');\n    \n    // Colisión con todas\n    this.physics.add.collider(this.jugador, plataformas);\n}\n\n\n\n\n\n\nAdvertencia\n\n\nLlamar a refreshBody() tras modificar objetos estáticos"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#grupos-dinámicos",
+    "href": "ch3_p1_phaser.html#grupos-dinámicos",
+    "title": "Introducción a Phaser 3",
+    "section": "Grupos Dinámicos",
+    "text": "Grupos Dinámicos\nPara objetos con físicas completas:\n\nSe mueven y responden a gravedad\nPueden colisionar entre sí\nMás costosos computacionalmente\n\n// Crear 12 estrellas espaciadas\nlet estrellas = this.physics.add.group({\n    key: 'estrella',\n    repeat: 11,  // 1 + 11 = 12 total\n    setXY: { x: 12, y: 0, stepX: 70 }  // Cada 70px\n});\n\n// Aplicar propiedades a cada una\nestrellas.children.iterate((estrella) =&gt; {\n    estrella.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));\n});\n\n// Overlap para recogerlas\nthis.physics.add.overlap(this.jugador, estrellas, (j, e) =&gt; {\n    e.disableBody(true, true);  // Desactivar\n    this.puntuacion += 10;\n});"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#callbacks-de-colisión",
+    "href": "ch3_p1_phaser.html#callbacks-de-colisión",
+    "title": "Introducción a Phaser 3",
+    "section": "Callbacks de Colisión",
+    "text": "Callbacks de Colisión\nEjecutar código cuando ocurre colisión:\n// Callback básico\nthis.physics.add.collider(jugador, enemigo, (j, e) =&gt; {\n    // Se ejecuta cada vez que colisionan\n    j.setTint(0xff0000);      // Jugador en rojo\n    j.setVelocityX(-200);     // Retroceder\n});\nProcess callback (condición):\n\nDecide si procesar la colisión\nRetorna true para procesar, false para ignorar\n\nthis.physics.add.collider(\n    jugador, \n    enemigo,\n    this.dañar,              // Si procesa\n    this.puedeRecibirDaño,   // Condición\n    this\n);"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#sistema-de-invulnerabilidad",
+    "href": "ch3_p1_phaser.html#sistema-de-invulnerabilidad",
+    "title": "Introducción a Phaser 3",
+    "section": "Sistema de Invulnerabilidad",
+    "text": "Sistema de Invulnerabilidad\nEjemplo: no recibir daño temporalmente\nfunction puedeRecibirDaño(jugador, enemigo) {\n    // Solo procesar si no es invulnerable\n    return !jugador.invulnerable;\n}\n\nfunction dañar(jugador, enemigo) {\n    jugador.invulnerable = true;\n    jugador.setTint(0xff0000);  // Rojo\n    \n    // Volver vulnerable tras 2 segundos\n    this.time.delayedCall(2000, () =&gt; {\n        jugador.invulnerable = false;\n        jugador.clearTint();\n    });\n}"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#detectar-contacto-con-superficies",
+    "href": "ch3_p1_phaser.html#detectar-contacto-con-superficies",
+    "title": "Introducción a Phaser 3",
+    "section": "Detectar Contacto con Superficies",
+    "text": "Detectar Contacto con Superficies\nPropiedades útiles para mecánicas:\n\ntouching.down: Tocando suelo\ntouching.up: Tocando techo\ntouching.left/right: Tocando paredes\nblocked.*: Similar pero solo objetos inmóviles\n\nfunction update() {\n    // Verificar si toca el suelo\n    if (this.jugador.body.touching.down) {\n        console.log('En el suelo');\n    }\n    \n    // Saltar solo si está en el suelo\n    if (this.cursors.up.isDown && \n        this.jugador.body.touching.down) {\n        this.jugador.setVelocityY(-330);\n    }\n    \n    // Detectar si está contra pared\n    if (this.jugador.body.touching.left) {\n        console.log('Pared izquierda');\n    }\n}"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#qué-es-el-patrón-command",
+    "href": "ch3_p1_phaser.html#qué-es-el-patrón-command",
+    "title": "Introducción a Phaser 3",
+    "section": "¿Qué es el Patrón Command?",
+    "text": "¿Qué es el Patrón Command?\nProblema en juegos multijugador:\n\nCapturar acciones del jugador (input)\nEjecutar localmente (respuesta inmediata)\nTransmitir por red a otros jugadores\nReproducir acciones recibidas\n\nSolución: Patrón Command\n\nEncapsula cada acción como un objeto\nSepara input, lógica y networking\nFacilita testing y debugging"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#beneficios-del-patrón",
+    "href": "ch3_p1_phaser.html#beneficios-del-patrón",
+    "title": "Introducción a Phaser 3",
+    "section": "Beneficios del Patrón",
+    "text": "Beneficios del Patrón\nVentajas principales:\n\nSeparación de responsabilidades: Input, lógica y red independientes\nTestabilidad: Probar comandos sin juego completo\nFlexibilidad: Añadir comandos sin modificar código existente\nNetworking transparente: Mismo comando para local y red\nDebugging: Registrar/reproducir todas las acciones\nPredicción cliente: Respuesta inmediata + reconciliación servidor"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#estructura-base---command",
+    "href": "ch3_p1_phaser.html#estructura-base---command",
+    "title": "Introducción a Phaser 3",
+    "section": "Estructura Base - Command",
+    "text": "Estructura Base - Command\nClase abstracta con interfaz común:\nclass Command {\n    execute() {\n        // Implementar en subclases\n        // Ejecuta la acción en el juego\n    }\n    \n    serialize() {\n        // Convertir a JSON para enviar por red\n        return {};\n    }\n    \n    getPlayer() {\n        // Retorna la entidad asociada\n        return null;\n    }\n}\n\n\n\n\n\n\nNota\n\n\nEsta es la base que heredarán todos los comandos específicos"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#comando-concreto---constructor",
+    "href": "ch3_p1_phaser.html#comando-concreto---constructor",
+    "title": "Introducción a Phaser 3",
+    "section": "Comando Concreto - Constructor",
+    "text": "Comando Concreto - Constructor\nDefinir el comando específico:\nclass MovePaddleCommand extends Command {\n    constructor(paddle, direction) {\n        super();\n        this.paddle = paddle;        // Referencia al objeto\n        this.direction = direction;  // 'up', 'down', 'stop'\n    }\n    \n    // Métodos en siguientes slides...\n}\n\n\n\n\n\n\nTip\n\n\nCada comando guarda toda la información necesaria para ejecutarse"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#comando-concreto---ejecutar",
+    "href": "ch3_p1_phaser.html#comando-concreto---ejecutar",
+    "title": "Introducción a Phaser 3",
+    "section": "Comando Concreto - Ejecutar",
+    "text": "Comando Concreto - Ejecutar\nImplementar la lógica del comando:\nclass MovePaddleCommand extends Command {\n    // ... constructor ...\n    \n    execute() {\n        const speed = 300;  // Píxeles por segundo\n        \n        if (this.direction === 'up') {\n            this.paddle.setVelocityY(-speed);\n        } else if (this.direction === 'down') {\n            this.paddle.setVelocityY(speed);\n        } else {  // 'stop'\n            this.paddle.setVelocityY(0);\n        }\n    }\n    \n    // Métodos serialize() y getPlayer() en siguiente slide...\n}"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#comando-concreto---serializar",
+    "href": "ch3_p1_phaser.html#comando-concreto---serializar",
+    "title": "Introducción a Phaser 3",
+    "section": "Comando Concreto - Serializar",
+    "text": "Comando Concreto - Serializar\nPreparar para transmisión por red:\nclass MovePaddleCommand extends Command {\n    // ... constructor y execute() ...\n    \n    serialize() {\n        // Convertir a formato JSON simple\n        return {\n            type: 'MOVE_PADDLE',\n            playerId: this.paddle.id,\n            direction: this.direction\n        };\n    }\n    \n    getPlayer() {\n        return this.paddle;\n    }\n}\n\n\n\n\n\n\nNota\n\n\nSolo se envían datos esenciales, no referencias a objetos"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#commandprocessor---estructura",
+    "href": "ch3_p1_phaser.html#commandprocessor---estructura",
+    "title": "Introducción a Phaser 3",
+    "section": "CommandProcessor - Estructura",
+    "text": "CommandProcessor - Estructura\nCoordina comandos locales y remotos:\nclass CommandProcessor {\n    constructor() {\n        this.players = new Map();  // Registro de jugadores\n        this.network = null;       // Gestor de red\n    }\n    \n    setNetwork(networkManager) {\n        this.network = networkManager;\n    }\n    \n    // Métodos process() y receiveCommand() en siguientes slides...\n}"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#commandprocessor---procesar-local",
+    "href": "ch3_p1_phaser.html#commandprocessor---procesar-local",
+    "title": "Introducción a Phaser 3",
+    "section": "CommandProcessor - Procesar Local",
+    "text": "CommandProcessor - Procesar Local\nEjecutar comandos del jugador local:\nclass CommandProcessor {\n    // ... constructor ...\n    \n    process(command) {\n        const player = command.getPlayer();\n        \n        // Solo ejecutar si es jugador local\n        if (player && player.authority === 'LOCAL') {\n            command.execute();  // Respuesta inmediata\n            \n            // Transmitir a otros jugadores\n            if (this.network && this.network.isConnected()) {\n                this.network.send(command.serialize());\n            }\n        }\n    }\n}\n\n\n\n\n\n\nImportante\n\n\nLa autoridad LOCAL evita ejecutar el comando dos veces"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#commandprocessor---recibir-remoto",
+    "href": "ch3_p1_phaser.html#commandprocessor---recibir-remoto",
+    "title": "Introducción a Phaser 3",
+    "section": "CommandProcessor - Recibir Remoto",
+    "text": "CommandProcessor - Recibir Remoto\nProcesar comandos de otros jugadores:\nclass CommandProcessor {\n    // ... process() ...\n    \n    receiveCommand(data) {\n        const player = this.players.get(data.playerId);\n        \n        // Solo ejecutar si es jugador remoto\n        if (player && player.authority === 'REMOTE') {\n            const command = this.deserialize(data, player);\n            if (command) {\n                command.execute();\n            }\n        }\n    }\n}\n\n\n\n\n\n\nNota\n\n\nComandos remotos solo se ejecutan al recibirlos por red"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#commandprocessor---deserializar",
+    "href": "ch3_p1_phaser.html#commandprocessor---deserializar",
+    "title": "Introducción a Phaser 3",
+    "section": "CommandProcessor - Deserializar",
+    "text": "CommandProcessor - Deserializar\nReconstruir comandos desde JSON:\nclass CommandProcessor {\n    // ... receiveCommand() ...\n    \n    deserialize(data, player) {\n        switch(data.type) {\n            case 'MOVE_PADDLE':\n                return new MovePaddleCommand(player, data.direction);\n            \n            case 'SHOOT':\n                return new ShootCommand(player, data.x, data.y);\n            \n            default:\n                console.warn('Comando desconocido:', data.type);\n                return null;\n        }\n    }\n}"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#integración-en-phaser---create",
+    "href": "ch3_p1_phaser.html#integración-en-phaser---create",
+    "title": "Introducción a Phaser 3",
+    "section": "Integración en Phaser - Create",
+    "text": "Integración en Phaser - Create\nConfigurar escena con autoridad:\nclass GameScene extends Phaser.Scene {\n    constructor() {\n        super('GameScene');\n        this.commandProcessor = new CommandProcessor();\n    }\n    \n    create() {\n        // Paleta local (controlada por este jugador)\n        this.localPaddle = this.physics.add.image(50, 300, 'paddle');\n        this.localPaddle.id = 'player1';\n        this.localPaddle.authority = 'LOCAL';\n        this.localPaddle.setCollideWorldBounds(true);\n        \n        // Continúa en siguiente slide...\n    }\n}"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#integración-en-phaser---create-2",
+    "href": "ch3_p1_phaser.html#integración-en-phaser---create-2",
+    "title": "Introducción a Phaser 3",
+    "section": "Integración en Phaser - Create (2)",
+    "text": "Integración en Phaser - Create (2)\nConfigurar paleta remota y registrar:\ncreate() {\n    // ... localPaddle ...\n    \n    // Paleta remota (controlada por otro jugador)\n    this.remotePaddle = this.physics.add.image(750, 300, 'paddle');\n    this.remotePaddle.id = 'player2';\n    this.remotePaddle.authority = 'REMOTE';\n    this.remotePaddle.setCollideWorldBounds(true);\n    \n    // Registrar ambos jugadores\n    this.commandProcessor.players.set('player1', this.localPaddle);\n    this.commandProcessor.players.set('player2', this.remotePaddle);\n    \n    // Configurar input\n    this.cursors = this.input.keyboard.createCursorKeys();\n}"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#integración-en-phaser---update",
+    "href": "ch3_p1_phaser.html#integración-en-phaser---update",
+    "title": "Introducción a Phaser 3",
+    "section": "Integración en Phaser - Update",
+    "text": "Integración en Phaser - Update\nConvertir input a comandos:\nupdate() {\n    // Crear comando según tecla presionada\n    let command;\n    \n    if (this.cursors.up.isDown) {\n        command = new MovePaddleCommand(this.localPaddle, 'up');\n    } else if (this.cursors.down.isDown) {\n        command = new MovePaddleCommand(this.localPaddle, 'down');\n    } else {\n        command = new MovePaddleCommand(this.localPaddle, 'stop');\n    }\n    \n    // Procesar (ejecuta local y envía a red)\n    this.commandProcessor.process(command);\n}"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#flujo-completo-del-patrón",
+    "href": "ch3_p1_phaser.html#flujo-completo-del-patrón",
+    "title": "Introducción a Phaser 3",
+    "section": "Flujo Completo del Patrón",
+    "text": "Flujo Completo del Patrón\nJugador Local:\n\nPresiona tecla en update()\nCrea MovePaddleCommand\nCommandProcessor.process() ejecuta inmediatamente\nSerializa y envía por red\n\nJugador Remoto:\n\nRecibe datos JSON por red\nCommandProcessor.receiveCommand() deserializa\nCrea MovePaddleCommand con datos recibidos\nEjecuta el comando"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#ventajas-en-arquitectura",
+    "href": "ch3_p1_phaser.html#ventajas-en-arquitectura",
+    "title": "Introducción a Phaser 3",
+    "section": "Ventajas en Arquitectura",
+    "text": "Ventajas en Arquitectura\nTransparencia de red:\n\nMismo código para local y remoto\nSolo cambia la autoridad (LOCAL/REMOTE)\n\nPreparado para evolución:\n\nFácil cambiar de REST a WebSockets\nSolo modificar NetworkManager\nComandos permanecen iguales\n\nEscalabilidad:\n\nAñadir nuevos comandos = nueva clase\nNo modificar código existente\nPrincipio Open/Closed"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#conceptos-clave-de-phaser",
+    "href": "ch3_p1_phaser.html#conceptos-clave-de-phaser",
+    "title": "Introducción a Phaser 3",
+    "section": "Conceptos Clave de Phaser",
+    "text": "Conceptos Clave de Phaser\nEstructura básica:\n\nCanvas con coordenadas (0,0 arriba-izquierda)\nTres funciones: preload, create, update (dentro de escenas)\nSceneManager para múltiples pantallas\nPasar datos entre escenas con parámetro en create()\n\nFísicas:\n\nArcade Physics (simple y rápido)\nCollider (con física) vs Overlap (sin física)\nGrupos estáticos y dinámicos\n\nInput:\n\nEventos de teclado, cursores, combos\nSistema unificado ratón/táctil"
+  },
+  {
+    "objectID": "ch3_p1_phaser.html#conceptos-clave-del-patrón-command",
+    "href": "ch3_p1_phaser.html#conceptos-clave-del-patrón-command",
+    "title": "Introducción a Phaser 3",
+    "section": "Conceptos Clave del Patrón Command",
+    "text": "Conceptos Clave del Patrón Command\nArquitectura:\n\nCommand: Encapsula cada acción\nCommandProcessor: Coordina local y red\nAutoridad LOCAL/REMOTE\n\nBeneficios:\n\nSeparación input/lógica/red\nTesting simplificado\nDebugging con registro de comandos\nPreparado para networking"
   },
   {
     "objectID": "exercises/intro.html#instalación-previa",
