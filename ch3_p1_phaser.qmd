@@ -77,28 +77,17 @@ const config = {
 
 **Obtener Phaser 3:**
 
-::: {.columns}
-::: {.column width="33%"}
-**CDN** (más rápido)
+- **CDN** (más rápido)
 ```html
-<script src="//cdn.jsdelivr.net/
-npm/phaser@3.55.2/dist/
-phaser.js"></script>
+<script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
 ```
-:::
 
-::: {.column width="33%"}
-**Descarga directa**
+- **Descarga directa** [phaser.io/download/stable](https://phaser.io/download/stable)
 
-[phaser.io/download/stable](https://phaser.io/download/stable)
-:::
+- **GitHub** [github.com/photonstorm/phaser](https://github.com/photonstorm/phaser)
 
-::: {.column width="33%"}
-**GitHub**
+- **Node** `npm install phaser`
 
-[github.com/photonstorm/phaser](https://github.com/photonstorm/phaser)
-:::
-:::
 
 
 
