@@ -81,7 +81,9 @@ const personajeBase = {
     mover(x, y) {
         this.x += x;
         this.y += y;
-    }
+    },
+    x:  0,
+    y: 0
 };
 ```
 
@@ -94,14 +96,16 @@ const personajeBase = {
 **Creando un prototipo intermedio**
 
 ```javascript
-const protottipoJugador = Object.create(personajeBase);
-protottipoJugador.atacar = function(objetivo) {
+const prototipoJugador = Object.create(personajeBase);
+prototipoJugador.atacar = function(objetivo) {
     return `${this.nombre} ataca a ${objetivo.nombre}`;
 };
+prototipoJugador.nombre = "Sin nombre"
 ```
 
 - Hereda de `personajeBase`
 - Añade funcionalidad específica
+- Añade un nombre por defecto.
 - Forma el segundo eslabón de la cadena
 
 ## Herencia con Prototipos - Instancia
@@ -109,15 +113,60 @@ protottipoJugador.atacar = function(objetivo) {
 **Creando la instancia final**
 
 ```javascript
-const jugador = Object.create(protottipoJugador);
+const jugador = Object.create(prototipoJugador);
 jugador.nombre = "Aragorn";
-jugador.x = 0;
-jugador.y = 0;
+jugador.x = 10;
+jugador.y = 10;
+jugador.puntuacion = 3;
 ```
 
 - Tiene acceso a `mover()` y `atacar()`
 - Define sus propias propiedades
+- Propiedades que ocultan las del prototipo (locales) y nuevas.
 - Completa la cadena de herencia
+
+## Vision Completa
+
+::: {.columns}
+::: {.column width="30%"}
+### Base
+```javascript
+const personajeBase = {
+    mover(x, y) {
+        this.x += x;
+        this.y += y;
+    },
+    x:  0,
+    y: 0
+};
+```
+:::
+::: {.column width="70%"}
+### Prototipo
+```javascript
+const prototipoJugador = Object.create(personajeBase);
+prototipoJugador.atacar = function(objetivo) {
+    return `${this.nombre} ataca a ${objetivo.nombre}`;
+};
+prototipoJugador.nombre = "Sin nombre"
+```
+:::
+:::
+
+### Instancia
+```javascript
+const jugador = Object.create(prototipoJugador);
+```
+- Acceder a prototipoJugador.nombre y a jugador.nombre
+- añadir los cambios a nivel de instancia y ejecutar de nuevo.
+- Comprobar las propiedades con `Object.keys(INSTANCIA)` antes y después.
+
+```javascript
+jugador.nombre = "Aragorn";
+jugador.x = 10;
+jugador.y = 10;
+jugador.puntuacion = 3;
+```
 
 ## Acceso a Propiedades
 
@@ -140,7 +189,7 @@ config.volumen = 0.5;
 - Sintaxis clara: `objeto.propiedad`
 - Recomendada cuando el nombre es conocido
 - No funciona con nombres dinámicos
-::: {.columns}
+:::
 ::: {.column width="50%"}
 ### Notación corchetes
 **Para propiedades dinámicas o especiales**
@@ -589,21 +638,6 @@ const orc = Enemigo.crearOrc(); // Método estático
 - Podemos usar setters para asignar valores
 - Los métodos estáticos crean instancias preconfiguradas
 
-## Uso de Clases - Getters
-
-**Acceso a propiedades calculadas**
-
-```javascript
-if (goblin.estaVivo) {
-    console.log("El goblin sigue vivo");
-}
-
-console.log(`Vida actual: ${goblin.vida}`);
-```
-
-- Sin paréntesis, como propiedades normales
-- Transparentes para el código cliente
-- Pueden ejecutar cálculos o validaciones
 
 ## Uso de Clases - Polimorfismo
 
