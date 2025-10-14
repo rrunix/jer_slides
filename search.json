@@ -788,28 +788,35 @@
     "href": "ch2_p2_js_classes.html#herencia-con-prototipos---base",
     "title": "Desarrollo en el cliente",
     "section": "Herencia con Prototipos - Base",
-    "text": "Herencia con Prototipos - Base\nCreando el objeto base\nconst personajeBase = {\n    mover(x, y) {\n        this.x += x;\n        this.y += y;\n    }\n};\n\nDefine comportamiento común\nPuede ser heredado por múltiples objetos\nLos métodos usan this para acceder a propiedades"
+    "text": "Herencia con Prototipos - Base\nCreando el objeto base\nconst personajeBase = {\n    mover(x, y) {\n        this.x += x;\n        this.y += y;\n    },\n    x:  0,\n    y: 0\n};\n\nDefine comportamiento común\nPuede ser heredado por múltiples objetos\nLos métodos usan this para acceder a propiedades"
   },
   {
     "objectID": "ch2_p2_js_classes.html#herencia-con-prototipos---extensión",
     "href": "ch2_p2_js_classes.html#herencia-con-prototipos---extensión",
     "title": "Desarrollo en el cliente",
     "section": "Herencia con Prototipos - Extensión",
-    "text": "Herencia con Prototipos - Extensión\nCreando un prototipo intermedio\nconst protottipoJugador = Object.create(personajeBase);\nprotottipoJugador.atacar = function(objetivo) {\n    return `${this.nombre} ataca a ${objetivo.nombre}`;\n};\n\nHereda de personajeBase\nAñade funcionalidad específica\nForma el segundo eslabón de la cadena"
+    "text": "Herencia con Prototipos - Extensión\nCreando un prototipo intermedio\nconst prototipoJugador = Object.create(personajeBase);\nprototipoJugador.atacar = function(objetivo) {\n    return `${this.nombre} ataca a ${objetivo.nombre}`;\n};\nprototipoJugador.nombre = \"Sin nombre\"\n\nHereda de personajeBase\nAñade funcionalidad específica\nAñade un nombre por defecto.\nForma el segundo eslabón de la cadena"
   },
   {
     "objectID": "ch2_p2_js_classes.html#herencia-con-prototipos---instancia",
     "href": "ch2_p2_js_classes.html#herencia-con-prototipos---instancia",
     "title": "Desarrollo en el cliente",
     "section": "Herencia con Prototipos - Instancia",
-    "text": "Herencia con Prototipos - Instancia\nCreando la instancia final\nconst jugador = Object.create(protottipoJugador);\njugador.nombre = \"Aragorn\";\njugador.x = 0;\njugador.y = 0;\n\nTiene acceso a mover() y atacar()\nDefine sus propias propiedades\nCompleta la cadena de herencia"
+    "text": "Herencia con Prototipos - Instancia\nCreando la instancia final\nconst jugador = Object.create(prototipoJugador);\njugador.nombre = \"Aragorn\";\njugador.x = 10;\njugador.y = 10;\njugador.puntuacion = 3;\n\nTiene acceso a mover() y atacar()\nDefine sus propias propiedades\nPropiedades que ocultan las del prototipo (locales) y nuevas.\nCompleta la cadena de herencia"
+  },
+  {
+    "objectID": "ch2_p2_js_classes.html#vision-completa",
+    "href": "ch2_p2_js_classes.html#vision-completa",
+    "title": "Desarrollo en el cliente",
+    "section": "Vision Completa",
+    "text": "Vision Completa\n\n\nBase\nconst personajeBase = {\n    mover(x, y) {\n        this.x += x;\n        this.y += y;\n    },\n    x:  0,\n    y: 0\n};\n\nPrototipo\nconst prototipoJugador = Object.create(personajeBase);\nprototipoJugador.atacar = function(objetivo) {\n    return `${this.nombre} ataca a ${objetivo.nombre}`;\n};\nprototipoJugador.nombre = \"Sin nombre\"\n\nInstancia\nconst jugador = Object.create(prototipoJugador);\n\nAcceder a prototipoJugador.nombre y a jugador.nombre\nañadir los cambios a nivel de instancia y ejecutar de nuevo.\nComprobar las propiedades con Object.keys(INSTANCIA) antes y después.\n\njugador.nombre = \"Aragorn\";\njugador.x = 10;\njugador.y = 10;\njugador.puntuacion = 3;"
   },
   {
     "objectID": "ch2_p2_js_classes.html#acceso-a-propiedades",
     "href": "ch2_p2_js_classes.html#acceso-a-propiedades",
     "title": "Desarrollo en el cliente",
     "section": "Acceso a Propiedades",
-    "text": "Acceso a Propiedades\n\n\nNotación punto\nLa forma más común y legible\nconst config = {\n    sonido: true,\n    volumen: 0.8,\n    idioma: \"es\"\n};\n\nconsole.log(config.sonido);\nconfig.volumen = 0.5;\n\nSintaxis clara: objeto.propiedad\nRecomendada cuando el nombre es conocido\nNo funciona con nombres dinámicos ::: {.columns} ::: {.column width=“50%”} ### Notación corchetes Para propiedades dinámicas o especiales\n\nconsole.log(config[\"idioma\"]);\n\nconst propiedad = \"volumen\";\nconsole.log(config[propiedad]);\n\nPermite nombres de propiedad dinámicos\nÚtil con variables o bucles\nNecesaria para nombres con espacios o caracteres especiales"
+    "text": "Acceso a Propiedades\n\n\nNotación punto\nLa forma más común y legible\nconst config = {\n    sonido: true,\n    volumen: 0.8,\n    idioma: \"es\"\n};\n\nconsole.log(config.sonido);\nconfig.volumen = 0.5;\n\nSintaxis clara: objeto.propiedad\nRecomendada cuando el nombre es conocido\nNo funciona con nombres dinámicos\n\n\nNotación corchetes\nPara propiedades dinámicas o especiales\nconsole.log(config[\"idioma\"]);\n\nconst propiedad = \"volumen\";\nconsole.log(config[propiedad]);\n\nPermite nombres de propiedad dinámicos\nÚtil con variables o bucles\nNecesaria para nombres con espacios o caracteres especiales"
   },
   {
     "objectID": "ch2_p2_js_classes.html#añadir-propiedades-dinámicamente",
@@ -978,13 +985,6 @@
     "title": "Desarrollo en el cliente",
     "section": "Uso de Clases - Creación",
     "text": "Uso de Clases - Creación\nInstanciando objetos\nconst goblin = new Enemigo(10, 20, \"Goblin\");\ngoblin.vida = 30;\n\nconst orc = Enemigo.crearOrc(); // Método estático\n\nConstructor normal con new\nPodemos usar setters para asignar valores\nLos métodos estáticos crean instancias preconfiguradas"
-  },
-  {
-    "objectID": "ch2_p2_js_classes.html#uso-de-clases---getters",
-    "href": "ch2_p2_js_classes.html#uso-de-clases---getters",
-    "title": "Desarrollo en el cliente",
-    "section": "Uso de Clases - Getters",
-    "text": "Uso de Clases - Getters\nAcceso a propiedades calculadas\nif (goblin.estaVivo) {\n    console.log(\"El goblin sigue vivo\");\n}\n\nconsole.log(`Vida actual: ${goblin.vida}`);\n\nSin paréntesis, como propiedades normales\nTransparentes para el código cliente\nPueden ejecutar cálculos o validaciones"
   },
   {
     "objectID": "ch2_p2_js_classes.html#uso-de-clases---polimorfismo",
