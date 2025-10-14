@@ -22,4 +22,8 @@ format:
 # Programación en el cliente
 
 - [Introducción a JS](ch2_p1.html)
-<!-- - [Introducción a POO en JS](ch2_p2.html) -->
+- [Introducción a POO en JS](ch2_p2.html)
+
+# Programación con Phaser
+
+- [Introducción a Phaser](ch3_p1.html)
