@@ -809,7 +809,7 @@
     "href": "ch2_p2_js_classes.html#vision-completa",
     "title": "Desarrollo en el cliente",
     "section": "Vision Completa",
-    "text": "Vision Completa\n\n\nBase\nconst personajeBase = {\n    mover(x, y) {\n        this.x += x;\n        this.y += y;\n    },\n    x:  0,\n    y: 0\n};\n\nPrototipo\nconst prototipoJugador = Object.create(personajeBase);\nprototipoJugador.atacar = function(objetivo) {\n    return `${this.nombre} ataca a ${objetivo.nombre}`;\n};\nprototipoJugador.nombre = \"Sin nombre\"\n\nInstancia\nconst jugador = Object.create(prototipoJugador);\n\nAcceder a prototipoJugador.nombre y a jugador.nombre\nañadir los cambios a nivel de instancia y ejecutar de nuevo.\nComprobar las propiedades con Object.keys(INSTANCIA) antes y después.\n\njugador.nombre = \"Aragorn\";\njugador.x = 10;\njugador.y = 10;\njugador.puntuacion = 3;"
+    "text": "Vision Completa\n\n\nBase\nlet personajeBase = {\n    mover(x, y) {\n        this.x += x;\n        this.y += y;\n    },\n    x:  0,\n    y: 0\n};\n\nPrototipo\nlet prototipoJugador = Object.create(personajeBase);\nprototipoJugador.atacar = function(objetivo) {\n    return `${this.nombre} ataca a ${objetivo.nombre}`;\n};\nprototipoJugador.nombre = \"Sin nombre\"\n\nInstancia\nlet jugador = Object.create(prototipoJugador);\n\nAcceder a prototipoJugador.nombre y a jugador.nombre\nañadir los cambios a nivel de instancia y ejecutar de nuevo.\nComprobar las propiedades con Object.keys(INSTANCIA) antes y después.\n\njugador.nombre = \"Aragorn\";\njugador.x = 10;\njugador.y = 10;\njugador.puntuacion = 3;"
   },
   {
     "objectID": "ch2_p2_js_classes.html#acceso-a-propiedades",

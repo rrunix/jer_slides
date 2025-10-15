@@ -93,8 +93,6 @@ const config = {
 
 # Estructura Básica
 
-
-
 ## El Elemento Canvas
 
 **¿Qué es el Canvas?**
@@ -113,8 +111,6 @@ const config = {
 ```html
 <canvas id="game" width="800" height="600"></canvas>
 ```
-
-
 
 ## Configuración Inicial
 

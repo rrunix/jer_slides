@@ -338,7 +338,7 @@ Rubén Rodríguez Fernández (<span class="citation" data-cites="rrunix">(<a hre
 <div class="columns">
 <div class="column" style="width:30%;">
 <h3 id="base">Base</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a></a><span class="kw">const</span> personajeBase <span class="op">=</span> {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a></a><span class="kw">let</span> personajeBase <span class="op">=</span> {</span>
 <span id="cb6-2"><a></a>    <span class="fu">mover</span>(x<span class="op">,</span> y) {</span>
 <span id="cb6-3"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">x</span> <span class="op">+=</span> x<span class="op">;</span></span>
 <span id="cb6-4"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">y</span> <span class="op">+=</span> y<span class="op">;</span></span>
@@ -348,14 +348,14 @@ Rubén Rodríguez Fernández (<span class="citation" data-cites="rrunix">(<a hre
 <span id="cb6-8"><a></a>}<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:70%;">
 <h3 id="prototipo">Prototipo</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a></a><span class="kw">const</span> prototipoJugador <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">create</span>(personajeBase)<span class="op">;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a></a><span class="kw">let</span> prototipoJugador <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">create</span>(personajeBase)<span class="op">;</span></span>
 <span id="cb7-2"><a></a>prototipoJugador<span class="op">.</span><span class="at">atacar</span> <span class="op">=</span> <span class="kw">function</span>(objetivo) {</span>
 <span id="cb7-3"><a></a>    <span class="cf">return</span> <span class="vs">`</span><span class="sc">${</span><span class="kw">this</span><span class="op">.</span><span class="at">nombre</span><span class="sc">}</span><span class="vs"> ataca a </span><span class="sc">${</span>objetivo<span class="op">.</span><span class="at">nombre</span><span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
 <span id="cb7-4"><a></a>}<span class="op">;</span></span>
 <span id="cb7-5"><a></a>prototipoJugador<span class="op">.</span><span class="at">nombre</span> <span class="op">=</span> <span class="st">"Sin nombre"</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
 <h3 id="instancia">Instancia</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a></a><span class="kw">const</span> jugador <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">create</span>(prototipoJugador)<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a></a><span class="kw">let</span> jugador <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">create</span>(prototipoJugador)<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>Acceder a prototipoJugador.nombre y a jugador.nombre</li>
 <li>añadir los cambios a nivel de instancia y ejecutar de nuevo.</li>
