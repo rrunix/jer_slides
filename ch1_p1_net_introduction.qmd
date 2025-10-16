@@ -1,8 +1,10 @@
 ---
 title: "Introducción a las Redes de Ordenadores"
 subtitle: "Fundamentos de Internet y Arquitecturas de Red"
-author: "Rubén Rodríguez Fernández (&#64;rrunix)"
-date: "16/09/2025"
+author:   
+  - "Alberto Fernández de Isabel"   
+  - "Rubén Rodríguez Fernández (&#64;rrunix)"
+date: "10/20/2025"
 corresponding: true
 css: ojs_interactive.css
 aliases:
@@ -279,25 +281,7 @@ timeline
 - Burbuja punto com
 - Creación de las Redes sociales.
 - Inteligencia Artificial Generativa.
-
-
-## Crecimiento Exponencial
-
-De ~4 dispositivos (1969) a >100.000 millones (2025) en 50 años.
-
-```{python}
-import matplotlib.pyplot as plt
-
-decades = ['1970s', '1980s', '1990s', '2000s', '2010s', '2020s']
-values = [0.6, 2.3, 4.5, 9.0, 10.1, 11.7]
-
-plt.figure(figsize=(10, 6))
-plt.bar(decades, values, color='#4CAF50')
-plt.title('Dispositivos Conectados (Log₁₀)', fontsize=16)
-plt.ylabel('Log₁₀ (dispositivos)')
-plt.ylim(0, 12)
-plt.show()
-```
+- De ~4 dispositivos (1969) a >100.000 millones (2025) en 50 años.
 
 # Infraestructura de Red
 
@@ -780,7 +764,7 @@ Prueba a ejecutar `ping www.google.es` en tu terminal. ¿Qué ves?.
 :::
 
 ::: {.column width="50%"}
-### Throughput
+### Throughput (Tasa de Transferencia Efectiva)
 
 - Datos enviados por cantidad de tiempo.
 - "Número de carriles"
