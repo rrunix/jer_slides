@@ -131,7 +131,7 @@ jugador.puntuacion = 3;
 ::: {.column width="30%"}
 ### Base
 ```javascript
-const personajeBase = {
+let personajeBase = {
     mover(x, y) {
         this.x += x;
         this.y += y;
@@ -144,7 +144,7 @@ const personajeBase = {
 ::: {.column width="70%"}
 ### Prototipo
 ```javascript
-const prototipoJugador = Object.create(personajeBase);
+let prototipoJugador = Object.create(personajeBase);
 prototipoJugador.atacar = function(objetivo) {
     return `${this.nombre} ataca a ${objetivo.nombre}`;
 };
@@ -155,7 +155,7 @@ prototipoJugador.nombre = "Sin nombre"
 
 ### Instancia
 ```javascript
-const jugador = Object.create(prototipoJugador);
+let jugador = Object.create(prototipoJugador);
 ```
 - Acceder a prototipoJugador.nombre y a jugador.nombre
 - añadir los cambios a nivel de instancia y ejecutar de nuevo.

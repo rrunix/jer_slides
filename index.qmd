@@ -19,11 +19,15 @@ format:
 - [Capa de transporte](ch1_p4.html)
 - [Capa de aplicación](ch1_p5.html)
 
-# Programación en el cliente
+## Programación en el cliente
 
+# Javascript
 - [Introducción a JS](ch2_p1.html)
 - [Introducción a POO en JS](ch2_p2.html)
 
-# Programación con Phaser
-
+# Phaser
 - [Introducción a Phaser](ch3_p1.html)
+
+# Comunicación cliente-servidor
+- [API REST](ch4.html)
+- [WebSockets](ch5.html)
