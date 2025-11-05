@@ -9,8 +9,9 @@
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.8.24">
 
-  <meta name="author" content="Rubén Rodríguez Fernández (@rrunix)">
-  <meta name="dcterms.date" content="2026-05-09">
+  <meta name="author" content="Ruben Rodríguez">
+  <meta name="author" content="Natalia Madrueño">
+  <meta name="dcterms.date" content="2025-09-09">
   <title>Capa de Acceso a la Red</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -96,7 +97,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-ed81c1eb8156b6dfccbd5cf511d4619a.css">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-1ce769db2a36090d3274625bba5d3e18.css">
   <link rel="stylesheet" href="ojs_interactive.css">
   <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -202,20 +203,42 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-background-image="theme_images/background_fronpage.png" data-background-position="center 70%" data-background-size="33%" class="quarto-title-block center">
-  <h1 class="title">Capa de Acceso a la Red</h1>
-  <p class="subtitle">Fundamentos de la transmisión física y control de acceso al medio</p>
-
-<div class="quarto-title-authors">
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-Rubén Rodríguez Fernández (@rrunix) 
-</div>
-</div>
-</div>
-
-  <p class="date">2026-05-09</p>
-</section><section id="TOC">
+<section id="title-slide" class="quarto-title-block center">
+    <h1 class="title" style="background-color: #00a9d4; color: white; padding: 0.5em 1em; margin-left: 1em; margin-right: 1em;">Capa de Acceso a la Red</h1>
+      <p class="subtitle"><b>Juegos en Red - Grado en Desarrollo de Videojuegos</b></p>
+    
+  <div class="quarto-title-authors">
+    <div class="quarto-title-author">
+  <div class="quarto-title-author-name">
+  Ruben Rodríguez 
+  </div>
+    <div class="quarto-title-author-email">
+  <a href="mailto:ruben.rodriguez@urjc.es">ruben.rodriguez@urjc.es</a>
+  </div>
+                <p class="quarto-title-affiliation">
+                URJC
+              </p>
+          </div>
+    <div class="quarto-title-author">
+  <div class="quarto-title-author-name">
+  Natalia Madrueño 
+  </div>
+    <div class="quarto-title-author-email">
+  <a href="mailto:natalia.madrueno@urjc.es">natalia.madrueno@urjc.es</a>
+  </div>
+                <p class="quarto-title-affiliation">
+                URJC
+              </p>
+          </div>
+    </div>
+  
+      <p class="date">2025-09-09</p>
+  
+  <div style="display: flex; justify-content: center; align-items: center; gap: 2em; margin-top: 6em;">
+    <img src="images/URJClogo.png" alt="URJC Logo" style="height: 80px; width: auto;">
+    <img src="images/DSLab_logo_1.png" alt="DSLab Logo" style="height: 80px; width: auto;">
+  </div>
+  </section><section id="TOC">
 <nav role="doc-toc"> 
 <h2 id="toc-title">Tabla de contenidos</h2>
 <ul>
@@ -467,8 +490,8 @@ Rubén Rodríguez Fernández (@rrunix)
 <div class="ojsinteractive">
 <div class="ojscontrols">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="227" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 226;"><span id="cb1-227"><a></a><span class="co">// Input: 4-bit message</span></span>
-<span id="cb1-228"><a></a>viewof msg4 <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">text</span>({<span class="dt">label</span><span class="op">:</span> <span class="st">"Mensaje (4 bits)"</span><span class="op">,</span> <span class="dt">placeholder</span><span class="op">:</span> <span class="st">"e.g. 1011"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="226" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 225;"><span id="cb1-226"><a></a><span class="co">// Input: 4-bit message</span></span>
+<span id="cb1-227"><a></a>viewof msg4 <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">text</span>({<span class="dt">label</span><span class="op">:</span> <span class="st">"Mensaje (4 bits)"</span><span class="op">,</span> <span class="dt">placeholder</span><span class="op">:</span> <span class="st">"e.g. 1011"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-1" data-nodetype="declaration">
 
@@ -478,22 +501,22 @@ Rubén Rodríguez Fernández (@rrunix)
 </div>
 <div class="ojsplot">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="236" data-source-offset="-29"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 235;"><span id="cb2-236"><a></a><span class="kw">function</span> <span class="fu">hamming74_encode</span>(bits4) {</span>
-<span id="cb2-237"><a></a>  <span class="cf">if</span> (<span class="op">!</span><span class="ss">/</span><span class="sc">^[01]{4}$</span><span class="ss">/</span><span class="op">.</span><span class="fu">test</span>(bits4)) <span class="cf">return</span> <span class="st">""</span><span class="op">;</span></span>
-<span id="cb2-238"><a></a>  <span class="kw">const</span> [d1<span class="op">,</span> d2<span class="op">,</span> d3<span class="op">,</span> d4] <span class="op">=</span> bits4<span class="op">.</span><span class="fu">split</span>(<span class="st">""</span>)<span class="op">.</span><span class="fu">map</span>(b <span class="kw">=&gt;</span> <span class="op">+</span>b)<span class="op">;</span></span>
-<span id="cb2-239"><a></a>  </span>
-<span id="cb2-240"><a></a>  <span class="co">// parity bits</span></span>
-<span id="cb2-241"><a></a>  <span class="kw">const</span> p1 <span class="op">=</span> d1 <span class="op">^</span> d2 <span class="op">^</span> d4<span class="op">;</span></span>
-<span id="cb2-242"><a></a>  <span class="kw">const</span> p2 <span class="op">=</span> d1 <span class="op">^</span> d3 <span class="op">^</span> d4<span class="op">;</span></span>
-<span id="cb2-243"><a></a>  <span class="kw">const</span> p3 <span class="op">=</span> d2 <span class="op">^</span> d3 <span class="op">^</span> d4<span class="op">;</span></span>
-<span id="cb2-244"><a></a>  </span>
-<span id="cb2-245"><a></a>  <span class="co">// Codeword positions: p1 p2 d1 p3 d2 d3 d4</span></span>
-<span id="cb2-246"><a></a>  <span class="kw">const</span> code <span class="op">=</span> [p1<span class="op">,</span> p2<span class="op">,</span> d1<span class="op">,</span> p3<span class="op">,</span> d2<span class="op">,</span> d3<span class="op">,</span> d4]<span class="op">;</span></span>
-<span id="cb2-247"><a></a>  <span class="cf">return</span> code<span class="op">.</span><span class="fu">join</span>(<span class="st">""</span>)<span class="op">;</span></span>
-<span id="cb2-248"><a></a>}</span>
-<span id="cb2-249"><a></a></span>
-<span id="cb2-250"><a></a>encoded <span class="op">=</span> <span class="fu">hamming74_encode</span>(msg4)</span>
-<span id="cb2-251"><a></a>encoded</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="235" data-source-offset="-29"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 234;"><span id="cb2-235"><a></a><span class="kw">function</span> <span class="fu">hamming74_encode</span>(bits4) {</span>
+<span id="cb2-236"><a></a>  <span class="cf">if</span> (<span class="op">!</span><span class="ss">/</span><span class="sc">^[01]{4}$</span><span class="ss">/</span><span class="op">.</span><span class="fu">test</span>(bits4)) <span class="cf">return</span> <span class="st">""</span><span class="op">;</span></span>
+<span id="cb2-237"><a></a>  <span class="kw">const</span> [d1<span class="op">,</span> d2<span class="op">,</span> d3<span class="op">,</span> d4] <span class="op">=</span> bits4<span class="op">.</span><span class="fu">split</span>(<span class="st">""</span>)<span class="op">.</span><span class="fu">map</span>(b <span class="kw">=&gt;</span> <span class="op">+</span>b)<span class="op">;</span></span>
+<span id="cb2-238"><a></a>  </span>
+<span id="cb2-239"><a></a>  <span class="co">// parity bits</span></span>
+<span id="cb2-240"><a></a>  <span class="kw">const</span> p1 <span class="op">=</span> d1 <span class="op">^</span> d2 <span class="op">^</span> d4<span class="op">;</span></span>
+<span id="cb2-241"><a></a>  <span class="kw">const</span> p2 <span class="op">=</span> d1 <span class="op">^</span> d3 <span class="op">^</span> d4<span class="op">;</span></span>
+<span id="cb2-242"><a></a>  <span class="kw">const</span> p3 <span class="op">=</span> d2 <span class="op">^</span> d3 <span class="op">^</span> d4<span class="op">;</span></span>
+<span id="cb2-243"><a></a>  </span>
+<span id="cb2-244"><a></a>  <span class="co">// Codeword positions: p1 p2 d1 p3 d2 d3 d4</span></span>
+<span id="cb2-245"><a></a>  <span class="kw">const</span> code <span class="op">=</span> [p1<span class="op">,</span> p2<span class="op">,</span> d1<span class="op">,</span> p3<span class="op">,</span> d2<span class="op">,</span> d3<span class="op">,</span> d4]<span class="op">;</span></span>
+<span id="cb2-246"><a></a>  <span class="cf">return</span> code<span class="op">.</span><span class="fu">join</span>(<span class="st">""</span>)<span class="op">;</span></span>
+<span id="cb2-247"><a></a>}</span>
+<span id="cb2-248"><a></a></span>
+<span id="cb2-249"><a></a>encoded <span class="op">=</span> <span class="fu">hamming74_encode</span>(msg4)</span>
+<span id="cb2-250"><a></a>encoded</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-2-1" data-nodetype="declaration">
@@ -522,8 +545,8 @@ Rubén Rodríguez Fernández (@rrunix)
 <div class="ojsinteractive">
 <div class="ojscontrols">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="261" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 260;"><span id="cb3-261"><a></a><span class="co">// Input: 7-bit codeword</span></span>
-<span id="cb3-262"><a></a>viewof code7 <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">text</span>({<span class="dt">label</span><span class="op">:</span> <span class="st">"Codeword (7 bits)"</span><span class="op">,</span> <span class="dt">placeholder</span><span class="op">:</span> <span class="st">"e.g. 0110011"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="260" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 259;"><span id="cb3-260"><a></a><span class="co">// Input: 7-bit codeword</span></span>
+<span id="cb3-261"><a></a>viewof code7 <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">text</span>({<span class="dt">label</span><span class="op">:</span> <span class="st">"Codeword (7 bits)"</span><span class="op">,</span> <span class="dt">placeholder</span><span class="op">:</span> <span class="st">"e.g. 0110011"</span>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-3" data-nodetype="declaration">
 
@@ -533,34 +556,34 @@ Rubén Rodríguez Fernández (@rrunix)
 </div>
 <div class="ojsplot">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="269" data-source-offset="-0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 268;"><span id="cb4-269"><a></a><span class="kw">function</span> <span class="fu">hamming74_decode</span>(code) {</span>
-<span id="cb4-270"><a></a>  <span class="cf">if</span> (<span class="op">!</span><span class="ss">/</span><span class="sc">^[01]{7}$</span><span class="ss">/</span><span class="op">.</span><span class="fu">test</span>(code)) <span class="cf">return</span> <span class="st">"Enter exactly 7 bits"</span><span class="op">;</span></span>
-<span id="cb4-271"><a></a>  <span class="kw">const</span> bits <span class="op">=</span> code<span class="op">.</span><span class="fu">split</span>(<span class="st">""</span>)<span class="op">.</span><span class="fu">map</span>(b <span class="kw">=&gt;</span> <span class="op">+</span>b)<span class="op">;</span></span>
-<span id="cb4-272"><a></a>  <span class="kw">const</span> [p1<span class="op">,</span> p2<span class="op">,</span> d1<span class="op">,</span> p3<span class="op">,</span> d2<span class="op">,</span> d3<span class="op">,</span> d4] <span class="op">=</span> bits<span class="op">;</span></span>
-<span id="cb4-273"><a></a></span>
-<span id="cb4-274"><a></a>  <span class="co">// syndrome bits</span></span>
-<span id="cb4-275"><a></a>  <span class="kw">const</span> s1 <span class="op">=</span> p1 <span class="op">^</span> d1 <span class="op">^</span> d2 <span class="op">^</span> d4<span class="op">;</span></span>
-<span id="cb4-276"><a></a>  <span class="kw">const</span> s2 <span class="op">=</span> p2 <span class="op">^</span> d1 <span class="op">^</span> d3 <span class="op">^</span> d4<span class="op">;</span></span>
-<span id="cb4-277"><a></a>  <span class="kw">const</span> s3 <span class="op">=</span> p3 <span class="op">^</span> d2 <span class="op">^</span> d3 <span class="op">^</span> d4<span class="op">;</span></span>
-<span id="cb4-278"><a></a>  </span>
-<span id="cb4-279"><a></a>  <span class="kw">const</span> syndrome <span class="op">=</span> (s3 <span class="op">&lt;&lt;</span> <span class="dv">2</span>) <span class="op">|</span> (s2 <span class="op">&lt;&lt;</span> <span class="dv">1</span>) <span class="op">|</span> s1<span class="op">;</span> <span class="co">// binary → position (1-7)</span></span>
-<span id="cb4-280"><a></a></span>
-<span id="cb4-281"><a></a>  <span class="kw">let</span> corrected <span class="op">=</span> [<span class="op">...</span>bits]<span class="op">;</span></span>
-<span id="cb4-282"><a></a>  <span class="kw">let</span> msg <span class="op">=</span> [d1<span class="op">,</span> d2<span class="op">,</span> d3<span class="op">,</span> d4]<span class="op">.</span><span class="fu">join</span>(<span class="st">""</span>)<span class="op">;</span></span>
-<span id="cb4-283"><a></a>  </span>
-<span id="cb4-284"><a></a>  <span class="cf">if</span> (syndrome <span class="op">===</span> <span class="dv">0</span>) {</span>
-<span id="cb4-285"><a></a>    <span class="cf">return</span> <span class="vs">`✅ Valid codeword, message = </span><span class="sc">${</span>msg<span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
-<span id="cb4-286"><a></a>  } <span class="cf">else</span> {</span>
-<span id="cb4-287"><a></a>    <span class="co">// correct bit if single error</span></span>
-<span id="cb4-288"><a></a>    corrected[syndrome <span class="op">-</span> <span class="dv">1</span>] <span class="op">^=</span> <span class="dv">1</span><span class="op">;</span> </span>
-<span id="cb4-289"><a></a>    <span class="kw">const</span> [cp1<span class="op">,</span> cp2<span class="op">,</span> cd1<span class="op">,</span> cp3<span class="op">,</span> cd2<span class="op">,</span> cd3<span class="op">,</span> cd4] <span class="op">=</span> corrected<span class="op">;</span></span>
-<span id="cb4-290"><a></a>    <span class="kw">const</span> corrected_msg <span class="op">=</span> [cd1<span class="op">,</span> cd2<span class="op">,</span> cd3<span class="op">,</span> cd4]<span class="op">.</span><span class="fu">join</span>(<span class="st">""</span>)<span class="op">;</span></span>
-<span id="cb4-291"><a></a>    <span class="cf">return</span> <span class="vs">`❌ Error at position </span><span class="sc">${</span>syndrome<span class="sc">}</span><span class="vs">. Corrected codeword = </span><span class="sc">${</span>corrected<span class="op">.</span><span class="fu">join</span>(<span class="st">""</span>)<span class="sc">}</span><span class="vs">, message = </span><span class="sc">${</span>corrected_msg<span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
-<span id="cb4-292"><a></a>  }</span>
-<span id="cb4-293"><a></a>}</span>
-<span id="cb4-294"><a></a></span>
-<span id="cb4-295"><a></a>result <span class="op">=</span> <span class="fu">hamming74_decode</span>(code7)</span>
-<span id="cb4-296"><a></a>result</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="268" data-source-offset="-0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 267;"><span id="cb4-268"><a></a><span class="kw">function</span> <span class="fu">hamming74_decode</span>(code) {</span>
+<span id="cb4-269"><a></a>  <span class="cf">if</span> (<span class="op">!</span><span class="ss">/</span><span class="sc">^[01]{7}$</span><span class="ss">/</span><span class="op">.</span><span class="fu">test</span>(code)) <span class="cf">return</span> <span class="st">"Enter exactly 7 bits"</span><span class="op">;</span></span>
+<span id="cb4-270"><a></a>  <span class="kw">const</span> bits <span class="op">=</span> code<span class="op">.</span><span class="fu">split</span>(<span class="st">""</span>)<span class="op">.</span><span class="fu">map</span>(b <span class="kw">=&gt;</span> <span class="op">+</span>b)<span class="op">;</span></span>
+<span id="cb4-271"><a></a>  <span class="kw">const</span> [p1<span class="op">,</span> p2<span class="op">,</span> d1<span class="op">,</span> p3<span class="op">,</span> d2<span class="op">,</span> d3<span class="op">,</span> d4] <span class="op">=</span> bits<span class="op">;</span></span>
+<span id="cb4-272"><a></a></span>
+<span id="cb4-273"><a></a>  <span class="co">// syndrome bits</span></span>
+<span id="cb4-274"><a></a>  <span class="kw">const</span> s1 <span class="op">=</span> p1 <span class="op">^</span> d1 <span class="op">^</span> d2 <span class="op">^</span> d4<span class="op">;</span></span>
+<span id="cb4-275"><a></a>  <span class="kw">const</span> s2 <span class="op">=</span> p2 <span class="op">^</span> d1 <span class="op">^</span> d3 <span class="op">^</span> d4<span class="op">;</span></span>
+<span id="cb4-276"><a></a>  <span class="kw">const</span> s3 <span class="op">=</span> p3 <span class="op">^</span> d2 <span class="op">^</span> d3 <span class="op">^</span> d4<span class="op">;</span></span>
+<span id="cb4-277"><a></a>  </span>
+<span id="cb4-278"><a></a>  <span class="kw">const</span> syndrome <span class="op">=</span> (s3 <span class="op">&lt;&lt;</span> <span class="dv">2</span>) <span class="op">|</span> (s2 <span class="op">&lt;&lt;</span> <span class="dv">1</span>) <span class="op">|</span> s1<span class="op">;</span> <span class="co">// binary → position (1-7)</span></span>
+<span id="cb4-279"><a></a></span>
+<span id="cb4-280"><a></a>  <span class="kw">let</span> corrected <span class="op">=</span> [<span class="op">...</span>bits]<span class="op">;</span></span>
+<span id="cb4-281"><a></a>  <span class="kw">let</span> msg <span class="op">=</span> [d1<span class="op">,</span> d2<span class="op">,</span> d3<span class="op">,</span> d4]<span class="op">.</span><span class="fu">join</span>(<span class="st">""</span>)<span class="op">;</span></span>
+<span id="cb4-282"><a></a>  </span>
+<span id="cb4-283"><a></a>  <span class="cf">if</span> (syndrome <span class="op">===</span> <span class="dv">0</span>) {</span>
+<span id="cb4-284"><a></a>    <span class="cf">return</span> <span class="vs">`✅ Valid codeword, message = </span><span class="sc">${</span>msg<span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb4-285"><a></a>  } <span class="cf">else</span> {</span>
+<span id="cb4-286"><a></a>    <span class="co">// correct bit if single error</span></span>
+<span id="cb4-287"><a></a>    corrected[syndrome <span class="op">-</span> <span class="dv">1</span>] <span class="op">^=</span> <span class="dv">1</span><span class="op">;</span> </span>
+<span id="cb4-288"><a></a>    <span class="kw">const</span> [cp1<span class="op">,</span> cp2<span class="op">,</span> cd1<span class="op">,</span> cp3<span class="op">,</span> cd2<span class="op">,</span> cd3<span class="op">,</span> cd4] <span class="op">=</span> corrected<span class="op">;</span></span>
+<span id="cb4-289"><a></a>    <span class="kw">const</span> corrected_msg <span class="op">=</span> [cd1<span class="op">,</span> cd2<span class="op">,</span> cd3<span class="op">,</span> cd4]<span class="op">.</span><span class="fu">join</span>(<span class="st">""</span>)<span class="op">;</span></span>
+<span id="cb4-290"><a></a>    <span class="cf">return</span> <span class="vs">`❌ Error at position </span><span class="sc">${</span>syndrome<span class="sc">}</span><span class="vs">. Corrected codeword = </span><span class="sc">${</span>corrected<span class="op">.</span><span class="fu">join</span>(<span class="st">""</span>)<span class="sc">}</span><span class="vs">, message = </span><span class="sc">${</span>corrected_msg<span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb4-291"><a></a>  }</span>
+<span id="cb4-292"><a></a>}</span>
+<span id="cb4-293"><a></a></span>
+<span id="cb4-294"><a></a>result <span class="op">=</span> <span class="fu">hamming74_decode</span>(code7)</span>
+<span id="cb4-295"><a></a>result</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-4-1" data-nodetype="declaration">
@@ -1243,18 +1266,10 @@ Rubén Rodríguez Fernández (@rrunix)
 </ul>
 
 
-<div class="reveal-header">
-<div class="header-title">
-<p> </p>
-</div>
-<div class="header-logo">
-<img data-src="">
-</div>
-</div>
 </section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
-<p><img src="theme_images/URJClogo.png" class="slide-logo"></p>
+<p><img src="images/DSLab_logo_2.png" class="slide-logo"></p>
 <div class="footer footer-default">
 
 </div>
@@ -1441,7 +1456,12 @@ Rubén Rodríguez Fernández (@rrunix)
         height: 720,
 
         // Factor of the display size that should remain empty around the content
-        margin: 0.15,
+        margin: 0.1,
+
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.5,
+
+        maxScale: 1,
 
         // reveal.js plugins
         plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
@@ -1744,5 +1764,4 @@ Rubén Rodríguez Fernández (@rrunix)
       </script>
     
 
-<script src="site_libs/quarto-contrib/metropolis-beamer-1.0.0/add_header.js" defer="true"></script>
 </body></html>

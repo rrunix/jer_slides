@@ -9,8 +9,9 @@
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.8.24">
 
-  <meta name="author" content="Rubén Rodríguez Fernández (@rrunix)">
-  <meta name="dcterms.date" content="2026-10-09">
+  <meta name="author" content="Ruben Rodríguez">
+  <meta name="author" content="Natalia Madrueño">
+  <meta name="dcterms.date" content="2025-09-09">
   <title>Capa de Transporte</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -30,7 +31,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-ed81c1eb8156b6dfccbd5cf511d4619a.css">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-1ce769db2a36090d3274625bba5d3e18.css">
   <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -133,20 +134,42 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-background-image="theme_images/background_fronpage.png" data-background-position="center 70%" data-background-size="33%" class="quarto-title-block center">
-  <h1 class="title">Capa de Transporte</h1>
-  <p class="subtitle">Comunicación lógica entre procesos de aplicación</p>
-
-<div class="quarto-title-authors">
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-Rubén Rodríguez Fernández (@rrunix) 
-</div>
-</div>
-</div>
-
-  <p class="date">2026-10-09</p>
-</section><section id="TOC">
+<section id="title-slide" class="quarto-title-block center">
+    <h1 class="title" style="background-color: #00a9d4; color: white; padding: 0.5em 1em; margin-left: 1em; margin-right: 1em;">Capa de Transporte</h1>
+      <p class="subtitle"><b>Juegos en Red - Grado en Desarrollo de Videojuegos</b></p>
+    
+  <div class="quarto-title-authors">
+    <div class="quarto-title-author">
+  <div class="quarto-title-author-name">
+  Ruben Rodríguez 
+  </div>
+    <div class="quarto-title-author-email">
+  <a href="mailto:ruben.rodriguez@urjc.es">ruben.rodriguez@urjc.es</a>
+  </div>
+                <p class="quarto-title-affiliation">
+                URJC
+              </p>
+          </div>
+    <div class="quarto-title-author">
+  <div class="quarto-title-author-name">
+  Natalia Madrueño 
+  </div>
+    <div class="quarto-title-author-email">
+  <a href="mailto:natalia.madrueno@urjc.es">natalia.madrueno@urjc.es</a>
+  </div>
+                <p class="quarto-title-affiliation">
+                URJC
+              </p>
+          </div>
+    </div>
+  
+      <p class="date">2025-09-09</p>
+  
+  <div style="display: flex; justify-content: center; align-items: center; gap: 2em; margin-top: 6em;">
+    <img src="images/URJClogo.png" alt="URJC Logo" style="height: 80px; width: auto;">
+    <img src="images/DSLab_logo_1.png" alt="DSLab Logo" style="height: 80px; width: auto;">
+  </div>
+  </section><section id="TOC">
 <nav role="doc-toc"> 
 <h2 id="toc-title">Tabla de contenidos</h2>
 <ul>
@@ -979,18 +1002,10 @@ Rubén Rodríguez Fernández (@rrunix)
 </ul>
 
 
-<div class="reveal-header">
-<div class="header-title">
-<p> </p>
-</div>
-<div class="header-logo">
-<img data-src="">
-</div>
-</div>
 </section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
-<p><img src="theme_images/URJClogo.png" class="slide-logo"></p>
+<p><img src="images/DSLab_logo_2.png" class="slide-logo"></p>
 <div class="footer footer-default">
 
 </div>
@@ -1177,7 +1192,12 @@ Rubén Rodríguez Fernández (@rrunix)
         height: 720,
 
         // Factor of the display size that should remain empty around the content
-        margin: 0.15,
+        margin: 0.1,
+
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.5,
+
+        maxScale: 1,
 
         // reveal.js plugins
         plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
@@ -1469,5 +1489,4 @@ Rubén Rodríguez Fernández (@rrunix)
       </script>
     
 
-<script src="site_libs/quarto-contrib/metropolis-beamer-1.0.0/add_header.js" defer="true"></script>
 </body></html>

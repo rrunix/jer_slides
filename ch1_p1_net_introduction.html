@@ -9,9 +9,9 @@
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.8.24">
 
-  <meta name="author" content="Alberto Fernández de Isabel">
-  <meta name="author" content="Rubén Rodríguez Fernández (@rrunix)">
-  <meta name="dcterms.date" content="2025-10-22">
+  <meta name="author" content="Ruben Rodríguez">
+  <meta name="author" content="Natalia Madrueño">
+  <meta name="dcterms.date" content="2025-09-09">
   <title>Introducción a las Redes de Ordenadores</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -97,7 +97,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-ed81c1eb8156b6dfccbd5cf511d4619a.css">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-1ce769db2a36090d3274625bba5d3e18.css">
   <link rel="stylesheet" href="ojs_interactive.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
@@ -219,40 +219,51 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-background-image="theme_images/background_fronpage.png" data-background-position="center 70%" data-background-size="33%" class="quarto-title-block center">
-  <h1 class="title">Introducción a las Redes de Ordenadores</h1>
-  <p class="subtitle">Fundamentos de Internet y Arquitecturas de Red</p>
-
-<div class="quarto-title-authors">
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-Alberto Fernández de Isabel 
-</div>
-</div>
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-Rubén Rodríguez Fernández (@rrunix) 
-</div>
-</div>
-</div>
-
-  <p class="date">2025-10-22</p>
-</section><section id="TOC">
+<section id="title-slide" class="quarto-title-block center">
+    <h1 class="title" style="background-color: #00a9d4; color: white; padding: 0.5em 1em; margin-left: 1em; margin-right: 1em;">Introducción a las Redes de Ordenadores</h1>
+      <p class="subtitle"><b>Juegos en Red - Grado en Desarrollo de Videojuegos</b></p>
+    
+  <div class="quarto-title-authors">
+    <div class="quarto-title-author">
+  <div class="quarto-title-author-name">
+  Ruben Rodríguez 
+  </div>
+    <div class="quarto-title-author-email">
+  <a href="mailto:ruben.rodriguez@urjc.es">ruben.rodriguez@urjc.es</a>
+  </div>
+                <p class="quarto-title-affiliation">
+                URJC
+              </p>
+          </div>
+    <div class="quarto-title-author">
+  <div class="quarto-title-author-name">
+  Natalia Madrueño 
+  </div>
+    <div class="quarto-title-author-email">
+  <a href="mailto:natalia.madrueno@urjc.es">natalia.madrueno@urjc.es</a>
+  </div>
+                <p class="quarto-title-affiliation">
+                URJC
+              </p>
+          </div>
+    </div>
+  
+      <p class="date">2025-09-09</p>
+  
+  <div style="display: flex; justify-content: center; align-items: center; gap: 2em; margin-top: 6em;">
+    <img src="images/URJClogo.png" alt="URJC Logo" style="height: 80px; width: auto;">
+    <img src="images/DSLab_logo_1.png" alt="DSLab Logo" style="height: 80px; width: auto;">
+  </div>
+  </section><section id="TOC">
 <nav role="doc-toc"> 
 <h2 id="toc-title">Tabla de contenidos</h2>
 <ul>
-<li><a href="#/introducción" id="/toc-introducción">Introducción</a></li>
 <li><a href="#/historia-de-internet" id="/toc-historia-de-internet">Historia de Internet</a></li>
 <li><a href="#/infraestructura-de-red" id="/toc-infraestructura-de-red">Infraestructura de Red</a></li>
 <li><a href="#/modelos-de-referencia" id="/toc-modelos-de-referencia">Modelos de Referencia</a></li>
 <li><a href="#/rendimiento-en-redes" id="/toc-rendimiento-en-redes">Rendimiento en Redes</a></li>
 </ul>
 </nav>
-</section>
-<section>
-<section id="introducción" class="title-slide slide level1 center">
-<h1>Introducción</h1>
-
 </section>
 <section id="qué-es-internet" class="slide level2">
 <h2>¿Qué es Internet?</h2>
@@ -493,7 +504,7 @@ Rubén Rodríguez Fernández (@rrunix)
 <li><strong>Sin protocolos</strong>: Caos total, pérdida de información</li>
 <li><strong>Con protocolos</strong>: Flujo ordenado, comunicación efectiva</li>
 </ul>
-</section></section>
+</section>
 <section>
 <section id="historia-de-internet" class="title-slide slide level1 center">
 <h1>Historia de Internet</h1>
@@ -1168,20 +1179,20 @@ graph LR
 <div class="ojsinteractive">
 <div class="ojscontrols">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="808" data-source-offset="-38"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 807;"><span id="cb1-808"><a></a>viewof settings <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">form</span>({</span>
-<span id="cb1-809"><a></a>  <span class="st">"Tamaño total"</span><span class="op">:</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">50</span><span class="op">,</span> <span class="dv">5000</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">200</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Tamaño total"</span>}<span class="op">,</span>)<span class="op">,</span></span>
-<span id="cb1-810"><a></a>  <span class="st">"Latencia A"</span><span class="op">:</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">50</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Latencia (A)"</span>})<span class="op">,</span></span>
-<span id="cb1-811"><a></a>  <span class="st">"Throughput A"</span><span class="op">:</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">50</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span><span class="st">"Throughput (A)"</span>})<span class="op">,</span></span>
-<span id="cb1-812"><a></a>  <span class="st">"Latencia B"</span><span class="op">:</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">50</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span><span class="st">"Latencia (B)"</span>})<span class="op">,</span></span>
-<span id="cb1-813"><a></a>  <span class="st">"Throughput B"</span><span class="op">:</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">50</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">20</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span><span class="st">"Throughput B"</span>})</span>
-<span id="cb1-814"><a></a>})</span>
-<span id="cb1-815"><a></a></span>
-<span id="cb1-816"><a></a><span class="co">// Extraemos variables del formulario</span></span>
-<span id="cb1-817"><a></a>totalData <span class="op">=</span> settings[<span class="st">"Tamaño total"</span>]</span>
-<span id="cb1-818"><a></a>latencyA <span class="op">=</span> settings[<span class="st">"Latencia A"</span>]</span>
-<span id="cb1-819"><a></a>throughputA <span class="op">=</span> settings[<span class="st">"Throughput A"</span>]</span>
-<span id="cb1-820"><a></a>latencyB <span class="op">=</span> settings[<span class="st">"Latencia B"</span>]</span>
-<span id="cb1-821"><a></a>throughputB <span class="op">=</span> settings[<span class="st">"Throughput B"</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="804" data-source-offset="-38"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 803;"><span id="cb1-804"><a></a>viewof settings <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">form</span>({</span>
+<span id="cb1-805"><a></a>  <span class="st">"Tamaño total"</span><span class="op">:</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">50</span><span class="op">,</span> <span class="dv">5000</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">200</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Tamaño total"</span>}<span class="op">,</span>)<span class="op">,</span></span>
+<span id="cb1-806"><a></a>  <span class="st">"Latencia A"</span><span class="op">:</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">50</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Latencia (A)"</span>})<span class="op">,</span></span>
+<span id="cb1-807"><a></a>  <span class="st">"Throughput A"</span><span class="op">:</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">50</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span><span class="st">"Throughput (A)"</span>})<span class="op">,</span></span>
+<span id="cb1-808"><a></a>  <span class="st">"Latencia B"</span><span class="op">:</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">50</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span><span class="st">"Latencia (B)"</span>})<span class="op">,</span></span>
+<span id="cb1-809"><a></a>  <span class="st">"Throughput B"</span><span class="op">:</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">50</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">20</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span><span class="st">"Throughput B"</span>})</span>
+<span id="cb1-810"><a></a>})</span>
+<span id="cb1-811"><a></a></span>
+<span id="cb1-812"><a></a><span class="co">// Extraemos variables del formulario</span></span>
+<span id="cb1-813"><a></a>totalData <span class="op">=</span> settings[<span class="st">"Tamaño total"</span>]</span>
+<span id="cb1-814"><a></a>latencyA <span class="op">=</span> settings[<span class="st">"Latencia A"</span>]</span>
+<span id="cb1-815"><a></a>throughputA <span class="op">=</span> settings[<span class="st">"Throughput A"</span>]</span>
+<span id="cb1-816"><a></a>latencyB <span class="op">=</span> settings[<span class="st">"Latencia B"</span>]</span>
+<span id="cb1-817"><a></a>throughputB <span class="op">=</span> settings[<span class="st">"Throughput B"</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-1-1" data-nodetype="declaration">
@@ -1228,39 +1239,39 @@ graph LR
 </div>
 <div class="ojsplot">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="828" data-source-offset="-20"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 827;"><span id="cb2-828"><a></a><span class="kw">function</span> <span class="fu">progress</span>(t<span class="op">,</span> latency<span class="op">,</span> throughput<span class="op">,</span> total) {</span>
-<span id="cb2-829"><a></a>  <span class="cf">if</span> (t <span class="op">&lt;</span> latency) <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb2-830"><a></a>  <span class="cf">return</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(<span class="dv">100</span><span class="op">,</span> ((t <span class="op">-</span> latency) <span class="op">*</span> throughput <span class="op">/</span> total) <span class="op">*</span> <span class="dv">100</span>)<span class="op">;</span></span>
-<span id="cb2-831"><a></a>}</span>
-<span id="cb2-832"><a></a></span>
-<span id="cb2-833"><a></a><span class="co">// Reloj animado</span></span>
-<span id="cb2-834"><a></a>time <span class="op">=</span> {</span>
-<span id="cb2-835"><a></a>  <span class="kw">let</span> t0 <span class="op">=</span> <span class="bu">Date</span><span class="op">.</span><span class="fu">now</span>()<span class="op">;</span></span>
-<span id="cb2-836"><a></a>  <span class="cf">while</span> (<span class="kw">true</span>) {</span>
-<span id="cb2-837"><a></a>    <span class="kw">yield</span> (<span class="bu">Date</span><span class="op">.</span><span class="fu">now</span>() <span class="op">-</span> t0) <span class="op">/</span> <span class="dv">100</span><span class="op">;</span> <span class="co">// en decimas de segundo</span></span>
-<span id="cb2-838"><a></a>    <span class="cf">await</span> Promises<span class="op">.</span><span class="fu">tick</span>(<span class="dv">50</span>)<span class="op">;</span></span>
-<span id="cb2-839"><a></a>  }</span>
-<span id="cb2-840"><a></a>}</span>
-<span id="cb2-841"><a></a></span>
-<span id="cb2-842"><a></a><span class="co">// Tiempo máximo</span></span>
-<span id="cb2-843"><a></a>maxTime <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(latencyA <span class="op">+</span> totalData<span class="op">/</span>throughputA<span class="op">,</span> latencyB <span class="op">+</span> totalData<span class="op">/</span>throughputB)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="824" data-source-offset="-20"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 823;"><span id="cb2-824"><a></a><span class="kw">function</span> <span class="fu">progress</span>(t<span class="op">,</span> latency<span class="op">,</span> throughput<span class="op">,</span> total) {</span>
+<span id="cb2-825"><a></a>  <span class="cf">if</span> (t <span class="op">&lt;</span> latency) <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-826"><a></a>  <span class="cf">return</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(<span class="dv">100</span><span class="op">,</span> ((t <span class="op">-</span> latency) <span class="op">*</span> throughput <span class="op">/</span> total) <span class="op">*</span> <span class="dv">100</span>)<span class="op">;</span></span>
+<span id="cb2-827"><a></a>}</span>
+<span id="cb2-828"><a></a></span>
+<span id="cb2-829"><a></a><span class="co">// Reloj animado</span></span>
+<span id="cb2-830"><a></a>time <span class="op">=</span> {</span>
+<span id="cb2-831"><a></a>  <span class="kw">let</span> t0 <span class="op">=</span> <span class="bu">Date</span><span class="op">.</span><span class="fu">now</span>()<span class="op">;</span></span>
+<span id="cb2-832"><a></a>  <span class="cf">while</span> (<span class="kw">true</span>) {</span>
+<span id="cb2-833"><a></a>    <span class="kw">yield</span> (<span class="bu">Date</span><span class="op">.</span><span class="fu">now</span>() <span class="op">-</span> t0) <span class="op">/</span> <span class="dv">100</span><span class="op">;</span> <span class="co">// en decimas de segundo</span></span>
+<span id="cb2-834"><a></a>    <span class="cf">await</span> Promises<span class="op">.</span><span class="fu">tick</span>(<span class="dv">50</span>)<span class="op">;</span></span>
+<span id="cb2-835"><a></a>  }</span>
+<span id="cb2-836"><a></a>}</span>
+<span id="cb2-837"><a></a></span>
+<span id="cb2-838"><a></a><span class="co">// Tiempo máximo</span></span>
+<span id="cb2-839"><a></a>maxTime <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(latencyA <span class="op">+</span> totalData<span class="op">/</span>throughputA<span class="op">,</span> latencyB <span class="op">+</span> totalData<span class="op">/</span>throughputB)</span>
+<span id="cb2-840"><a></a></span>
+<span id="cb2-841"><a></a><span class="co">// Progresos</span></span>
+<span id="cb2-842"><a></a>progA <span class="op">=</span> <span class="fu">progress</span>(time <span class="op">%</span> maxTime<span class="op">,</span> latencyA<span class="op">,</span> throughputA<span class="op">,</span> totalData)</span>
+<span id="cb2-843"><a></a>progB <span class="op">=</span> <span class="fu">progress</span>(time <span class="op">%</span> maxTime<span class="op">,</span> latencyB<span class="op">,</span> throughputB<span class="op">,</span> totalData)</span>
 <span id="cb2-844"><a></a></span>
-<span id="cb2-845"><a></a><span class="co">// Progresos</span></span>
-<span id="cb2-846"><a></a>progA <span class="op">=</span> <span class="fu">progress</span>(time <span class="op">%</span> maxTime<span class="op">,</span> latencyA<span class="op">,</span> throughputA<span class="op">,</span> totalData)</span>
-<span id="cb2-847"><a></a>progB <span class="op">=</span> <span class="fu">progress</span>(time <span class="op">%</span> maxTime<span class="op">,</span> latencyB<span class="op">,</span> throughputB<span class="op">,</span> totalData)</span>
-<span id="cb2-848"><a></a></span>
-<span id="cb2-849"><a></a><span class="co">// Gráfico con Plot</span></span>
-<span id="cb2-850"><a></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
-<span id="cb2-851"><a></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">100</span>]<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"% completado"</span>}<span class="op">,</span></span>
-<span id="cb2-852"><a></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo (s)"</span>}<span class="op">,</span></span>
-<span id="cb2-853"><a></a>  <span class="dt">color</span><span class="op">:</span> {<span class="dt">legend</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="st">"A"</span><span class="op">,</span> <span class="st">"B"</span>]<span class="op">,</span> <span class="dt">range</span><span class="op">:</span> [<span class="st">"blue"</span><span class="op">,</span> <span class="st">"red"</span>]}<span class="op">,</span></span>
-<span id="cb2-854"><a></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
-<span id="cb2-855"><a></a>    Plot<span class="op">.</span><span class="fu">line</span>(d3<span class="op">.</span><span class="fu">range</span>(<span class="dv">0</span><span class="op">,</span> maxTime<span class="op">,</span> <span class="fl">0.1</span>)<span class="op">.</span><span class="fu">map</span>(t <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="fu">progress</span>(t<span class="op">,</span> latencyA<span class="op">,</span> throughputA<span class="op">,</span> totalData)<span class="op">,</span> <span class="dt">series</span><span class="op">:</span> <span class="st">"A"</span>}))<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"series"</span>})<span class="op">,</span></span>
-<span id="cb2-856"><a></a>    Plot<span class="op">.</span><span class="fu">line</span>(d3<span class="op">.</span><span class="fu">range</span>(<span class="dv">0</span><span class="op">,</span> maxTime<span class="op">,</span> <span class="fl">0.1</span>)<span class="op">.</span><span class="fu">map</span>(t <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="fu">progress</span>(t<span class="op">,</span> latencyB<span class="op">,</span> throughputB<span class="op">,</span> totalData)<span class="op">,</span> <span class="dt">series</span><span class="op">:</span> <span class="st">"B"</span>}))<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"series"</span>})<span class="op">,</span></span>
-<span id="cb2-857"><a></a>    Plot<span class="op">.</span><span class="fu">dot</span>([{<span class="dt">t</span><span class="op">:</span> time <span class="op">%</span> maxTime<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> progA<span class="op">,</span> <span class="dt">series</span><span class="op">:</span> <span class="st">"A"</span>}]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"series"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">5</span>})<span class="op">,</span></span>
-<span id="cb2-858"><a></a>    Plot<span class="op">.</span><span class="fu">dot</span>([{<span class="dt">t</span><span class="op">:</span> time <span class="op">%</span> maxTime<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> progB<span class="op">,</span> <span class="dt">series</span><span class="op">:</span> <span class="st">"B"</span>}]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"series"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">5</span>})</span>
-<span id="cb2-859"><a></a>  ]</span>
-<span id="cb2-860"><a></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-845"><a></a><span class="co">// Gráfico con Plot</span></span>
+<span id="cb2-846"><a></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb2-847"><a></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">100</span>]<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"% completado"</span>}<span class="op">,</span></span>
+<span id="cb2-848"><a></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Tiempo (s)"</span>}<span class="op">,</span></span>
+<span id="cb2-849"><a></a>  <span class="dt">color</span><span class="op">:</span> {<span class="dt">legend</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="st">"A"</span><span class="op">,</span> <span class="st">"B"</span>]<span class="op">,</span> <span class="dt">range</span><span class="op">:</span> [<span class="st">"blue"</span><span class="op">,</span> <span class="st">"red"</span>]}<span class="op">,</span></span>
+<span id="cb2-850"><a></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb2-851"><a></a>    Plot<span class="op">.</span><span class="fu">line</span>(d3<span class="op">.</span><span class="fu">range</span>(<span class="dv">0</span><span class="op">,</span> maxTime<span class="op">,</span> <span class="fl">0.1</span>)<span class="op">.</span><span class="fu">map</span>(t <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="fu">progress</span>(t<span class="op">,</span> latencyA<span class="op">,</span> throughputA<span class="op">,</span> totalData)<span class="op">,</span> <span class="dt">series</span><span class="op">:</span> <span class="st">"A"</span>}))<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"series"</span>})<span class="op">,</span></span>
+<span id="cb2-852"><a></a>    Plot<span class="op">.</span><span class="fu">line</span>(d3<span class="op">.</span><span class="fu">range</span>(<span class="dv">0</span><span class="op">,</span> maxTime<span class="op">,</span> <span class="fl">0.1</span>)<span class="op">.</span><span class="fu">map</span>(t <span class="kw">=&gt;</span> ({t<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="fu">progress</span>(t<span class="op">,</span> latencyB<span class="op">,</span> throughputB<span class="op">,</span> totalData)<span class="op">,</span> <span class="dt">series</span><span class="op">:</span> <span class="st">"B"</span>}))<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"series"</span>})<span class="op">,</span></span>
+<span id="cb2-853"><a></a>    Plot<span class="op">.</span><span class="fu">dot</span>([{<span class="dt">t</span><span class="op">:</span> time <span class="op">%</span> maxTime<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> progA<span class="op">,</span> <span class="dt">series</span><span class="op">:</span> <span class="st">"A"</span>}]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"series"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">5</span>})<span class="op">,</span></span>
+<span id="cb2-854"><a></a>    Plot<span class="op">.</span><span class="fu">dot</span>([{<span class="dt">t</span><span class="op">:</span> time <span class="op">%</span> maxTime<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> progB<span class="op">,</span> <span class="dt">series</span><span class="op">:</span> <span class="st">"B"</span>}]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"series"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">5</span>})</span>
+<span id="cb2-855"><a></a>  ]</span>
+<span id="cb2-856"><a></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-2-1" data-nodetype="declaration">
@@ -1460,18 +1471,10 @@ graph LR
 </ul>
 
 
-<div class="reveal-header">
-<div class="header-title">
-<p> </p>
-</div>
-<div class="header-logo">
-<img data-src="">
-</div>
-</div>
 </section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
-<p><img src="theme_images/URJClogo.png" class="slide-logo"></p>
+<p><img src="images/DSLab_logo_2.png" class="slide-logo"></p>
 <div class="footer footer-default">
 
 </div>
@@ -1658,7 +1661,12 @@ graph LR
         height: 720,
 
         // Factor of the display size that should remain empty around the content
-        margin: 0.15,
+        margin: 0.1,
+
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.5,
+
+        maxScale: 1,
 
         // reveal.js plugins
         plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
@@ -1961,5 +1969,4 @@ graph LR
       </script>
     
 
-<script src="site_libs/quarto-contrib/metropolis-beamer-1.0.0/add_header.js" defer="true"></script>
 </body></html>
