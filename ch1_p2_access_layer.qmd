@@ -1,6 +1,6 @@
 ---
 title: "Capa de Acceso a la Red"
-subtitle: "Fundamentos de la transmisión física y control de acceso al medio"
+subtitle: "Juegos en Red - Grado en Desarrollo de Videojuegos"
 
 aliases:
   - ch1_p2.html

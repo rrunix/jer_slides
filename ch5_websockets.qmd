@@ -1,6 +1,6 @@
 ---
 title: "WebSockets"
-subtitle: "Comunicación en Tiempo Real"
+subtitle: "Juegos en Red - Grado en Desarrollo de Videojuegos"
 
 aliases:
   - ch5.html
@@ -877,20 +877,4 @@ wss.clients.forEach(client => {
 
 ::: {.callout-tip}
 En juegos modernos: ambas tecnologías se complementan
-:::
-
-
-
-## Próximos Pasos
-
-**Aplicar en juego multijugador:**
-
-1. REST para registro y autenticación
-2. WebSockets para estado del juego
-3. Patrón Command para acciones
-4. Sincronización de estado
-5. Manejo de desconexiones
-
-::: {.callout-note}
-La combinación de estas tecnologías permite juegos robustos y escalables
 :::

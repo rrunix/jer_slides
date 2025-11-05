@@ -1,6 +1,6 @@
 ---
 title: "Introducción a Phaser 3"
-subtitle: "Framework para Videojuegos Web"
+subtitle: "Juegos en Red - Grado en Desarrollo de Videojuegos"
 
 aliases: 
   - ch3_p1.html

@@ -1,6 +1,6 @@
 ---
 title: "Capa de Transporte"
-subtitle: "Comunicación lógica entre procesos de aplicación"
+subtitle: "Juegos en Red - Grado en Desarrollo de Videojuegos"
 
 aliases:
   - ch1_p4.html

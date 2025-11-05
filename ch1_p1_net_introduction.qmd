@@ -1,6 +1,6 @@
 ---
 title: "Introducción a las Redes de Ordenadores"
-subtitle: "Fundamentos de Internet y Arquitecturas de Red"
+subtitle: "Juegos en Red - Grado en Desarrollo de Videojuegos"
 css: ojs_interactive.css
 aliases:
   - ch1_p1.html

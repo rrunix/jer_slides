@@ -1,6 +1,6 @@
 ---
 title: "Capa de Aplicación"
-subtitle: "Protocolos y arquitecturas para la comunicación entre procesos"
+subtitle: "Juegos en Red - Grado en Desarrollo de Videojuegos"
 
 aliases: 
   - ch1_p5.html

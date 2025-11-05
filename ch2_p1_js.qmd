@@ -1,6 +1,6 @@
 ---
 title: "Desarrollo en el cliente"
-subtitle: "Introducción a JavaScript"
+subtitle: "Juegos en Red - Grado en Desarrollo de Videojuegos"
 
 aliases: 
   - ch2_p1.html

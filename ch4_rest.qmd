@@ -1,6 +1,6 @@
 ---
 title: "APIs REST"
-subtitle: "Comunicación Cliente-Servidor"
+subtitle: "Juegos en Red - Grado en Desarrollo de Videojuegos"
 
 aliases:
   - ch4.html
@@ -1298,7 +1298,6 @@ Arquitectura preparada para futuras expansiones
 - Formato estándar de intercambio
 - Ligero y legible
 - Objetos y arrays anidados
-
 
 
 ## Implementación

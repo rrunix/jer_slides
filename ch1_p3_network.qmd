@@ -1,6 +1,6 @@
 ---
 title: "Capa de Red"
-subtitle: "Comunicación end-to-end en Internet"
+subtitle: "Juegos en Red - Grado en Desarrollo de Videojuegos"
 
 css: ojs_interactive.css
 aliases:
