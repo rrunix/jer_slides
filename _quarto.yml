@@ -1,10 +1,12 @@
 project:
   type: website
   output-dir: slides
+  resources:
+    - images/
 
 format:
   revealjs:
-    theme: [default]
+    theme: [default, dslab-theme.scss]
     auto-stretch: true
     width: 1280
     height: 720
@@ -13,42 +15,59 @@ format:
     scrollable: false
     max-scale: 0.9
     min-scale: 0.5
-    # filters:
-    #   - metropolis-beamer/metropolis-header.lua
-    #   - metropolis-beamer/custom-block.lua
-    # lang: es
-    # # theme: [default, theme.scss]
-    # html-math-method: katex
-    # chalkboard:
-    #   buttons: true
-    # preview-links: auto
-    # show-notes: false
-    # pdf-max-pages-per-slide: 1
-    # progress: true
-    # menu:
-    #   openButton: true
-    #   openSlideNumber: false
-    #   openOnInit: false
-    #   keyboard: false
-    #   markers: false
-    #   titleSelector: ""
-    #   side: left
-    #   width: third
-    # toc: true
-    # toc-depth: 1
+    disableLayout: false
+    logo: images/DSLab_logo_2.png
+    title-slide-attributes:
+      data-background-color: "#00a9d4"
+    pdf-max-pages-per-slide: 1
+    progress: true
+    menu:
+      openButton: true
+      openSlideNumber: false
+      openOnInit: false
+      keyboard: false
+      markers: false
+      titleSelector: ""
+      side: left
+      width: third
+    lang: es
+    html-math-method: katex
+    chalkboard:
+      buttons: true
+    preview-links: auto
+    show-notes: false
+    toc: true
+    toc-depth: 1
     # logo: theme_images/URJClogo.png
     # title-slide-attributes:
     #   data-background-image: theme_images/background_fronpage.png
     #   data-background-size: 33%
     #   data-background-position: center 70%
-    # include-after-body: mermaid-fix.html
+    include-after-body: mermaid-fix.html
 
-  beamer: 
-    template: dslab.beamer.tex
-    keep-tex: true
-    include-in-header:
-      text: |
-        \providecommand{\pandocbounded}[1]{#1}
+  # beamer:
+  #   template: dslab.beamer.tex
+  #   keep-tex: true
+  #   pdf-engine: lualatex
+  #   include-in-header:
+  #     text: |
+  #       \providecommand{\pandocbounded}[1]{#1}
+  #       \usepackage{array}
+  #       \usepackage{longtable}
+  #       \usepackage{calc}
+  #       \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+  #       \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+  #       \newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+  #       % Add spacing between elements
+  #       \setlength{\parskip}{1em}
+  #       \setlength{\topsep}{0.5em}
+  #       % Make images fit properly - smaller max size
+  #       \usepackage{graphicx}
+  #       \setkeys{Gin}{width=0.8\textwidth,height=0.5\textheight,keepaspectratio}
+  #       % Reduce code block font size
+  #       \DefineVerbatimEnvironment{Highlighting}{Verbatim}{fontsize=\tiny,commandchars=\\\{\}}
+  #       % Add spacing around blocks
+  #       \setlength{\OuterFrameSep}{0.5em}
 
 execute:
   freeze: true
