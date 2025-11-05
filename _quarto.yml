@@ -28,6 +28,7 @@ format:
     disableLayout: false
     logo: images/DSLab_logo_2.png
     pdf-max-pages-per-slide: 1
+    pdf-separate-fragments: false
     progress: true
     menu:
       openButton: true
