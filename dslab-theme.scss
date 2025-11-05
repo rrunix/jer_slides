@@ -36,6 +36,11 @@ $presentation-line-height: 1.3;
 }
 
 .reveal .title-slide {
+  // Hide the default logo on title slide only
+  .slide-logo {
+    display: none !important;
+  }
+
   h1.title {
     color: $color-title-text;
     font-size: 2.5em;
@@ -48,12 +53,18 @@ $presentation-line-height: 1.3;
   }
 
   .subtitle {
-    color: $color-title-text;
-    font-size: 1.4em;
-    margin-bottom: 2em;
+    color: $color-title-text !important;
+    font-size: 1.4em !important;
+    margin-bottom: 6em !important;
     text-align: center;
     padding-left: 0;
     padding-right: 0;
+    font-weight: bold !important;
+    line-height: 1.4;
+  }
+
+  p.subtitle {
+    font-weight: bold !important;
   }
 
   .author {
@@ -82,19 +93,27 @@ $presentation-line-height: 1.3;
   }
 }
 
-// Add logos to title slide
-.reveal .title-slide::after {
+// Add logos to FRONTPAGE only - target the first slide background
+.reveal .backgrounds .slide-background:first-child::after {
   content: '';
   position: absolute;
-  bottom: 50px;
-  left: 50%;
-  transform: translateX(-50%);
+  bottom: 30px;
+  left: 0;
+  right: 0;
   width: 100%;
-  height: 100px;
-  background-image: url('/images/DSLab_logo_1.png'), url('/images/URJClogo.png');
+  height: 120px;
+  background-image: url('images/DSLab_logo_1.png'), url('images/URJClogo.png');
   background-repeat: no-repeat, no-repeat;
   background-position: calc(50% - 200px) center, calc(50% + 200px) center;
   background-size: 150px auto, 150px auto;
+  z-index: 10;
+  pointer-events: none;
+}
+
+// Hide logos from section title slides (# Introducción, etc)
+.reveal section:not(#title-slide)::before,
+.reveal section:not(#title-slide)::after {
+  background-image: none !important;
 }
 
 // Slide headings (frame titles)
@@ -112,19 +131,6 @@ $presentation-line-height: 1.3;
   font-size: 1.5em;
 }
 
-// Add small logo to slide headings
-.reveal h2::after {
-  content: '';
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 30px;
-  height: 30px;
-  background-image: url('/images/DSLab_logo_2.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-}
 
 // Regular content
 .reveal h3 {

@@ -13,12 +13,10 @@ format:
     center: false
     slide-number: true
     scrollable: false
-    max-scale: 0.9
+    max-scale: 1.0
     min-scale: 0.5
     disableLayout: false
     logo: images/DSLab_logo_2.png
-    title-slide-attributes:
-      data-background-color: "#00a9d4"
     pdf-max-pages-per-slide: 1
     progress: true
     menu:
@@ -38,6 +36,8 @@ format:
     show-notes: false
     toc: true
     toc-depth: 1
+    template-partials:
+      - title-slide.html
     # logo: theme_images/URJClogo.png
     # title-slide-attributes:
     #   data-background-image: theme_images/background_fronpage.png

@@ -16,7 +16,8 @@ mermaid:
     background: "#ffffff"
 ---
 
-# Introducción
+
+
 
 ## ¿Qué es Internet?
 
