@@ -4,6 +4,16 @@ project:
   resources:
     - images/
 
+
+author:
+    - name: "Ruben Rodríguez"
+      email: "ruben.rodriguez@urjc.es"
+      affiliation: "URJC"
+    - name: "Natalia Madrueño"
+      email: "natalia.madrueno@urjc.es"
+      affiliation: "URJC"
+date: 09/09/2025
+
 format:
   revealjs:
     theme: [default, dslab-theme.scss]

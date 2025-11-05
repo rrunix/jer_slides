@@ -1,8 +1,7 @@
 ---
 title: "Capa de Acceso a la Red"
 subtitle: "Fundamentos de la transmisión física y control de acceso al medio"
-author: "Rubén Rodríguez Fernández (&#64;rrunix)"
-date: "17/09/2025"
+
 aliases:
   - ch1_p2.html
 css: ojs_interactive.css

@@ -1,8 +1,7 @@
 ---
 title: "Desarrollo en el cliente"
 subtitle: "Introducción a JavaScript"
-author: "Rubén Rodríguez Fernández (&#64;rrunix)"
-date: "10/10/2025"
+
 aliases: 
   - ch2_p1.html
   

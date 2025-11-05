@@ -1,11 +1,6 @@
 ---
 title: "Introducción a las Redes de Ordenadores"
 subtitle: "Fundamentos de Internet y Arquitecturas de Red"
-author:   
-  - "Alberto Fernández de Isabel"   
-  - "Rubén Rodríguez Fernández (&#64;rrunix)"
-date: "10/22/2025"
-corresponding: true
 css: ojs_interactive.css
 aliases:
   - ch1_p1.html

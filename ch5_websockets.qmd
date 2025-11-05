@@ -1,8 +1,7 @@
 ---
 title: "WebSockets"
 subtitle: "Comunicación en Tiempo Real"
-author: "Rubén Rodríguez Fernández (&#64;rrunix)"
-date: "28/10/2025"
+
 aliases:
   - ch5.html
 

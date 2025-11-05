@@ -1,9 +1,7 @@
-
 ---
 title: "Introducción a Phaser 3"
 subtitle: "Framework para Videojuegos Web"
-author: "Rubén Rodríguez Fernández (&#64;rrunix)"
-date: "14/10/2025"
+
 aliases: 
   - ch3_p1.html
   
