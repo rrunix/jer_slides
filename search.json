@@ -2167,7 +2167,7 @@
     "href": "ch3_p1_phaser.html#grupos-estáticos",
     "title": "Introducción a Phaser 3",
     "section": "Grupos Estáticos",
-    "text": "Grupos Estáticos\nPara objetos inmóviles (plataformas, paredes):\n\nMás eficientes que objetos dinámicos\nNo se mueven ni responden a físicas\nIdeales para nivel/escenario\n\nfunction create() {\n    // Crear grupo estático\n    let plataformas = this.physics.add.staticGroup();\n    \n    // Añadir plataformas\n    plataformas.create(400, 568, 'suelo')\n        .setScale(2)\n        .refreshBody();  // Actualizar tras modificar\n    \n    plataformas.create(600, 400, 'suelo');\n    plataformas.create(50, 250, 'suelo');\n    \n    // Colisión con todas\n    this.physics.add.collider(this.jugador, plataformas);\n}\n\n\n\n\n\n\nAdvertencia\n\n\nLlamar a refreshBody() tras modificar objetos estáticos"
+    "text": "Grupos Estáticos\nPara objetos inmóviles (plataformas, paredes):\n\nMás eficientes que objetos dinámicos\nNo se mueven ni responden a físicas\nIdeales para nivel/escenario\n\nfunction create() {\n    // Crear grupo estático\n    let plataformas = this.physics.add.staticGroup();\n    \n    // Añadir plataformas\n    plataformas.create(400, 568, 'suelo')\n        .setScale(2)\n        .refreshBody();  // Actualizar tras modificar\n    \n    plataformas.create(600, 400, 'suelo');\n    plataformas.create(50, 250, 'suelo');\n    \n    // Colisión con todas\n    this.physics.add.collider(this.jugador, plataformas);\n}"
   },
   {
     "objectID": "ch3_p1_phaser.html#grupos-dinámicos",
@@ -2475,7 +2475,7 @@
     "href": "ch1_p5_application.html#quic",
     "title": "Capa de Aplicación",
     "section": "QUIC",
-    "text": "QUIC\nProtocolo moderno sobre UDP\n\n\nVentajas principales:\n\nMultiplexado sin head-of-line blocking\nEstablecimiento 0-RTT\nMigración de conexión transparente\nControl de congestión mejorado\nForward Error Correction\n\nDesarrollado por:\n\nGoogle (2012)\nEstandarizado IETF (2021)\nRFC 9000\n\n\nAdopción 2025:\n\n8.2% de sitios web usan QUIC\n31.1% usan HTTP/3\nYouTube reduce 30% tiempo de carga\n\nCasos de uso:\n\nStreaming\nVideoconferencia\nJuegos en línea\nPlataformas de contenido\n\n\n\n\n\n\n\n\nTip\n\n\nQUIC combina lo mejor de TCP con seguridad TLS 1.3 integrada, eliminando limitaciones históricas"
+    "text": "QUIC\nProtocolo moderno sobre UDP\n\n\nVentajas principales:\n\nMultiplexado sin head-of-line blocking\nEstablecimiento 0-RTT\nMigración de conexión transparente\nControl de congestión mejorado\nForward Error Correction\n\nDesarrollado por:\n\nGoogle (2012)\nEstandarizado IETF (2021)\nRFC 9000\n\n\nAdopción 2025:\n\n8.2% de sitios web usan QUIC\n31.1% usan HTTP/3\nYouTube reduce 30% tiempo de carga\n\nCasos de uso:\n\nStreaming\nVideoconferencia\nJuegos en línea\nPlataformas de contenido"
   },
   {
     "objectID": "ch1_p5_application.html#cdns---content-delivery-networks",
