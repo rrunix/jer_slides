@@ -1,13 +1,12 @@
 ---
 title: Presentación de Juegos en Red
-authors:
-    author: "Rubén Rodríguez Fernández (&#64;rrunix)"
-    date: "12/09/2025"
-    corresponding: true
+subtitle: "Juegos en Red - Grado en Desarrollo de Videojuegos"
 
 ---
 
-# Datos de la asignatura
+# Información de la asignatura
+
+## Datos de la asignatura
 
 - Tipo: Obligatoria.
 - Período de impartición: Primer cuatrimestre.
@@ -17,9 +16,7 @@ authors:
 - Departamento: Departamento de Informática y Estadística.
 - Web: Aula Virtual (https://ww.aulavirtual.urjc.es).
 
-# Profesorado
 ## Prof. Rubén Rodríguez
-Rubén Rodríguez Fernández
 
 - E-mail: `ruben.rodriguez@urjc.es`. (Escribir por aula virtual).
 - Despacho: 131, Ed. Departamental II (Campus de Móstoles).
@@ -27,13 +24,13 @@ Rubén Rodríguez Fernández
 
 
 ## Prof. Natalia Madrueño
-Natalia Madrueño Sierro
 
 - Email: `natalia.madrueno@urjc.es` (Escribir por aula virtual).
 - Despacho: 044, Ed. Departamental II (Campus de Móstoles).
 - Tutorias: Concertar por e-mail (aula virtual).
 
-# Motivación
+# Motivación y objetivos
+
 ## Aplicaciones en red
 La gran mayoría de las aplicaciones actuales son **aplicaciones basadas en red**:
 
@@ -53,7 +50,8 @@ La gran mayoría de las aplicaciones actuales son **aplicaciones basadas en red*
 - Juegos de Facebook
 - ...
 
-# Objetivos
+
+## Objetivos
 
 - Introducir al alumno a las **redes de computadores**.
 - Dar a conocer y permitir comprender el modelo de **arquitectura de red cliente-servidor**.
@@ -62,8 +60,6 @@ La gran mayoría de las aplicaciones actuales son **aplicaciones basadas en red*
 - Guiar al alumno en la creación de un **producto software**.
 
 # Temario
-
-La asignatura se estructura en cinco temas:
 
 ## Tema 1: Introducción a los juegos en red y a las redes de comunicaciones
 
@@ -104,7 +100,9 @@ Se estudia el uso de WebSockets para comunicación asíncrona entre nodos:
 - Creación de protocolos de mensajes.
 - Desarrollo de comunicación asíncrona entre cliente y servidor con WebSockets.
 
-# Metodología Docente
+# Metodología y Material Docente
+
+## Metodologia
 
 El curso estará conducido por una **metodología basada en proyectos**, en la que los alumnos deberán realizar un proyecto en grupo a lo largo de toda la asignatura.
 
@@ -116,17 +114,17 @@ Habrá **sesiones de prácticas** que se utilizarán para realizar y corregir la
 
 El profesor dejará el **material** necesario para el desempeño de la asignatura en el **Aula Virtual**, que incluirá vídeos, presentaciones, ejercicios propuestos y resueltos, etc., para que el alumno estudie de manera autónoma.
 
-# Material
-
 ## Material teórico
 - El material se irá publicando en el Aula Virtual a medida que avance el cuatrimestre.
 - Se publicará como asignatura en abierto, todos los materiales son públicos.
 - Contará con diapositivas, apuntes, problemas y una guía de estudio.
 
 ## Enunciado de la práctica
+
 - Los enunciados de las prácticas se colgarán en el aula virtual.
 
-# Herramientas
+
+## Herramientas
 
 Utilizaremos varias **herramientas software y bibliotecas**:
 
@@ -135,6 +133,10 @@ Utilizaremos varias **herramientas software y bibliotecas**:
 - JavaScript
 - Phaser 3
 - Node
+
+## Inteligencia Artificial
+
+El uso de ChatGPT, Gemini, Claude o alternativas está permitido a excepción de los exámenes. La única condición que se impone es que seáis capaces de explicar vuestras prácticas, y en caso negativo, se considerarán suspensas.
 
 # Evaluación
 
@@ -153,7 +155,7 @@ Utilizaremos varias **herramientas software y bibliotecas**:
 
 ## Pruebas teórico-prácticas (40 %)
 
-- 3 exámenes: 
+- 3 exámenes:
   - Examen 1 (Tema 1): 35%.
   - Examen 2 (Tema 2 y 3): 32.5%.
   - Examen 3 (Tema 4): 32.5%.
@@ -184,7 +186,10 @@ Utilizaremos varias **herramientas software y bibliotecas**:
 - También se podrán obtener proponiendo mejoras o correcciones a los apuntes y diapositivas de la asignatura.
 - No es revaluable en convocatoria extraordinaria
 
+
 # Evaluación extraordinaria
+
+## Evaluación extraordinaria
 
 Para aprobar la asignatura en la convocatoria extraordinaria se deberán realizar las pruebas no superadas durante la evaluación ordinaria.
 
@@ -207,11 +212,10 @@ Las fechas de las pruebas serán anunciadas con anterioridad.
 
 Un alumno obtendrá la calificación de no presentado únicamente si no se presenta a ninguna prueba evaluable (ya sea de teoría o práctica).
 
-# Inteligencia Artificial
-
-El uso de ChatGPT, Gemini, Claude o alternativas está permitido a excepción de los exámenes. La única condición que se impone es que seáis capaces de explicar vuestras prácticas, y en caso negativo, se considerarán suspensas.
 
 # Calendario aproximado de entregas
+
+## Calendario aproximado de entregas
 
 - **Septiembre:** Registro grupos de prácticas
 - **Octubre:** Entrega fase 1 (mes de octubre)
@@ -221,6 +225,8 @@ El uso de ChatGPT, Gemini, Claude o alternativas está permitido a excepción de
 - **Enero:** Entrega fase 5 (mes de enero)
 
 # Bibliografía
+
+## Bibliografía
 
 - Material de la asignatura disponible en el **aula virtual**
 - **Biblioteca virtual** para alumnos
@@ -233,7 +239,8 @@ El uso de ChatGPT, Gemini, Claude o alternativas está permitido a excepción de
 - Aplicaciones web de código abierto
 - ... y todo lo que Google encuentre :)
 
-# Ejemplos de proyectos de otros años
+
+## Ejemplos de proyectos de otros años
 
 - [Head and Balls](https://www.newgrounds.com/portal/view/963939)
 - [Ink Catiction](https://www.newgrounds.com/portal/view/963911)

@@ -905,10 +905,6 @@ sequenceDiagram
 :::
 :::
 
-::: {.callout-tip}
-QUIC combina lo mejor de TCP con seguridad TLS 1.3 integrada, eliminando limitaciones históricas
-:::
-
 # Servicios
 
 ## CDNs - Content Delivery Networks

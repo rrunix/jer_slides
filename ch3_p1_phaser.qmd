@@ -934,11 +934,6 @@ function create() {
 }
 ```
 
-::: {.callout-warning}
-Llamar a `refreshBody()` tras modificar objetos estáticos
-:::
-
-
 
 ## Grupos Dinámicos
 

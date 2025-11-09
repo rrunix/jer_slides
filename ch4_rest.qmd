@@ -14,9 +14,9 @@ mermaid:
 
 # Introducción a APIs REST
 
-## Contexto en Juegos Multijugador
+## Contexto
 
-**Después de implementar el juego con Phaser 3 y el Patrón Command**
+**Después de implementar el juego con Phaser 3**
 
 - Cliente y servidor necesitan comunicarse
 - Gestionar registro y autenticación de jugadores
@@ -58,20 +58,63 @@ Respuesta:
 
 
 
+## URI y URL
+
+::: {.columns}
+::: {.column width="50%"}
+**URI (Uniform Resource Identifier)**
+
+- Identificador único de un recurso
+- Puede ser un nombre, una localización, o ambos
+- Ejemplo: `/players/alice`
+- Toda URL es una URI, pero no toda URI es una URL
+
+:::
+
+::: {.column width="50%"}
+**URL (Uniform Resource Locator)**
+
+- Tipo específico de URI
+- Indica **cómo acceder** al recurso
+- Incluye protocolo y localización
+- Ejemplo: `https://api.game.com/players/alice`
+:::
+:::
+
+
+**Estructura de una URL:**
+
+```
+https://api.game.com:443/players/alice?sort=score#stats
+└─┬─┘  └────┬──────┘ └┬┘ └─────┬──────┘ └───┬───┘ └─┬─┘
+Protocolo  Dominio  Puerto   Ruta       Query    Fragment
+```
+
+- **Protocolo:** `http://` o `https://` (comunicación segura)
+- **Dominio:** Nombre del servidor (`api.game.com`)
+- **Puerto:** Opcional, por defecto 80 (HTTP) o 443 (HTTPS)
+- **Ruta:** Identifica el recurso específico (`/players/alice`)
+- **Query:** Parámetros adicionales opcionales (`?sort=score`)
+- **Fragment:** Sección específica del recurso (`#stats`)
+
+
+
 ## ¿Qué es una API REST?
 
 **REST (Representational State Transfer)**
 
-- Estilo de arquitectura de software basado en HTTP
-- Acuñado en 2000 por **Roy Fielding** (coautor de HTTP)
-- Cuando un servicio cumple estos principios es **RESTful**
+- Estilo de arquitectura para sistemas distribuidos
+- Los recursos del servidor se representan mediante URLs
+- El cliente transfiere representaciones de esos recursos (JSON, XML, etc.)
+- El "estado" reside en esas representaciones que se transfieren
 
-**Características clave:**
+**Principios REST (para ser RESTful):**
 
-- Operaciones CRUD sobre recursos del servidor
-- Aprovecha URL, métodos HTTP, códigos de estado
-- Intercambio de información en formato JSON
-- Simplicidad y eficiencia
+1. **Cliente-Servidor:** Separación de responsabilidades
+2. **Sin estado (Stateless):** Cada petición contiene toda la información necesaria
+3. **Cacheable:** Las respuestas indican si pueden ser cacheadas
+4. **Interfaz uniforme:** URLs, métodos HTTP y representaciones consistentes
+5. **Sistema en capas:** Arquitectura puede tener intermediarios (proxies, load balancers)
 
 ::: {.callout-tip}
 REST se ha convertido en el estándar de facto frente a otras alternativas como SOAP
@@ -79,13 +122,7 @@ REST se ha convertido en el estándar de facto frente a otras alternativas como 
 
 
 
-# Niveles de Madurez REST
-
-## Modelo de Richardson
-
-**4 niveles según conformidad con principios REST**
-
-
+# Niveles de Madurez REST (Modelo de Richardson)
 
 ## Nivel 0 - The Swamp of POX
 
@@ -270,24 +307,39 @@ Pocas APIs implementan HATEOAS en la práctica debido a su complejidad
 - WebSockets y tiempo real
 
 
-
 # Principios de Diseño REST
 
 ## Todo es un Recurso
 
-**Recurso: ítem de información identificado por URI única**
+**En REST, todo es un recurso identificable**
+
+- **Recurso:** Cualquier entidad o información con significado
+- Cada recurso tiene una **URI única** que lo identifica
+- Los recursos pueden ser individuales o colecciones
+
+**Ejemplos:**
+
+::: {.columns}
+::: {.column width="50%"}
+**Recursos individuales:**
 
 ```
-http://api.game.com/players/alice
-http://api.game.com/matches/12345
-http://api.game.com/players/alice/scores
-http://api.game.com/leaderboard
+/players/alice
+/matches/12345
+/leaderboard
 ```
+:::
 
-**Estructura de URI:**
+::: {.column width="50%"}
+**Colecciones:**
 
-- Parte fija: dominio y ruta base
-- Parte variable: identifica el recurso específico
+```
+/players
+/matches
+/players/alice/scores
+```
+:::
+:::
 
 
 

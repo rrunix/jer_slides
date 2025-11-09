@@ -49,36 +49,7 @@ format:
     toc-depth: 1
     template-partials:
       - title-slide.html
-    # logo: theme_images/URJClogo.png
-    # title-slide-attributes:
-    #   data-background-image: theme_images/background_fronpage.png
-    #   data-background-size: 33%
-    #   data-background-position: center 70%
     include-after-body: mermaid-fix.html
-
-  # beamer:
-  #   template: dslab.beamer.tex
-  #   keep-tex: true
-  #   pdf-engine: lualatex
-  #   include-in-header:
-  #     text: |
-  #       \providecommand{\pandocbounded}[1]{#1}
-  #       \usepackage{array}
-  #       \usepackage{longtable}
-  #       \usepackage{calc}
-  #       \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
-  #       \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
-  #       \newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
-  #       % Add spacing between elements
-  #       \setlength{\parskip}{1em}
-  #       \setlength{\topsep}{0.5em}
-  #       % Make images fit properly - smaller max size
-  #       \usepackage{graphicx}
-  #       \setkeys{Gin}{width=0.8\textwidth,height=0.5\textheight,keepaspectratio}
-  #       % Reduce code block font size
-  #       \DefineVerbatimEnvironment{Highlighting}{Verbatim}{fontsize=\tiny,commandchars=\\\{\}}
-  #       % Add spacing around blocks
-  #       \setlength{\OuterFrameSep}{0.5em}
 
 execute:
   freeze: true
