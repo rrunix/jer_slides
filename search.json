@@ -763,18 +763,25 @@
     "text": "Puntos Clave\n\nLa Capa de Red proporciona comunicación end-to-end entre dispositivos en diferentes redes\nDos funciones principales: Enrutamiento (global) y Reenvío (local)\nModelos de servicio: Circuitos Virtuales vs Datagramas (Internet usa datagramas)\nIPv4: 32 bits, sistema de clases → CIDR para eficiencia\nIPv6: 128 bits, soluciona limitaciones de IPv4\nICMP: Herramientas de diagnóstico (ping, traceroute)\nNAT: Permite compartir IP pública, pero limita conectividad directa\nMTU: Define tamaño máximo, fragmentación si se excede\nLos routers operan con plano de control (enrutamiento) y plano de datos (reenvío)"
   },
   {
+    "objectID": "sub_introduction.html#datos-de-la-asignatura",
+    "href": "sub_introduction.html#datos-de-la-asignatura",
+    "title": "Presentación de Juegos en Red",
+    "section": "Datos de la asignatura",
+    "text": "Datos de la asignatura\n\nTipo: Obligatoria.\nPeríodo de impartición: Primer cuatrimestre.\nNº de créditos: 6\n\nSesiones: 28 clases de 2h.\nHoras de trabajo: 180h (56h clase / 124h fuera).\n\nDepartamento: Departamento de Informática y Estadística.\nWeb: Aula Virtual (https://ww.aulavirtual.urjc.es)."
+  },
+  {
     "objectID": "sub_introduction.html#prof.-rubén-rodríguez",
     "href": "sub_introduction.html#prof.-rubén-rodríguez",
     "title": "Presentación de Juegos en Red",
     "section": "Prof. Rubén Rodríguez",
-    "text": "Prof. Rubén Rodríguez\nRubén Rodríguez Fernández\n\nE-mail: ruben.rodriguez@urjc.es. (Escribir por aula virtual).\nDespacho: 131, Ed. Departamental II (Campus de Móstoles).\nTutorias: Concertar por e-mail (aula virtual)."
+    "text": "Prof. Rubén Rodríguez\n\nE-mail: ruben.rodriguez@urjc.es. (Escribir por aula virtual).\nDespacho: 131, Ed. Departamental II (Campus de Móstoles).\nTutorias: Concertar por e-mail (aula virtual)."
   },
   {
     "objectID": "sub_introduction.html#prof.-natalia-madrueño",
     "href": "sub_introduction.html#prof.-natalia-madrueño",
     "title": "Presentación de Juegos en Red",
     "section": "Prof. Natalia Madrueño",
-    "text": "Prof. Natalia Madrueño\nNatalia Madrueño Sierro\n\nEmail: natalia.madrueno@urjc.es (Escribir por aula virtual).\nDespacho: 044, Ed. Departamental II (Campus de Móstoles).\nTutorias: Concertar por e-mail (aula virtual)."
+    "text": "Prof. Natalia Madrueño\n\nEmail: natalia.madrueno@urjc.es (Escribir por aula virtual).\nDespacho: 044, Ed. Departamental II (Campus de Móstoles).\nTutorias: Concertar por e-mail (aula virtual)."
   },
   {
     "objectID": "sub_introduction.html#aplicaciones-en-red",
@@ -789,6 +796,13 @@
     "title": "Presentación de Juegos en Red",
     "section": "Muchos juegos también",
     "text": "Muchos juegos también\n\nPlayerUnknown’s Battlegrounds (PUBG) / Fortnite / Destiny 2 / Overwatch / Quake Champions / Counter-Strike: Global Offensive (CS:GO) / League of Legends (LoL) / DOTA 2\nWorld of Warcraft\nFIFA / PES\nMario Kart / Project Cars / Rocket League\nJuegos de Facebook\n…"
+  },
+  {
+    "objectID": "sub_introduction.html#objetivos",
+    "href": "sub_introduction.html#objetivos",
+    "title": "Presentación de Juegos en Red",
+    "section": "Objetivos",
+    "text": "Objetivos\n\nIntroducir al alumno a las redes de computadores.\nDar a conocer y permitir comprender el modelo de arquitectura de red cliente-servidor.\nOfrecer al alumno una visión general de los problemas y soluciones al desarrollar juegos en red.\nFomentar el trabajo en equipo para la creación de videojuegos.\nGuiar al alumno en la creación de un producto software."
   },
   {
     "objectID": "sub_introduction.html#tema-1-introducción-a-los-juegos-en-red-y-a-las-redes-de-comunicaciones",
@@ -826,6 +840,13 @@
     "text": "Tema 5: Comunicación asíncrona cliente - servidor\nSe estudia el uso de WebSockets para comunicación asíncrona entre nodos:\n\nIntroducción a la comunicación asíncrona con WebSockets.\nCreación de protocolos de mensajes.\nDesarrollo de comunicación asíncrona entre cliente y servidor con WebSockets."
   },
   {
+    "objectID": "sub_introduction.html#metodologia",
+    "href": "sub_introduction.html#metodologia",
+    "title": "Presentación de Juegos en Red",
+    "section": "Metodologia",
+    "text": "Metodologia\nEl curso estará conducido por una metodología basada en proyectos, en la que los alumnos deberán realizar un proyecto en grupo a lo largo de toda la asignatura.\nSe combinarán las lecciones magistrales síncronas con la metodología de clase invertida para temas concretos.\nSe incluirán diferentes gamificaciones a lo largo del curso.\nHabrá sesiones de prácticas que se utilizarán para realizar y corregir la práctica, donde el profesor podrá realizar un seguimiento de cada grupo de prácticas.\nEl profesor dejará el material necesario para el desempeño de la asignatura en el Aula Virtual, que incluirá vídeos, presentaciones, ejercicios propuestos y resueltos, etc., para que el alumno estudie de manera autónoma."
+  },
+  {
     "objectID": "sub_introduction.html#material-teórico",
     "href": "sub_introduction.html#material-teórico",
     "title": "Presentación de Juegos en Red",
@@ -838,6 +859,20 @@
     "title": "Presentación de Juegos en Red",
     "section": "Enunciado de la práctica",
     "text": "Enunciado de la práctica\n\nLos enunciados de las prácticas se colgarán en el aula virtual."
+  },
+  {
+    "objectID": "sub_introduction.html#herramientas",
+    "href": "sub_introduction.html#herramientas",
+    "title": "Presentación de Juegos en Red",
+    "section": "Herramientas",
+    "text": "Herramientas\nUtilizaremos varias herramientas software y bibliotecas:\n\nVisual Studio Code / Tu IDE de confianza.\nGoogle Chrome/Firefox/Safari\nJavaScript\nPhaser 3\nNode"
+  },
+  {
+    "objectID": "sub_introduction.html#inteligencia-artificial",
+    "href": "sub_introduction.html#inteligencia-artificial",
+    "title": "Presentación de Juegos en Red",
+    "section": "Inteligencia Artificial",
+    "text": "Inteligencia Artificial\nEl uso de ChatGPT, Gemini, Claude o alternativas está permitido a excepción de los exámenes. La única condición que se impone es que seáis capaces de explicar vuestras prácticas, y en caso negativo, se considerarán suspensas."
   },
   {
     "objectID": "sub_introduction.html#pruebas-de-evaluación",
@@ -875,6 +910,13 @@
     "text": "Participación en clase (5 %)\n\nEs opcional. No tiene nota mínima.\nConsiste en una serie de actividades que se irán realizando a lo largo del cuatrimestre.\nTambién se podrán obtener proponiendo mejoras o correcciones a los apuntes y diapositivas de la asignatura.\nNo es revaluable en convocatoria extraordinaria"
   },
   {
+    "objectID": "sub_introduction.html#evaluación-extraordinaria-1",
+    "href": "sub_introduction.html#evaluación-extraordinaria-1",
+    "title": "Presentación de Juegos en Red",
+    "section": "Evaluación extraordinaria",
+    "text": "Evaluación extraordinaria\nPara aprobar la asignatura en la convocatoria extraordinaria se deberán realizar las pruebas no superadas durante la evaluación ordinaria.\nSe guardan las notas de:\n\nLa prueba teórico-práctica\nCada una de las fases por separado\nLa resolución de problemas (fase 5)\nLas actividades de participación en clase"
+  },
+  {
     "objectID": "sub_introduction.html#dispensa-académica",
     "href": "sub_introduction.html#dispensa-académica",
     "title": "Presentación de Juegos en Red",
@@ -889,11 +931,32 @@
     "text": "No presentado\nUn alumno obtendrá la calificación de no presentado únicamente si no se presenta a ninguna prueba evaluable (ya sea de teoría o práctica)."
   },
   {
+    "objectID": "sub_introduction.html#calendario-aproximado-de-entregas-1",
+    "href": "sub_introduction.html#calendario-aproximado-de-entregas-1",
+    "title": "Presentación de Juegos en Red",
+    "section": "Calendario aproximado de entregas",
+    "text": "Calendario aproximado de entregas\n\nSeptiembre: Registro grupos de prácticas\nOctubre: Entrega fase 1 (mes de octubre)\nNoviembre: Entrega fase 2 (mes de noviembre)\nDiciembre: Entrega fase 3 (mes de diciembre)\nEnero: Entrega fase 4 (mes de enero)\nEnero: Entrega fase 5 (mes de enero)"
+  },
+  {
+    "objectID": "sub_introduction.html#bibliografía-1",
+    "href": "sub_introduction.html#bibliografía-1",
+    "title": "Presentación de Juegos en Red",
+    "section": "Bibliografía",
+    "text": "Bibliografía\n\nMaterial de la asignatura disponible en el aula virtual\nBiblioteca virtual para alumnos"
+  },
+  {
     "objectID": "sub_introduction.html#internet",
     "href": "sub_introduction.html#internet",
     "title": "Presentación de Juegos en Red",
     "section": "Internet",
     "text": "Internet\n\nPáginas oficiales de los estándares y tecnologías\nTutoriales, ejemplos y blogs realizados por la comunidad\nAplicaciones web de código abierto\n… y todo lo que Google encuentre :)"
+  },
+  {
+    "objectID": "sub_introduction.html#ejemplos-de-proyectos-de-otros-años",
+    "href": "sub_introduction.html#ejemplos-de-proyectos-de-otros-años",
+    "title": "Presentación de Juegos en Red",
+    "section": "Ejemplos de proyectos de otros años",
+    "text": "Ejemplos de proyectos de otros años\n\nHead and Balls\nInk Catiction\nBombs ‘R’ Us"
   },
   {
     "objectID": "ch1_p4_transport.html#qué-es-la-capa-de-transporte",
