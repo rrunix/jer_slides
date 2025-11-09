@@ -685,212 +685,6 @@ Los errores 5xx indican problemas del servidor, no del cliente
 :::
 
 
-
-# Cliente JavaScript con fetch()
-
-## La API fetch()
-
-**API estándar moderna para peticiones HTTP**
-
-- Integrada en todos los navegadores modernos
-- Utiliza Promises para operaciones asincrónicas
-- Sintaxis limpia y potente
-
-**Dos formas de manejar respuestas:**
-
-::: {.columns}
-::: {.column width="50%"}
-**Callbacks con .then()**
-
-```javascript
-fetch(url)
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error(error));
-```
-:::
-
-::: {.column width="50%"}
-**async/await (recomendado)**
-
-```javascript
-async function getData() {
-  const response = await fetch(url);
-  const data = await response.json();
-  console.log(data);
-}
-```
-:::
-:::
-
-
-
-## async/await: Sintaxis Recomendada
-
-**Código más legible y natural**
-
-```javascript
-async function getPlayer() {
-    try {
-        const response = await fetch('https://api.game.com/players/alice');
-
-        if (!response.ok) {
-            throw new Error('HTTP error ' + response.status);
-        }
-
-        const data = await response.json();
-        console.log(data);
-
-    } catch (error) {
-        console.error('Error:', error);
-    }
-}
-```
-
-::: {.callout-tip}
-Siempre usar try/catch para manejar errores
-:::
-
-
-
-## GET - Obtener Datos
-
-**Método por defecto de fetch()**
-
-```javascript
-// Obtener un jugador específico
-async function getPlayer(id) {
-    const response = await fetch(`https://api.game.com/players/${id}`);
-    return await response.json();
-}
-
-// Uso
-const player = await getPlayer('alice');
-console.log(player.name);
-console.log(player.level);
-```
-
-::: {.callout-note}
-Template literals (`` ` ``) permiten insertar variables en strings
-:::
-
-
-
-## POST - Crear Recurso
-
-**Especificar método, headers y body**
-
-```javascript
-async function createPlayer(data) {
-    const response = await fetch('https://api.game.com/players', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    });
-
-    return await response.json();
-}
-
-// Uso
-const newPlayer = await createPlayer({
-    username: 'charlie',
-    email: 'charlie@example.com'
-});
-console.log('Creado con ID:', newPlayer.id);
-```
-
-
-
-## PUT - Actualizar Recurso
-
-**Reemplazar completamente el recurso**
-
-```javascript
-async function updatePlayer(id, updates) {
-    const response = await fetch(`https://api.game.com/players/${id}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updates)
-    });
-
-    return await response.json();
-}
-
-// Uso
-await updatePlayer('charlie', {
-    email: 'newemail@example.com',
-    level: 5
-});
-```
-
-::: {.callout-note}
-PUT reemplaza todo el recurso; PATCH actualiza solo campos específicos
-:::
-
-
-
-## DELETE - Eliminar Recurso
-
-**Método más simple**
-
-```javascript
-async function deletePlayer(id) {
-    const response = await fetch(`https://api.game.com/players/${id}`, {
-        method: 'DELETE'
-    });
-
-    return response.ok;
-}
-
-// Uso
-const eliminado = await deletePlayer('charlie');
-if (eliminado) {
-    console.log('Jugador eliminado correctamente');
-}
-```
-
-::: {.callout-tip}
-`response.ok` es `true` para códigos 2xx
-:::
-
-
-
-## Manejo de Errores y Códigos de Estado
-
-**Manejo robusto con switch**
-
-```javascript
-async function fetchWithErrorHandling(url) {
-    try {
-        const response = await fetch(url);
-
-        switch (response.status) {
-            case 200:
-                return await response.json();
-            case 401:
-                throw new Error('No autenticado');
-            case 403:
-                throw new Error('Sin permisos');
-            case 404:
-                throw new Error('Recurso no encontrado');
-            case 500:
-                throw new Error('Error del servidor');
-            default:
-                throw new Error(`Error: ${response.status}`);
-        }
-    } catch (error) {
-        console.error('Error en petición:', error);
-        throw error;
-    }
-}
-```
-
-
-
 # Servidor con Node.js y Express
 
 ## Express.js
@@ -974,6 +768,97 @@ app.listen(8080, () => {
 
 ```bash
 node src/app.js
+```
+
+## Servir Archivos Estáticos
+
+**Express puede servir HTML, CSS, JS del cliente**
+
+```javascript
+app.use(express.static('public'));
+```
+
+**Estructura:**
+
+```
+mi-api-juego/
+├── public/
+│   ├── index.html
+│   ├── script.js
+│   └── style.css
+└── src/
+    └── app.js
+```
+
+**Acceso:**
+
+- `http://localhost:8080/index.html`
+- `http://localhost:8080/script.js`
+
+
+
+## Ejemplo simple: Servidor POST
+
+**Servidor simple con endpoint POST:**
+
+```javascript
+import express from 'express';
+const app = express();
+app.use(express.json());
+
+const messages = [];
+
+// Endpoint POST para crear un mensaje
+app.post('/messages', (req, res) => {
+  const { text, author } = req.body;
+  const newMessage = {
+    id: Date.now(), text, author,
+    timestamp: new Date().toISOString()
+  };
+  messages.push(newMessage);
+  res.status(201).json(newMessage);
+});
+
+app.get('/messages', (req, res) => {
+    res.json(messages);
+});
+
+app.listen(8080, () => {
+  console.log('Servidor en http://localhost:8080');
+});
+```
+
+
+
+## Invocar con fetch()
+
+**Cliente JavaScript usando POST:**
+
+```javascript
+async function createMessage() {
+  const response = await fetch('http://localhost:8080/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      text: 'Hola desde el cliente',
+      author: 'Alice'
+    })
+  });
+
+  const newMessage = await response.json();
+  console.log('Mensaje creado:', newMessage);
+}
+
+createMessage();
+```
+
+**Obtener los mensajes**
+
+```javascript
+const response = await fetch('http://localhost:8080/messages');
+const message = await response.json();
 ```
 
 
@@ -1237,32 +1122,208 @@ Debe colocarse **después** de todas las rutas
 :::
 
 
+# Cliente JavaScript con fetch()
 
-## Servir Archivos Estáticos
+## La API fetch()
 
-**Express puede servir HTML, CSS, JS del cliente**
+**API estándar moderna para peticiones HTTP**
+
+- Integrada en todos los navegadores modernos
+- Utiliza Promises para operaciones asincrónicas
+- Sintaxis limpia y potente
+
+**Dos formas de manejar respuestas:**
+
+::: {.columns}
+::: {.column width="50%"}
+**Callbacks con .then()**
 
 ```javascript
-app.use(express.static('public'));
+fetch(url)
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error(error));
+```
+:::
+
+::: {.column width="50%"}
+**async/await (recomendado)**
+
+```javascript
+async function getData() {
+  const response = await fetch(url);
+  const data = await response.json();
+  console.log(data);
+}
+```
+:::
+:::
+
+
+
+## async/await: Sintaxis Recomendada
+
+**Código más legible y natural**
+
+```javascript
+async function getPlayer() {
+    try {
+        const response = await fetch('https://api.game.com/players/alice');
+
+        if (!response.ok) {
+            throw new Error('HTTP error ' + response.status);
+        }
+
+        const data = await response.json();
+        console.log(data);
+
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
 ```
 
-**Estructura:**
+::: {.callout-tip}
+Siempre usar try/catch para manejar errores
+:::
 
+
+
+## GET - Obtener Datos
+
+**Método por defecto de fetch()**
+
+```javascript
+// Obtener un jugador específico
+async function getPlayer(id) {
+    const response = await fetch(`https://api.game.com/players/${id}`);
+    return await response.json();
+}
+
+// Uso
+const player = await getPlayer('alice');
+console.log(player.name);
+console.log(player.level);
 ```
-mi-api-juego/
-├── public/
-│   ├── index.html
-│   ├── script.js
-│   └── style.css
-└── src/
-    └── app.js
+
+::: {.callout-note}
+Template literals (`` ` ``) permiten insertar variables en strings
+:::
+
+
+
+## POST - Crear Recurso
+
+**Especificar método, headers y body**
+
+```javascript
+async function createPlayer(data) {
+    const response = await fetch('https://api.game.com/players', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+
+    return await response.json();
+}
+
+// Uso
+const newPlayer = await createPlayer({
+    username: 'charlie',
+    email: 'charlie@example.com'
+});
+console.log('Creado con ID:', newPlayer.id);
 ```
 
-**Acceso:**
 
-- `http://localhost:8080/index.html`
-- `http://localhost:8080/script.js`
 
+## PUT - Actualizar Recurso
+
+**Reemplazar completamente el recurso**
+
+```javascript
+async function updatePlayer(id, updates) {
+    const response = await fetch(`https://api.game.com/players/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updates)
+    });
+
+    return await response.json();
+}
+
+// Uso
+await updatePlayer('charlie', {
+    email: 'newemail@example.com',
+    level: 5
+});
+```
+
+::: {.callout-note}
+PUT reemplaza todo el recurso; PATCH actualiza solo campos específicos
+:::
+
+
+
+## DELETE - Eliminar Recurso
+
+**Método más simple**
+
+```javascript
+async function deletePlayer(id) {
+    const response = await fetch(`https://api.game.com/players/${id}`, {
+        method: 'DELETE'
+    });
+
+    return response.ok;
+}
+
+// Uso
+const eliminado = await deletePlayer('charlie');
+if (eliminado) {
+    console.log('Jugador eliminado correctamente');
+}
+```
+
+::: {.callout-tip}
+`response.ok` es `true` para códigos 2xx
+:::
+
+
+
+## Manejo de Errores y Códigos de Estado
+
+**Manejo robusto con switch**
+
+```javascript
+async function fetchWithErrorHandling(url) {
+    try {
+        const response = await fetch(url);
+
+        switch (response.status) {
+            case 200:
+                return await response.json();
+            case 401:
+                throw new Error('No autenticado');
+            case 403:
+                throw new Error('Sin permisos');
+            case 404:
+                throw new Error('Recurso no encontrado');
+            case 500:
+                throw new Error('Error del servidor');
+            default:
+                throw new Error(`Error: ${response.status}`);
+        }
+    } catch (error) {
+        console.error('Error en petición:', error);
+        throw error;
+    }
+}
+```
 
 
 # Ventajas de la Arquitectura REST
