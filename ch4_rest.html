@@ -237,14 +237,14 @@
 <h2 id="toc-title">Tabla de contenidos</h2>
 <ul>
 <li><a href="#/introducción-a-apis-rest" id="/toc-introducción-a-apis-rest">Introducción a APIs REST</a></li>
-<li><a href="#/niveles-de-madurez-rest" id="/toc-niveles-de-madurez-rest">Niveles de Madurez REST</a></li>
+<li><a href="#/niveles-de-madurez-rest-modelo-de-richardson" id="/toc-niveles-de-madurez-rest-modelo-de-richardson">Niveles de Madurez REST (Modelo de Richardson)</a></li>
 <li><a href="#/formato-json" id="/toc-formato-json">Formato JSON</a></li>
 <li><a href="#/principios-de-diseño-rest" id="/toc-principios-de-diseño-rest">Principios de Diseño REST</a></li>
 <li><a href="#/métodos-http" id="/toc-métodos-http">Métodos HTTP</a></li>
 <li><a href="#/anatomía-de-peticiones-y-respuestas" id="/toc-anatomía-de-peticiones-y-respuestas">Anatomía de Peticiones y Respuestas</a></li>
 <li><a href="#/códigos-de-estado-http" id="/toc-códigos-de-estado-http">Códigos de Estado HTTP</a></li>
-<li><a href="#/cliente-javascript-con-fetch" id="/toc-cliente-javascript-con-fetch">Cliente JavaScript con fetch()</a></li>
 <li><a href="#/servidor-con-node.js-y-express" id="/toc-servidor-con-node.js-y-express">Servidor con Node.js y Express</a></li>
+<li><a href="#/cliente-javascript-con-fetch" id="/toc-cliente-javascript-con-fetch">Cliente JavaScript con fetch()</a></li>
 <li><a href="#/ventajas-de-la-arquitectura-rest" id="/toc-ventajas-de-la-arquitectura-rest">Ventajas de la Arquitectura REST</a></li>
 <li><a href="#/resumen" id="/toc-resumen">Resumen</a></li>
 </ul>
@@ -255,9 +255,9 @@
 <h1>Introducción a APIs REST</h1>
 
 </section>
-<section id="contexto-en-juegos-multijugador" class="slide level2">
-<h2>Contexto en Juegos Multijugador</h2>
-<p><strong>Después de implementar el juego con Phaser 3 y el Patrón Command</strong></p>
+<section id="contexto" class="slide level2">
+<h2>Contexto</h2>
+<p><strong>Después de implementar el juego con Phaser 3</strong></p>
 <ul>
 <li>Cliente y servidor necesitan comunicarse</li>
 <li>Gestionar registro y autenticación de jugadores</li>
@@ -303,21 +303,56 @@ Respuesta:
   "score": 8500
 }</code></pre>
 </section>
+<section id="uri-y-url" class="slide level2">
+<h2>URI y URL</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>URI (Uniform Resource Identifier)</strong></p>
+<ul>
+<li>Identificador único de un recurso</li>
+<li>Puede ser un nombre, una localización, o ambos</li>
+<li>Ejemplo: <code>/players/alice</code></li>
+<li>Toda URL es una URI, pero no toda URI es una URL</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><strong>URL (Uniform Resource Locator)</strong></p>
+<ul>
+<li>Tipo específico de URI</li>
+<li>Indica <strong>cómo acceder</strong> al recurso</li>
+<li>Incluye protocolo y localización</li>
+<li>Ejemplo: <code>https://api.game.com/players/alice</code></li>
+</ul>
+</div></div>
+<p><strong>Estructura de una URL:</strong></p>
+<pre><code>https://api.game.com:443/players/alice?sort=score#stats
+└─┬─┘  └────┬──────┘ └┬┘ └─────┬──────┘ └───┬───┘ └─┬─┘
+Protocolo  Dominio  Puerto   Ruta       Query    Fragment</code></pre>
+<ul>
+<li><strong>Protocolo:</strong> <code>http://</code> o <code>https://</code> (comunicación segura)</li>
+<li><strong>Dominio:</strong> Nombre del servidor (<code>api.game.com</code>)</li>
+<li><strong>Puerto:</strong> Opcional, por defecto 80 (HTTP) o 443 (HTTPS)</li>
+<li><strong>Ruta:</strong> Identifica el recurso específico (<code>/players/alice</code>)</li>
+<li><strong>Query:</strong> Parámetros adicionales opcionales (<code>?sort=score</code>)</li>
+<li><strong>Fragment:</strong> Sección específica del recurso (<code>#stats</code>)</li>
+</ul>
+</section>
 <section id="qué-es-una-api-rest" class="slide level2">
 <h2>¿Qué es una API REST?</h2>
 <p><strong>REST (Representational State Transfer)</strong></p>
 <ul>
-<li>Estilo de arquitectura de software basado en HTTP</li>
-<li>Acuñado en 2000 por <strong>Roy Fielding</strong> (coautor de HTTP)</li>
-<li>Cuando un servicio cumple estos principios es <strong>RESTful</strong></li>
+<li>Estilo de arquitectura para sistemas distribuidos</li>
+<li>Los recursos del servidor se representan mediante URLs</li>
+<li>El cliente transfiere representaciones de esos recursos (JSON, XML, etc.)</li>
+<li>El “estado” reside en esas representaciones que se transfieren</li>
 </ul>
-<p><strong>Características clave:</strong></p>
-<ul>
-<li>Operaciones CRUD sobre recursos del servidor</li>
-<li>Aprovecha URL, métodos HTTP, códigos de estado</li>
-<li>Intercambio de información en formato JSON</li>
-<li>Simplicidad y eficiencia</li>
-</ul>
+<p><strong>Principios REST (para ser RESTful):</strong></p>
+<ol type="1">
+<li><strong>Cliente-Servidor:</strong> Separación de responsabilidades</li>
+<li><strong>Sin estado (Stateless):</strong> Cada petición contiene toda la información necesaria</li>
+<li><strong>Cacheable:</strong> Las respuestas indican si pueden ser cacheadas</li>
+<li><strong>Interfaz uniforme:</strong> URLs, métodos HTTP y representaciones consistentes</li>
+<li><strong>Sistema en capas:</strong> Arquitectura puede tener intermediarios (proxies, load balancers)</li>
+</ol>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -333,13 +368,9 @@ Respuesta:
 </div>
 </section></section>
 <section>
-<section id="niveles-de-madurez-rest" class="title-slide slide level1 center">
-<h1>Niveles de Madurez REST</h1>
+<section id="niveles-de-madurez-rest-modelo-de-richardson" class="title-slide slide level1 center">
+<h1>Niveles de Madurez REST (Modelo de Richardson)</h1>
 
-</section>
-<section id="modelo-de-richardson" class="slide level2">
-<h2>Modelo de Richardson</h2>
-<p><strong>4 niveles según conformidad con principios REST</strong></p>
 </section>
 <section id="nivel-0---the-swamp-of-pox" class="slide level2">
 <h2>Nivel 0 - The Swamp of POX</h2>
@@ -412,14 +443,14 @@ DELETE /players/bob HTTP/1.1      → 204 No Content</code></pre>
 <li>Guían al cliente sobre acciones disponibles</li>
 <li>Los clientes descubren dinámicamente la API</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb5-1"><a></a><span class="fu">{</span></span>
-<span id="cb5-2"><a></a>  <span class="dt">"id"</span><span class="fu">:</span> <span class="st">"alice"</span><span class="fu">,</span></span>
-<span id="cb5-3"><a></a>  <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Alice Smith"</span><span class="fu">,</span></span>
-<span id="cb5-4"><a></a>  <span class="dt">"links"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb5-5"><a></a>    <span class="dt">"matches"</span><span class="fu">:</span> <span class="st">"/players/alice/matches"</span><span class="fu">,</span></span>
-<span id="cb5-6"><a></a>    <span class="dt">"friends"</span><span class="fu">:</span> <span class="st">"/players/alice/friends"</span></span>
-<span id="cb5-7"><a></a>  <span class="fu">}</span></span>
-<span id="cb5-8"><a></a><span class="fu">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb6-1"><a></a><span class="fu">{</span></span>
+<span id="cb6-2"><a></a>  <span class="dt">"id"</span><span class="fu">:</span> <span class="st">"alice"</span><span class="fu">,</span></span>
+<span id="cb6-3"><a></a>  <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Alice Smith"</span><span class="fu">,</span></span>
+<span id="cb6-4"><a></a>  <span class="dt">"links"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb6-5"><a></a>    <span class="dt">"matches"</span><span class="fu">:</span> <span class="st">"/players/alice/matches"</span><span class="fu">,</span></span>
+<span id="cb6-6"><a></a>    <span class="dt">"friends"</span><span class="fu">:</span> <span class="st">"/players/alice/friends"</span></span>
+<span id="cb6-7"><a></a>  <span class="fu">}</span></span>
+<span id="cb6-8"><a></a><span class="fu">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -455,21 +486,21 @@ DELETE /players/bob HTTP/1.1      → 204 No Content</code></pre>
 <li>Colección de pares clave-valor</li>
 <li>Encerrados en <code>{}</code></li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb6-1"><a></a><span class="fu">{</span></span>
-<span id="cb6-2"><a></a>  <span class="dt">"nombre"</span><span class="fu">:</span> <span class="st">"Alice"</span><span class="fu">,</span></span>
-<span id="cb6-3"><a></a>  <span class="dt">"nivel"</span><span class="fu">:</span> <span class="dv">15</span></span>
-<span id="cb6-4"><a></a><span class="fu">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb7-1"><a></a><span class="fu">{</span></span>
+<span id="cb7-2"><a></a>  <span class="dt">"nombre"</span><span class="fu">:</span> <span class="st">"Alice"</span><span class="fu">,</span></span>
+<span id="cb7-3"><a></a>  <span class="dt">"nivel"</span><span class="fu">:</span> <span class="dv">15</span></span>
+<span id="cb7-4"><a></a><span class="fu">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:50%;">
 <p><strong>Arrays:</strong></p>
 <ul>
 <li>Lista ordenada de valores</li>
 <li>Encerrados en <code>[]</code></li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb7-1"><a></a><span class="ot">[</span></span>
-<span id="cb7-2"><a></a>  <span class="st">"item1"</span><span class="ot">,</span></span>
-<span id="cb7-3"><a></a>  <span class="st">"item2"</span><span class="ot">,</span></span>
-<span id="cb7-4"><a></a>  <span class="st">"item3"</span></span>
-<span id="cb7-5"><a></a><span class="ot">]</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb8-1"><a></a><span class="ot">[</span></span>
+<span id="cb8-2"><a></a>  <span class="st">"item1"</span><span class="ot">,</span></span>
+<span id="cb8-3"><a></a>  <span class="st">"item2"</span><span class="ot">,</span></span>
+<span id="cb8-4"><a></a>  <span class="st">"item3"</span></span>
+<span id="cb8-5"><a></a><span class="ot">]</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
 </section>
 <section id="tipos-de-valores-json" class="slide level2">
@@ -486,31 +517,31 @@ DELETE /players/bob HTTP/1.1      → 204 No Content</code></pre>
 </section>
 <section id="ejemplo-completo-estado-de-partida" class="slide level2">
 <h2>Ejemplo Completo: Estado de Partida</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb8-1"><a></a><span class="fu">{</span></span>
-<span id="cb8-2"><a></a>  <span class="dt">"game"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb8-3"><a></a>    <span class="dt">"id"</span><span class="fu">:</span> <span class="st">"match_12345"</span><span class="fu">,</span></span>
-<span id="cb8-4"><a></a>    <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"pong"</span><span class="fu">,</span></span>
-<span id="cb8-5"><a></a>    <span class="dt">"status"</span><span class="fu">:</span> <span class="st">"active"</span><span class="fu">,</span></span>
-<span id="cb8-6"><a></a>    <span class="dt">"players"</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb8-7"><a></a>      <span class="fu">{</span></span>
-<span id="cb8-8"><a></a>        <span class="dt">"id"</span><span class="fu">:</span> <span class="st">"alice"</span><span class="fu">,</span></span>
-<span id="cb8-9"><a></a>        <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Alice Smith"</span><span class="fu">,</span></span>
-<span id="cb8-10"><a></a>        <span class="dt">"score"</span><span class="fu">:</span> <span class="dv">5</span><span class="fu">,</span></span>
-<span id="cb8-11"><a></a>        <span class="dt">"ready"</span><span class="fu">:</span> <span class="kw">true</span></span>
-<span id="cb8-12"><a></a>      <span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb8-13"><a></a>      <span class="fu">{</span></span>
-<span id="cb8-14"><a></a>        <span class="dt">"id"</span><span class="fu">:</span> <span class="st">"bob"</span><span class="fu">,</span></span>
-<span id="cb8-15"><a></a>        <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Bob Johnson"</span><span class="fu">,</span></span>
-<span id="cb8-16"><a></a>        <span class="dt">"score"</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></span>
-<span id="cb8-17"><a></a>        <span class="dt">"ready"</span><span class="fu">:</span> <span class="kw">true</span></span>
-<span id="cb8-18"><a></a>      <span class="fu">}</span></span>
-<span id="cb8-19"><a></a>    <span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb8-20"><a></a>    <span class="dt">"settings"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb8-21"><a></a>      <span class="dt">"max_score"</span><span class="fu">:</span> <span class="dv">11</span><span class="fu">,</span></span>
-<span id="cb8-22"><a></a>      <span class="dt">"ball_speed"</span><span class="fu">:</span> <span class="dv">300</span></span>
-<span id="cb8-23"><a></a>    <span class="fu">}</span></span>
-<span id="cb8-24"><a></a>  <span class="fu">}</span></span>
-<span id="cb8-25"><a></a><span class="fu">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb9-1"><a></a><span class="fu">{</span></span>
+<span id="cb9-2"><a></a>  <span class="dt">"game"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb9-3"><a></a>    <span class="dt">"id"</span><span class="fu">:</span> <span class="st">"match_12345"</span><span class="fu">,</span></span>
+<span id="cb9-4"><a></a>    <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"pong"</span><span class="fu">,</span></span>
+<span id="cb9-5"><a></a>    <span class="dt">"status"</span><span class="fu">:</span> <span class="st">"active"</span><span class="fu">,</span></span>
+<span id="cb9-6"><a></a>    <span class="dt">"players"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb9-7"><a></a>      <span class="fu">{</span></span>
+<span id="cb9-8"><a></a>        <span class="dt">"id"</span><span class="fu">:</span> <span class="st">"alice"</span><span class="fu">,</span></span>
+<span id="cb9-9"><a></a>        <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Alice Smith"</span><span class="fu">,</span></span>
+<span id="cb9-10"><a></a>        <span class="dt">"score"</span><span class="fu">:</span> <span class="dv">5</span><span class="fu">,</span></span>
+<span id="cb9-11"><a></a>        <span class="dt">"ready"</span><span class="fu">:</span> <span class="kw">true</span></span>
+<span id="cb9-12"><a></a>      <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb9-13"><a></a>      <span class="fu">{</span></span>
+<span id="cb9-14"><a></a>        <span class="dt">"id"</span><span class="fu">:</span> <span class="st">"bob"</span><span class="fu">,</span></span>
+<span id="cb9-15"><a></a>        <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Bob Johnson"</span><span class="fu">,</span></span>
+<span id="cb9-16"><a></a>        <span class="dt">"score"</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></span>
+<span id="cb9-17"><a></a>        <span class="dt">"ready"</span><span class="fu">:</span> <span class="kw">true</span></span>
+<span id="cb9-18"><a></a>      <span class="fu">}</span></span>
+<span id="cb9-19"><a></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb9-20"><a></a>    <span class="dt">"settings"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb9-21"><a></a>      <span class="dt">"max_score"</span><span class="fu">:</span> <span class="dv">11</span><span class="fu">,</span></span>
+<span id="cb9-22"><a></a>      <span class="dt">"ball_speed"</span><span class="fu">:</span> <span class="dv">300</span></span>
+<span id="cb9-23"><a></a>    <span class="fu">}</span></span>
+<span id="cb9-24"><a></a>  <span class="fu">}</span></span>
+<span id="cb9-25"><a></a><span class="fu">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="usos-de-json" class="slide level2">
 <h2>Usos de JSON</h2>
@@ -530,16 +561,25 @@ DELETE /players/bob HTTP/1.1      → 204 No Content</code></pre>
 </section>
 <section id="todo-es-un-recurso" class="slide level2">
 <h2>Todo es un Recurso</h2>
-<p><strong>Recurso: ítem de información identificado por URI única</strong></p>
-<pre><code>http://api.game.com/players/alice
-http://api.game.com/matches/12345
-http://api.game.com/players/alice/scores
-http://api.game.com/leaderboard</code></pre>
-<p><strong>Estructura de URI:</strong></p>
+<p><strong>En REST, todo es un recurso identificable</strong></p>
 <ul>
-<li>Parte fija: dominio y ruta base</li>
-<li>Parte variable: identifica el recurso específico</li>
+<li><strong>Recurso:</strong> Cualquier entidad o información con significado</li>
+<li>Cada recurso tiene una <strong>URI única</strong> que lo identifica</li>
+<li>Los recursos pueden ser individuales o colecciones</li>
 </ul>
+<p><strong>Ejemplos:</strong></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Recursos individuales:</strong></p>
+<pre><code>/players/alice
+/matches/12345
+/leaderboard</code></pre>
+</div><div class="column" style="width:50%;">
+<p><strong>Colecciones:</strong></p>
+<pre><code>/players
+/matches
+/players/alice/scores</code></pre>
+</div></div>
 </section>
 <section id="principios-de-diseño-de-uris" class="slide level2">
 <h2>Principios de Diseño de URIs</h2>
@@ -1000,208 +1040,6 @@ Content-Length: 156
 </div>
 </section></section>
 <section>
-<section id="cliente-javascript-con-fetch" class="title-slide slide level1 center">
-<h1>Cliente JavaScript con fetch()</h1>
-
-</section>
-<section id="la-api-fetch" class="slide level2">
-<h2>La API fetch()</h2>
-<p><strong>API estándar moderna para peticiones HTTP</strong></p>
-<ul>
-<li>Integrada en todos los navegadores modernos</li>
-<li>Utiliza Promises para operaciones asincrónicas</li>
-<li>Sintaxis limpia y potente</li>
-</ul>
-<p><strong>Dos formas de manejar respuestas:</strong></p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><strong>Callbacks con .then()</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb16-1"><a></a><span class="fu">fetch</span>(url)</span>
-<span id="cb16-2"><a></a>  <span class="op">.</span><span class="fu">then</span>(response <span class="kw">=&gt;</span> response<span class="op">.</span><span class="fu">json</span>())</span>
-<span id="cb16-3"><a></a>  <span class="op">.</span><span class="fu">then</span>(data <span class="kw">=&gt;</span> <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(data))</span>
-<span id="cb16-4"><a></a>  <span class="op">.</span><span class="fu">catch</span>(error <span class="kw">=&gt;</span> <span class="bu">console</span><span class="op">.</span><span class="fu">error</span>(error))<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</div><div class="column" style="width:50%;">
-<p><strong>async/await (recomendado)</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb17-1"><a></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">getData</span>() {</span>
-<span id="cb17-2"><a></a>  <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(url)<span class="op">;</span></span>
-<span id="cb17-3"><a></a>  <span class="kw">const</span> data <span class="op">=</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
-<span id="cb17-4"><a></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(data)<span class="op">;</span></span>
-<span id="cb17-5"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</div></div>
-</section>
-<section id="asyncawait-sintaxis-recomendada" class="slide level2">
-<h2>async/await: Sintaxis Recomendada</h2>
-<p><strong>Código más legible y natural</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb18-1"><a></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">getPlayer</span>() {</span>
-<span id="cb18-2"><a></a>    <span class="cf">try</span> {</span>
-<span id="cb18-3"><a></a>        <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(<span class="st">'https://api.game.com/players/alice'</span>)<span class="op">;</span></span>
-<span id="cb18-4"><a></a></span>
-<span id="cb18-5"><a></a>        <span class="cf">if</span> (<span class="op">!</span>response<span class="op">.</span><span class="at">ok</span>) {</span>
-<span id="cb18-6"><a></a>            <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">Error</span>(<span class="st">'HTTP error '</span> <span class="op">+</span> response<span class="op">.</span><span class="at">status</span>)<span class="op">;</span></span>
-<span id="cb18-7"><a></a>        }</span>
-<span id="cb18-8"><a></a></span>
-<span id="cb18-9"><a></a>        <span class="kw">const</span> data <span class="op">=</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
-<span id="cb18-10"><a></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(data)<span class="op">;</span></span>
-<span id="cb18-11"><a></a></span>
-<span id="cb18-12"><a></a>    } <span class="cf">catch</span> (error) {</span>
-<span id="cb18-13"><a></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">error</span>(<span class="st">'Error:'</span><span class="op">,</span> error)<span class="op">;</span></span>
-<span id="cb18-14"><a></a>    }</span>
-<span id="cb18-15"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Tip</strong></p>
-</div>
-<div class="callout-content">
-<p>Siempre usar try/catch para manejar errores</p>
-</div>
-</div>
-</div>
-</section>
-<section id="get---obtener-datos" class="slide level2">
-<h2>GET - Obtener Datos</h2>
-<p><strong>Método por defecto de fetch()</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb19-1"><a></a><span class="co">// Obtener un jugador específico</span></span>
-<span id="cb19-2"><a></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">getPlayer</span>(id) {</span>
-<span id="cb19-3"><a></a>    <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(<span class="vs">`https://api.game.com/players/</span><span class="sc">${</span>id<span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></span>
-<span id="cb19-4"><a></a>    <span class="cf">return</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
-<span id="cb19-5"><a></a>}</span>
-<span id="cb19-6"><a></a></span>
-<span id="cb19-7"><a></a><span class="co">// Uso</span></span>
-<span id="cb19-8"><a></a><span class="kw">const</span> player <span class="op">=</span> <span class="cf">await</span> <span class="fu">getPlayer</span>(<span class="st">'alice'</span>)<span class="op">;</span></span>
-<span id="cb19-9"><a></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(player<span class="op">.</span><span class="at">name</span>)<span class="op">;</span></span>
-<span id="cb19-10"><a></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(player<span class="op">.</span><span class="at">level</span>)<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Nota</strong></p>
-</div>
-<div class="callout-content">
-<p>Template literals (<code>`</code>) permiten insertar variables en strings</p>
-</div>
-</div>
-</div>
-</section>
-<section id="post---crear-recurso" class="slide level2">
-<h2>POST - Crear Recurso</h2>
-<p><strong>Especificar método, headers y body</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb20-1"><a></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">createPlayer</span>(data) {</span>
-<span id="cb20-2"><a></a>    <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(<span class="st">'https://api.game.com/players'</span><span class="op">,</span> {</span>
-<span id="cb20-3"><a></a>        <span class="dt">method</span><span class="op">:</span> <span class="st">'POST'</span><span class="op">,</span></span>
-<span id="cb20-4"><a></a>        <span class="dt">headers</span><span class="op">:</span> {</span>
-<span id="cb20-5"><a></a>            <span class="st">'Content-Type'</span><span class="op">:</span> <span class="st">'application/json'</span></span>
-<span id="cb20-6"><a></a>        }<span class="op">,</span></span>
-<span id="cb20-7"><a></a>        <span class="dt">body</span><span class="op">:</span> <span class="bu">JSON</span><span class="op">.</span><span class="fu">stringify</span>(data)</span>
-<span id="cb20-8"><a></a>    })<span class="op">;</span></span>
-<span id="cb20-9"><a></a></span>
-<span id="cb20-10"><a></a>    <span class="cf">return</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
-<span id="cb20-11"><a></a>}</span>
-<span id="cb20-12"><a></a></span>
-<span id="cb20-13"><a></a><span class="co">// Uso</span></span>
-<span id="cb20-14"><a></a><span class="kw">const</span> newPlayer <span class="op">=</span> <span class="cf">await</span> <span class="fu">createPlayer</span>({</span>
-<span id="cb20-15"><a></a>    <span class="dt">username</span><span class="op">:</span> <span class="st">'charlie'</span><span class="op">,</span></span>
-<span id="cb20-16"><a></a>    <span class="dt">email</span><span class="op">:</span> <span class="st">'charlie@example.com'</span></span>
-<span id="cb20-17"><a></a>})<span class="op">;</span></span>
-<span id="cb20-18"><a></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">'Creado con ID:'</span><span class="op">,</span> newPlayer<span class="op">.</span><span class="at">id</span>)<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="put---actualizar-recurso" class="slide level2">
-<h2>PUT - Actualizar Recurso</h2>
-<p><strong>Reemplazar completamente el recurso</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb21-1"><a></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">updatePlayer</span>(id<span class="op">,</span> updates) {</span>
-<span id="cb21-2"><a></a>    <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(<span class="vs">`https://api.game.com/players/</span><span class="sc">${</span>id<span class="sc">}</span><span class="vs">`</span><span class="op">,</span> {</span>
-<span id="cb21-3"><a></a>        <span class="dt">method</span><span class="op">:</span> <span class="st">'PUT'</span><span class="op">,</span></span>
-<span id="cb21-4"><a></a>        <span class="dt">headers</span><span class="op">:</span> {</span>
-<span id="cb21-5"><a></a>            <span class="st">'Content-Type'</span><span class="op">:</span> <span class="st">'application/json'</span></span>
-<span id="cb21-6"><a></a>        }<span class="op">,</span></span>
-<span id="cb21-7"><a></a>        <span class="dt">body</span><span class="op">:</span> <span class="bu">JSON</span><span class="op">.</span><span class="fu">stringify</span>(updates)</span>
-<span id="cb21-8"><a></a>    })<span class="op">;</span></span>
-<span id="cb21-9"><a></a></span>
-<span id="cb21-10"><a></a>    <span class="cf">return</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
-<span id="cb21-11"><a></a>}</span>
-<span id="cb21-12"><a></a></span>
-<span id="cb21-13"><a></a><span class="co">// Uso</span></span>
-<span id="cb21-14"><a></a><span class="cf">await</span> <span class="fu">updatePlayer</span>(<span class="st">'charlie'</span><span class="op">,</span> {</span>
-<span id="cb21-15"><a></a>    <span class="dt">email</span><span class="op">:</span> <span class="st">'newemail@example.com'</span><span class="op">,</span></span>
-<span id="cb21-16"><a></a>    <span class="dt">level</span><span class="op">:</span> <span class="dv">5</span></span>
-<span id="cb21-17"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Nota</strong></p>
-</div>
-<div class="callout-content">
-<p>PUT reemplaza todo el recurso; PATCH actualiza solo campos específicos</p>
-</div>
-</div>
-</div>
-</section>
-<section id="delete---eliminar-recurso" class="slide level2">
-<h2>DELETE - Eliminar Recurso</h2>
-<p><strong>Método más simple</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb22-1"><a></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">deletePlayer</span>(id) {</span>
-<span id="cb22-2"><a></a>    <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(<span class="vs">`https://api.game.com/players/</span><span class="sc">${</span>id<span class="sc">}</span><span class="vs">`</span><span class="op">,</span> {</span>
-<span id="cb22-3"><a></a>        <span class="dt">method</span><span class="op">:</span> <span class="st">'DELETE'</span></span>
-<span id="cb22-4"><a></a>    })<span class="op">;</span></span>
-<span id="cb22-5"><a></a></span>
-<span id="cb22-6"><a></a>    <span class="cf">return</span> response<span class="op">.</span><span class="at">ok</span><span class="op">;</span></span>
-<span id="cb22-7"><a></a>}</span>
-<span id="cb22-8"><a></a></span>
-<span id="cb22-9"><a></a><span class="co">// Uso</span></span>
-<span id="cb22-10"><a></a><span class="kw">const</span> eliminado <span class="op">=</span> <span class="cf">await</span> <span class="fu">deletePlayer</span>(<span class="st">'charlie'</span>)<span class="op">;</span></span>
-<span id="cb22-11"><a></a><span class="cf">if</span> (eliminado) {</span>
-<span id="cb22-12"><a></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">'Jugador eliminado correctamente'</span>)<span class="op">;</span></span>
-<span id="cb22-13"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Tip</strong></p>
-</div>
-<div class="callout-content">
-<p><code>response.ok</code> es <code>true</code> para códigos 2xx</p>
-</div>
-</div>
-</div>
-</section>
-<section id="manejo-de-errores-y-códigos-de-estado" class="slide level2">
-<h2>Manejo de Errores y Códigos de Estado</h2>
-<p><strong>Manejo robusto con switch</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb23-1"><a></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">fetchWithErrorHandling</span>(url) {</span>
-<span id="cb23-2"><a></a>    <span class="cf">try</span> {</span>
-<span id="cb23-3"><a></a>        <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(url)<span class="op">;</span></span>
-<span id="cb23-4"><a></a></span>
-<span id="cb23-5"><a></a>        <span class="cf">switch</span> (response<span class="op">.</span><span class="at">status</span>) {</span>
-<span id="cb23-6"><a></a>            <span class="cf">case</span> <span class="dv">200</span><span class="op">:</span></span>
-<span id="cb23-7"><a></a>                <span class="cf">return</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
-<span id="cb23-8"><a></a>            <span class="cf">case</span> <span class="dv">401</span><span class="op">:</span></span>
-<span id="cb23-9"><a></a>                <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">Error</span>(<span class="st">'No autenticado'</span>)<span class="op">;</span></span>
-<span id="cb23-10"><a></a>            <span class="cf">case</span> <span class="dv">403</span><span class="op">:</span></span>
-<span id="cb23-11"><a></a>                <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">Error</span>(<span class="st">'Sin permisos'</span>)<span class="op">;</span></span>
-<span id="cb23-12"><a></a>            <span class="cf">case</span> <span class="dv">404</span><span class="op">:</span></span>
-<span id="cb23-13"><a></a>                <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">Error</span>(<span class="st">'Recurso no encontrado'</span>)<span class="op">;</span></span>
-<span id="cb23-14"><a></a>            <span class="cf">case</span> <span class="dv">500</span><span class="op">:</span></span>
-<span id="cb23-15"><a></a>                <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">Error</span>(<span class="st">'Error del servidor'</span>)<span class="op">;</span></span>
-<span id="cb23-16"><a></a>            <span class="cf">default</span><span class="op">:</span></span>
-<span id="cb23-17"><a></a>                <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">Error</span>(<span class="vs">`Error: </span><span class="sc">${</span>response<span class="op">.</span><span class="at">status</span><span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></span>
-<span id="cb23-18"><a></a>        }</span>
-<span id="cb23-19"><a></a>    } <span class="cf">catch</span> (error) {</span>
-<span id="cb23-20"><a></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">error</span>(<span class="st">'Error en petición:'</span><span class="op">,</span> error)<span class="op">;</span></span>
-<span id="cb23-21"><a></a>        <span class="cf">throw</span> error<span class="op">;</span></span>
-<span id="cb23-22"><a></a>    }</span>
-<span id="cb23-23"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</section></section>
-<section>
 <section id="servidor-con-node.js-y-express" class="title-slide slide level1 center">
 <h1>Servidor con Node.js y Express</h1>
 
@@ -1218,20 +1056,20 @@ Content-Length: 156
 <li>Estándar de la industria</li>
 </ul>
 <p><strong>Instalación:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a></a><span class="ex">npm</span> init <span class="at">-y</span></span>
-<span id="cb24-2"><a></a><span class="ex">npm</span> install express</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a></a><span class="ex">npm</span> init <span class="at">-y</span></span>
+<span id="cb18-2"><a></a><span class="ex">npm</span> install express</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="configuración-de-proyecto" class="slide level2">
 <h2>Configuración de Proyecto</h2>
 <p><strong>Habilitar módulos ES6:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb25-1"><a></a><span class="fu">{</span></span>
-<span id="cb25-2"><a></a>  <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"mi-api-juego"</span><span class="fu">,</span></span>
-<span id="cb25-3"><a></a>  <span class="dt">"version"</span><span class="fu">:</span> <span class="st">"1.0.0"</span><span class="fu">,</span></span>
-<span id="cb25-4"><a></a>  <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"module"</span><span class="fu">,</span></span>
-<span id="cb25-5"><a></a>  <span class="dt">"dependencies"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb25-6"><a></a>    <span class="dt">"express"</span><span class="fu">:</span> <span class="st">"^4.18.0"</span></span>
-<span id="cb25-7"><a></a>  <span class="fu">}</span></span>
-<span id="cb25-8"><a></a><span class="fu">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb19-1"><a></a><span class="fu">{</span></span>
+<span id="cb19-2"><a></a>  <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"mi-api-juego"</span><span class="fu">,</span></span>
+<span id="cb19-3"><a></a>  <span class="dt">"version"</span><span class="fu">:</span> <span class="st">"1.0.0"</span><span class="fu">,</span></span>
+<span id="cb19-4"><a></a>  <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"module"</span><span class="fu">,</span></span>
+<span id="cb19-5"><a></a>  <span class="dt">"dependencies"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb19-6"><a></a>    <span class="dt">"express"</span><span class="fu">:</span> <span class="st">"^4.18.0"</span></span>
+<span id="cb19-7"><a></a>  <span class="fu">}</span></span>
+<span id="cb19-8"><a></a><span class="fu">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-important callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1259,17 +1097,17 @@ Content-Length: 156
 </section>
 <section id="servidor-básico-con-express" class="slide level2">
 <h2>Servidor Básico con Express</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb27-1"><a></a><span class="im">import</span> express <span class="im">from</span> <span class="st">'express'</span><span class="op">;</span></span>
-<span id="cb27-2"><a></a></span>
-<span id="cb27-3"><a></a><span class="kw">const</span> app <span class="op">=</span> <span class="fu">express</span>()<span class="op">;</span></span>
-<span id="cb27-4"><a></a></span>
-<span id="cb27-5"><a></a><span class="co">// Middleware para parsear JSON</span></span>
-<span id="cb27-6"><a></a>app<span class="op">.</span><span class="fu">use</span>(express<span class="op">.</span><span class="fu">json</span>())<span class="op">;</span></span>
-<span id="cb27-7"><a></a></span>
-<span id="cb27-8"><a></a><span class="co">// Iniciar servidor</span></span>
-<span id="cb27-9"><a></a>app<span class="op">.</span><span class="fu">listen</span>(<span class="dv">8080</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
-<span id="cb27-10"><a></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">'Servidor ejecutándose en http://localhost:8080'</span>)<span class="op">;</span></span>
-<span id="cb27-11"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb21-1"><a></a><span class="im">import</span> express <span class="im">from</span> <span class="st">'express'</span><span class="op">;</span></span>
+<span id="cb21-2"><a></a></span>
+<span id="cb21-3"><a></a><span class="kw">const</span> app <span class="op">=</span> <span class="fu">express</span>()<span class="op">;</span></span>
+<span id="cb21-4"><a></a></span>
+<span id="cb21-5"><a></a><span class="co">// Middleware para parsear JSON</span></span>
+<span id="cb21-6"><a></a>app<span class="op">.</span><span class="fu">use</span>(express<span class="op">.</span><span class="fu">json</span>())<span class="op">;</span></span>
+<span id="cb21-7"><a></a></span>
+<span id="cb21-8"><a></a><span class="co">// Iniciar servidor</span></span>
+<span id="cb21-9"><a></a>app<span class="op">.</span><span class="fu">listen</span>(<span class="dv">8080</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb21-10"><a></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">'Servidor ejecutándose en http://localhost:8080'</span>)<span class="op">;</span></span>
+<span id="cb21-11"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-important callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1284,7 +1122,77 @@ Content-Length: 156
 </div>
 </div>
 <p><strong>Ejecutar:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a></a><span class="ex">node</span> src/app.js</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a></a><span class="ex">node</span> src/app.js</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="servir-archivos-estáticos" class="slide level2">
+<h2>Servir Archivos Estáticos</h2>
+<p><strong>Express puede servir HTML, CSS, JS del cliente</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb23-1"><a></a>app<span class="op">.</span><span class="fu">use</span>(express<span class="op">.</span><span class="fu">static</span>(<span class="st">'public'</span>))<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Estructura:</strong></p>
+<pre><code>mi-api-juego/
+├── public/
+│   ├── index.html
+│   ├── script.js
+│   └── style.css
+└── src/
+    └── app.js</code></pre>
+<p><strong>Acceso:</strong></p>
+<ul>
+<li><code>http://localhost:8080/index.html</code></li>
+<li><code>http://localhost:8080/script.js</code></li>
+</ul>
+</section>
+<section id="ejemplo-simple-servidor-post" class="slide level2">
+<h2>Ejemplo simple: Servidor POST</h2>
+<p><strong>Servidor simple con endpoint POST:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb25-1"><a></a><span class="im">import</span> express <span class="im">from</span> <span class="st">'express'</span><span class="op">;</span></span>
+<span id="cb25-2"><a></a><span class="kw">const</span> app <span class="op">=</span> <span class="fu">express</span>()<span class="op">;</span></span>
+<span id="cb25-3"><a></a>app<span class="op">.</span><span class="fu">use</span>(express<span class="op">.</span><span class="fu">json</span>())<span class="op">;</span></span>
+<span id="cb25-4"><a></a></span>
+<span id="cb25-5"><a></a><span class="kw">const</span> messages <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb25-6"><a></a></span>
+<span id="cb25-7"><a></a><span class="co">// Endpoint POST para crear un mensaje</span></span>
+<span id="cb25-8"><a></a>app<span class="op">.</span><span class="fu">post</span>(<span class="st">'/messages'</span><span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb25-9"><a></a>  <span class="kw">const</span> { text<span class="op">,</span> author } <span class="op">=</span> req<span class="op">.</span><span class="at">body</span><span class="op">;</span></span>
+<span id="cb25-10"><a></a>  <span class="kw">const</span> newMessage <span class="op">=</span> {</span>
+<span id="cb25-11"><a></a>    <span class="dt">id</span><span class="op">:</span> <span class="bu">Date</span><span class="op">.</span><span class="fu">now</span>()<span class="op">,</span> text<span class="op">,</span> author<span class="op">,</span></span>
+<span id="cb25-12"><a></a>    <span class="dt">timestamp</span><span class="op">:</span> <span class="kw">new</span> <span class="bu">Date</span>()<span class="op">.</span><span class="fu">toISOString</span>()</span>
+<span id="cb25-13"><a></a>  }<span class="op">;</span></span>
+<span id="cb25-14"><a></a>  messages<span class="op">.</span><span class="fu">push</span>(newMessage)<span class="op">;</span></span>
+<span id="cb25-15"><a></a>  res<span class="op">.</span><span class="fu">status</span>(<span class="dv">201</span>)<span class="op">.</span><span class="fu">json</span>(newMessage)<span class="op">;</span></span>
+<span id="cb25-16"><a></a>})<span class="op">;</span></span>
+<span id="cb25-17"><a></a></span>
+<span id="cb25-18"><a></a>app<span class="op">.</span><span class="fu">get</span>(<span class="st">'/messages'</span><span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb25-19"><a></a>    res<span class="op">.</span><span class="fu">json</span>(messages)<span class="op">;</span></span>
+<span id="cb25-20"><a></a>})<span class="op">;</span></span>
+<span id="cb25-21"><a></a></span>
+<span id="cb25-22"><a></a>app<span class="op">.</span><span class="fu">listen</span>(<span class="dv">8080</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb25-23"><a></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">'Servidor en http://localhost:8080'</span>)<span class="op">;</span></span>
+<span id="cb25-24"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="invocar-con-fetch" class="slide level2">
+<h2>Invocar con fetch()</h2>
+<p><strong>Cliente JavaScript usando POST:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb26-1"><a></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">createMessage</span>() {</span>
+<span id="cb26-2"><a></a>  <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(<span class="st">'http://localhost:8080/messages'</span><span class="op">,</span> {</span>
+<span id="cb26-3"><a></a>    <span class="dt">method</span><span class="op">:</span> <span class="st">'POST'</span><span class="op">,</span></span>
+<span id="cb26-4"><a></a>    <span class="dt">headers</span><span class="op">:</span> {</span>
+<span id="cb26-5"><a></a>      <span class="st">'Content-Type'</span><span class="op">:</span> <span class="st">'application/json'</span></span>
+<span id="cb26-6"><a></a>    }<span class="op">,</span></span>
+<span id="cb26-7"><a></a>    <span class="dt">body</span><span class="op">:</span> <span class="bu">JSON</span><span class="op">.</span><span class="fu">stringify</span>({</span>
+<span id="cb26-8"><a></a>      <span class="dt">text</span><span class="op">:</span> <span class="st">'Hola desde el cliente'</span><span class="op">,</span></span>
+<span id="cb26-9"><a></a>      <span class="dt">author</span><span class="op">:</span> <span class="st">'Alice'</span></span>
+<span id="cb26-10"><a></a>    })</span>
+<span id="cb26-11"><a></a>  })<span class="op">;</span></span>
+<span id="cb26-12"><a></a></span>
+<span id="cb26-13"><a></a>  <span class="kw">const</span> newMessage <span class="op">=</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
+<span id="cb26-14"><a></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">'Mensaje creado:'</span><span class="op">,</span> newMessage)<span class="op">;</span></span>
+<span id="cb26-15"><a></a>}</span>
+<span id="cb26-16"><a></a></span>
+<span id="cb26-17"><a></a><span class="fu">createMessage</span>()<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Obtener los mensajes</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb27-1"><a></a><span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(<span class="st">'http://localhost:8080/messages'</span>)<span class="op">;</span></span>
+<span id="cb27-2"><a></a><span class="kw">const</span> message <span class="op">=</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="controladores" class="slide level2">
 <h2>Controladores</h2>
@@ -1296,8 +1204,24 @@ Content-Length: 156
 <li>Separan lógica del enrutamiento</li>
 </ul>
 <p><strong>Patrón con closures para estado privado:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb29-1"><a></a><span class="kw">const</span> createAnunciosController <span class="op">=</span> () <span class="kw">=&gt;</span> {</span>
-<span id="cb29-2"><a></a>  <span class="co">// Estado privado</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb28-1"><a></a><span class="kw">const</span> createAnunciosController <span class="op">=</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb28-2"><a></a>  <span class="co">// Estado privado</span></span>
+<span id="cb28-3"><a></a>  <span class="kw">const</span> anuncios <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb28-4"><a></a>  <span class="kw">let</span> nextId <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb28-5"><a></a></span>
+<span id="cb28-6"><a></a>  <span class="kw">const</span> getAll <span class="op">=</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb28-7"><a></a>    res<span class="op">.</span><span class="fu">json</span>(anuncios)<span class="op">;</span></span>
+<span id="cb28-8"><a></a>  }<span class="op">;</span></span>
+<span id="cb28-9"><a></a></span>
+<span id="cb28-10"><a></a>  <span class="cf">return</span> { getAll }<span class="op">;</span></span>
+<span id="cb28-11"><a></a>}<span class="op">;</span></span>
+<span id="cb28-12"><a></a></span>
+<span id="cb28-13"><a></a><span class="im">export</span> <span class="im">default</span> createAnunciosController<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="controlador-completo---ejemplo" class="slide level2">
+<h2>Controlador Completo - Ejemplo</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb29-1"><a></a><span class="co">// src/controllers/anunciosController.js</span></span>
+<span id="cb29-2"><a></a><span class="kw">const</span> createAnunciosController <span class="op">=</span> () <span class="kw">=&gt;</span> {</span>
 <span id="cb29-3"><a></a>  <span class="kw">const</span> anuncios <span class="op">=</span> []<span class="op">;</span></span>
 <span id="cb29-4"><a></a>  <span class="kw">let</span> nextId <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
 <span id="cb29-5"><a></a></span>
@@ -1305,55 +1229,39 @@ Content-Length: 156
 <span id="cb29-7"><a></a>    res<span class="op">.</span><span class="fu">json</span>(anuncios)<span class="op">;</span></span>
 <span id="cb29-8"><a></a>  }<span class="op">;</span></span>
 <span id="cb29-9"><a></a></span>
-<span id="cb29-10"><a></a>  <span class="cf">return</span> { getAll }<span class="op">;</span></span>
-<span id="cb29-11"><a></a>}<span class="op">;</span></span>
+<span id="cb29-10"><a></a>  <span class="kw">const</span> create <span class="op">=</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb29-11"><a></a>    <span class="kw">const</span> { nombre<span class="op">,</span> asunto<span class="op">,</span> comentario } <span class="op">=</span> req<span class="op">.</span><span class="at">body</span><span class="op">;</span></span>
 <span id="cb29-12"><a></a></span>
-<span id="cb29-13"><a></a><span class="im">export</span> <span class="im">default</span> createAnunciosController<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="controlador-completo---ejemplo" class="slide level2">
-<h2>Controlador Completo - Ejemplo</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb30-1"><a></a><span class="co">// src/controllers/anunciosController.js</span></span>
-<span id="cb30-2"><a></a><span class="kw">const</span> createAnunciosController <span class="op">=</span> () <span class="kw">=&gt;</span> {</span>
-<span id="cb30-3"><a></a>  <span class="kw">const</span> anuncios <span class="op">=</span> []<span class="op">;</span></span>
-<span id="cb30-4"><a></a>  <span class="kw">let</span> nextId <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb30-5"><a></a></span>
-<span id="cb30-6"><a></a>  <span class="kw">const</span> getAll <span class="op">=</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
-<span id="cb30-7"><a></a>    res<span class="op">.</span><span class="fu">json</span>(anuncios)<span class="op">;</span></span>
-<span id="cb30-8"><a></a>  }<span class="op">;</span></span>
-<span id="cb30-9"><a></a></span>
-<span id="cb30-10"><a></a>  <span class="kw">const</span> create <span class="op">=</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
-<span id="cb30-11"><a></a>    <span class="kw">const</span> { nombre<span class="op">,</span> asunto<span class="op">,</span> comentario } <span class="op">=</span> req<span class="op">.</span><span class="at">body</span><span class="op">;</span></span>
-<span id="cb30-12"><a></a></span>
-<span id="cb30-13"><a></a>    <span class="kw">const</span> nuevoAnuncio <span class="op">=</span> {</span>
-<span id="cb30-14"><a></a>      <span class="dt">id</span><span class="op">:</span> nextId<span class="op">++,</span></span>
-<span id="cb30-15"><a></a>      nombre<span class="op">,</span></span>
-<span id="cb30-16"><a></a>      asunto<span class="op">,</span></span>
-<span id="cb30-17"><a></a>      comentario</span>
-<span id="cb30-18"><a></a>    }<span class="op">;</span></span>
-<span id="cb30-19"><a></a></span>
-<span id="cb30-20"><a></a>    anuncios<span class="op">.</span><span class="fu">push</span>(nuevoAnuncio)<span class="op">;</span></span>
-<span id="cb30-21"><a></a>    res<span class="op">.</span><span class="fu">status</span>(<span class="dv">201</span>)<span class="op">.</span><span class="fu">json</span>(nuevoAnuncio)<span class="op">;</span></span>
-<span id="cb30-22"><a></a>  }<span class="op">;</span></span>
-<span id="cb30-23"><a></a></span>
-<span id="cb30-24"><a></a>  <span class="cf">return</span> { getAll<span class="op">,</span> create }<span class="op">;</span></span>
-<span id="cb30-25"><a></a>}<span class="op">;</span></span>
-<span id="cb30-26"><a></a></span>
-<span id="cb30-27"><a></a><span class="im">export</span> <span class="im">default</span> createAnunciosController<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb29-13"><a></a>    <span class="kw">const</span> nuevoAnuncio <span class="op">=</span> {</span>
+<span id="cb29-14"><a></a>      <span class="dt">id</span><span class="op">:</span> nextId<span class="op">++,</span></span>
+<span id="cb29-15"><a></a>      nombre<span class="op">,</span></span>
+<span id="cb29-16"><a></a>      asunto<span class="op">,</span></span>
+<span id="cb29-17"><a></a>      comentario</span>
+<span id="cb29-18"><a></a>    }<span class="op">;</span></span>
+<span id="cb29-19"><a></a></span>
+<span id="cb29-20"><a></a>    anuncios<span class="op">.</span><span class="fu">push</span>(nuevoAnuncio)<span class="op">;</span></span>
+<span id="cb29-21"><a></a>    res<span class="op">.</span><span class="fu">status</span>(<span class="dv">201</span>)<span class="op">.</span><span class="fu">json</span>(nuevoAnuncio)<span class="op">;</span></span>
+<span id="cb29-22"><a></a>  }<span class="op">;</span></span>
+<span id="cb29-23"><a></a></span>
+<span id="cb29-24"><a></a>  <span class="cf">return</span> { getAll<span class="op">,</span> create }<span class="op">;</span></span>
+<span id="cb29-25"><a></a>}<span class="op">;</span></span>
+<span id="cb29-26"><a></a></span>
+<span id="cb29-27"><a></a><span class="im">export</span> <span class="im">default</span> createAnunciosController<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="rutas" class="slide level2">
 <h2>Rutas</h2>
 <p><strong>Conectan URLs con controladores</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb31-1"><a></a><span class="co">// src/routes/anunciosRoutes.js</span></span>
-<span id="cb31-2"><a></a><span class="im">import</span> express <span class="im">from</span> <span class="st">'express'</span><span class="op">;</span></span>
-<span id="cb31-3"><a></a><span class="im">import</span> createAnunciosController <span class="im">from</span> <span class="st">'../controllers/anunciosController.js'</span><span class="op">;</span></span>
-<span id="cb31-4"><a></a></span>
-<span id="cb31-5"><a></a><span class="kw">const</span> router <span class="op">=</span> express<span class="op">.</span><span class="fu">Router</span>()<span class="op">;</span></span>
-<span id="cb31-6"><a></a><span class="kw">const</span> controller <span class="op">=</span> <span class="fu">createAnunciosController</span>()<span class="op">;</span></span>
-<span id="cb31-7"><a></a></span>
-<span id="cb31-8"><a></a>router<span class="op">.</span><span class="fu">get</span>(<span class="st">'/'</span><span class="op">,</span> controller<span class="op">.</span><span class="at">getAll</span>)<span class="op">;</span></span>
-<span id="cb31-9"><a></a>router<span class="op">.</span><span class="fu">post</span>(<span class="st">'/'</span><span class="op">,</span> controller<span class="op">.</span><span class="at">create</span>)<span class="op">;</span></span>
-<span id="cb31-10"><a></a></span>
-<span id="cb31-11"><a></a><span class="im">export</span> <span class="im">default</span> router<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb30-1"><a></a><span class="co">// src/routes/anunciosRoutes.js</span></span>
+<span id="cb30-2"><a></a><span class="im">import</span> express <span class="im">from</span> <span class="st">'express'</span><span class="op">;</span></span>
+<span id="cb30-3"><a></a><span class="im">import</span> createAnunciosController <span class="im">from</span> <span class="st">'../controllers/anunciosController.js'</span><span class="op">;</span></span>
+<span id="cb30-4"><a></a></span>
+<span id="cb30-5"><a></a><span class="kw">const</span> router <span class="op">=</span> express<span class="op">.</span><span class="fu">Router</span>()<span class="op">;</span></span>
+<span id="cb30-6"><a></a><span class="kw">const</span> controller <span class="op">=</span> <span class="fu">createAnunciosController</span>()<span class="op">;</span></span>
+<span id="cb30-7"><a></a></span>
+<span id="cb30-8"><a></a>router<span class="op">.</span><span class="fu">get</span>(<span class="st">'/'</span><span class="op">,</span> controller<span class="op">.</span><span class="at">getAll</span>)<span class="op">;</span></span>
+<span id="cb30-9"><a></a>router<span class="op">.</span><span class="fu">post</span>(<span class="st">'/'</span><span class="op">,</span> controller<span class="op">.</span><span class="at">create</span>)<span class="op">;</span></span>
+<span id="cb30-10"><a></a></span>
+<span id="cb30-11"><a></a><span class="im">export</span> <span class="im">default</span> router<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1370,17 +1278,17 @@ Content-Length: 156
 </section>
 <section id="integrar-rutas-en-la-aplicación" class="slide level2">
 <h2>Integrar Rutas en la Aplicación</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb32-1"><a></a><span class="co">// src/app.js</span></span>
-<span id="cb32-2"><a></a><span class="im">import</span> express <span class="im">from</span> <span class="st">'express'</span><span class="op">;</span></span>
-<span id="cb32-3"><a></a><span class="im">import</span> anunciosRoutes <span class="im">from</span> <span class="st">'./routes/anunciosRoutes.js'</span><span class="op">;</span></span>
-<span id="cb32-4"><a></a></span>
-<span id="cb32-5"><a></a><span class="kw">const</span> app <span class="op">=</span> <span class="fu">express</span>()<span class="op">;</span></span>
-<span id="cb32-6"><a></a>app<span class="op">.</span><span class="fu">use</span>(express<span class="op">.</span><span class="fu">json</span>())<span class="op">;</span></span>
-<span id="cb32-7"><a></a></span>
-<span id="cb32-8"><a></a><span class="co">// Registrar rutas con prefijo</span></span>
-<span id="cb32-9"><a></a>app<span class="op">.</span><span class="fu">use</span>(<span class="st">'/anuncios'</span><span class="op">,</span> anunciosRoutes)<span class="op">;</span></span>
-<span id="cb32-10"><a></a></span>
-<span id="cb32-11"><a></a>app<span class="op">.</span><span class="fu">listen</span>(<span class="dv">8080</span>)<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb31-1"><a></a><span class="co">// src/app.js</span></span>
+<span id="cb31-2"><a></a><span class="im">import</span> express <span class="im">from</span> <span class="st">'express'</span><span class="op">;</span></span>
+<span id="cb31-3"><a></a><span class="im">import</span> anunciosRoutes <span class="im">from</span> <span class="st">'./routes/anunciosRoutes.js'</span><span class="op">;</span></span>
+<span id="cb31-4"><a></a></span>
+<span id="cb31-5"><a></a><span class="kw">const</span> app <span class="op">=</span> <span class="fu">express</span>()<span class="op">;</span></span>
+<span id="cb31-6"><a></a>app<span class="op">.</span><span class="fu">use</span>(express<span class="op">.</span><span class="fu">json</span>())<span class="op">;</span></span>
+<span id="cb31-7"><a></a></span>
+<span id="cb31-8"><a></a><span class="co">// Registrar rutas con prefijo</span></span>
+<span id="cb31-9"><a></a>app<span class="op">.</span><span class="fu">use</span>(<span class="st">'/anuncios'</span><span class="op">,</span> anunciosRoutes)<span class="op">;</span></span>
+<span id="cb31-10"><a></a></span>
+<span id="cb31-11"><a></a>app<span class="op">.</span><span class="fu">listen</span>(<span class="dv">8080</span>)<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Resultado:</strong></p>
 <ul>
 <li><code>GET /anuncios</code> → obtener todos</li>
@@ -1389,16 +1297,16 @@ Content-Length: 156
 </section>
 <section id="operación-get---recurso-específico" class="slide level2">
 <h2>Operación GET - Recurso Específico</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb33-1"><a></a>app<span class="op">.</span><span class="fu">get</span>(<span class="st">'/anuncios/:id'</span><span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
-<span id="cb33-2"><a></a>  <span class="kw">const</span> { id } <span class="op">=</span> req<span class="op">.</span><span class="at">params</span><span class="op">;</span></span>
-<span id="cb33-3"><a></a>  <span class="kw">const</span> anuncio <span class="op">=</span> anuncios<span class="op">.</span><span class="fu">find</span>(a <span class="kw">=&gt;</span> a<span class="op">.</span><span class="at">id</span> <span class="op">===</span> <span class="pp">parseInt</span>(id))<span class="op">;</span></span>
-<span id="cb33-4"><a></a></span>
-<span id="cb33-5"><a></a>  <span class="cf">if</span> (<span class="op">!</span>anuncio) {</span>
-<span id="cb33-6"><a></a>    <span class="cf">return</span> res<span class="op">.</span><span class="fu">status</span>(<span class="dv">404</span>)<span class="op">.</span><span class="fu">json</span>({ <span class="dt">error</span><span class="op">:</span> <span class="st">'No encontrado'</span> })<span class="op">;</span></span>
-<span id="cb33-7"><a></a>  }</span>
-<span id="cb33-8"><a></a></span>
-<span id="cb33-9"><a></a>  res<span class="op">.</span><span class="fu">json</span>(anuncio)<span class="op">;</span></span>
-<span id="cb33-10"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb32-1"><a></a>app<span class="op">.</span><span class="fu">get</span>(<span class="st">'/anuncios/:id'</span><span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb32-2"><a></a>  <span class="kw">const</span> { id } <span class="op">=</span> req<span class="op">.</span><span class="at">params</span><span class="op">;</span></span>
+<span id="cb32-3"><a></a>  <span class="kw">const</span> anuncio <span class="op">=</span> anuncios<span class="op">.</span><span class="fu">find</span>(a <span class="kw">=&gt;</span> a<span class="op">.</span><span class="at">id</span> <span class="op">===</span> <span class="pp">parseInt</span>(id))<span class="op">;</span></span>
+<span id="cb32-4"><a></a></span>
+<span id="cb32-5"><a></a>  <span class="cf">if</span> (<span class="op">!</span>anuncio) {</span>
+<span id="cb32-6"><a></a>    <span class="cf">return</span> res<span class="op">.</span><span class="fu">status</span>(<span class="dv">404</span>)<span class="op">.</span><span class="fu">json</span>({ <span class="dt">error</span><span class="op">:</span> <span class="st">'No encontrado'</span> })<span class="op">;</span></span>
+<span id="cb32-7"><a></a>  }</span>
+<span id="cb32-8"><a></a></span>
+<span id="cb32-9"><a></a>  res<span class="op">.</span><span class="fu">json</span>(anuncio)<span class="op">;</span></span>
+<span id="cb32-10"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1415,60 +1323,60 @@ Content-Length: 156
 </section>
 <section id="operación-post---validación" class="slide level2">
 <h2>Operación POST - Validación</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb34-1"><a></a>app<span class="op">.</span><span class="fu">post</span>(<span class="st">'/anuncios'</span><span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
-<span id="cb34-2"><a></a>  <span class="kw">const</span> { nombre<span class="op">,</span> asunto<span class="op">,</span> comentario } <span class="op">=</span> req<span class="op">.</span><span class="at">body</span><span class="op">;</span></span>
-<span id="cb34-3"><a></a></span>
-<span id="cb34-4"><a></a>  <span class="co">// Validar datos</span></span>
-<span id="cb34-5"><a></a>  <span class="cf">if</span> (<span class="op">!</span>nombre <span class="op">||</span> <span class="op">!</span>asunto) {</span>
-<span id="cb34-6"><a></a>    <span class="cf">return</span> res<span class="op">.</span><span class="fu">status</span>(<span class="dv">400</span>)<span class="op">.</span><span class="fu">json</span>({</span>
-<span id="cb34-7"><a></a>      <span class="dt">error</span><span class="op">:</span> <span class="st">'Nombre y asunto son requeridos'</span></span>
-<span id="cb34-8"><a></a>    })<span class="op">;</span></span>
-<span id="cb34-9"><a></a>  }</span>
-<span id="cb34-10"><a></a></span>
-<span id="cb34-11"><a></a>  <span class="kw">const</span> nuevoAnuncio <span class="op">=</span> {</span>
-<span id="cb34-12"><a></a>    <span class="dt">id</span><span class="op">:</span> <span class="bu">Date</span><span class="op">.</span><span class="fu">now</span>()<span class="op">,</span></span>
-<span id="cb34-13"><a></a>    nombre<span class="op">,</span></span>
-<span id="cb34-14"><a></a>    asunto<span class="op">,</span></span>
-<span id="cb34-15"><a></a>    comentario</span>
-<span id="cb34-16"><a></a>  }<span class="op">;</span></span>
-<span id="cb34-17"><a></a></span>
-<span id="cb34-18"><a></a>  anuncios<span class="op">.</span><span class="fu">push</span>(nuevoAnuncio)<span class="op">;</span></span>
-<span id="cb34-19"><a></a>  res<span class="op">.</span><span class="fu">status</span>(<span class="dv">201</span>)<span class="op">.</span><span class="fu">json</span>(nuevoAnuncio)<span class="op">;</span></span>
-<span id="cb34-20"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb33-1"><a></a>app<span class="op">.</span><span class="fu">post</span>(<span class="st">'/anuncios'</span><span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb33-2"><a></a>  <span class="kw">const</span> { nombre<span class="op">,</span> asunto<span class="op">,</span> comentario } <span class="op">=</span> req<span class="op">.</span><span class="at">body</span><span class="op">;</span></span>
+<span id="cb33-3"><a></a></span>
+<span id="cb33-4"><a></a>  <span class="co">// Validar datos</span></span>
+<span id="cb33-5"><a></a>  <span class="cf">if</span> (<span class="op">!</span>nombre <span class="op">||</span> <span class="op">!</span>asunto) {</span>
+<span id="cb33-6"><a></a>    <span class="cf">return</span> res<span class="op">.</span><span class="fu">status</span>(<span class="dv">400</span>)<span class="op">.</span><span class="fu">json</span>({</span>
+<span id="cb33-7"><a></a>      <span class="dt">error</span><span class="op">:</span> <span class="st">'Nombre y asunto son requeridos'</span></span>
+<span id="cb33-8"><a></a>    })<span class="op">;</span></span>
+<span id="cb33-9"><a></a>  }</span>
+<span id="cb33-10"><a></a></span>
+<span id="cb33-11"><a></a>  <span class="kw">const</span> nuevoAnuncio <span class="op">=</span> {</span>
+<span id="cb33-12"><a></a>    <span class="dt">id</span><span class="op">:</span> <span class="bu">Date</span><span class="op">.</span><span class="fu">now</span>()<span class="op">,</span></span>
+<span id="cb33-13"><a></a>    nombre<span class="op">,</span></span>
+<span id="cb33-14"><a></a>    asunto<span class="op">,</span></span>
+<span id="cb33-15"><a></a>    comentario</span>
+<span id="cb33-16"><a></a>  }<span class="op">;</span></span>
+<span id="cb33-17"><a></a></span>
+<span id="cb33-18"><a></a>  anuncios<span class="op">.</span><span class="fu">push</span>(nuevoAnuncio)<span class="op">;</span></span>
+<span id="cb33-19"><a></a>  res<span class="op">.</span><span class="fu">status</span>(<span class="dv">201</span>)<span class="op">.</span><span class="fu">json</span>(nuevoAnuncio)<span class="op">;</span></span>
+<span id="cb33-20"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="operación-put" class="slide level2">
 <h2>Operación PUT</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb35-1"><a></a>app<span class="op">.</span><span class="fu">put</span>(<span class="st">'/anuncios/:id'</span><span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
-<span id="cb35-2"><a></a>  <span class="kw">const</span> { id } <span class="op">=</span> req<span class="op">.</span><span class="at">params</span><span class="op">;</span></span>
-<span id="cb35-3"><a></a>  <span class="kw">const</span> { nombre<span class="op">,</span> asunto<span class="op">,</span> comentario } <span class="op">=</span> req<span class="op">.</span><span class="at">body</span><span class="op">;</span></span>
-<span id="cb35-4"><a></a></span>
-<span id="cb35-5"><a></a>  <span class="kw">const</span> anuncio <span class="op">=</span> anuncios<span class="op">.</span><span class="fu">find</span>(a <span class="kw">=&gt;</span> a<span class="op">.</span><span class="at">id</span> <span class="op">===</span> <span class="pp">parseInt</span>(id))<span class="op">;</span></span>
-<span id="cb35-6"><a></a></span>
-<span id="cb35-7"><a></a>  <span class="cf">if</span> (<span class="op">!</span>anuncio) {</span>
-<span id="cb35-8"><a></a>    <span class="cf">return</span> res<span class="op">.</span><span class="fu">status</span>(<span class="dv">404</span>)<span class="op">.</span><span class="fu">json</span>({ <span class="dt">error</span><span class="op">:</span> <span class="st">'No encontrado'</span> })<span class="op">;</span></span>
-<span id="cb35-9"><a></a>  }</span>
-<span id="cb35-10"><a></a></span>
-<span id="cb35-11"><a></a>  <span class="co">// Actualizar propiedades</span></span>
-<span id="cb35-12"><a></a>  anuncio<span class="op">.</span><span class="at">nombre</span> <span class="op">=</span> nombre<span class="op">;</span></span>
-<span id="cb35-13"><a></a>  anuncio<span class="op">.</span><span class="at">asunto</span> <span class="op">=</span> asunto<span class="op">;</span></span>
-<span id="cb35-14"><a></a>  anuncio<span class="op">.</span><span class="at">comentario</span> <span class="op">=</span> comentario<span class="op">;</span></span>
-<span id="cb35-15"><a></a></span>
-<span id="cb35-16"><a></a>  res<span class="op">.</span><span class="fu">json</span>(anuncio)<span class="op">;</span></span>
-<span id="cb35-17"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb34-1"><a></a>app<span class="op">.</span><span class="fu">put</span>(<span class="st">'/anuncios/:id'</span><span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb34-2"><a></a>  <span class="kw">const</span> { id } <span class="op">=</span> req<span class="op">.</span><span class="at">params</span><span class="op">;</span></span>
+<span id="cb34-3"><a></a>  <span class="kw">const</span> { nombre<span class="op">,</span> asunto<span class="op">,</span> comentario } <span class="op">=</span> req<span class="op">.</span><span class="at">body</span><span class="op">;</span></span>
+<span id="cb34-4"><a></a></span>
+<span id="cb34-5"><a></a>  <span class="kw">const</span> anuncio <span class="op">=</span> anuncios<span class="op">.</span><span class="fu">find</span>(a <span class="kw">=&gt;</span> a<span class="op">.</span><span class="at">id</span> <span class="op">===</span> <span class="pp">parseInt</span>(id))<span class="op">;</span></span>
+<span id="cb34-6"><a></a></span>
+<span id="cb34-7"><a></a>  <span class="cf">if</span> (<span class="op">!</span>anuncio) {</span>
+<span id="cb34-8"><a></a>    <span class="cf">return</span> res<span class="op">.</span><span class="fu">status</span>(<span class="dv">404</span>)<span class="op">.</span><span class="fu">json</span>({ <span class="dt">error</span><span class="op">:</span> <span class="st">'No encontrado'</span> })<span class="op">;</span></span>
+<span id="cb34-9"><a></a>  }</span>
+<span id="cb34-10"><a></a></span>
+<span id="cb34-11"><a></a>  <span class="co">// Actualizar propiedades</span></span>
+<span id="cb34-12"><a></a>  anuncio<span class="op">.</span><span class="at">nombre</span> <span class="op">=</span> nombre<span class="op">;</span></span>
+<span id="cb34-13"><a></a>  anuncio<span class="op">.</span><span class="at">asunto</span> <span class="op">=</span> asunto<span class="op">;</span></span>
+<span id="cb34-14"><a></a>  anuncio<span class="op">.</span><span class="at">comentario</span> <span class="op">=</span> comentario<span class="op">;</span></span>
+<span id="cb34-15"><a></a></span>
+<span id="cb34-16"><a></a>  res<span class="op">.</span><span class="fu">json</span>(anuncio)<span class="op">;</span></span>
+<span id="cb34-17"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="operación-delete" class="slide level2">
 <h2>Operación DELETE</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb36-1"><a></a>app<span class="op">.</span><span class="fu">delete</span>(<span class="st">'/anuncios/:id'</span><span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
-<span id="cb36-2"><a></a>  <span class="kw">const</span> { id } <span class="op">=</span> req<span class="op">.</span><span class="at">params</span><span class="op">;</span></span>
-<span id="cb36-3"><a></a>  <span class="kw">const</span> index <span class="op">=</span> anuncios<span class="op">.</span><span class="fu">findIndex</span>(a <span class="kw">=&gt;</span> a<span class="op">.</span><span class="at">id</span> <span class="op">===</span> <span class="pp">parseInt</span>(id))<span class="op">;</span></span>
-<span id="cb36-4"><a></a></span>
-<span id="cb36-5"><a></a>  <span class="cf">if</span> (index <span class="op">===</span> <span class="op">-</span><span class="dv">1</span>) {</span>
-<span id="cb36-6"><a></a>    <span class="cf">return</span> res<span class="op">.</span><span class="fu">status</span>(<span class="dv">404</span>)<span class="op">.</span><span class="fu">json</span>({ <span class="dt">error</span><span class="op">:</span> <span class="st">'No encontrado'</span> })<span class="op">;</span></span>
-<span id="cb36-7"><a></a>  }</span>
-<span id="cb36-8"><a></a></span>
-<span id="cb36-9"><a></a>  <span class="kw">const</span> anuncioEliminado <span class="op">=</span> anuncios<span class="op">.</span><span class="fu">splice</span>(index<span class="op">,</span> <span class="dv">1</span>)[<span class="dv">0</span>]<span class="op">;</span></span>
-<span id="cb36-10"><a></a>  res<span class="op">.</span><span class="fu">json</span>(anuncioEliminado)<span class="op">;</span></span>
-<span id="cb36-11"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb35-1"><a></a>app<span class="op">.</span><span class="fu">delete</span>(<span class="st">'/anuncios/:id'</span><span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb35-2"><a></a>  <span class="kw">const</span> { id } <span class="op">=</span> req<span class="op">.</span><span class="at">params</span><span class="op">;</span></span>
+<span id="cb35-3"><a></a>  <span class="kw">const</span> index <span class="op">=</span> anuncios<span class="op">.</span><span class="fu">findIndex</span>(a <span class="kw">=&gt;</span> a<span class="op">.</span><span class="at">id</span> <span class="op">===</span> <span class="pp">parseInt</span>(id))<span class="op">;</span></span>
+<span id="cb35-4"><a></a></span>
+<span id="cb35-5"><a></a>  <span class="cf">if</span> (index <span class="op">===</span> <span class="op">-</span><span class="dv">1</span>) {</span>
+<span id="cb35-6"><a></a>    <span class="cf">return</span> res<span class="op">.</span><span class="fu">status</span>(<span class="dv">404</span>)<span class="op">.</span><span class="fu">json</span>({ <span class="dt">error</span><span class="op">:</span> <span class="st">'No encontrado'</span> })<span class="op">;</span></span>
+<span id="cb35-7"><a></a>  }</span>
+<span id="cb35-8"><a></a></span>
+<span id="cb35-9"><a></a>  <span class="kw">const</span> anuncioEliminado <span class="op">=</span> anuncios<span class="op">.</span><span class="fu">splice</span>(index<span class="op">,</span> <span class="dv">1</span>)[<span class="dv">0</span>]<span class="op">;</span></span>
+<span id="cb35-10"><a></a>  res<span class="op">.</span><span class="fu">json</span>(anuncioEliminado)<span class="op">;</span></span>
+<span id="cb35-11"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1494,17 +1402,17 @@ Content-Length: 156
 <li>Manejo de errores</li>
 </ul>
 <p><strong>Firma:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb37-1"><a></a>(req<span class="op">,</span> res<span class="op">,</span> next) <span class="kw">=&gt;</span> {</span>
-<span id="cb37-2"><a></a>  <span class="co">// Procesar</span></span>
-<span id="cb37-3"><a></a>  <span class="fu">next</span>()<span class="op">;</span>  <span class="co">// Pasar al siguiente middleware/ruta</span></span>
-<span id="cb37-4"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb36-1"><a></a>(req<span class="op">,</span> res<span class="op">,</span> next) <span class="kw">=&gt;</span> {</span>
+<span id="cb36-2"><a></a>  <span class="co">// Procesar</span></span>
+<span id="cb36-3"><a></a>  <span class="fu">next</span>()<span class="op">;</span>  <span class="co">// Pasar al siguiente middleware/ruta</span></span>
+<span id="cb36-4"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="middleware-de-logging" class="slide level2">
 <h2>Middleware de Logging</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb38-1"><a></a>app<span class="op">.</span><span class="fu">use</span>((req<span class="op">,</span> res<span class="op">,</span> next) <span class="kw">=&gt;</span> {</span>
-<span id="cb38-2"><a></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`</span><span class="sc">${</span>req<span class="op">.</span><span class="at">method</span><span class="sc">}</span><span class="vs"> </span><span class="sc">${</span>req<span class="op">.</span><span class="at">path</span><span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></span>
-<span id="cb38-3"><a></a>  <span class="fu">next</span>()<span class="op">;</span>  <span class="co">// Importante: pasar control</span></span>
-<span id="cb38-4"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb37-1"><a></a>app<span class="op">.</span><span class="fu">use</span>((req<span class="op">,</span> res<span class="op">,</span> next) <span class="kw">=&gt;</span> {</span>
+<span id="cb37-2"><a></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`</span><span class="sc">${</span>req<span class="op">.</span><span class="at">method</span><span class="sc">}</span><span class="vs"> </span><span class="sc">${</span>req<span class="op">.</span><span class="at">path</span><span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></span>
+<span id="cb37-3"><a></a>  <span class="fu">next</span>()<span class="op">;</span>  <span class="co">// Importante: pasar control</span></span>
+<span id="cb37-4"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-warning callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1522,12 +1430,12 @@ Content-Length: 156
 <section id="middleware-de-manejo-de-errores" class="slide level2">
 <h2>Middleware de Manejo de Errores</h2>
 <p><strong>Firma especial con 4 parámetros</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb39-1"><a></a>app<span class="op">.</span><span class="fu">use</span>((err<span class="op">,</span> req<span class="op">,</span> res<span class="op">,</span> next) <span class="kw">=&gt;</span> {</span>
-<span id="cb39-2"><a></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">error</span>(err<span class="op">.</span><span class="at">stack</span>)<span class="op">;</span></span>
-<span id="cb39-3"><a></a>  res<span class="op">.</span><span class="fu">status</span>(<span class="dv">500</span>)<span class="op">.</span><span class="fu">json</span>({</span>
-<span id="cb39-4"><a></a>    <span class="dt">error</span><span class="op">:</span> <span class="st">'Error interno del servidor'</span></span>
-<span id="cb39-5"><a></a>  })<span class="op">;</span></span>
-<span id="cb39-6"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb38-1"><a></a>app<span class="op">.</span><span class="fu">use</span>((err<span class="op">,</span> req<span class="op">,</span> res<span class="op">,</span> next) <span class="kw">=&gt;</span> {</span>
+<span id="cb38-2"><a></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">error</span>(err<span class="op">.</span><span class="at">stack</span>)<span class="op">;</span></span>
+<span id="cb38-3"><a></a>  res<span class="op">.</span><span class="fu">status</span>(<span class="dv">500</span>)<span class="op">.</span><span class="fu">json</span>({</span>
+<span id="cb38-4"><a></a>    <span class="dt">error</span><span class="op">:</span> <span class="st">'Error interno del servidor'</span></span>
+<span id="cb38-5"><a></a>  })<span class="op">;</span></span>
+<span id="cb38-6"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-important callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1541,24 +1449,208 @@ Content-Length: 156
 </div>
 </div>
 </div>
+</section></section>
+<section>
+<section id="cliente-javascript-con-fetch" class="title-slide slide level1 center">
+<h1>Cliente JavaScript con fetch()</h1>
+
 </section>
-<section id="servir-archivos-estáticos" class="slide level2">
-<h2>Servir Archivos Estáticos</h2>
-<p><strong>Express puede servir HTML, CSS, JS del cliente</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb40-1"><a></a>app<span class="op">.</span><span class="fu">use</span>(express<span class="op">.</span><span class="fu">static</span>(<span class="st">'public'</span>))<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Estructura:</strong></p>
-<pre><code>mi-api-juego/
-├── public/
-│   ├── index.html
-│   ├── script.js
-│   └── style.css
-└── src/
-    └── app.js</code></pre>
-<p><strong>Acceso:</strong></p>
+<section id="la-api-fetch" class="slide level2">
+<h2>La API fetch()</h2>
+<p><strong>API estándar moderna para peticiones HTTP</strong></p>
 <ul>
-<li><code>http://localhost:8080/index.html</code></li>
-<li><code>http://localhost:8080/script.js</code></li>
+<li>Integrada en todos los navegadores modernos</li>
+<li>Utiliza Promises para operaciones asincrónicas</li>
+<li>Sintaxis limpia y potente</li>
 </ul>
+<p><strong>Dos formas de manejar respuestas:</strong></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Callbacks con .then()</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb39-1"><a></a><span class="fu">fetch</span>(url)</span>
+<span id="cb39-2"><a></a>  <span class="op">.</span><span class="fu">then</span>(response <span class="kw">=&gt;</span> response<span class="op">.</span><span class="fu">json</span>())</span>
+<span id="cb39-3"><a></a>  <span class="op">.</span><span class="fu">then</span>(data <span class="kw">=&gt;</span> <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(data))</span>
+<span id="cb39-4"><a></a>  <span class="op">.</span><span class="fu">catch</span>(error <span class="kw">=&gt;</span> <span class="bu">console</span><span class="op">.</span><span class="fu">error</span>(error))<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:50%;">
+<p><strong>async/await (recomendado)</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb40-1"><a></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">getData</span>() {</span>
+<span id="cb40-2"><a></a>  <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(url)<span class="op">;</span></span>
+<span id="cb40-3"><a></a>  <span class="kw">const</span> data <span class="op">=</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
+<span id="cb40-4"><a></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(data)<span class="op">;</span></span>
+<span id="cb40-5"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+</section>
+<section id="asyncawait-sintaxis-recomendada" class="slide level2">
+<h2>async/await: Sintaxis Recomendada</h2>
+<p><strong>Código más legible y natural</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb41-1"><a></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">getPlayer</span>() {</span>
+<span id="cb41-2"><a></a>    <span class="cf">try</span> {</span>
+<span id="cb41-3"><a></a>        <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(<span class="st">'https://api.game.com/players/alice'</span>)<span class="op">;</span></span>
+<span id="cb41-4"><a></a></span>
+<span id="cb41-5"><a></a>        <span class="cf">if</span> (<span class="op">!</span>response<span class="op">.</span><span class="at">ok</span>) {</span>
+<span id="cb41-6"><a></a>            <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">Error</span>(<span class="st">'HTTP error '</span> <span class="op">+</span> response<span class="op">.</span><span class="at">status</span>)<span class="op">;</span></span>
+<span id="cb41-7"><a></a>        }</span>
+<span id="cb41-8"><a></a></span>
+<span id="cb41-9"><a></a>        <span class="kw">const</span> data <span class="op">=</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
+<span id="cb41-10"><a></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(data)<span class="op">;</span></span>
+<span id="cb41-11"><a></a></span>
+<span id="cb41-12"><a></a>    } <span class="cf">catch</span> (error) {</span>
+<span id="cb41-13"><a></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">error</span>(<span class="st">'Error:'</span><span class="op">,</span> error)<span class="op">;</span></span>
+<span id="cb41-14"><a></a>    }</span>
+<span id="cb41-15"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>Siempre usar try/catch para manejar errores</p>
+</div>
+</div>
+</div>
+</section>
+<section id="get---obtener-datos" class="slide level2">
+<h2>GET - Obtener Datos</h2>
+<p><strong>Método por defecto de fetch()</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb42-1"><a></a><span class="co">// Obtener un jugador específico</span></span>
+<span id="cb42-2"><a></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">getPlayer</span>(id) {</span>
+<span id="cb42-3"><a></a>    <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(<span class="vs">`https://api.game.com/players/</span><span class="sc">${</span>id<span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></span>
+<span id="cb42-4"><a></a>    <span class="cf">return</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
+<span id="cb42-5"><a></a>}</span>
+<span id="cb42-6"><a></a></span>
+<span id="cb42-7"><a></a><span class="co">// Uso</span></span>
+<span id="cb42-8"><a></a><span class="kw">const</span> player <span class="op">=</span> <span class="cf">await</span> <span class="fu">getPlayer</span>(<span class="st">'alice'</span>)<span class="op">;</span></span>
+<span id="cb42-9"><a></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(player<span class="op">.</span><span class="at">name</span>)<span class="op">;</span></span>
+<span id="cb42-10"><a></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(player<span class="op">.</span><span class="at">level</span>)<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Nota</strong></p>
+</div>
+<div class="callout-content">
+<p>Template literals (<code>`</code>) permiten insertar variables en strings</p>
+</div>
+</div>
+</div>
+</section>
+<section id="post---crear-recurso" class="slide level2">
+<h2>POST - Crear Recurso</h2>
+<p><strong>Especificar método, headers y body</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb43-1"><a></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">createPlayer</span>(data) {</span>
+<span id="cb43-2"><a></a>    <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(<span class="st">'https://api.game.com/players'</span><span class="op">,</span> {</span>
+<span id="cb43-3"><a></a>        <span class="dt">method</span><span class="op">:</span> <span class="st">'POST'</span><span class="op">,</span></span>
+<span id="cb43-4"><a></a>        <span class="dt">headers</span><span class="op">:</span> {</span>
+<span id="cb43-5"><a></a>            <span class="st">'Content-Type'</span><span class="op">:</span> <span class="st">'application/json'</span></span>
+<span id="cb43-6"><a></a>        }<span class="op">,</span></span>
+<span id="cb43-7"><a></a>        <span class="dt">body</span><span class="op">:</span> <span class="bu">JSON</span><span class="op">.</span><span class="fu">stringify</span>(data)</span>
+<span id="cb43-8"><a></a>    })<span class="op">;</span></span>
+<span id="cb43-9"><a></a></span>
+<span id="cb43-10"><a></a>    <span class="cf">return</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
+<span id="cb43-11"><a></a>}</span>
+<span id="cb43-12"><a></a></span>
+<span id="cb43-13"><a></a><span class="co">// Uso</span></span>
+<span id="cb43-14"><a></a><span class="kw">const</span> newPlayer <span class="op">=</span> <span class="cf">await</span> <span class="fu">createPlayer</span>({</span>
+<span id="cb43-15"><a></a>    <span class="dt">username</span><span class="op">:</span> <span class="st">'charlie'</span><span class="op">,</span></span>
+<span id="cb43-16"><a></a>    <span class="dt">email</span><span class="op">:</span> <span class="st">'charlie@example.com'</span></span>
+<span id="cb43-17"><a></a>})<span class="op">;</span></span>
+<span id="cb43-18"><a></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">'Creado con ID:'</span><span class="op">,</span> newPlayer<span class="op">.</span><span class="at">id</span>)<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="put---actualizar-recurso" class="slide level2">
+<h2>PUT - Actualizar Recurso</h2>
+<p><strong>Reemplazar completamente el recurso</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb44-1"><a></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">updatePlayer</span>(id<span class="op">,</span> updates) {</span>
+<span id="cb44-2"><a></a>    <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(<span class="vs">`https://api.game.com/players/</span><span class="sc">${</span>id<span class="sc">}</span><span class="vs">`</span><span class="op">,</span> {</span>
+<span id="cb44-3"><a></a>        <span class="dt">method</span><span class="op">:</span> <span class="st">'PUT'</span><span class="op">,</span></span>
+<span id="cb44-4"><a></a>        <span class="dt">headers</span><span class="op">:</span> {</span>
+<span id="cb44-5"><a></a>            <span class="st">'Content-Type'</span><span class="op">:</span> <span class="st">'application/json'</span></span>
+<span id="cb44-6"><a></a>        }<span class="op">,</span></span>
+<span id="cb44-7"><a></a>        <span class="dt">body</span><span class="op">:</span> <span class="bu">JSON</span><span class="op">.</span><span class="fu">stringify</span>(updates)</span>
+<span id="cb44-8"><a></a>    })<span class="op">;</span></span>
+<span id="cb44-9"><a></a></span>
+<span id="cb44-10"><a></a>    <span class="cf">return</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
+<span id="cb44-11"><a></a>}</span>
+<span id="cb44-12"><a></a></span>
+<span id="cb44-13"><a></a><span class="co">// Uso</span></span>
+<span id="cb44-14"><a></a><span class="cf">await</span> <span class="fu">updatePlayer</span>(<span class="st">'charlie'</span><span class="op">,</span> {</span>
+<span id="cb44-15"><a></a>    <span class="dt">email</span><span class="op">:</span> <span class="st">'newemail@example.com'</span><span class="op">,</span></span>
+<span id="cb44-16"><a></a>    <span class="dt">level</span><span class="op">:</span> <span class="dv">5</span></span>
+<span id="cb44-17"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Nota</strong></p>
+</div>
+<div class="callout-content">
+<p>PUT reemplaza todo el recurso; PATCH actualiza solo campos específicos</p>
+</div>
+</div>
+</div>
+</section>
+<section id="delete---eliminar-recurso" class="slide level2">
+<h2>DELETE - Eliminar Recurso</h2>
+<p><strong>Método más simple</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb45-1"><a></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">deletePlayer</span>(id) {</span>
+<span id="cb45-2"><a></a>    <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(<span class="vs">`https://api.game.com/players/</span><span class="sc">${</span>id<span class="sc">}</span><span class="vs">`</span><span class="op">,</span> {</span>
+<span id="cb45-3"><a></a>        <span class="dt">method</span><span class="op">:</span> <span class="st">'DELETE'</span></span>
+<span id="cb45-4"><a></a>    })<span class="op">;</span></span>
+<span id="cb45-5"><a></a></span>
+<span id="cb45-6"><a></a>    <span class="cf">return</span> response<span class="op">.</span><span class="at">ok</span><span class="op">;</span></span>
+<span id="cb45-7"><a></a>}</span>
+<span id="cb45-8"><a></a></span>
+<span id="cb45-9"><a></a><span class="co">// Uso</span></span>
+<span id="cb45-10"><a></a><span class="kw">const</span> eliminado <span class="op">=</span> <span class="cf">await</span> <span class="fu">deletePlayer</span>(<span class="st">'charlie'</span>)<span class="op">;</span></span>
+<span id="cb45-11"><a></a><span class="cf">if</span> (eliminado) {</span>
+<span id="cb45-12"><a></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">'Jugador eliminado correctamente'</span>)<span class="op">;</span></span>
+<span id="cb45-13"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p><code>response.ok</code> es <code>true</code> para códigos 2xx</p>
+</div>
+</div>
+</div>
+</section>
+<section id="manejo-de-errores-y-códigos-de-estado" class="slide level2">
+<h2>Manejo de Errores y Códigos de Estado</h2>
+<p><strong>Manejo robusto con switch</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb46-1"><a></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">fetchWithErrorHandling</span>(url) {</span>
+<span id="cb46-2"><a></a>    <span class="cf">try</span> {</span>
+<span id="cb46-3"><a></a>        <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(url)<span class="op">;</span></span>
+<span id="cb46-4"><a></a></span>
+<span id="cb46-5"><a></a>        <span class="cf">switch</span> (response<span class="op">.</span><span class="at">status</span>) {</span>
+<span id="cb46-6"><a></a>            <span class="cf">case</span> <span class="dv">200</span><span class="op">:</span></span>
+<span id="cb46-7"><a></a>                <span class="cf">return</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
+<span id="cb46-8"><a></a>            <span class="cf">case</span> <span class="dv">401</span><span class="op">:</span></span>
+<span id="cb46-9"><a></a>                <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">Error</span>(<span class="st">'No autenticado'</span>)<span class="op">;</span></span>
+<span id="cb46-10"><a></a>            <span class="cf">case</span> <span class="dv">403</span><span class="op">:</span></span>
+<span id="cb46-11"><a></a>                <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">Error</span>(<span class="st">'Sin permisos'</span>)<span class="op">;</span></span>
+<span id="cb46-12"><a></a>            <span class="cf">case</span> <span class="dv">404</span><span class="op">:</span></span>
+<span id="cb46-13"><a></a>                <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">Error</span>(<span class="st">'Recurso no encontrado'</span>)<span class="op">;</span></span>
+<span id="cb46-14"><a></a>            <span class="cf">case</span> <span class="dv">500</span><span class="op">:</span></span>
+<span id="cb46-15"><a></a>                <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">Error</span>(<span class="st">'Error del servidor'</span>)<span class="op">;</span></span>
+<span id="cb46-16"><a></a>            <span class="cf">default</span><span class="op">:</span></span>
+<span id="cb46-17"><a></a>                <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">Error</span>(<span class="vs">`Error: </span><span class="sc">${</span>response<span class="op">.</span><span class="at">status</span><span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></span>
+<span id="cb46-18"><a></a>        }</span>
+<span id="cb46-19"><a></a>    } <span class="cf">catch</span> (error) {</span>
+<span id="cb46-20"><a></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">error</span>(<span class="st">'Error en petición:'</span><span class="op">,</span> error)<span class="op">;</span></span>
+<span id="cb46-21"><a></a>        <span class="cf">throw</span> error<span class="op">;</span></span>
+<span id="cb46-22"><a></a>    }</span>
+<span id="cb46-23"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </section></section>
 <section>
 <section id="ventajas-de-la-arquitectura-rest" class="title-slide slide level1 center">

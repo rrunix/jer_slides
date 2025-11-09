@@ -1365,11 +1365,11 @@
     "text": "Resumen: Prototipos vs Clases\nDos formas, mismo resultado\n\n\n\nAspecto\nPrototipos\nClases ES2015+\n\n\n\n\nSintaxis\nVerbosa y manual\nClara y estructurada\n\n\nHerencia\nObject.create() y call()\nextends y super()\n\n\nMétodos\nFuncion.prototype.metodo\nDentro de la clase\n\n\nUso actual\nLegacy code\nRecomendado\n\n\n\n\n\n\n\n\n\nImportante\n\n\nLas clases son azúcar sintáctico: por debajo siguen usando prototipos"
   },
   {
-    "objectID": "ch4_rest.html#contexto-en-juegos-multijugador",
-    "href": "ch4_rest.html#contexto-en-juegos-multijugador",
+    "objectID": "ch4_rest.html#contexto",
+    "href": "ch4_rest.html#contexto",
     "title": "APIs REST",
-    "section": "Contexto en Juegos Multijugador",
-    "text": "Contexto en Juegos Multijugador\nDespués de implementar el juego con Phaser 3 y el Patrón Command\n\nCliente y servidor necesitan comunicarse\nGestionar registro y autenticación de jugadores\nAlmacenar puntuaciones y estadísticas\nGestionar partidas y salas de juego\nConsultar rankings y perfiles\n\n\n\n\n\n\n\nNota\n\n\nREST para operaciones que no requieren actualización instantánea"
+    "section": "Contexto",
+    "text": "Contexto\nDespués de implementar el juego con Phaser 3\n\nCliente y servidor necesitan comunicarse\nGestionar registro y autenticación de jugadores\nAlmacenar puntuaciones y estadísticas\nGestionar partidas y salas de juego\nConsultar rankings y perfiles\n\n\n\n\n\n\n\nNota\n\n\nREST para operaciones que no requieren actualización instantánea"
   },
   {
     "objectID": "ch4_rest.html#comunicación-http-tradicional-vs-api-rest",
@@ -1379,18 +1379,18 @@
     "text": "Comunicación HTTP Tradicional vs API REST\nAplicaciones web tradicionales:\n\nPeticiones HTTP devuelven documentos HTML\nEl navegador renderiza la página completa\n\nAplicaciones con AJAX y SPA:\n\nPeticiones HTTP intercambian información estructurada\nNo devuelven HTML, sino datos (típicamente JSON)\nEl cliente procesa y actualiza la interfaz\n\nPetición:\nGET http://www.mygame.com/players/alice\n\nRespuesta:\n{\n  \"id\": \"alice\",\n  \"name\": \"Alice Smith\",\n  \"level\": 15,\n  \"score\": 8500\n}"
   },
   {
+    "objectID": "ch4_rest.html#uri-y-url",
+    "href": "ch4_rest.html#uri-y-url",
+    "title": "APIs REST",
+    "section": "URI y URL",
+    "text": "URI y URL\n\n\nURI (Uniform Resource Identifier)\n\nIdentificador único de un recurso\nPuede ser un nombre, una localización, o ambos\nEjemplo: /players/alice\nToda URL es una URI, pero no toda URI es una URL\n\n\nURL (Uniform Resource Locator)\n\nTipo específico de URI\nIndica cómo acceder al recurso\nIncluye protocolo y localización\nEjemplo: https://api.game.com/players/alice\n\n\nEstructura de una URL:\nhttps://api.game.com:443/players/alice?sort=score#stats\n└─┬─┘  └────┬──────┘ └┬┘ └─────┬──────┘ └───┬───┘ └─┬─┘\nProtocolo  Dominio  Puerto   Ruta       Query    Fragment\n\nProtocolo: http:// o https:// (comunicación segura)\nDominio: Nombre del servidor (api.game.com)\nPuerto: Opcional, por defecto 80 (HTTP) o 443 (HTTPS)\nRuta: Identifica el recurso específico (/players/alice)\nQuery: Parámetros adicionales opcionales (?sort=score)\nFragment: Sección específica del recurso (#stats)"
+  },
+  {
     "objectID": "ch4_rest.html#qué-es-una-api-rest",
     "href": "ch4_rest.html#qué-es-una-api-rest",
     "title": "APIs REST",
     "section": "¿Qué es una API REST?",
-    "text": "¿Qué es una API REST?\nREST (Representational State Transfer)\n\nEstilo de arquitectura de software basado en HTTP\nAcuñado en 2000 por Roy Fielding (coautor de HTTP)\nCuando un servicio cumple estos principios es RESTful\n\nCaracterísticas clave:\n\nOperaciones CRUD sobre recursos del servidor\nAprovecha URL, métodos HTTP, códigos de estado\nIntercambio de información en formato JSON\nSimplicidad y eficiencia\n\n\n\n\n\n\n\nTip\n\n\nREST se ha convertido en el estándar de facto frente a otras alternativas como SOAP"
-  },
-  {
-    "objectID": "ch4_rest.html#modelo-de-richardson",
-    "href": "ch4_rest.html#modelo-de-richardson",
-    "title": "APIs REST",
-    "section": "Modelo de Richardson",
-    "text": "Modelo de Richardson\n4 niveles según conformidad con principios REST"
+    "text": "¿Qué es una API REST?\nREST (Representational State Transfer)\n\nEstilo de arquitectura para sistemas distribuidos\nLos recursos del servidor se representan mediante URLs\nEl cliente transfiere representaciones de esos recursos (JSON, XML, etc.)\nEl “estado” reside en esas representaciones que se transfieren\n\nPrincipios REST (para ser RESTful):\n\nCliente-Servidor: Separación de responsabilidades\nSin estado (Stateless): Cada petición contiene toda la información necesaria\nCacheable: Las respuestas indican si pueden ser cacheadas\nInterfaz uniforme: URLs, métodos HTTP y representaciones consistentes\nSistema en capas: Arquitectura puede tener intermediarios (proxies, load balancers)\n\n\n\n\n\n\n\nTip\n\n\nREST se ha convertido en el estándar de facto frente a otras alternativas como SOAP"
   },
   {
     "objectID": "ch4_rest.html#nivel-0---the-swamp-of-pox",
@@ -1453,7 +1453,7 @@
     "href": "ch4_rest.html#todo-es-un-recurso",
     "title": "APIs REST",
     "section": "Todo es un Recurso",
-    "text": "Todo es un Recurso\nRecurso: ítem de información identificado por URI única\nhttp://api.game.com/players/alice\nhttp://api.game.com/matches/12345\nhttp://api.game.com/players/alice/scores\nhttp://api.game.com/leaderboard\nEstructura de URI:\n\nParte fija: dominio y ruta base\nParte variable: identifica el recurso específico"
+    "text": "Todo es un Recurso\nEn REST, todo es un recurso identificable\n\nRecurso: Cualquier entidad o información con significado\nCada recurso tiene una URI única que lo identifica\nLos recursos pueden ser individuales o colecciones\n\nEjemplos:\n\n\nRecursos individuales:\n/players/alice\n/matches/12345\n/leaderboard\n\nColecciones:\n/players\n/matches\n/players/alice/scores"
   },
   {
     "objectID": "ch4_rest.html#principios-de-diseño-de-uris",
@@ -1568,55 +1568,6 @@
     "text": "5xx - Errores del Servidor\nEl servidor no pudo completar la petición\n\n500 Internal Server Error\n\nError genérico del servidor\nAlgo falló en el procesamiento\n\n503 Service Unavailable\n\nServidor temporalmente no disponible\nDebe incluir Retry-After\n\n504 Gateway Timeout\n\nTimeout esperando respuesta de otro servidor\n\n\n\n\n\n\n\n\nAdvertencia\n\n\nLos errores 5xx indican problemas del servidor, no del cliente"
   },
   {
-    "objectID": "ch4_rest.html#la-api-fetch",
-    "href": "ch4_rest.html#la-api-fetch",
-    "title": "APIs REST",
-    "section": "La API fetch()",
-    "text": "La API fetch()\nAPI estándar moderna para peticiones HTTP\n\nIntegrada en todos los navegadores modernos\nUtiliza Promises para operaciones asincrónicas\nSintaxis limpia y potente\n\nDos formas de manejar respuestas:\n\n\nCallbacks con .then()\nfetch(url)\n  .then(response =&gt; response.json())\n  .then(data =&gt; console.log(data))\n  .catch(error =&gt; console.error(error));\n\nasync/await (recomendado)\nasync function getData() {\n  const response = await fetch(url);\n  const data = await response.json();\n  console.log(data);\n}"
-  },
-  {
-    "objectID": "ch4_rest.html#asyncawait-sintaxis-recomendada",
-    "href": "ch4_rest.html#asyncawait-sintaxis-recomendada",
-    "title": "APIs REST",
-    "section": "async/await: Sintaxis Recomendada",
-    "text": "async/await: Sintaxis Recomendada\nCódigo más legible y natural\nasync function getPlayer() {\n    try {\n        const response = await fetch('https://api.game.com/players/alice');\n\n        if (!response.ok) {\n            throw new Error('HTTP error ' + response.status);\n        }\n\n        const data = await response.json();\n        console.log(data);\n\n    } catch (error) {\n        console.error('Error:', error);\n    }\n}\n\n\n\n\n\n\nTip\n\n\nSiempre usar try/catch para manejar errores"
-  },
-  {
-    "objectID": "ch4_rest.html#get---obtener-datos",
-    "href": "ch4_rest.html#get---obtener-datos",
-    "title": "APIs REST",
-    "section": "GET - Obtener Datos",
-    "text": "GET - Obtener Datos\nMétodo por defecto de fetch()\n// Obtener un jugador específico\nasync function getPlayer(id) {\n    const response = await fetch(`https://api.game.com/players/${id}`);\n    return await response.json();\n}\n\n// Uso\nconst player = await getPlayer('alice');\nconsole.log(player.name);\nconsole.log(player.level);\n\n\n\n\n\n\nNota\n\n\nTemplate literals (`) permiten insertar variables en strings"
-  },
-  {
-    "objectID": "ch4_rest.html#post---crear-recurso",
-    "href": "ch4_rest.html#post---crear-recurso",
-    "title": "APIs REST",
-    "section": "POST - Crear Recurso",
-    "text": "POST - Crear Recurso\nEspecificar método, headers y body\nasync function createPlayer(data) {\n    const response = await fetch('https://api.game.com/players', {\n        method: 'POST',\n        headers: {\n            'Content-Type': 'application/json'\n        },\n        body: JSON.stringify(data)\n    });\n\n    return await response.json();\n}\n\n// Uso\nconst newPlayer = await createPlayer({\n    username: 'charlie',\n    email: 'charlie@example.com'\n});\nconsole.log('Creado con ID:', newPlayer.id);"
-  },
-  {
-    "objectID": "ch4_rest.html#put---actualizar-recurso",
-    "href": "ch4_rest.html#put---actualizar-recurso",
-    "title": "APIs REST",
-    "section": "PUT - Actualizar Recurso",
-    "text": "PUT - Actualizar Recurso\nReemplazar completamente el recurso\nasync function updatePlayer(id, updates) {\n    const response = await fetch(`https://api.game.com/players/${id}`, {\n        method: 'PUT',\n        headers: {\n            'Content-Type': 'application/json'\n        },\n        body: JSON.stringify(updates)\n    });\n\n    return await response.json();\n}\n\n// Uso\nawait updatePlayer('charlie', {\n    email: 'newemail@example.com',\n    level: 5\n});\n\n\n\n\n\n\nNota\n\n\nPUT reemplaza todo el recurso; PATCH actualiza solo campos específicos"
-  },
-  {
-    "objectID": "ch4_rest.html#delete---eliminar-recurso",
-    "href": "ch4_rest.html#delete---eliminar-recurso",
-    "title": "APIs REST",
-    "section": "DELETE - Eliminar Recurso",
-    "text": "DELETE - Eliminar Recurso\nMétodo más simple\nasync function deletePlayer(id) {\n    const response = await fetch(`https://api.game.com/players/${id}`, {\n        method: 'DELETE'\n    });\n\n    return response.ok;\n}\n\n// Uso\nconst eliminado = await deletePlayer('charlie');\nif (eliminado) {\n    console.log('Jugador eliminado correctamente');\n}\n\n\n\n\n\n\nTip\n\n\nresponse.ok es true para códigos 2xx"
-  },
-  {
-    "objectID": "ch4_rest.html#manejo-de-errores-y-códigos-de-estado",
-    "href": "ch4_rest.html#manejo-de-errores-y-códigos-de-estado",
-    "title": "APIs REST",
-    "section": "Manejo de Errores y Códigos de Estado",
-    "text": "Manejo de Errores y Códigos de Estado\nManejo robusto con switch\nasync function fetchWithErrorHandling(url) {\n    try {\n        const response = await fetch(url);\n\n        switch (response.status) {\n            case 200:\n                return await response.json();\n            case 401:\n                throw new Error('No autenticado');\n            case 403:\n                throw new Error('Sin permisos');\n            case 404:\n                throw new Error('Recurso no encontrado');\n            case 500:\n                throw new Error('Error del servidor');\n            default:\n                throw new Error(`Error: ${response.status}`);\n        }\n    } catch (error) {\n        console.error('Error en petición:', error);\n        throw error;\n    }\n}"
-  },
-  {
     "objectID": "ch4_rest.html#express.js",
     "href": "ch4_rest.html#express.js",
     "title": "APIs REST",
@@ -1643,6 +1594,27 @@
     "title": "APIs REST",
     "section": "Servidor Básico con Express",
     "text": "Servidor Básico con Express\nimport express from 'express';\n\nconst app = express();\n\n// Middleware para parsear JSON\napp.use(express.json());\n\n// Iniciar servidor\napp.listen(8080, () =&gt; {\n  console.log('Servidor ejecutándose en http://localhost:8080');\n});\n\n\n\n\n\n\nImportante\n\n\nexpress.json() es fundamental para leer el body de las peticiones\n\n\n\nEjecutar:\nnode src/app.js"
+  },
+  {
+    "objectID": "ch4_rest.html#servir-archivos-estáticos",
+    "href": "ch4_rest.html#servir-archivos-estáticos",
+    "title": "APIs REST",
+    "section": "Servir Archivos Estáticos",
+    "text": "Servir Archivos Estáticos\nExpress puede servir HTML, CSS, JS del cliente\napp.use(express.static('public'));\nEstructura:\nmi-api-juego/\n├── public/\n│   ├── index.html\n│   ├── script.js\n│   └── style.css\n└── src/\n    └── app.js\nAcceso:\n\nhttp://localhost:8080/index.html\nhttp://localhost:8080/script.js"
+  },
+  {
+    "objectID": "ch4_rest.html#ejemplo-simple-servidor-post",
+    "href": "ch4_rest.html#ejemplo-simple-servidor-post",
+    "title": "APIs REST",
+    "section": "Ejemplo simple: Servidor POST",
+    "text": "Ejemplo simple: Servidor POST\nServidor simple con endpoint POST:\nimport express from 'express';\nconst app = express();\napp.use(express.json());\n\nconst messages = [];\n\n// Endpoint POST para crear un mensaje\napp.post('/messages', (req, res) =&gt; {\n  const { text, author } = req.body;\n  const newMessage = {\n    id: Date.now(), text, author,\n    timestamp: new Date().toISOString()\n  };\n  messages.push(newMessage);\n  res.status(201).json(newMessage);\n});\n\napp.get('/messages', (req, res) =&gt; {\n    res.json(messages);\n});\n\napp.listen(8080, () =&gt; {\n  console.log('Servidor en http://localhost:8080');\n});"
+  },
+  {
+    "objectID": "ch4_rest.html#invocar-con-fetch",
+    "href": "ch4_rest.html#invocar-con-fetch",
+    "title": "APIs REST",
+    "section": "Invocar con fetch()",
+    "text": "Invocar con fetch()\nCliente JavaScript usando POST:\nasync function createMessage() {\n  const response = await fetch('http://localhost:8080/messages', {\n    method: 'POST',\n    headers: {\n      'Content-Type': 'application/json'\n    },\n    body: JSON.stringify({\n      text: 'Hola desde el cliente',\n      author: 'Alice'\n    })\n  });\n\n  const newMessage = await response.json();\n  console.log('Mensaje creado:', newMessage);\n}\n\ncreateMessage();\nObtener los mensajes\nconst response = await fetch('http://localhost:8080/messages');\nconst message = await response.json();"
   },
   {
     "objectID": "ch4_rest.html#controladores",
@@ -1722,11 +1694,53 @@
     "text": "Middleware de Manejo de Errores\nFirma especial con 4 parámetros\napp.use((err, req, res, next) =&gt; {\n  console.error(err.stack);\n  res.status(500).json({\n    error: 'Error interno del servidor'\n  });\n});\n\n\n\n\n\n\nImportante\n\n\nDebe colocarse después de todas las rutas"
   },
   {
-    "objectID": "ch4_rest.html#servir-archivos-estáticos",
-    "href": "ch4_rest.html#servir-archivos-estáticos",
+    "objectID": "ch4_rest.html#la-api-fetch",
+    "href": "ch4_rest.html#la-api-fetch",
     "title": "APIs REST",
-    "section": "Servir Archivos Estáticos",
-    "text": "Servir Archivos Estáticos\nExpress puede servir HTML, CSS, JS del cliente\napp.use(express.static('public'));\nEstructura:\nmi-api-juego/\n├── public/\n│   ├── index.html\n│   ├── script.js\n│   └── style.css\n└── src/\n    └── app.js\nAcceso:\n\nhttp://localhost:8080/index.html\nhttp://localhost:8080/script.js"
+    "section": "La API fetch()",
+    "text": "La API fetch()\nAPI estándar moderna para peticiones HTTP\n\nIntegrada en todos los navegadores modernos\nUtiliza Promises para operaciones asincrónicas\nSintaxis limpia y potente\n\nDos formas de manejar respuestas:\n\n\nCallbacks con .then()\nfetch(url)\n  .then(response =&gt; response.json())\n  .then(data =&gt; console.log(data))\n  .catch(error =&gt; console.error(error));\n\nasync/await (recomendado)\nasync function getData() {\n  const response = await fetch(url);\n  const data = await response.json();\n  console.log(data);\n}"
+  },
+  {
+    "objectID": "ch4_rest.html#asyncawait-sintaxis-recomendada",
+    "href": "ch4_rest.html#asyncawait-sintaxis-recomendada",
+    "title": "APIs REST",
+    "section": "async/await: Sintaxis Recomendada",
+    "text": "async/await: Sintaxis Recomendada\nCódigo más legible y natural\nasync function getPlayer() {\n    try {\n        const response = await fetch('https://api.game.com/players/alice');\n\n        if (!response.ok) {\n            throw new Error('HTTP error ' + response.status);\n        }\n\n        const data = await response.json();\n        console.log(data);\n\n    } catch (error) {\n        console.error('Error:', error);\n    }\n}\n\n\n\n\n\n\nTip\n\n\nSiempre usar try/catch para manejar errores"
+  },
+  {
+    "objectID": "ch4_rest.html#get---obtener-datos",
+    "href": "ch4_rest.html#get---obtener-datos",
+    "title": "APIs REST",
+    "section": "GET - Obtener Datos",
+    "text": "GET - Obtener Datos\nMétodo por defecto de fetch()\n// Obtener un jugador específico\nasync function getPlayer(id) {\n    const response = await fetch(`https://api.game.com/players/${id}`);\n    return await response.json();\n}\n\n// Uso\nconst player = await getPlayer('alice');\nconsole.log(player.name);\nconsole.log(player.level);\n\n\n\n\n\n\nNota\n\n\nTemplate literals (`) permiten insertar variables en strings"
+  },
+  {
+    "objectID": "ch4_rest.html#post---crear-recurso",
+    "href": "ch4_rest.html#post---crear-recurso",
+    "title": "APIs REST",
+    "section": "POST - Crear Recurso",
+    "text": "POST - Crear Recurso\nEspecificar método, headers y body\nasync function createPlayer(data) {\n    const response = await fetch('https://api.game.com/players', {\n        method: 'POST',\n        headers: {\n            'Content-Type': 'application/json'\n        },\n        body: JSON.stringify(data)\n    });\n\n    return await response.json();\n}\n\n// Uso\nconst newPlayer = await createPlayer({\n    username: 'charlie',\n    email: 'charlie@example.com'\n});\nconsole.log('Creado con ID:', newPlayer.id);"
+  },
+  {
+    "objectID": "ch4_rest.html#put---actualizar-recurso",
+    "href": "ch4_rest.html#put---actualizar-recurso",
+    "title": "APIs REST",
+    "section": "PUT - Actualizar Recurso",
+    "text": "PUT - Actualizar Recurso\nReemplazar completamente el recurso\nasync function updatePlayer(id, updates) {\n    const response = await fetch(`https://api.game.com/players/${id}`, {\n        method: 'PUT',\n        headers: {\n            'Content-Type': 'application/json'\n        },\n        body: JSON.stringify(updates)\n    });\n\n    return await response.json();\n}\n\n// Uso\nawait updatePlayer('charlie', {\n    email: 'newemail@example.com',\n    level: 5\n});\n\n\n\n\n\n\nNota\n\n\nPUT reemplaza todo el recurso; PATCH actualiza solo campos específicos"
+  },
+  {
+    "objectID": "ch4_rest.html#delete---eliminar-recurso",
+    "href": "ch4_rest.html#delete---eliminar-recurso",
+    "title": "APIs REST",
+    "section": "DELETE - Eliminar Recurso",
+    "text": "DELETE - Eliminar Recurso\nMétodo más simple\nasync function deletePlayer(id) {\n    const response = await fetch(`https://api.game.com/players/${id}`, {\n        method: 'DELETE'\n    });\n\n    return response.ok;\n}\n\n// Uso\nconst eliminado = await deletePlayer('charlie');\nif (eliminado) {\n    console.log('Jugador eliminado correctamente');\n}\n\n\n\n\n\n\nTip\n\n\nresponse.ok es true para códigos 2xx"
+  },
+  {
+    "objectID": "ch4_rest.html#manejo-de-errores-y-códigos-de-estado",
+    "href": "ch4_rest.html#manejo-de-errores-y-códigos-de-estado",
+    "title": "APIs REST",
+    "section": "Manejo de Errores y Códigos de Estado",
+    "text": "Manejo de Errores y Códigos de Estado\nManejo robusto con switch\nasync function fetchWithErrorHandling(url) {\n    try {\n        const response = await fetch(url);\n\n        switch (response.status) {\n            case 200:\n                return await response.json();\n            case 401:\n                throw new Error('No autenticado');\n            case 403:\n                throw new Error('Sin permisos');\n            case 404:\n                throw new Error('Recurso no encontrado');\n            case 500:\n                throw new Error('Error del servidor');\n            default:\n                throw new Error(`Error: ${response.status}`);\n        }\n    } catch (error) {\n        console.error('Error en petición:', error);\n        throw error;\n    }\n}"
   },
   {
     "objectID": "ch4_rest.html#separación-de-responsabilidades",
