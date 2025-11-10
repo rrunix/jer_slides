@@ -1,6 +1,6 @@
 # Material docente en abierto de la asignatura Juegos en Red del Grado en Diseño y Desarrollo de Videojuegos
 
-Material docente en abierto de la asignatura "Juegos en Red" del Grado en Diseño y Desarrollo de Videojuegos de la Universidad Rey Juan Carlos (URJC). Impartida en dos sedes, campus de Quintana y Móstoles. Depositado en el BURJC Digital.
+Material docente en abierto de la asignatura "Juegos en Red" del Grado en Diseño y Desarrollo de Videojuegos de la Universidad Rey Juan Carlos (URJC). Impartida en dos sedes, campus de Quintana y Móstoles. Depositado en el BURJC Digital [https://hdl.handle.net/10115/112657](https://hdl.handle.net/10115/112657).
 
 **Autores**: 
 
