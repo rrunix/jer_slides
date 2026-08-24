@@ -36,7 +36,7 @@ mermaid:
 
 - Maneja los aspectos físicos de la transmisión
 - Controla el acceso al medio compartido
-- Se ejecuta en el host y en el nucleo de la red
+- Se ejecuta en el host y en el núcleo de la red
 - Garantiza transmisión confiable entre nodos adyacentes
 :::
 
@@ -219,7 +219,7 @@ Las direcciones MAC son como el DNI del dispositivo: únicas, estáticas y cada 
 
 ## 3. Detección y Corrección de Errores (Ejemplo)
 
-Introducir un mensaje de 4 bits (1011) y os saldrá a le derecha el mensaje codificado
+Introducir un mensaje de 4 bits (1011) y os saldrá a la derecha el mensaje codificado
 
 :::{.ojsinteractive}
 :::{.ojscontrols}
@@ -311,7 +311,7 @@ result
 | **PPP** | Variable (~1500) | Para compatibilidad con Ethernet |
 
 ::: {.callout-warning}
-Si datos > MTU → La Capa de Acceso a la Red **descarta automáticamente** el paquete
+Si datos > MTU → el paquete se **fragmenta en la capa de red (IPv4)** o el emisor ajusta el tamaño con PMTUD; una trama nunca supera la MTU
 :::
 
 ::: {.fragment}

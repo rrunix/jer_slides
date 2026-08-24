@@ -14,20 +14,20 @@ subtitle: "Juegos en Red - Grado en Desarrollo de Videojuegos"
   - Sesiones: 28 clases de 2h.
   - Horas de trabajo: 180h (56h clase / 124h fuera).
 - Departamento: Departamento de Informática y Estadística.
-- Web: Aula Virtual (https://ww.aulavirtual.urjc.es).
+- Web: Aula Virtual (https://www.aulavirtual.urjc.es).
 
 ## Prof. Rubén Rodríguez
 
 - E-mail: `ruben.rodriguez@urjc.es`. (Escribir por aula virtual).
 - Despacho: 131, Ed. Departamental II (Campus de Móstoles).
-- Tutorias: Concertar por e-mail (aula virtual).
+- Tutorías: Concertar por e-mail (aula virtual).
 
 
 ## Prof. Natalia Madrueño
 
-- Email: `natalia.madrueno@urjc.es` (Escribir por aula virtual).
+- E-mail: `natalia.madrueno@urjc.es` (Escribir por aula virtual).
 - Despacho: 044, Ed. Departamental II (Campus de Móstoles).
-- Tutorias: Concertar por e-mail (aula virtual).
+- Tutorías: Concertar por e-mail (aula virtual).
 
 # Motivación y objetivos
 
@@ -65,7 +65,7 @@ La gran mayoría de las aplicaciones actuales son **aplicaciones basadas en red*
 
 Se presentan los retos de las aplicaciones en red y se introducen los principales conceptos necesarios para entender su funcionamiento:
 
-- Qué son y como funcionan las aplicaciones en red.
+- Qué son y cómo funcionan las aplicaciones en red.
 - Problemas propios de aplicaciones en red.
 - Conceptos fundamentales de comunicación en red entre aplicaciones.
 - Consideraciones al desarrollar juegos en red.
@@ -102,7 +102,7 @@ Se estudia el uso de WebSockets para comunicación asíncrona entre nodos:
 
 # Metodología y Material Docente
 
-## Metodologia
+## Metodología
 
 El curso estará conducido por una **metodología basada en proyectos**, en la que los alumnos deberán realizar un proyecto en grupo a lo largo de toda la asignatura.
 
@@ -168,7 +168,7 @@ El uso de ChatGPT, Gemini, Claude o alternativas está permitido a excepción de
 - Se realiza en grupos de 4 personas
 - Cada alumno será evaluado individualmente
 - Se desarrolla en parte en las sesiones prácticas
-- Consta de 4 entregas (fases) obligatorias coonderaciones 10%, 35%, 25%, 30%.
+- Consta de 4 entregas (fases) obligatorias con ponderaciones 10%, 35%, 25%, 30%.
 - Nota mínima en cada fase: 5 puntos
 - Cada fase es revaluable en convocatoria extraordinaria
 
@@ -202,7 +202,7 @@ Para aprobar la asignatura en la convocatoria extraordinaria se deberán realiza
 
 ## Dispensa académica
 
-Un alumno con dispensa académica debe realizar los exámenes teóricos-prácticos.
+Un alumno con dispensa académica debe realizar los exámenes teórico-prácticos.
 
 Está obligado a hacer las 4 entregas presenciales de la parte práctica ya que son como exámenes.
 

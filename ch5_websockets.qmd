@@ -84,9 +84,8 @@ El servidor puede enviar sin que el cliente pregunte constantemente
 
 **Ventajas:**
 
-- Usa **puerto 80** (mismo que HTTP)
-- Multiplexado: múltiples comunicaciones por puerto
-- Evita problemas con firewalls
+- Usa los puertos estándar **80/443** (los mismos que HTTP/HTTPS)
+- Evita problemas con firewalls y proxies
 - Pensado para navegadores y servidores web
 
 ::: {.callout-note}
@@ -124,12 +123,16 @@ new WebSocket('wss://example.com/demo');
 GET /demo HTTP/1.1
 Host: example.com
 Connection: Upgrade
-Upgrade: WebSocket
+Upgrade: websocket
+Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==
+Sec-WebSocket-Version: 13
 Origin: http://example.com
 ```
 
 - `Connection: Upgrade` → queremos cambiar de protocolo
-- `Upgrade: WebSocket` → especifica WebSocket
+- `Upgrade: websocket` → especifica WebSocket
+- `Sec-WebSocket-Key` → valor aleatorio para verificar el handshake
+- `Sec-WebSocket-Version: 13` → versión del protocolo (RFC 6455)
 - `Origin` → origen de la petición (seguridad)
 
 
@@ -139,15 +142,14 @@ Origin: http://example.com
 **Si acepta la conexión:**
 
 ```http
-HTTP/1.1 101 WebSocket Protocol Handshake
-Upgrade: WebSocket
+HTTP/1.1 101 Switching Protocols
+Upgrade: websocket
 Connection: Upgrade
-Sec-WebSocket-Origin: http://example.com
-Sec-WebSocket-Location: ws://example.com/demo
+Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
 ```
 
 - Código **101**: cambio de protocolo aceptado
-- `Sec-WebSocket-Location` → nueva ubicación con `ws://`
+- `Sec-WebSocket-Accept` → derivado de `Sec-WebSocket-Key` (demuestra que el servidor entiende WebSocket)
 
 ::: {.callout-important}
 Después del handshake, HTTP se transforma en WebSocket
@@ -359,8 +361,10 @@ connection.onclose = function(event) {
 
   // Intentar reconectar después de 3 segundos
   setTimeout(function() {
-    connection = new WebSocket('ws://127.0.0.1:8080/echo');
-    configurarListeners(connection);
+    const nuevaConexion = new WebSocket('ws://127.0.0.1:8080/echo');
+    // configurarListeners reasigna los manejadores onopen, onmessage,
+    // onerror y onclose (vistos en este tema) a la nueva conexión
+    configurarListeners(nuevaConexion);
   }, 3000);
 };
 ```
@@ -585,7 +589,7 @@ const server = createServer(app);
 
 app.use(express.static('public'));
 
-const wss = new WebSocketServer({ server });
+const wss = new WebSocketServer({ server, path: '/echo' });
 
 wss.on('connection', (ws) => {
   console.log('Nuevo cliente');
@@ -618,7 +622,7 @@ wss.on('connection', (ws) => {
 
     // Enviar a todos los clientes
     wss.clients.forEach((client) => {
-      if (client.readyState === ws.OPEN) {
+      if (client.readyState === WebSocket.OPEN) {
         client.send(JSON.stringify(data));
       }
     });
@@ -627,7 +631,7 @@ wss.on('connection', (ws) => {
 ```
 
 ::: {.callout-tip}
-Verificar `readyState === ws.OPEN` antes de enviar
+Verificar `readyState === WebSocket.OPEN` antes de enviar (importando `WebSocket` de 'ws')
 :::
 
 
@@ -636,7 +640,7 @@ Verificar `readyState === ws.OPEN` antes de enviar
 
 ```javascript
 import express from 'express';
-import { WebSocketServer } from 'ws';
+import { WebSocketServer, WebSocket } from 'ws';
 import { createServer } from 'http';
 
 const app = express();
@@ -661,7 +665,7 @@ wss.on('connection', (ws) => {
 
       // Broadcast a todos
       wss.clients.forEach((client) => {
-        if (client.readyState === ws.OPEN) {
+        if (client.readyState === WebSocket.OPEN) {
           client.send(JSON.stringify(respuesta));
         }
       });
@@ -686,10 +690,11 @@ server.listen(8080, () => console.log('Chat en puerto 8080'));
 
 ```javascript
 const clientes = new Map();
+let nextClientId = 1;
 
 wss.on('connection', (ws) => {
   // Asignar ID único
-  const clientId = Date.now();
+  const clientId = nextClientId++;
   clientes.set(ws, { id: clientId, nombre: null });
 
   console.log(`Cliente ${clientId} conectado`);
@@ -841,7 +846,7 @@ const ws = new WebSocket('ws://host:port/path');
 **Librería ws:**
 
 ```javascript
-import { WebSocketServer } from 'ws';
+import { WebSocketServer, WebSocket } from 'ws';
 const wss = new WebSocketServer({ server });
 ```
 
@@ -856,7 +861,7 @@ const wss = new WebSocketServer({ server });
 
 ```javascript
 wss.clients.forEach(client => {
-  if (client.readyState === ws.OPEN) {
+  if (client.readyState === WebSocket.OPEN) {
     client.send(data);
   }
 });

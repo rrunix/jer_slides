@@ -71,7 +71,7 @@ graph LR
 ## Jerarquía de Redes
 
 ```{mermaid}
-%%| fig-width: 5s
+%%| fig-width: 5
 graph LR
     PAN["📱 PAN (Personal Area Network)<br>Smartphone ↔ Smartwatch"]
     LAN["🏠 LAN (Local Area Network)<br>Home/Office/Building Network"]
@@ -127,7 +127,7 @@ graph LR
 
 ## Ejemplo: Mensaje Madrid → Tokio
 
-Smartphone María (WiFI) en Madrid -> Takeshi LAN en la Universidad de Tokyo
+Smartphone María (WiFi) en Madrid -> Takeshi LAN en la Universidad de Tokio
 
 ::: {.incremental}
 1. **Origen LAN Madrid**: Smartphone → Router WiFi
@@ -213,7 +213,7 @@ Entonces... ¿Esto que es?
 
 ::: {.callout-note}
 # Ejercicio
-Prueba a ejecutar `ifconfig` en tu terminal MacOS/Linux o `ipconfig` en Windows. ¿Qué ves?.
+Prueba a ejecutar `ifconfig` en tu terminal MacOS/Linux o `ipconfig` en Windows. ¿Qué ves?
 :::
 
 
@@ -228,9 +228,9 @@ Prueba a ejecutar `ifconfig` en tu terminal MacOS/Linux o `ipconfig` en Windows.
 
 # Historia de Internet
 
-## Linea temporal de Internet.
+## Línea temporal de Internet
 ```{mermaid}
-%%| fig-width: 6s
+%%| fig-width: 6
 timeline
     title Evolución de Internet: De ARPANET a la Era Digital
     
@@ -272,12 +272,12 @@ timeline
 
 ```
 
-- ARPANET se creo con fines militares
-- Se creo y publicó el primer sitio web (CERN)
+- ARPANET se creó con fines militares
+- Se creó y publicó el primer sitio web (CERN)
 - Burbuja punto com
 - Creación de las Redes sociales.
 - Inteligencia Artificial Generativa.
-- De ~4 dispositivos (1969) a >100.000 millones (2025) en 50 años.
+- De ~4 dispositivos (1969) a >20.000 millones (2025) en más de 50 años.
 
 # Infraestructura de Red
 
@@ -400,7 +400,7 @@ graph LR
 ```{mermaid}
 graph LR
     T1A["Tier 1<br/>🌍 Cogent"]
-    T1B["Tier 1<br/>🌍 Level 3"]
+    T1B["Tier 1<br/>🌍 Lumen"]
     
     T2A["Tier 2<br/>🇪🇸 Movistar"]
     T2B["Tier 2<br/>🇪🇸 Vodafone"]
@@ -628,7 +628,7 @@ graph LR
 ::: {.columns}
 ::: {.column width="50%"}
 
-::: {style="width: 35vw; height auto; overflow: visible;"}
+::: {style="width: 35vw; height: auto; overflow: visible;"}
 ![](resources/tcp_osi.svg)
 :::
 :::
@@ -640,7 +640,7 @@ graph LR
 :::
 :::
 
-> ⚠️ **Nota**: TCP/IP no es un protocolo, hace referencia a una pila de protocolos. Además, no tiene porque utilizar necesariamente TCP, podría ser UDP.
+> ⚠️ **Nota**: TCP/IP no es un protocolo, hace referencia a una pila de protocolos. Además, no tiene por qué utilizar necesariamente TCP, podría ser UDP.
 
 :::{.notes}
 TCP/IP es superior a OSI porque es simple, práctico y probado. Mientras OSI tiene 7 capas teóricas diseñadas en comités académicos, TCP/IP usa solo 4 capas que realmente se necesitan y ha funcionado en Internet durante más de 50 años. TCP/IP es más eficiente (menos overhead), más flexible (se adapta fácilmente), y tiene adopción masiva con ecosistemas completos de hardware y software. OSI llegó tarde al mercado cuando TCP/IP ya dominaba, y sus capas extra (como Sesión y Presentación) añaden complejidad innecesaria para la mayoría de aplicaciones reales. En resumen: OSI es el modelo perfecto para estudiar redes, pero TCP/IP es lo que realmente mueve Internet.
@@ -720,7 +720,7 @@ TCP/IP es superior a OSI porque es simple, práctico y probado. Mientras OSI tie
 
 ::: {.callout-note}
 # Ejercicio
-Prueba a ejecutar `ping www.google.es` en tu terminal. ¿Qué ves?.
+Prueba a ejecutar `ping www.google.es` en tu terminal. ¿Qué ves?
 :::
 
 ## Nivel de Acceso Físico
@@ -830,7 +830,7 @@ function progress(t, latency, throughput, total) {
 time = {
   let t0 = Date.now();
   while (true) {
-    yield (Date.now() - t0) / 100; // en decimas de segundo
+    yield (Date.now() - t0) / 100; // en décimas de segundo
     await Promises.tick(50);
   }
 }
@@ -874,7 +874,7 @@ $d_{total} = \textcolor{red}{d_{proc}} + \textcolor{blue}{d_{queue}} + \textcolo
 
 > RTT (Round trip time): Tiempo total que tarda un paquete en ir desde el origen hasta el destino y volver de vuelta (ida + vuelta).
 
-- La latencia no tiene porque ser simétrica.
+- La latencia no tiene por qué ser simétrica.
 - Generalmente la descarga es más rápida que la subida.
 - Por lo tanto, el RTT es un valor muy importante en aplicaciones interactivas.
 
@@ -952,7 +952,7 @@ $d_{total} = \textcolor{red}{d_{proc}} + \textcolor{blue}{d_{queue}} + \textcolo
 ## Resumen
 ::: {.incremental}
 - Internet es un **sistema distribuido y descentralizado**
-- Evolución desde 4 hosts (1969) a >100B dispositivos (2025)
+- Evolución desde 4 hosts (1969) a >20.000 millones de dispositivos (2025)
 - **Infraestructura jerárquica**: PAN → LAN → MAN → WAN → Internet
 - **Modelos de capas**: OSI (teórico) vs TCP/IP (práctico)
 - **Rendimiento**: Balance entre latencia y throughput

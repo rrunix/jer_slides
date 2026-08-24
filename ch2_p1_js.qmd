@@ -41,16 +41,16 @@ JavaScript es el lenguaje fundamental para desarrollo web interactivo y videojue
 ## Versiones de ECMAScript
 
 - Primera versión en 10 días (1995).
-- **ES5 (2011)**: Base sólida que estableció JavaScript moderno en todos los navegadores
+- **ES5 (2009)**: Base sólida que estableció JavaScript moderno en todos los navegadores
 - **ES6/ES2015**: Revolución del lenguaje - introdujo sintaxis moderna que cambió cómo programamos
 - **Actualizaciones anuales**: Cada año se añaden mejoras sin romper código existente (compatibilidad hacia atrás)
 - **ES2015 marcó un antes y después**: La mayoría del código moderno usa características de ES6+
 
 | Versión | Año | Características |
 |---------|-----|-----------------|
-| ES5 | 2011 | Popularizó JavaScript |
+| ES5 | 2009 | Popularizó JavaScript |
 | ES2015 (ES6) | 2015 | Clases, módulos, arrow functions, promises |
-| ES2016-2024 | 2016-2024 | Actualizaciones anuales con compatibilidad |
+| ES2016+ | 2016-presente | Actualizaciones anuales con compatibilidad |
 
 ::: {.notes}
 ES2015 fue un punto de inflexión importante en la evolución del lenguaje.
@@ -276,7 +276,7 @@ module.exports = {
     "start": "node server.js",
 
     // Observa los cambios en los archivos y recompila automáticamente (sin servidor)
-    "watch": "webpack --watch",
+    "watch": "webpack --watch"
   }
 }
 ```
@@ -303,7 +303,7 @@ module.exports = {
 - **Prohíbe sintaxis peligrosa**: Variables sin declarar, duplicar parámetros, etc.
 - **Mejor rendimiento**: Permite optimizaciones del motor JavaScript
 - **En módulos ES2015+ ya está activo**: No necesitas añadirlo manualmente
-- También se puede utiliziar `node --use_strict` en node.
+- También se puede utilizar `node --use_strict` en node.
 
 ```javascript
 // Activar modo estricto (poner al inicio del archivo o función)
@@ -333,7 +333,7 @@ playerName = "Juan"; // Error: playerName is not defined
     <!-- Scripts al final - mejor rendimiento (HTML ya cargado) -->
     <script src="js/game.js"></script>
 
-    <!-- async: descarga paralela, ejecuta inmediatamente -->
+    <!-- async: descarga paralela, ejecuta en cuanto se descarga -->
     <script src="js/game.js" async></script>
 
     <!-- defer: descarga paralela, ejecuta después del HTML -->
@@ -669,7 +669,7 @@ let firstOrc = enemies.find(enemy => enemy.type === "orc"); // { id: 1, health: 
 let orcIndex = enemies.findIndex(enemy => enemy.type === "orc"); // 0
 
 // every() - ¿TODOS cumplen la condición?
-let allDead = enemies.every(enemy => enemy.health === 0); // false -> no todos muerto
+let allDead = enemies.every(enemy => enemy.health === 0); // false -> no todos muertos
 
 // some() - ¿ALGUNO cumple la condición?
 let someDead = enemies.some(enemy => enemy.health === 0); // true -> al menos un muerto
@@ -727,9 +727,9 @@ let [x, y] = coordinates;  // x = 100, y = 200
 let [first, , third] = [1, 2, 3]; // first = 1, third = 3
 
 // Rest operator - captura el resto de elementos
-let [first, second, ...rest] = inventory;
-// first = primer elemento
-// second = segundo elemento
+let [firstItem, secondItem, ...rest] = inventory;
+// firstItem = primer elemento
+// secondItem = segundo elemento
 // rest = array con todos los demás
 
 // En parámetros de función
@@ -915,7 +915,7 @@ let isAlive = (entity) => entity.health > 0;
 // Equivalente a: function(entity) { return entity.health > 0; }
 
 // Sin parámetros - paréntesis vacíos
-let generateRandomID = () => Math.random().toString(36);
+let generateRandomID = () => Math.random().toString(36).slice(2);
 
 // Un parámetro - paréntesis opcionales
 let double = x => x * 2;

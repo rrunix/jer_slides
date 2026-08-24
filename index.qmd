@@ -21,13 +21,13 @@ format:
 
 ## Programación en el cliente
 
-# Javascript
+## JavaScript
 - [Introducción a JS](ch2_p1.html)
 - [Introducción a POO en JS](ch2_p2.html)
 
-# Phaser
+## Phaser
 - [Introducción a Phaser](ch3_p1.html)
 
-# Comunicación cliente-servidor
+## Comunicación cliente-servidor
 - [API REST](ch4.html)
 - [WebSockets](ch5.html)

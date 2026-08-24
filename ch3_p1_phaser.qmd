@@ -47,8 +47,8 @@ mermaid:
 
 **Dos opciones disponibles:**
 
-- **Canvas (por defecto)**: Mayor compatibilidad, menos exigente
-- **WebGL**: Gráficos avanzados, mejor rendimiento, requiere soporte GPU
+- **Canvas**: Mayor compatibilidad, menos exigente
+- **WebGL**: Gráficos avanzados, mejor rendimiento, requiere soporte GPU (preferido por `Phaser.AUTO`)
 
 **¿Cuándo usar cada uno?**
 
@@ -58,7 +58,7 @@ mermaid:
 ```javascript
 // Configurar tipo de renderizado
 const config = {
-    type: Phaser.AUTO,  // Elige el mejor disponible
+    type: Phaser.AUTO,  // WebGL si está disponible; si no, Canvas
     // type: Phaser.CANVAS,  // Forzar Canvas
     // type: Phaser.WEBGL,   // Forzar WebGL
 };
@@ -77,12 +77,12 @@ const config = {
 
 - **CDN** (más rápido)
 ```html
-<script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/phaser@3.88.2/dist/phaser.js"></script>
 ```
 
 - **Descarga directa** [phaser.io/download/stable](https://phaser.io/download/stable)
 
-- **GitHub** [github.com/photonstorm/phaser](https://github.com/photonstorm/phaser)
+- **GitHub** [github.com/phaserjs/phaser](https://github.com/phaserjs/phaser)
 
 - **Node** `npm install phaser`
 
@@ -104,7 +104,7 @@ const config = {
 - Origen **(0,0)** en esquina superior izquierda
 - Eje X positivo → derecha
 - Eje Y positivo → abajo (inverso a matemáticas)
-- Dimensiones por defecto: 300x300 píxeles
+- Dimensiones por defecto: 300x150 píxeles
 
 ```html
 <canvas id="game" width="800" height="600"></canvas>
@@ -181,6 +181,7 @@ function create() {
     // Crear plataforma con físicas
     this.plataforma = this.physics.add.image(400, 500, 'suelo');
     this.plataforma.setImmovable(true);  // No se mueve
+    this.plataforma.body.setAllowGravity(false);  // No le afecta la gravedad
 }
 ```
 
@@ -190,7 +191,7 @@ function create() {
 
 **update(time, delta) - Bucle del juego**
 
-- **Cuándo**: Se ejecuta constantemente (~60 veces/segundo)
+- **Cuándo**: Se ejecuta una vez por refresco del monitor (normalmente ~60 veces/segundo)
 - **Para qué**: Lógica que debe actualizarse continuamente
 - **Parámetros**: `time` (tiempo total), `delta` (desde último frame)
 
@@ -439,6 +440,10 @@ this.scene.start('SiguienteEscena', {
 
 ```javascript
 class SiguienteEscena extends Phaser.Scene {
+    constructor() {
+        super('SiguienteEscena');
+    }
+
     create(datos) {
         // Recibir los datos como parámetro
         console.log(datos.puntuacion);  // 100
@@ -633,19 +638,13 @@ hud.depth = 100;  // Encima de todo
 
 
 
-## Tres Motores Disponibles
+## Dos Motores Disponibles
 
 **Arcade Physics:**
 
 - Más simple y rápido
 - Solo rectángulos y círculos
 - Ideal para juegos arcade/plataformas
-
-**Impact Physics:**
-
-- Soporta pendientes en tiles
-- Más complejo que Arcade
-- Ideal para plataformas con terreno inclinado
 
 **Matter Physics:**
 
@@ -889,6 +888,7 @@ function create() {
     
     let plataforma = this.physics.add.image(400, 500, 'suelo');
     plataforma.setImmovable(true);  // No se mueve al impacto
+    plataforma.body.setAllowGravity(false);  // No le afecta la gravedad
     
     // Colisión con resolución física
     this.physics.add.collider(jugador, plataforma);
@@ -987,8 +987,8 @@ this.physics.add.collider(jugador, enemigo, (j, e) => {
 this.physics.add.collider(
     jugador, 
     enemigo,
-    this.dañar,              // Si procesa
-    this.puedeRecibirDaño,   // Condición
+    dañar,                   // Si procesa
+    puedeRecibirDaño,        // Condición
     this
 );
 ```

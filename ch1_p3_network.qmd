@@ -28,7 +28,7 @@ mermaid:
 
 ## ¿Qué es la Capa de Red?
 
-> La Capa de Red es el **tercer nivel del modelo TCP/IP** y forma el núcleo del sistema de comunicaciones de Internet
+> La Capa de Red es el **segundo nivel del modelo TCP/IP** (capa 3 en el modelo OSI) y forma el núcleo del sistema de comunicaciones de Internet
 
 ::: {.columns}
 ::: {.column width="50%"}
@@ -57,7 +57,7 @@ block-beta
     classDef normal fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#000
     
     class C highlight
-    class A,B, D normal
+    class A,B,D normal
 ```
 :::
 :::
@@ -377,7 +377,7 @@ title IPv4 Header Format
 
 - Source address y Destination address para identificación de hosts
 - Protocol para identificar el protocolo de la capa superior
-- Checksum para integridad de datos.
+- Checksum para integridad de la cabecera (no cubre los datos).
 
 ## IPv4: Direccionamiento
 
@@ -427,7 +427,7 @@ La división red/host permite enrutamiento jerárquico eficiente
 
 ### Longest Prefix Matching
 
-Seleccionamos en nuestra tabla de rutas aquella con la coincidencia **mas grande**.
+Seleccionamos en nuestra tabla de rutas aquella con la coincidencia **más larga**.
 
 Tabla con rutas:
 
@@ -435,7 +435,7 @@ Tabla con rutas:
 - 192.168.1.0/24 ← **Seleccionada**
 - 192.168.1.128/25
 
-Destino 192.168.1.200 → Selecciona /24 (prefijo más largo)
+Destino 192.168.1.100 → Selecciona /24 (prefijo más largo que coincide)
 
 ## Direcciones Especiales
 
@@ -519,7 +519,7 @@ IP garantiza orden dentro del datagrama, NO entre datagramas diferentes
 - **Direcciones:** 128 bits ($3.4×10^{38}$ direcciones)
 - **Cabecera:** Fija 40 bytes
 - **Sin checksum** en cabecera
-- **IPSec obligatorio**
+- **IPSec recomendado** (ya no obligatorio, RFC 8504)
 - **Autoconfiguración SLAAC**
 - **Mejor QoS** (Traffic Class, Flow Label)
 :::
@@ -744,7 +744,7 @@ sequenceDiagram
 ::: {.column width="50%"}
 
 - Descubrimiento: servidor STUN para obtener sus IPs/puertos
-- Envío simultáneo: Envían paquetes UDP al **mismo tiemp** -> mappings en sus NATs
+- Envío simultáneo: Envían paquetes UDP al **mismo tiempo** -> mappings en sus NATs
 - Agujeros listos: Los mappings NAT se crean **ANTES** de recibir
 :::
 :::

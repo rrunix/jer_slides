@@ -100,7 +100,7 @@ sequenceDiagram
 **Identificación de sockets:**
 
 - TCP: (IP y Puerto origen, IP y puerto destino)
-- UDP: ([IP y puerto origen]{style="color:red;"}, IP y puerto destino)
+- UDP: ([IP y puerto destino]{style="color:red;"} únicamente)
 :::
 ::: {.column width="50%"}
 **Puertos:** Identificadores numéricos (1-65535)
@@ -188,7 +188,7 @@ graph LR
 
 - **Control de flujo**: Evita que el emisor sature al receptor limitando la velocidad de envío según la capacidad del destinatario
 - **Control de congestión**: Ajusta la velocidad de transmisión para evitar saturar la red cuando detecta congestión
-- **Temporización**: Proporciona el tiempo mínimo de entrega de datos entre emisor y receptor a través de la red
+- **Temporización**: Garantiza un tiempo máximo de entrega de datos entre emisor y receptor a través de la red
 - **Tasa de transferencia mínima**: Garantiza una velocidad mínima de transmisión de datos para aplicaciones que requieren ancho de banda constante
 
 # UDP (User Datagram Protocol)
@@ -255,7 +255,7 @@ packet-beta
     48-63: "Checksum"
 ```
 
-- **Longitud:** Hasta 65535 bytes (limitado por MTU)
+- **Longitud:** Cabecera (8 bytes) + datos, hasta 65535 bytes
 - **Checksum:** Verificación de integridad
 - Estructura simple comparada con otros protocolos
 - 8 bytes de cabecera fijos.
@@ -300,7 +300,7 @@ Ejemplo: Implementar protocolo propio sobre UDP para juegos
 
 ::: {.columns}
 ::: {.column width="50%"}
-**Protocolo confiable [RFC 793]:**
+**Protocolo confiable [RFC 9293]:**
 
 - Orientado a conexión
 - Entrega fiable y ordenada (confiabilidad)
@@ -367,7 +367,7 @@ packet-beta
 - Cuando enviamos información, está identificada por un número de secuencia (SEQ)
 - Además, esperamos confirmación de que se ha recibido correctamente (ACK)
 - ACKs acumulativos (ACK para byte N confirma hasta N-1)
-- Los ACKs y SEQs permite detectar datos perdidos, duplicados o desordenados
+- Los ACKs y SEQs permiten detectar datos perdidos, duplicados o desordenados
 :::
 ::: {.column width="50%"}
 ::: {style="width: 30vw; text-align: center; margin: 0 auto;"}
@@ -411,7 +411,7 @@ sequenceDiagram
     participant E as Emisor
     participant R as Receptor
     E ->> X: seq=100, data="A", Paquete perdido
-    Note over E: Timeout de seq:100, reenvio
+    Note over E: Timeout de seq:100, reenvío
     E ->> R: seq=100, data="A",
 ```
 :::
@@ -665,7 +665,7 @@ sequenceDiagram
 - Servidor necesita menos recursos
 - No mantiene estado
 
-**Ejemplos:** Shooters (Counter Strike), juegos de lucha
+**Ejemplos:** Shooters (Counter-Strike), juegos de lucha
 :::
 ::: {.column width="50%"}
 ### TCP
@@ -701,7 +701,7 @@ sequenceDiagram
 :::
 
 ::: {.column width="50%"}
-**Counter Strike (UDP):**
+**Counter-Strike (UDP):**
 
 - Retroalimentación inmediata crítica
 - Actualizaciones posición/disparos

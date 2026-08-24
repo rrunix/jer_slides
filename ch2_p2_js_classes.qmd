@@ -99,7 +99,7 @@ const prototipoJugador = Object.create(personajeBase);
 prototipoJugador.atacar = function(objetivo) {
     return `${this.nombre} ataca a ${objetivo.nombre}`;
 };
-prototipoJugador.nombre = "Sin nombre"
+prototipoJugador.nombre = "Sin nombre";
 ```
 
 - Hereda de `personajeBase`
@@ -124,7 +124,7 @@ jugador.puntuacion = 3;
 - Propiedades que ocultan las del prototipo (locales) y nuevas.
 - Completa la cadena de herencia
 
-## Vision Completa
+## Visión Completa
 
 ::: {.columns}
 ::: {.column width="30%"}
@@ -147,7 +147,7 @@ let prototipoJugador = Object.create(personajeBase);
 prototipoJugador.atacar = function(objetivo) {
     return `${this.nombre} ataca a ${objetivo.nombre}`;
 };
-prototipoJugador.nombre = "Sin nombre"
+prototipoJugador.nombre = "Sin nombre";
 ```
 :::
 :::
@@ -468,7 +468,7 @@ class Enemigo extends GameObject {
 
 - `extends` establece la herencia
 - `super()` llama al constructor de la clase padre
-- Debe ser la primera línea del constructor hijo
+- Debe llamarse antes de usar `this` en el constructor hijo
 
 ## Herencia con Clases - Sobrescritura
 
