@@ -333,7 +333,7 @@
 <span id="cb4-2"><a></a>prototipoJugador<span class="op">.</span><span class="at">atacar</span> <span class="op">=</span> <span class="kw">function</span>(objetivo) {</span>
 <span id="cb4-3"><a></a>    <span class="cf">return</span> <span class="vs">`</span><span class="sc">${</span><span class="kw">this</span><span class="op">.</span><span class="at">nombre</span><span class="sc">}</span><span class="vs"> ataca a </span><span class="sc">${</span>objetivo<span class="op">.</span><span class="at">nombre</span><span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
 <span id="cb4-4"><a></a>}<span class="op">;</span></span>
-<span id="cb4-5"><a></a>prototipoJugador<span class="op">.</span><span class="at">nombre</span> <span class="op">=</span> <span class="st">"Sin nombre"</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-5"><a></a>prototipoJugador<span class="op">.</span><span class="at">nombre</span> <span class="op">=</span> <span class="st">"Sin nombre"</span><span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>Hereda de <code>personajeBase</code></li>
 <li>Añade funcionalidad específica</li>
@@ -356,8 +356,8 @@
 <li>Completa la cadena de herencia</li>
 </ul>
 </section>
-<section id="vision-completa" class="slide level2">
-<h2>Vision Completa</h2>
+<section id="visión-completa" class="slide level2">
+<h2>Visión Completa</h2>
 <div class="columns">
 <div class="column" style="width:30%;">
 <h3 id="base">Base</h3>
@@ -375,7 +375,7 @@
 <span id="cb7-2"><a></a>prototipoJugador<span class="op">.</span><span class="at">atacar</span> <span class="op">=</span> <span class="kw">function</span>(objetivo) {</span>
 <span id="cb7-3"><a></a>    <span class="cf">return</span> <span class="vs">`</span><span class="sc">${</span><span class="kw">this</span><span class="op">.</span><span class="at">nombre</span><span class="sc">}</span><span class="vs"> ataca a </span><span class="sc">${</span>objetivo<span class="op">.</span><span class="at">nombre</span><span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
 <span id="cb7-4"><a></a>}<span class="op">;</span></span>
-<span id="cb7-5"><a></a>prototipoJugador<span class="op">.</span><span class="at">nombre</span> <span class="op">=</span> <span class="st">"Sin nombre"</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-5"><a></a>prototipoJugador<span class="op">.</span><span class="at">nombre</span> <span class="op">=</span> <span class="st">"Sin nombre"</span><span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
 <h3 id="instancia">Instancia</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a></a><span class="kw">let</span> jugador <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">create</span>(prototipoJugador)<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
@@ -655,7 +655,7 @@
 <ul>
 <li><code>extends</code> establece la herencia</li>
 <li><code>super()</code> llama al constructor de la clase padre</li>
-<li>Debe ser la primera línea del constructor hijo</li>
+<li>Debe llamarse antes de usar <code>this</code> en el constructor hijo</li>
 </ul>
 </section>
 <section id="herencia-con-clases---sobrescritura" class="slide level2">

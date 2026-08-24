@@ -347,9 +347,8 @@
 <p><strong>RFC 6455 sobre socket TCP</strong></p>
 <p><strong>Ventajas:</strong></p>
 <ul>
-<li>Usa <strong>puerto 80</strong> (mismo que HTTP)</li>
-<li>Multiplexado: múltiples comunicaciones por puerto</li>
-<li>Evita problemas con firewalls</li>
+<li>Usa los puertos estándar <strong>80/443</strong> (los mismos que HTTP/HTTPS)</li>
+<li>Evita problemas con firewalls y proxies</li>
 <li>Pensado para navegadores y servidores web</li>
 </ul>
 <div class="callout callout-note callout-titled callout-style-default">
@@ -394,25 +393,28 @@
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource http number-lines code-with-copy"><code class="sourceCode"><span id="cb2-1"><a></a>GET /demo HTTP/1.1</span>
 <span id="cb2-2"><a></a>Host: example.com</span>
 <span id="cb2-3"><a></a>Connection: Upgrade</span>
-<span id="cb2-4"><a></a>Upgrade: WebSocket</span>
-<span id="cb2-5"><a></a>Origin: http://example.com</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-4"><a></a>Upgrade: websocket</span>
+<span id="cb2-5"><a></a>Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==</span>
+<span id="cb2-6"><a></a>Sec-WebSocket-Version: 13</span>
+<span id="cb2-7"><a></a>Origin: http://example.com</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><code>Connection: Upgrade</code> → queremos cambiar de protocolo</li>
-<li><code>Upgrade: WebSocket</code> → especifica WebSocket</li>
+<li><code>Upgrade: websocket</code> → especifica WebSocket</li>
+<li><code>Sec-WebSocket-Key</code> → valor aleatorio para verificar el handshake</li>
+<li><code>Sec-WebSocket-Version: 13</code> → versión del protocolo (RFC 6455)</li>
 <li><code>Origin</code> → origen de la petición (seguridad)</li>
 </ul>
 </section>
 <section id="respuesta-del-servidor" class="slide level2">
 <h2>Respuesta del Servidor</h2>
 <p><strong>Si acepta la conexión:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource http number-lines code-with-copy"><code class="sourceCode"><span id="cb3-1"><a></a>HTTP/1.1 101 WebSocket Protocol Handshake</span>
-<span id="cb3-2"><a></a>Upgrade: WebSocket</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource http number-lines code-with-copy"><code class="sourceCode"><span id="cb3-1"><a></a>HTTP/1.1 101 Switching Protocols</span>
+<span id="cb3-2"><a></a>Upgrade: websocket</span>
 <span id="cb3-3"><a></a>Connection: Upgrade</span>
-<span id="cb3-4"><a></a>Sec-WebSocket-Origin: http://example.com</span>
-<span id="cb3-5"><a></a>Sec-WebSocket-Location: ws://example.com/demo</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-4"><a></a>Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>Código <strong>101</strong>: cambio de protocolo aceptado</li>
-<li><code>Sec-WebSocket-Location</code> → nueva ubicación con <code>ws://</code></li>
+<li><code>Sec-WebSocket-Accept</code> → derivado de <code>Sec-WebSocket-Key</code> (demuestra que el servidor entiende WebSocket)</li>
 </ul>
 <div class="callout callout-important callout-titled callout-style-default">
 <div class="callout-body">
@@ -676,10 +678,12 @@
 <span id="cb12-7"><a></a></span>
 <span id="cb12-8"><a></a>  <span class="co">// Intentar reconectar después de 3 segundos</span></span>
 <span id="cb12-9"><a></a>  <span class="pp">setTimeout</span>(<span class="kw">function</span>() {</span>
-<span id="cb12-10"><a></a>    connection <span class="op">=</span> <span class="kw">new</span> <span class="bu">WebSocket</span>(<span class="st">'ws://127.0.0.1:8080/echo'</span>)<span class="op">;</span></span>
-<span id="cb12-11"><a></a>    <span class="fu">configurarListeners</span>(connection)<span class="op">;</span></span>
-<span id="cb12-12"><a></a>  }<span class="op">,</span> <span class="dv">3000</span>)<span class="op">;</span></span>
-<span id="cb12-13"><a></a>}<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb12-10"><a></a>    <span class="kw">const</span> nuevaConexion <span class="op">=</span> <span class="kw">new</span> <span class="bu">WebSocket</span>(<span class="st">'ws://127.0.0.1:8080/echo'</span>)<span class="op">;</span></span>
+<span id="cb12-11"><a></a>    <span class="co">// configurarListeners reasigna los manejadores onopen, onmessage,</span></span>
+<span id="cb12-12"><a></a>    <span class="co">// onerror y onclose (vistos en este tema) a la nueva conexión</span></span>
+<span id="cb12-13"><a></a>    <span class="fu">configurarListeners</span>(nuevaConexion)<span class="op">;</span></span>
+<span id="cb12-14"><a></a>  }<span class="op">,</span> <span class="dv">3000</span>)<span class="op">;</span></span>
+<span id="cb12-15"><a></a>}<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Razones del cierre:</strong></p>
 <ul>
 <li>Llamamos a <code>connection.close()</code></li>
@@ -880,7 +884,7 @@
 <span id="cb22-7"><a></a></span>
 <span id="cb22-8"><a></a>app<span class="op">.</span><span class="fu">use</span>(express<span class="op">.</span><span class="fu">static</span>(<span class="st">'public'</span>))<span class="op">;</span></span>
 <span id="cb22-9"><a></a></span>
-<span id="cb22-10"><a></a><span class="kw">const</span> wss <span class="op">=</span> <span class="kw">new</span> <span class="fu">WebSocketServer</span>({ server })<span class="op">;</span></span>
+<span id="cb22-10"><a></a><span class="kw">const</span> wss <span class="op">=</span> <span class="kw">new</span> <span class="fu">WebSocketServer</span>({ server<span class="op">,</span> <span class="dt">path</span><span class="op">:</span> <span class="st">'/echo'</span> })<span class="op">;</span></span>
 <span id="cb22-11"><a></a></span>
 <span id="cb22-12"><a></a>wss<span class="op">.</span><span class="fu">on</span>(<span class="st">'connection'</span><span class="op">,</span> (ws) <span class="kw">=&gt;</span> {</span>
 <span id="cb22-13"><a></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">'Nuevo cliente'</span>)<span class="op">;</span></span>
@@ -908,7 +912,7 @@
 <span id="cb23-4"><a></a></span>
 <span id="cb23-5"><a></a>    <span class="co">// Enviar a todos los clientes</span></span>
 <span id="cb23-6"><a></a>    wss<span class="op">.</span><span class="at">clients</span><span class="op">.</span><span class="fu">forEach</span>((client) <span class="kw">=&gt;</span> {</span>
-<span id="cb23-7"><a></a>      <span class="cf">if</span> (client<span class="op">.</span><span class="at">readyState</span> <span class="op">===</span> ws<span class="op">.</span><span class="at">OPEN</span>) {</span>
+<span id="cb23-7"><a></a>      <span class="cf">if</span> (client<span class="op">.</span><span class="at">readyState</span> <span class="op">===</span> <span class="bu">WebSocket</span><span class="op">.</span><span class="at">OPEN</span>) {</span>
 <span id="cb23-8"><a></a>        client<span class="op">.</span><span class="fu">send</span>(<span class="bu">JSON</span><span class="op">.</span><span class="fu">stringify</span>(data))<span class="op">;</span></span>
 <span id="cb23-9"><a></a>      }</span>
 <span id="cb23-10"><a></a>    })<span class="op">;</span></span>
@@ -923,7 +927,7 @@
 <p><strong>Tip</strong></p>
 </div>
 <div class="callout-content">
-<p>Verificar <code>readyState === ws.OPEN</code> antes de enviar</p>
+<p>Verificar <code>readyState === WebSocket.OPEN</code> antes de enviar (importando <code>WebSocket</code> de ‘ws’)</p>
 </div>
 </div>
 </div>
@@ -931,7 +935,7 @@
 <section id="ejemplo-servidor-de-chat" class="slide level2">
 <h2>Ejemplo: Servidor de Chat</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb24-1"><a></a><span class="im">import</span> express <span class="im">from</span> <span class="st">'express'</span><span class="op">;</span></span>
-<span id="cb24-2"><a></a><span class="im">import</span> { WebSocketServer } <span class="im">from</span> <span class="st">'ws'</span><span class="op">;</span></span>
+<span id="cb24-2"><a></a><span class="im">import</span> { WebSocketServer<span class="op">,</span> <span class="bu">WebSocket</span> } <span class="im">from</span> <span class="st">'ws'</span><span class="op">;</span></span>
 <span id="cb24-3"><a></a><span class="im">import</span> { createServer } <span class="im">from</span> <span class="st">'http'</span><span class="op">;</span></span>
 <span id="cb24-4"><a></a></span>
 <span id="cb24-5"><a></a><span class="kw">const</span> app <span class="op">=</span> <span class="fu">express</span>()<span class="op">;</span></span>
@@ -956,7 +960,7 @@
 <span id="cb24-24"><a></a></span>
 <span id="cb24-25"><a></a>      <span class="co">// Broadcast a todos</span></span>
 <span id="cb24-26"><a></a>      wss<span class="op">.</span><span class="at">clients</span><span class="op">.</span><span class="fu">forEach</span>((client) <span class="kw">=&gt;</span> {</span>
-<span id="cb24-27"><a></a>        <span class="cf">if</span> (client<span class="op">.</span><span class="at">readyState</span> <span class="op">===</span> ws<span class="op">.</span><span class="at">OPEN</span>) {</span>
+<span id="cb24-27"><a></a>        <span class="cf">if</span> (client<span class="op">.</span><span class="at">readyState</span> <span class="op">===</span> <span class="bu">WebSocket</span><span class="op">.</span><span class="at">OPEN</span>) {</span>
 <span id="cb24-28"><a></a>          client<span class="op">.</span><span class="fu">send</span>(<span class="bu">JSON</span><span class="op">.</span><span class="fu">stringify</span>(respuesta))<span class="op">;</span></span>
 <span id="cb24-29"><a></a>        }</span>
 <span id="cb24-30"><a></a>      })<span class="op">;</span></span>
@@ -976,30 +980,31 @@
 <h2>Gestionar Estado de Clientes</h2>
 <p><strong>Asociar datos a cada conexión</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb25-1"><a></a><span class="kw">const</span> clientes <span class="op">=</span> <span class="kw">new</span> <span class="bu">Map</span>()<span class="op">;</span></span>
-<span id="cb25-2"><a></a></span>
-<span id="cb25-3"><a></a>wss<span class="op">.</span><span class="fu">on</span>(<span class="st">'connection'</span><span class="op">,</span> (ws) <span class="kw">=&gt;</span> {</span>
-<span id="cb25-4"><a></a>  <span class="co">// Asignar ID único</span></span>
-<span id="cb25-5"><a></a>  <span class="kw">const</span> clientId <span class="op">=</span> <span class="bu">Date</span><span class="op">.</span><span class="fu">now</span>()<span class="op">;</span></span>
-<span id="cb25-6"><a></a>  clientes<span class="op">.</span><span class="fu">set</span>(ws<span class="op">,</span> { <span class="dt">id</span><span class="op">:</span> clientId<span class="op">,</span> <span class="dt">nombre</span><span class="op">:</span> <span class="kw">null</span> })<span class="op">;</span></span>
-<span id="cb25-7"><a></a></span>
-<span id="cb25-8"><a></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`Cliente </span><span class="sc">${</span>clientId<span class="sc">}</span><span class="vs"> conectado`</span>)<span class="op">;</span></span>
-<span id="cb25-9"><a></a></span>
-<span id="cb25-10"><a></a>  ws<span class="op">.</span><span class="fu">on</span>(<span class="st">'message'</span><span class="op">,</span> (message) <span class="kw">=&gt;</span> {</span>
-<span id="cb25-11"><a></a>    <span class="kw">const</span> datos <span class="op">=</span> <span class="bu">JSON</span><span class="op">.</span><span class="fu">parse</span>(message<span class="op">.</span><span class="fu">toString</span>())<span class="op">;</span></span>
-<span id="cb25-12"><a></a></span>
-<span id="cb25-13"><a></a>    <span class="co">// Guardar nombre del cliente</span></span>
-<span id="cb25-14"><a></a>    <span class="kw">const</span> clienteInfo <span class="op">=</span> clientes<span class="op">.</span><span class="fu">get</span>(ws)<span class="op">;</span></span>
-<span id="cb25-15"><a></a>    clienteInfo<span class="op">.</span><span class="at">nombre</span> <span class="op">=</span> datos<span class="op">.</span><span class="at">nombre</span><span class="op">;</span></span>
-<span id="cb25-16"><a></a></span>
-<span id="cb25-17"><a></a>    <span class="co">// Procesar mensaje...</span></span>
-<span id="cb25-18"><a></a>  })<span class="op">;</span></span>
-<span id="cb25-19"><a></a></span>
-<span id="cb25-20"><a></a>  ws<span class="op">.</span><span class="fu">on</span>(<span class="st">'close'</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
-<span id="cb25-21"><a></a>    <span class="kw">const</span> clienteInfo <span class="op">=</span> clientes<span class="op">.</span><span class="fu">get</span>(ws)<span class="op">;</span></span>
-<span id="cb25-22"><a></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`Cliente </span><span class="sc">${</span>clienteInfo<span class="op">.</span><span class="at">id</span><span class="sc">}</span><span class="vs"> desconectado`</span>)<span class="op">;</span></span>
-<span id="cb25-23"><a></a>    clientes<span class="op">.</span><span class="fu">delete</span>(ws)<span class="op">;</span></span>
-<span id="cb25-24"><a></a>  })<span class="op">;</span></span>
-<span id="cb25-25"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb25-2"><a></a><span class="kw">let</span> nextClientId <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb25-3"><a></a></span>
+<span id="cb25-4"><a></a>wss<span class="op">.</span><span class="fu">on</span>(<span class="st">'connection'</span><span class="op">,</span> (ws) <span class="kw">=&gt;</span> {</span>
+<span id="cb25-5"><a></a>  <span class="co">// Asignar ID único</span></span>
+<span id="cb25-6"><a></a>  <span class="kw">const</span> clientId <span class="op">=</span> nextClientId<span class="op">++;</span></span>
+<span id="cb25-7"><a></a>  clientes<span class="op">.</span><span class="fu">set</span>(ws<span class="op">,</span> { <span class="dt">id</span><span class="op">:</span> clientId<span class="op">,</span> <span class="dt">nombre</span><span class="op">:</span> <span class="kw">null</span> })<span class="op">;</span></span>
+<span id="cb25-8"><a></a></span>
+<span id="cb25-9"><a></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`Cliente </span><span class="sc">${</span>clientId<span class="sc">}</span><span class="vs"> conectado`</span>)<span class="op">;</span></span>
+<span id="cb25-10"><a></a></span>
+<span id="cb25-11"><a></a>  ws<span class="op">.</span><span class="fu">on</span>(<span class="st">'message'</span><span class="op">,</span> (message) <span class="kw">=&gt;</span> {</span>
+<span id="cb25-12"><a></a>    <span class="kw">const</span> datos <span class="op">=</span> <span class="bu">JSON</span><span class="op">.</span><span class="fu">parse</span>(message<span class="op">.</span><span class="fu">toString</span>())<span class="op">;</span></span>
+<span id="cb25-13"><a></a></span>
+<span id="cb25-14"><a></a>    <span class="co">// Guardar nombre del cliente</span></span>
+<span id="cb25-15"><a></a>    <span class="kw">const</span> clienteInfo <span class="op">=</span> clientes<span class="op">.</span><span class="fu">get</span>(ws)<span class="op">;</span></span>
+<span id="cb25-16"><a></a>    clienteInfo<span class="op">.</span><span class="at">nombre</span> <span class="op">=</span> datos<span class="op">.</span><span class="at">nombre</span><span class="op">;</span></span>
+<span id="cb25-17"><a></a></span>
+<span id="cb25-18"><a></a>    <span class="co">// Procesar mensaje...</span></span>
+<span id="cb25-19"><a></a>  })<span class="op">;</span></span>
+<span id="cb25-20"><a></a></span>
+<span id="cb25-21"><a></a>  ws<span class="op">.</span><span class="fu">on</span>(<span class="st">'close'</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb25-22"><a></a>    <span class="kw">const</span> clienteInfo <span class="op">=</span> clientes<span class="op">.</span><span class="fu">get</span>(ws)<span class="op">;</span></span>
+<span id="cb25-23"><a></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`Cliente </span><span class="sc">${</span>clienteInfo<span class="op">.</span><span class="at">id</span><span class="sc">}</span><span class="vs"> desconectado`</span>)<span class="op">;</span></span>
+<span id="cb25-24"><a></a>    clientes<span class="op">.</span><span class="fu">delete</span>(ws)<span class="op">;</span></span>
+<span id="cb25-25"><a></a>  })<span class="op">;</span></span>
+<span id="cb25-26"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </section></section>
 <section>
 <section id="integración-rest-websockets" class="title-slide slide level1 center">
@@ -1126,7 +1131,7 @@
 <section id="servidor-node.js" class="slide level2">
 <h2>Servidor Node.js</h2>
 <p><strong>Librería ws:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb28-1"><a></a><span class="im">import</span> { WebSocketServer } <span class="im">from</span> <span class="st">'ws'</span><span class="op">;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb28-1"><a></a><span class="im">import</span> { WebSocketServer<span class="op">,</span> <span class="bu">WebSocket</span> } <span class="im">from</span> <span class="st">'ws'</span><span class="op">;</span></span>
 <span id="cb28-2"><a></a><span class="kw">const</span> wss <span class="op">=</span> <span class="kw">new</span> <span class="fu">WebSocketServer</span>({ server })<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Eventos del servidor:</strong></p>
 <ul>
@@ -1137,7 +1142,7 @@
 </ul>
 <p><strong>Broadcast:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb29-1"><a></a>wss<span class="op">.</span><span class="at">clients</span><span class="op">.</span><span class="fu">forEach</span>(client <span class="kw">=&gt;</span> {</span>
-<span id="cb29-2"><a></a>  <span class="cf">if</span> (client<span class="op">.</span><span class="at">readyState</span> <span class="op">===</span> ws<span class="op">.</span><span class="at">OPEN</span>) {</span>
+<span id="cb29-2"><a></a>  <span class="cf">if</span> (client<span class="op">.</span><span class="at">readyState</span> <span class="op">===</span> <span class="bu">WebSocket</span><span class="op">.</span><span class="at">OPEN</span>) {</span>
 <span id="cb29-3"><a></a>    client<span class="op">.</span><span class="fu">send</span>(data)<span class="op">;</span></span>
 <span id="cb29-4"><a></a>  }</span>
 <span id="cb29-5"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>

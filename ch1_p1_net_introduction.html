@@ -328,7 +328,7 @@
 </section>
 <section id="jerarquía-de-redes" class="slide level2">
 <h2>Jerarquía de Redes</h2>
-<div class="cell" data-reveal="true" data-fig-width="5s" data-layout-align="default">
+<div class="cell" data-reveal="true" data-fig-width="5" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class=""><p></p>
@@ -400,7 +400,7 @@
 </section>
 <section id="ejemplo-mensaje-madrid-tokio" class="slide level2">
 <h2>Ejemplo: Mensaje Madrid → Tokio</h2>
-<p>Smartphone María (WiFI) en Madrid -&gt; Takeshi LAN en la Universidad de Tokyo</p>
+<p>Smartphone María (WiFi) en Madrid -&gt; Takeshi LAN en la Universidad de Tokio</p>
 <ol type="1">
 <li class="fragment"><strong>Origen LAN Madrid</strong>: Smartphone → Router WiFi</li>
 <li class="fragment"><strong>Router local → MAN</strong>: ISP local → MAN Madrid</li>
@@ -489,7 +489,7 @@
 <p><strong>Ejercicio</strong></p>
 </div>
 <div class="callout-content">
-<p>Prueba a ejecutar <code>ifconfig</code> en tu terminal MacOS/Linux o <code>ipconfig</code> en Windows. ¿Qué ves?.</p>
+<p>Prueba a ejecutar <code>ifconfig</code> en tu terminal MacOS/Linux o <code>ipconfig</code> en Windows. ¿Qué ves?</p>
 </div>
 </div>
 </div>
@@ -510,9 +510,9 @@
 <h1>Historia de Internet</h1>
 
 </section>
-<section id="linea-temporal-de-internet." class="slide level2">
-<h2>Linea temporal de Internet.</h2>
-<div class="cell" data-reveal="true" data-fig-width="6s" data-layout-align="default">
+<section id="línea-temporal-de-internet" class="slide level2">
+<h2>Línea temporal de Internet</h2>
+<div class="cell" data-reveal="true" data-fig-width="6" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class=""><p></p>
@@ -563,12 +563,12 @@
 </div>
 </div>
 <ul>
-<li>ARPANET se creo con fines militares</li>
-<li>Se creo y publicó el primer sitio web (CERN)</li>
+<li>ARPANET se creó con fines militares</li>
+<li>Se creó y publicó el primer sitio web (CERN)</li>
 <li>Burbuja punto com</li>
 <li>Creación de las Redes sociales.</li>
 <li>Inteligencia Artificial Generativa.</li>
-<li>De ~4 dispositivos (1969) a &gt;100.000 millones (2025) en 50 años.</li>
+<li>De ~4 dispositivos (1969) a &gt;20.000 millones (2025) en más de 50 años.</li>
 </ul>
 </section></section>
 <section>
@@ -735,7 +735,7 @@ graph LR
 <div>
 <pre class="mermaid mermaid-js">graph LR
     T1A["Tier 1&lt;br/&gt;🌍 Cogent"]
-    T1B["Tier 1&lt;br/&gt;🌍 Level 3"]
+    T1B["Tier 1&lt;br/&gt;🌍 Lumen"]
     
     T2A["Tier 2&lt;br/&gt;🇪🇸 Movistar"]
     T2B["Tier 2&lt;br/&gt;🇪🇸 Vodafone"]
@@ -999,7 +999,7 @@ graph LR
 <h2>Modelos OSI vs TCP/IP</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div style="width: 35vw; height auto; overflow: visible;">
+<div style="width: 35vw; height: auto; overflow: visible;">
 <p><img data-src="resources/tcp_osi.svg"></p>
 </div>
 </div><div class="column" style="width:50%;">
@@ -1009,7 +1009,7 @@ graph LR
 </ul>
 </div></div>
 <blockquote>
-<p>⚠️ <strong>Nota</strong>: TCP/IP no es un protocolo, hace referencia a una pila de protocolos. Además, no tiene porque utilizar necesariamente TCP, podría ser UDP.</p>
+<p>⚠️ <strong>Nota</strong>: TCP/IP no es un protocolo, hace referencia a una pila de protocolos. Además, no tiene por qué utilizar necesariamente TCP, podría ser UDP.</p>
 </blockquote>
 <aside class="notes">
 <p>TCP/IP es superior a OSI porque es simple, práctico y probado. Mientras OSI tiene 7 capas teóricas diseñadas en comités académicos, TCP/IP usa solo 4 capas que realmente se necesitan y ha funcionado en Internet durante más de 50 años. TCP/IP es más eficiente (menos overhead), más flexible (se adapta fácilmente), y tiene adopción masiva con ecosistemas completos de hardware y software. OSI llegó tarde al mercado cuando TCP/IP ya dominaba, y sus capas extra (como Sesión y Presentación) añaden complejidad innecesaria para la mayoría de aplicaciones reales. En resumen: OSI es el modelo perfecto para estudiar redes, pero TCP/IP es lo que realmente mueve Internet.</p>
@@ -1101,7 +1101,7 @@ graph LR
 <p><strong>Ejercicio</strong></p>
 </div>
 <div class="callout-content">
-<p>Prueba a ejecutar <code>ping www.google.es</code> en tu terminal. ¿Qué ves?.</p>
+<p>Prueba a ejecutar <code>ping www.google.es</code> en tu terminal. ¿Qué ves?</p>
 </div>
 </div>
 </div>
@@ -1248,7 +1248,7 @@ graph LR
 <span id="cb2-830"><a></a>time <span class="op">=</span> {</span>
 <span id="cb2-831"><a></a>  <span class="kw">let</span> t0 <span class="op">=</span> <span class="bu">Date</span><span class="op">.</span><span class="fu">now</span>()<span class="op">;</span></span>
 <span id="cb2-832"><a></a>  <span class="cf">while</span> (<span class="kw">true</span>) {</span>
-<span id="cb2-833"><a></a>    <span class="kw">yield</span> (<span class="bu">Date</span><span class="op">.</span><span class="fu">now</span>() <span class="op">-</span> t0) <span class="op">/</span> <span class="dv">100</span><span class="op">;</span> <span class="co">// en decimas de segundo</span></span>
+<span id="cb2-833"><a></a>    <span class="kw">yield</span> (<span class="bu">Date</span><span class="op">.</span><span class="fu">now</span>() <span class="op">-</span> t0) <span class="op">/</span> <span class="dv">100</span><span class="op">;</span> <span class="co">// en décimas de segundo</span></span>
 <span id="cb2-834"><a></a>    <span class="cf">await</span> Promises<span class="op">.</span><span class="fu">tick</span>(<span class="dv">50</span>)<span class="op">;</span></span>
 <span id="cb2-835"><a></a>  }</span>
 <span id="cb2-836"><a></a>}</span>
@@ -1334,7 +1334,7 @@ graph LR
 <p>RTT (Round trip time): Tiempo total que tarda un paquete en ir desde el origen hasta el destino y volver de vuelta (ida + vuelta).</p>
 </blockquote>
 <ul>
-<li>La latencia no tiene porque ser simétrica.</li>
+<li>La latencia no tiene por qué ser simétrica.</li>
 <li>Generalmente la descarga es más rápida que la subida.</li>
 <li>Por lo tanto, el RTT es un valor muy importante en aplicaciones interactivas.</li>
 </ul>
@@ -1463,7 +1463,7 @@ graph LR
 <h2>Resumen</h2>
 <ul>
 <li class="fragment">Internet es un <strong>sistema distribuido y descentralizado</strong></li>
-<li class="fragment">Evolución desde 4 hosts (1969) a &gt;100B dispositivos (2025)</li>
+<li class="fragment">Evolución desde 4 hosts (1969) a &gt;20.000 millones de dispositivos (2025)</li>
 <li class="fragment"><strong>Infraestructura jerárquica</strong>: PAN → LAN → MAN → WAN → Internet</li>
 <li class="fragment"><strong>Modelos de capas</strong>: OSI (teórico) vs TCP/IP (práctico)</li>
 <li class="fragment"><strong>Rendimiento</strong>: Balance entre latencia y throughput</li>
@@ -1789,7 +1789,7 @@ graph LR
     }
     </style>
     <script type="ojs-module-contents">
-    eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Ii8vIFNsaWRlcnMgYWdydXBhZG9zIGVuIHVuIGZvcm11bGFyaW9cbnZpZXdvZiBzZXR0aW5ncyA9IElucHV0cy5mb3JtKHtcbiAgXCJUYW1hw7FvIHRvdGFsXCI6IElucHV0cy5yYW5nZShbNTAsIDUwMDBdLCB7dmFsdWU6IDIwMCwgc3RlcDogMTAsIGxhYmVsOiBcIlRhbWHDsW8gdG90YWxcIn0sKSxcbiAgXCJMYXRlbmNpYSBBXCI6IElucHV0cy5yYW5nZShbMSwgNTBdLCB7dmFsdWU6IDEsIHN0ZXA6IDAuMSwgbGFiZWw6IFwiTGF0ZW5jaWEgKEEpXCJ9KSxcbiAgXCJUaHJvdWdocHV0IEFcIjogSW5wdXRzLnJhbmdlKFsxLCA1MF0sIHt2YWx1ZTogMTAsIHN0ZXA6IDEsIGxhYmVsOlwiVGhyb3VnaHB1dCAoQSlcIn0pLFxuICBcIkxhdGVuY2lhIEJcIjogSW5wdXRzLnJhbmdlKFsxLCA1MF0sIHt2YWx1ZTogMiwgc3RlcDogMC4xLCBsYWJlbDpcIkxhdGVuY2lhIChCKVwifSksXG4gIFwiVGhyb3VnaHB1dCBCXCI6IElucHV0cy5yYW5nZShbMSwgNTBdLCB7dmFsdWU6IDIwLCBzdGVwOiAxLCBsYWJlbDpcIlRocm91Z2hwdXQgQlwifSlcbn0pXG5cbi8vIEV4dHJhZW1vcyB2YXJpYWJsZXMgZGVsIGZvcm11bGFyaW9cbnRvdGFsRGF0YSA9IHNldHRpbmdzW1wiVGFtYcOxbyB0b3RhbFwiXVxubGF0ZW5jeUEgPSBzZXR0aW5nc1tcIkxhdGVuY2lhIEFcIl1cbnRocm91Z2hwdXRBID0gc2V0dGluZ3NbXCJUaHJvdWdocHV0IEFcIl1cbmxhdGVuY3lCID0gc2V0dGluZ3NbXCJMYXRlbmNpYSBCXCJdXG50aHJvdWdocHV0QiA9IHNldHRpbmdzW1wiVGhyb3VnaHB1dCBCXCJdXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiIvLyBGdW5jacOzbiBwcm9ncmVzb1xuZnVuY3Rpb24gcHJvZ3Jlc3ModCwgbGF0ZW5jeSwgdGhyb3VnaHB1dCwgdG90YWwpIHtcbiAgaWYgKHQgPCBsYXRlbmN5KSByZXR1cm4gMDtcbiAgcmV0dXJuIE1hdGgubWluKDEwMCwgKCh0IC0gbGF0ZW5jeSkgKiB0aHJvdWdocHV0IC8gdG90YWwpICogMTAwKTtcbn1cblxuLy8gUmVsb2ogYW5pbWFkb1xudGltZSA9IHtcbiAgbGV0IHQwID0gRGF0ZS5ub3coKTtcbiAgd2hpbGUgKHRydWUpIHtcbiAgICB5aWVsZCAoRGF0ZS5ub3coKSAtIHQwKSAvIDEwMDsgLy8gZW4gZGVjaW1hcyBkZSBzZWd1bmRvXG4gICAgYXdhaXQgUHJvbWlzZXMudGljayg1MCk7XG4gIH1cbn1cblxuLy8gVGllbXBvIG3DoXhpbW9cbm1heFRpbWUgPSBNYXRoLm1heChsYXRlbmN5QSArIHRvdGFsRGF0YS90aHJvdWdocHV0QSwgbGF0ZW5jeUIgKyB0b3RhbERhdGEvdGhyb3VnaHB1dEIpXG5cbi8vIFByb2dyZXNvc1xucHJvZ0EgPSBwcm9ncmVzcyh0aW1lICUgbWF4VGltZSwgbGF0ZW5jeUEsIHRocm91Z2hwdXRBLCB0b3RhbERhdGEpXG5wcm9nQiA9IHByb2dyZXNzKHRpbWUgJSBtYXhUaW1lLCBsYXRlbmN5QiwgdGhyb3VnaHB1dEIsIHRvdGFsRGF0YSlcblxuLy8gR3LDoWZpY28gY29uIFBsb3RcblBsb3QucGxvdCh7XG4gIHk6IHtkb21haW46IFswLCAxMDBdLCBsYWJlbDogXCIlIGNvbXBsZXRhZG9cIn0sXG4gIHg6IHtsYWJlbDogXCJUaWVtcG8gKHMpXCJ9LFxuICBjb2xvcjoge2xlZ2VuZDogdHJ1ZSwgZG9tYWluOiBbXCJBXCIsIFwiQlwiXSwgcmFuZ2U6IFtcImJsdWVcIiwgXCJyZWRcIl19LFxuICBtYXJrczogW1xuICAgIFBsb3QubGluZShkMy5yYW5nZSgwLCBtYXhUaW1lLCAwLjEpLm1hcCh0ID0+ICh7dCwgeTogcHJvZ3Jlc3ModCwgbGF0ZW5jeUEsIHRocm91Z2hwdXRBLCB0b3RhbERhdGEpLCBzZXJpZXM6IFwiQVwifSkpLCB7eDogXCJ0XCIsIHk6IFwieVwiLCBzdHJva2U6IFwic2VyaWVzXCJ9KSxcbiAgICBQbG90LmxpbmUoZDMucmFuZ2UoMCwgbWF4VGltZSwgMC4xKS5tYXAodCA9PiAoe3QsIHk6IHByb2dyZXNzKHQsIGxhdGVuY3lCLCB0aHJvdWdocHV0QiwgdG90YWxEYXRhKSwgc2VyaWVzOiBcIkJcIn0pKSwge3g6IFwidFwiLCB5OiBcInlcIiwgc3Ryb2tlOiBcInNlcmllc1wifSksXG4gICAgUGxvdC5kb3QoW3t0OiB0aW1lICUgbWF4VGltZSwgeTogcHJvZ0EsIHNlcmllczogXCJBXCJ9XSwge3g6IFwidFwiLCB5OiBcInlcIiwgZmlsbDogXCJzZXJpZXNcIiwgcjogNX0pLFxuICAgIFBsb3QuZG90KFt7dDogdGltZSAlIG1heFRpbWUsIHk6IHByb2dCLCBzZXJpZXM6IFwiQlwifV0sIHt4OiBcInRcIiwgeTogXCJ5XCIsIGZpbGw6IFwic2VyaWVzXCIsIHI6IDV9KVxuICBdXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdzZXR0aW5ncycpIn1dfQ==
+    eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Ii8vIFNsaWRlcnMgYWdydXBhZG9zIGVuIHVuIGZvcm11bGFyaW9cbnZpZXdvZiBzZXR0aW5ncyA9IElucHV0cy5mb3JtKHtcbiAgXCJUYW1hw7FvIHRvdGFsXCI6IElucHV0cy5yYW5nZShbNTAsIDUwMDBdLCB7dmFsdWU6IDIwMCwgc3RlcDogMTAsIGxhYmVsOiBcIlRhbWHDsW8gdG90YWxcIn0sKSxcbiAgXCJMYXRlbmNpYSBBXCI6IElucHV0cy5yYW5nZShbMSwgNTBdLCB7dmFsdWU6IDEsIHN0ZXA6IDAuMSwgbGFiZWw6IFwiTGF0ZW5jaWEgKEEpXCJ9KSxcbiAgXCJUaHJvdWdocHV0IEFcIjogSW5wdXRzLnJhbmdlKFsxLCA1MF0sIHt2YWx1ZTogMTAsIHN0ZXA6IDEsIGxhYmVsOlwiVGhyb3VnaHB1dCAoQSlcIn0pLFxuICBcIkxhdGVuY2lhIEJcIjogSW5wdXRzLnJhbmdlKFsxLCA1MF0sIHt2YWx1ZTogMiwgc3RlcDogMC4xLCBsYWJlbDpcIkxhdGVuY2lhIChCKVwifSksXG4gIFwiVGhyb3VnaHB1dCBCXCI6IElucHV0cy5yYW5nZShbMSwgNTBdLCB7dmFsdWU6IDIwLCBzdGVwOiAxLCBsYWJlbDpcIlRocm91Z2hwdXQgQlwifSlcbn0pXG5cbi8vIEV4dHJhZW1vcyB2YXJpYWJsZXMgZGVsIGZvcm11bGFyaW9cbnRvdGFsRGF0YSA9IHNldHRpbmdzW1wiVGFtYcOxbyB0b3RhbFwiXVxubGF0ZW5jeUEgPSBzZXR0aW5nc1tcIkxhdGVuY2lhIEFcIl1cbnRocm91Z2hwdXRBID0gc2V0dGluZ3NbXCJUaHJvdWdocHV0IEFcIl1cbmxhdGVuY3lCID0gc2V0dGluZ3NbXCJMYXRlbmNpYSBCXCJdXG50aHJvdWdocHV0QiA9IHNldHRpbmdzW1wiVGhyb3VnaHB1dCBCXCJdXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiIvLyBGdW5jacOzbiBwcm9ncmVzb1xuZnVuY3Rpb24gcHJvZ3Jlc3ModCwgbGF0ZW5jeSwgdGhyb3VnaHB1dCwgdG90YWwpIHtcbiAgaWYgKHQgPCBsYXRlbmN5KSByZXR1cm4gMDtcbiAgcmV0dXJuIE1hdGgubWluKDEwMCwgKCh0IC0gbGF0ZW5jeSkgKiB0aHJvdWdocHV0IC8gdG90YWwpICogMTAwKTtcbn1cblxuLy8gUmVsb2ogYW5pbWFkb1xudGltZSA9IHtcbiAgbGV0IHQwID0gRGF0ZS5ub3coKTtcbiAgd2hpbGUgKHRydWUpIHtcbiAgICB5aWVsZCAoRGF0ZS5ub3coKSAtIHQwKSAvIDEwMDsgLy8gZW4gZMOpY2ltYXMgZGUgc2VndW5kb1xuICAgIGF3YWl0IFByb21pc2VzLnRpY2soNTApO1xuICB9XG59XG5cbi8vIFRpZW1wbyBtw6F4aW1vXG5tYXhUaW1lID0gTWF0aC5tYXgobGF0ZW5jeUEgKyB0b3RhbERhdGEvdGhyb3VnaHB1dEEsIGxhdGVuY3lCICsgdG90YWxEYXRhL3Rocm91Z2hwdXRCKVxuXG4vLyBQcm9ncmVzb3NcbnByb2dBID0gcHJvZ3Jlc3ModGltZSAlIG1heFRpbWUsIGxhdGVuY3lBLCB0aHJvdWdocHV0QSwgdG90YWxEYXRhKVxucHJvZ0IgPSBwcm9ncmVzcyh0aW1lICUgbWF4VGltZSwgbGF0ZW5jeUIsIHRocm91Z2hwdXRCLCB0b3RhbERhdGEpXG5cbi8vIEdyw6FmaWNvIGNvbiBQbG90XG5QbG90LnBsb3Qoe1xuICB5OiB7ZG9tYWluOiBbMCwgMTAwXSwgbGFiZWw6IFwiJSBjb21wbGV0YWRvXCJ9LFxuICB4OiB7bGFiZWw6IFwiVGllbXBvIChzKVwifSxcbiAgY29sb3I6IHtsZWdlbmQ6IHRydWUsIGRvbWFpbjogW1wiQVwiLCBcIkJcIl0sIHJhbmdlOiBbXCJibHVlXCIsIFwicmVkXCJdfSxcbiAgbWFya3M6IFtcbiAgICBQbG90LmxpbmUoZDMucmFuZ2UoMCwgbWF4VGltZSwgMC4xKS5tYXAodCA9PiAoe3QsIHk6IHByb2dyZXNzKHQsIGxhdGVuY3lBLCB0aHJvdWdocHV0QSwgdG90YWxEYXRhKSwgc2VyaWVzOiBcIkFcIn0pKSwge3g6IFwidFwiLCB5OiBcInlcIiwgc3Ryb2tlOiBcInNlcmllc1wifSksXG4gICAgUGxvdC5saW5lKGQzLnJhbmdlKDAsIG1heFRpbWUsIDAuMSkubWFwKHQgPT4gKHt0LCB5OiBwcm9ncmVzcyh0LCBsYXRlbmN5QiwgdGhyb3VnaHB1dEIsIHRvdGFsRGF0YSksIHNlcmllczogXCJCXCJ9KSksIHt4OiBcInRcIiwgeTogXCJ5XCIsIHN0cm9rZTogXCJzZXJpZXNcIn0pLFxuICAgIFBsb3QuZG90KFt7dDogdGltZSAlIG1heFRpbWUsIHk6IHByb2dBLCBzZXJpZXM6IFwiQVwifV0sIHt4OiBcInRcIiwgeTogXCJ5XCIsIGZpbGw6IFwic2VyaWVzXCIsIHI6IDV9KSxcbiAgICBQbG90LmRvdChbe3Q6IHRpbWUgJSBtYXhUaW1lLCB5OiBwcm9nQiwgc2VyaWVzOiBcIkJcIn1dLCB7eDogXCJ0XCIsIHk6IFwieVwiLCBmaWxsOiBcInNlcmllc1wiLCByOiA1fSlcbiAgXVxufSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnc2V0dGluZ3MnKSJ9XX0=
     </script>
     <script type="module">
     if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }

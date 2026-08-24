@@ -405,7 +405,7 @@
 <ul>
 <li>Punto de conexión bidireccional</li>
 <li>Abstracción de detalles de bajo nivel</li>
-<li>API introducida en BSD4.1 UNIX (1981)</li>
+<li>API introducida en BSD 4.2 UNIX (1983)</li>
 <li>Basada en paradigma cliente/servidor</li>
 </ul>
 </div><div class="column" style="width:50%;">
@@ -496,7 +496,7 @@
 <span id="cb5-17"><a></a>})<span class="op">;</span></span>
 <span id="cb5-18"><a></a></span>
 <span id="cb5-19"><a></a><span class="co">// Cerrar conexión</span></span>
-<span id="cb5-20"><a></a>socket<span class="op">.</span><span class="fu">close</span>()<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-20"><a></a>socket<span class="op">.</span><span class="fu">end</span>()<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="sockets-udp" class="slide level2">
 <h2>Sockets UDP</h2>
@@ -729,7 +729,7 @@
 <p><strong>Ejemplos:</strong></p>
 <ul>
 <li>World of Warcraft</li>
-<li>Counter-Strike: GO</li>
+<li>Counter-Strike 2</li>
 <li>League of Legends</li>
 <li>Fortnite Battle Royale</li>
 </ul>
@@ -1034,7 +1034,7 @@
     Note over C,S: Más recursos pueden solicitarse...
     
     C-&gt;&gt;S: 8. Connection: close (cuando termine)    
-    Note over C,S: Tiempo total: 1 RTT + transferencia
+    Note over C,S: Tiempo total: 3 RTT + transferencia
 </pre>
 </div>
 </div>
@@ -1065,7 +1065,7 @@
 <ul>
 <li><strong>Propias</strong>: De la web navegada</li>
 <li><strong>Terceros</strong>: Servicios externos</li>
-<li><strong>Permanentes</strong>: Sin expiración</li>
+<li><strong>Permanentes</strong>: Con fecha de expiración</li>
 <li><strong>Sesión</strong>: Expiran al cerrar</li>
 </ul>
 </div><div class="column" style="width:50%;">
@@ -1201,7 +1201,7 @@
 <li>Establecimiento 0-RTT</li>
 <li>Migración de conexión transparente</li>
 <li>Control de congestión mejorado</li>
-<li>Forward Error Correction</li>
+<li>Cifrado integrado (TLS 1.3)</li>
 </ul>
 <p><strong>Desarrollado por:</strong></p>
 <ul>

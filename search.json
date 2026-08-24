@@ -32,7 +32,7 @@
     "href": "ch5_websockets.html#websockets-como-estándar",
     "title": "WebSockets",
     "section": "WebSockets como Estándar",
-    "text": "WebSockets como Estándar\nRFC 6455 sobre socket TCP\nVentajas:\n\nUsa puerto 80 (mismo que HTTP)\nMultiplexado: múltiples comunicaciones por puerto\nEvita problemas con firewalls\nPensado para navegadores y servidores web\n\n\n\n\n\n\n\nNota\n\n\nFunciona sobre HTTP pero puede usar protocolo propio"
+    "text": "WebSockets como Estándar\nRFC 6455 sobre socket TCP\nVentajas:\n\nUsa los puertos estándar 80/443 (los mismos que HTTP/HTTPS)\nEvita problemas con firewalls y proxies\nPensado para navegadores y servidores web\n\n\n\n\n\n\n\nNota\n\n\nFunciona sobre HTTP pero puede usar protocolo propio"
   },
   {
     "objectID": "ch5_websockets.html#protocolos-websocket",
@@ -46,14 +46,14 @@
     "href": "ch5_websockets.html#handshake-inicial",
     "title": "WebSockets",
     "section": "Handshake Inicial",
-    "text": "Handshake Inicial\nLa negociación comienza sobre HTTP\nPetición del cliente:\nGET /demo HTTP/1.1\nHost: example.com\nConnection: Upgrade\nUpgrade: WebSocket\nOrigin: http://example.com\n\nConnection: Upgrade → queremos cambiar de protocolo\nUpgrade: WebSocket → especifica WebSocket\nOrigin → origen de la petición (seguridad)"
+    "text": "Handshake Inicial\nLa negociación comienza sobre HTTP\nPetición del cliente:\nGET /demo HTTP/1.1\nHost: example.com\nConnection: Upgrade\nUpgrade: websocket\nSec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\nSec-WebSocket-Version: 13\nOrigin: http://example.com\n\nConnection: Upgrade → queremos cambiar de protocolo\nUpgrade: websocket → especifica WebSocket\nSec-WebSocket-Key → valor aleatorio para verificar el handshake\nSec-WebSocket-Version: 13 → versión del protocolo (RFC 6455)\nOrigin → origen de la petición (seguridad)"
   },
   {
     "objectID": "ch5_websockets.html#respuesta-del-servidor",
     "href": "ch5_websockets.html#respuesta-del-servidor",
     "title": "WebSockets",
     "section": "Respuesta del Servidor",
-    "text": "Respuesta del Servidor\nSi acepta la conexión:\nHTTP/1.1 101 WebSocket Protocol Handshake\nUpgrade: WebSocket\nConnection: Upgrade\nSec-WebSocket-Origin: http://example.com\nSec-WebSocket-Location: ws://example.com/demo\n\nCódigo 101: cambio de protocolo aceptado\nSec-WebSocket-Location → nueva ubicación con ws://\n\n\n\n\n\n\n\nImportante\n\n\nDespués del handshake, HTTP se transforma en WebSocket"
+    "text": "Respuesta del Servidor\nSi acepta la conexión:\nHTTP/1.1 101 Switching Protocols\nUpgrade: websocket\nConnection: Upgrade\nSec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=\n\nCódigo 101: cambio de protocolo aceptado\nSec-WebSocket-Accept → derivado de Sec-WebSocket-Key (demuestra que el servidor entiende WebSocket)\n\n\n\n\n\n\n\nImportante\n\n\nDespués del handshake, HTTP se transforma en WebSocket"
   },
   {
     "objectID": "ch5_websockets.html#uso-práctico",
@@ -116,7 +116,7 @@
     "href": "ch5_websockets.html#event-listeners---onclose",
     "title": "WebSockets",
     "section": "Event Listeners - onclose",
-    "text": "Event Listeners - onclose\nSe ejecuta cuando la conexión se cierra\nconnection.onclose = function(event) {\n  console.log('Desconectado del servidor');\n  console.log('Código de cierre:', event.code);\n\n  // Notificar al usuario\n  alert('Se ha perdido la conexión');\n\n  // Intentar reconectar después de 3 segundos\n  setTimeout(function() {\n    connection = new WebSocket('ws://127.0.0.1:8080/echo');\n    configurarListeners(connection);\n  }, 3000);\n};\nRazones del cierre:\n\nLlamamos a connection.close()\nEl servidor cierra la conexión\nSe pierde la conexión de red"
+    "text": "Event Listeners - onclose\nSe ejecuta cuando la conexión se cierra\nconnection.onclose = function(event) {\n  console.log('Desconectado del servidor');\n  console.log('Código de cierre:', event.code);\n\n  // Notificar al usuario\n  alert('Se ha perdido la conexión');\n\n  // Intentar reconectar después de 3 segundos\n  setTimeout(function() {\n    const nuevaConexion = new WebSocket('ws://127.0.0.1:8080/echo');\n    // configurarListeners reasigna los manejadores onopen, onmessage,\n    // onerror y onclose (vistos en este tema) a la nueva conexión\n    configurarListeners(nuevaConexion);\n  }, 3000);\n};\nRazones del cierre:\n\nLlamamos a connection.close()\nEl servidor cierra la conexión\nSe pierde la conexión de red"
   },
   {
     "objectID": "ch5_websockets.html#ejemplo-completo---cliente",
@@ -179,28 +179,28 @@
     "href": "ch5_websockets.html#ejemplo-servidor-echo",
     "title": "WebSockets",
     "section": "Ejemplo: Servidor Echo",
-    "text": "Ejemplo: Servidor Echo\nDevuelve cualquier mensaje recibido\nimport express from 'express';\nimport { WebSocketServer } from 'ws';\nimport { createServer } from 'http';\n\nconst app = express();\nconst server = createServer(app);\n\napp.use(express.static('public'));\n\nconst wss = new WebSocketServer({ server });\n\nwss.on('connection', (ws) =&gt; {\n  console.log('Nuevo cliente');\n\n  ws.on('message', (message) =&gt; {\n    const data = message.toString();\n    console.log('Recibido:', data);\n\n    // Echo: devolver al cliente\n    ws.send(`Echo: ${data}`);\n  });\n\n  ws.on('close', () =&gt; console.log('Cliente desconectado'));\n  ws.on('error', (error) =&gt; console.error('Error:', error));\n});\n\nserver.listen(8080, () =&gt; console.log('Servidor en puerto 8080'));"
+    "text": "Ejemplo: Servidor Echo\nDevuelve cualquier mensaje recibido\nimport express from 'express';\nimport { WebSocketServer } from 'ws';\nimport { createServer } from 'http';\n\nconst app = express();\nconst server = createServer(app);\n\napp.use(express.static('public'));\n\nconst wss = new WebSocketServer({ server, path: '/echo' });\n\nwss.on('connection', (ws) =&gt; {\n  console.log('Nuevo cliente');\n\n  ws.on('message', (message) =&gt; {\n    const data = message.toString();\n    console.log('Recibido:', data);\n\n    // Echo: devolver al cliente\n    ws.send(`Echo: ${data}`);\n  });\n\n  ws.on('close', () =&gt; console.log('Cliente desconectado'));\n  ws.on('error', (error) =&gt; console.error('Error:', error));\n});\n\nserver.listen(8080, () =&gt; console.log('Servidor en puerto 8080'));"
   },
   {
     "objectID": "ch5_websockets.html#broadcast-enviar-a-todos",
     "href": "ch5_websockets.html#broadcast-enviar-a-todos",
     "title": "WebSockets",
     "section": "Broadcast: Enviar a Todos",
-    "text": "Broadcast: Enviar a Todos\nEnviar mensaje a todos los clientes conectados\nwss.on('connection', (ws) =&gt; {\n  ws.on('message', (message) =&gt; {\n    const data = JSON.parse(message.toString());\n\n    // Enviar a todos los clientes\n    wss.clients.forEach((client) =&gt; {\n      if (client.readyState === ws.OPEN) {\n        client.send(JSON.stringify(data));\n      }\n    });\n  });\n});\n\n\n\n\n\n\nTip\n\n\nVerificar readyState === ws.OPEN antes de enviar"
+    "text": "Broadcast: Enviar a Todos\nEnviar mensaje a todos los clientes conectados\nwss.on('connection', (ws) =&gt; {\n  ws.on('message', (message) =&gt; {\n    const data = JSON.parse(message.toString());\n\n    // Enviar a todos los clientes\n    wss.clients.forEach((client) =&gt; {\n      if (client.readyState === WebSocket.OPEN) {\n        client.send(JSON.stringify(data));\n      }\n    });\n  });\n});\n\n\n\n\n\n\nTip\n\n\nVerificar readyState === WebSocket.OPEN antes de enviar (importando WebSocket de ‘ws’)"
   },
   {
     "objectID": "ch5_websockets.html#ejemplo-servidor-de-chat",
     "href": "ch5_websockets.html#ejemplo-servidor-de-chat",
     "title": "WebSockets",
     "section": "Ejemplo: Servidor de Chat",
-    "text": "Ejemplo: Servidor de Chat\nimport express from 'express';\nimport { WebSocketServer } from 'ws';\nimport { createServer } from 'http';\n\nconst app = express();\nconst server = createServer(app);\napp.use(express.static('public'));\n\nconst wss = new WebSocketServer({ server });\n\nwss.on('connection', (ws) =&gt; {\n  console.log('Cliente conectado al chat');\n\n  ws.on('message', (message) =&gt; {\n    try {\n      const datos = JSON.parse(message.toString());\n      console.log(`${datos.nombre}: ${datos.mensaje}`);\n\n      const respuesta = {\n        nombre: datos.nombre,\n        mensaje: datos.mensaje,\n        timestamp: new Date().toISOString()\n      };\n\n      // Broadcast a todos\n      wss.clients.forEach((client) =&gt; {\n        if (client.readyState === ws.OPEN) {\n          client.send(JSON.stringify(respuesta));\n        }\n      });\n    } catch (error) {\n      console.error('Error al parsear:', error);\n      ws.send(JSON.stringify({ error: 'Formato inválido' }));\n    }\n  });\n\n  ws.on('close', () =&gt; console.log('Cliente desconectado'));\n  ws.on('error', (error) =&gt; console.error('Error:', error));\n});\n\nserver.listen(8080, () =&gt; console.log('Chat en puerto 8080'));"
+    "text": "Ejemplo: Servidor de Chat\nimport express from 'express';\nimport { WebSocketServer, WebSocket } from 'ws';\nimport { createServer } from 'http';\n\nconst app = express();\nconst server = createServer(app);\napp.use(express.static('public'));\n\nconst wss = new WebSocketServer({ server });\n\nwss.on('connection', (ws) =&gt; {\n  console.log('Cliente conectado al chat');\n\n  ws.on('message', (message) =&gt; {\n    try {\n      const datos = JSON.parse(message.toString());\n      console.log(`${datos.nombre}: ${datos.mensaje}`);\n\n      const respuesta = {\n        nombre: datos.nombre,\n        mensaje: datos.mensaje,\n        timestamp: new Date().toISOString()\n      };\n\n      // Broadcast a todos\n      wss.clients.forEach((client) =&gt; {\n        if (client.readyState === WebSocket.OPEN) {\n          client.send(JSON.stringify(respuesta));\n        }\n      });\n    } catch (error) {\n      console.error('Error al parsear:', error);\n      ws.send(JSON.stringify({ error: 'Formato inválido' }));\n    }\n  });\n\n  ws.on('close', () =&gt; console.log('Cliente desconectado'));\n  ws.on('error', (error) =&gt; console.error('Error:', error));\n});\n\nserver.listen(8080, () =&gt; console.log('Chat en puerto 8080'));"
   },
   {
     "objectID": "ch5_websockets.html#gestionar-estado-de-clientes",
     "href": "ch5_websockets.html#gestionar-estado-de-clientes",
     "title": "WebSockets",
     "section": "Gestionar Estado de Clientes",
-    "text": "Gestionar Estado de Clientes\nAsociar datos a cada conexión\nconst clientes = new Map();\n\nwss.on('connection', (ws) =&gt; {\n  // Asignar ID único\n  const clientId = Date.now();\n  clientes.set(ws, { id: clientId, nombre: null });\n\n  console.log(`Cliente ${clientId} conectado`);\n\n  ws.on('message', (message) =&gt; {\n    const datos = JSON.parse(message.toString());\n\n    // Guardar nombre del cliente\n    const clienteInfo = clientes.get(ws);\n    clienteInfo.nombre = datos.nombre;\n\n    // Procesar mensaje...\n  });\n\n  ws.on('close', () =&gt; {\n    const clienteInfo = clientes.get(ws);\n    console.log(`Cliente ${clienteInfo.id} desconectado`);\n    clientes.delete(ws);\n  });\n});"
+    "text": "Gestionar Estado de Clientes\nAsociar datos a cada conexión\nconst clientes = new Map();\nlet nextClientId = 1;\n\nwss.on('connection', (ws) =&gt; {\n  // Asignar ID único\n  const clientId = nextClientId++;\n  clientes.set(ws, { id: clientId, nombre: null });\n\n  console.log(`Cliente ${clientId} conectado`);\n\n  ws.on('message', (message) =&gt; {\n    const datos = JSON.parse(message.toString());\n\n    // Guardar nombre del cliente\n    const clienteInfo = clientes.get(ws);\n    clienteInfo.nombre = datos.nombre;\n\n    // Procesar mensaje...\n  });\n\n  ws.on('close', () =&gt; {\n    const clienteInfo = clientes.get(ws);\n    console.log(`Cliente ${clienteInfo.id} desconectado`);\n    clientes.delete(ws);\n  });\n});"
   },
   {
     "objectID": "ch5_websockets.html#arquitectura-híbrida",
@@ -242,7 +242,7 @@
     "href": "ch5_websockets.html#servidor-node.js",
     "title": "WebSockets",
     "section": "Servidor Node.js",
-    "text": "Servidor Node.js\nLibrería ws:\nimport { WebSocketServer } from 'ws';\nconst wss = new WebSocketServer({ server });\nEventos del servidor:\n\nconnection - nuevo cliente conectado\nmessage - mensaje del cliente\nclose - cliente desconectado\nerror - error en conexión\n\nBroadcast:\nwss.clients.forEach(client =&gt; {\n  if (client.readyState === ws.OPEN) {\n    client.send(data);\n  }\n});"
+    "text": "Servidor Node.js\nLibrería ws:\nimport { WebSocketServer, WebSocket } from 'ws';\nconst wss = new WebSocketServer({ server });\nEventos del servidor:\n\nconnection - nuevo cliente conectado\nmessage - mensaje del cliente\nclose - cliente desconectado\nerror - error en conexión\n\nBroadcast:\nwss.clients.forEach(client =&gt; {\n  if (client.readyState === WebSocket.OPEN) {\n    client.send(data);\n  }\n});"
   },
   {
     "objectID": "ch5_websockets.html#rest-vs-websockets",
@@ -263,7 +263,7 @@
     "href": "ch2_p1_js.html#versiones-de-ecmascript",
     "title": "Desarrollo en el cliente",
     "section": "Versiones de ECMAScript",
-    "text": "Versiones de ECMAScript\n\nPrimera versión en 10 días (1995).\nES5 (2011): Base sólida que estableció JavaScript moderno en todos los navegadores\nES6/ES2015: Revolución del lenguaje - introdujo sintaxis moderna que cambió cómo programamos\nActualizaciones anuales: Cada año se añaden mejoras sin romper código existente (compatibilidad hacia atrás)\nES2015 marcó un antes y después: La mayoría del código moderno usa características de ES6+\n\n\n\n\nVersión\nAño\nCaracterísticas\n\n\n\n\nES5\n2011\nPopularizó JavaScript\n\n\nES2015 (ES6)\n2015\nClases, módulos, arrow functions, promises\n\n\nES2016-2024\n2016-2024\nActualizaciones anuales con compatibilidad\n\n\n\n\nES2015 fue un punto de inflexión importante en la evolución del lenguaje."
+    "text": "Versiones de ECMAScript\n\nPrimera versión en 10 días (1995).\nES5 (2009): Base sólida que estableció JavaScript moderno en todos los navegadores\nES6/ES2015: Revolución del lenguaje - introdujo sintaxis moderna que cambió cómo programamos\nActualizaciones anuales: Cada año se añaden mejoras sin romper código existente (compatibilidad hacia atrás)\nES2015 marcó un antes y después: La mayoría del código moderno usa características de ES6+\n\n\n\n\nVersión\nAño\nCaracterísticas\n\n\n\n\nES5\n2009\nPopularizó JavaScript\n\n\nES2015 (ES6)\n2015\nClases, módulos, arrow functions, promises\n\n\nES2016+\n2016-presente\nActualizaciones anuales con compatibilidad\n\n\n\n\nES2015 fue un punto de inflexión importante en la evolución del lenguaje."
   },
   {
     "objectID": "ch2_p1_js.html#javascript-vs-java",
@@ -319,7 +319,7 @@
     "href": "ch2_p1_js.html#scripts-de-desarrollo",
     "title": "Desarrollo en el cliente",
     "section": "Scripts de Desarrollo",
-    "text": "Scripts de Desarrollo\n\nScripts npm: Comandos personalizados para automatizar tareas comunes\nnpm run dev: Inicia servidor de desarrollo con recarga automática\nnpm run build: Crea versión optimizada para producción\nnpm run lint: Revisa errores de código con ESLint\nnpm run format: Formatea código con Prettier\n\npackage.json:\n{\n  \"scripts\": {\n    // Construye el paquete para producción usando Webpack\n    \"build\": \"webpack --mode production\",\n\n    // Inicia el servidor de desarrollo con Webpack Dev Server y habilita hot-reload\n    \"dev\": \"webpack serve --mode development\",\n\n    // Inicia el servidor en modo producción (requiere que server.js esté correctamente configurado)\n    \"start\": \"node server.js\",\n\n    // Observa los cambios en los archivos y recompila automáticamente (sin servidor)\n    \"watch\": \"webpack --watch\",\n  }\n}"
+    "text": "Scripts de Desarrollo\n\nScripts npm: Comandos personalizados para automatizar tareas comunes\nnpm run dev: Inicia servidor de desarrollo con recarga automática\nnpm run build: Crea versión optimizada para producción\nnpm run lint: Revisa errores de código con ESLint\nnpm run format: Formatea código con Prettier\n\npackage.json:\n{\n  \"scripts\": {\n    // Construye el paquete para producción usando Webpack\n    \"build\": \"webpack --mode production\",\n\n    // Inicia el servidor de desarrollo con Webpack Dev Server y habilita hot-reload\n    \"dev\": \"webpack serve --mode development\",\n\n    // Inicia el servidor en modo producción (requiere que server.js esté correctamente configurado)\n    \"start\": \"node server.js\",\n\n    // Observa los cambios en los archivos y recompila automáticamente (sin servidor)\n    \"watch\": \"webpack --watch\"\n  }\n}"
   },
   {
     "objectID": "ch2_p1_js.html#características-del-lenguaje",
@@ -333,14 +333,14 @@
     "href": "ch2_p1_js.html#modo-estricto",
     "title": "Desarrollo en el cliente",
     "section": "Modo Estricto",
-    "text": "Modo Estricto\n\nDetecta errores que normalmente JavaScript ignora: Convierte errores silenciosos en excepciones\nProhíbe sintaxis peligrosa: Variables sin declarar, duplicar parámetros, etc.\nMejor rendimiento: Permite optimizaciones del motor JavaScript\nEn módulos ES2015+ ya está activo: No necesitas añadirlo manualmente\nTambién se puede utiliziar node --use_strict en node.\n\n// Activar modo estricto (poner al inicio del archivo o función)\n\"use strict\";\n\n// Ahora esto genera error (sin strict mode, crea variable global)\nplayerName = \"Juan\"; // Error: playerName is not defined"
+    "text": "Modo Estricto\n\nDetecta errores que normalmente JavaScript ignora: Convierte errores silenciosos en excepciones\nProhíbe sintaxis peligrosa: Variables sin declarar, duplicar parámetros, etc.\nMejor rendimiento: Permite optimizaciones del motor JavaScript\nEn módulos ES2015+ ya está activo: No necesitas añadirlo manualmente\nTambién se puede utilizar node --use_strict en node.\n\n// Activar modo estricto (poner al inicio del archivo o función)\n\"use strict\";\n\n// Ahora esto genera error (sin strict mode, crea variable global)\nplayerName = \"Juan\"; // Error: playerName is not defined"
   },
   {
     "objectID": "ch2_p1_js.html#integración-con-html",
     "href": "ch2_p1_js.html#integración-con-html",
     "title": "Desarrollo en el cliente",
     "section": "Integración con HTML",
-    "text": "Integración con HTML\n\nScripts en &lt;head&gt;: Se ejecutan antes de cargar el contenido (puede bloquear renderizado)\nScripts al final de &lt;body&gt;: Mejor práctica - el HTML ya está cargado\nasync: Descarga el script en paralelo, ejecuta en cuanto esté listo (orden no garantizado)\ndefer: Descarga en paralelo, pero ejecuta en orden después del HTML\n\n&lt;html&gt;\n&lt;head&gt;\n    &lt;!-- Script en head - se ejecuta inmediatamente --&gt;\n    &lt;script src=\"js/config.js\"&gt;&lt;/script&gt;\n&lt;/head&gt;\n&lt;body&gt;\n    &lt;!-- Contenido HTML --&gt;\n    &lt;!-- Scripts al final - mejor rendimiento (HTML ya cargado) --&gt;\n    &lt;script src=\"js/game.js\"&gt;&lt;/script&gt;\n\n    &lt;!-- async: descarga paralela, ejecuta inmediatamente --&gt;\n    &lt;script src=\"js/game.js\" async&gt;&lt;/script&gt;\n\n    &lt;!-- defer: descarga paralela, ejecuta después del HTML --&gt;\n    &lt;script src=\"js/game.js\" defer&gt;&lt;/script&gt;    \n&lt;/body&gt;\n&lt;/html&gt;"
+    "text": "Integración con HTML\n\nScripts en &lt;head&gt;: Se ejecutan antes de cargar el contenido (puede bloquear renderizado)\nScripts al final de &lt;body&gt;: Mejor práctica - el HTML ya está cargado\nasync: Descarga el script en paralelo, ejecuta en cuanto esté listo (orden no garantizado)\ndefer: Descarga en paralelo, pero ejecuta en orden después del HTML\n\n&lt;html&gt;\n&lt;head&gt;\n    &lt;!-- Script en head - se ejecuta inmediatamente --&gt;\n    &lt;script src=\"js/config.js\"&gt;&lt;/script&gt;\n&lt;/head&gt;\n&lt;body&gt;\n    &lt;!-- Contenido HTML --&gt;\n    &lt;!-- Scripts al final - mejor rendimiento (HTML ya cargado) --&gt;\n    &lt;script src=\"js/game.js\"&gt;&lt;/script&gt;\n\n    &lt;!-- async: descarga paralela, ejecuta en cuanto se descarga --&gt;\n    &lt;script src=\"js/game.js\" async&gt;&lt;/script&gt;\n\n    &lt;!-- defer: descarga paralela, ejecuta después del HTML --&gt;\n    &lt;script src=\"js/game.js\" defer&gt;&lt;/script&gt;    \n&lt;/body&gt;\n&lt;/html&gt;"
   },
   {
     "objectID": "ch2_p1_js.html#mostrar-información",
@@ -438,7 +438,7 @@
     "href": "ch2_p1_js.html#más-métodos-de-arrays",
     "title": "Desarrollo en el cliente",
     "section": "Más Métodos de Arrays",
-    "text": "Más Métodos de Arrays\n\nfind(): Retorna el primer elemento que cumple condición\nfindIndex(): Retorna el índice del primer elemento que cumple condición\nevery(): Retorna true si todos los elementos cumplen condición\nsome(): Retorna true si algún elemento cumple condición\nreduce(): Reduce array a un único valor (suma, acumulación, etc.)\n\n// find() - retorna PRIMER elemento que cumple condición\nlet firstOrc = enemies.find(enemy =&gt; enemy.type === \"orc\"); // { id: 1, health: 100, type: \"orc\" }\n\n// findIndex() - retorna índice del primer match\nlet orcIndex = enemies.findIndex(enemy =&gt; enemy.type === \"orc\"); // 0\n\n// every() - ¿TODOS cumplen la condición?\nlet allDead = enemies.every(enemy =&gt; enemy.health === 0); // false -&gt; no todos muerto\n\n// some() - ¿ALGUNO cumple la condición?\nlet someDead = enemies.some(enemy =&gt; enemy.health === 0); // true -&gt; al menos un muerto\n\n// reduce() - reduce array a un solo valor\n// Suma total de la salud de todos los enemigos\nlet totalHealth = enemies.reduce((sum, enemy) =&gt; \n    sum + enemy.health, 0); // 0 es valor inicial\n// 150 (100 + 50 + 0)"
+    "text": "Más Métodos de Arrays\n\nfind(): Retorna el primer elemento que cumple condición\nfindIndex(): Retorna el índice del primer elemento que cumple condición\nevery(): Retorna true si todos los elementos cumplen condición\nsome(): Retorna true si algún elemento cumple condición\nreduce(): Reduce array a un único valor (suma, acumulación, etc.)\n\n// find() - retorna PRIMER elemento que cumple condición\nlet firstOrc = enemies.find(enemy =&gt; enemy.type === \"orc\"); // { id: 1, health: 100, type: \"orc\" }\n\n// findIndex() - retorna índice del primer match\nlet orcIndex = enemies.findIndex(enemy =&gt; enemy.type === \"orc\"); // 0\n\n// every() - ¿TODOS cumplen la condición?\nlet allDead = enemies.every(enemy =&gt; enemy.health === 0); // false -&gt; no todos muertos\n\n// some() - ¿ALGUNO cumple la condición?\nlet someDead = enemies.some(enemy =&gt; enemy.health === 0); // true -&gt; al menos un muerto\n\n// reduce() - reduce array a un solo valor\n// Suma total de la salud de todos los enemigos\nlet totalHealth = enemies.reduce((sum, enemy) =&gt; \n    sum + enemy.health, 0); // 0 es valor inicial\n// 150 (100 + 50 + 0)"
   },
   {
     "objectID": "ch2_p1_js.html#modificar-arrays",
@@ -452,7 +452,7 @@
     "href": "ch2_p1_js.html#destructuring-de-arrays",
     "title": "Desarrollo en el cliente",
     "section": "Destructuring de Arrays",
-    "text": "Destructuring de Arrays\n\nDestructuring: Extraer valores de arrays a variables individuales\nRest operator (...): Captura “el resto” de elementos\nSintaxis limpia: Evita acceder por índice repetidamente\n\n// Extraer valores de array a variables\nlet coordinates = [100, 200];\nlet [x, y] = coordinates;  // x = 100, y = 200\n\n// Ignorar elementos\nlet [first, , third] = [1, 2, 3]; // first = 1, third = 3\n\n// Rest operator - captura el resto de elementos\nlet [first, second, ...rest] = inventory;\n// first = primer elemento\n// second = segundo elemento\n// rest = array con todos los demás\n\n// En parámetros de función\nfunction showCoords([x, y]) {\n    console.log(`X: ${x}, Y: ${y}`);\n}"
+    "text": "Destructuring de Arrays\n\nDestructuring: Extraer valores de arrays a variables individuales\nRest operator (...): Captura “el resto” de elementos\nSintaxis limpia: Evita acceder por índice repetidamente\n\n// Extraer valores de array a variables\nlet coordinates = [100, 200];\nlet [x, y] = coordinates;  // x = 100, y = 200\n\n// Ignorar elementos\nlet [first, , third] = [1, 2, 3]; // first = 1, third = 3\n\n// Rest operator - captura el resto de elementos\nlet [firstItem, secondItem, ...rest] = inventory;\n// firstItem = primer elemento\n// secondItem = segundo elemento\n// rest = array con todos los demás\n\n// En parámetros de función\nfunction showCoords([x, y]) {\n    console.log(`X: ${x}, Y: ${y}`);\n}"
   },
   {
     "objectID": "ch2_p1_js.html#sentencias-básicas",
@@ -494,7 +494,7 @@
     "href": "ch2_p1_js.html#arrow-functions-es2015",
     "title": "Desarrollo en el cliente",
     "section": "Arrow Functions (ES2015+)",
-    "text": "Arrow Functions (ES2015+)\n\nSintaxis más concisa que funciones tradicionales\nNo tienen su propio this: Heredan this del contexto (útil en callbacks)\nRetorno implícito: Si es una sola expresión, retorna automáticamente (sin return)\nIdeal para: Callbacks, funciones cortas, map/filter/reduce\n\n// Arrow function completa con llaves\nlet movePlayer = (deltaX, deltaY) =&gt; {\n    player.x += deltaX; // Mueve en X\n    player.y += deltaY; // Mueve en Y\n};\n\n// Arrow function con una expresión - retorno implícito\nlet isAlive = (entity) =&gt; entity.health &gt; 0;\n// Equivalente a: function(entity) { return entity.health &gt; 0; }\n\n// Sin parámetros - paréntesis vacíos\nlet generateRandomID = () =&gt; Math.random().toString(36);\n\n// Un parámetro - paréntesis opcionales\nlet double = x =&gt; x * 2;"
+    "text": "Arrow Functions (ES2015+)\n\nSintaxis más concisa que funciones tradicionales\nNo tienen su propio this: Heredan this del contexto (útil en callbacks)\nRetorno implícito: Si es una sola expresión, retorna automáticamente (sin return)\nIdeal para: Callbacks, funciones cortas, map/filter/reduce\n\n// Arrow function completa con llaves\nlet movePlayer = (deltaX, deltaY) =&gt; {\n    player.x += deltaX; // Mueve en X\n    player.y += deltaY; // Mueve en Y\n};\n\n// Arrow function con una expresión - retorno implícito\nlet isAlive = (entity) =&gt; entity.health &gt; 0;\n// Equivalente a: function(entity) { return entity.health &gt; 0; }\n\n// Sin parámetros - paréntesis vacíos\nlet generateRandomID = () =&gt; Math.random().toString(36).slice(2);\n\n// Un parámetro - paréntesis opcionales\nlet double = x =&gt; x * 2;"
   },
   {
     "objectID": "ch2_p1_js.html#parámetros-de-función",
@@ -557,7 +557,7 @@
     "href": "index.html",
     "title": "Juegos en Red",
     "section": "",
-    "text": "Introducción a la asignatura\n\n\n\n\n\nIntroducción a las redes de computadores\nCapa de acceso a la red\nCapa de red\nCapa de transporte\nCapa de aplicación"
+    "text": "Introducción a la asignatura\n\n\n\n\n\nIntroducción a las redes de computadores\nCapa de acceso a la red\nCapa de red\nCapa de transporte\nCapa de aplicación\n\n\n\n\n\n\n\n\nIntroducción a JS\nIntroducción a POO en JS\n\n\n\n\n\nIntroducción a Phaser\n\n\n\n\n\nAPI REST\nWebSockets"
   },
   {
     "objectID": "index.html#introducción",
@@ -574,11 +574,32 @@
     "text": "Introducción a las redes de computadores\nCapa de acceso a la red\nCapa de red\nCapa de transporte\nCapa de aplicación"
   },
   {
+    "objectID": "index.html#javascript",
+    "href": "index.html#javascript",
+    "title": "Juegos en Red",
+    "section": "",
+    "text": "Introducción a JS\nIntroducción a POO en JS"
+  },
+  {
+    "objectID": "index.html#phaser",
+    "href": "index.html#phaser",
+    "title": "Juegos en Red",
+    "section": "",
+    "text": "Introducción a Phaser"
+  },
+  {
+    "objectID": "index.html#comunicación-cliente-servidor",
+    "href": "index.html#comunicación-cliente-servidor",
+    "title": "Juegos en Red",
+    "section": "",
+    "text": "API REST\nWebSockets"
+  },
+  {
     "objectID": "ch1_p3_network.html#qué-es-la-capa-de-red",
     "href": "ch1_p3_network.html#qué-es-la-capa-de-red",
     "title": "Capa de Red",
     "section": "¿Qué es la Capa de Red?",
-    "text": "¿Qué es la Capa de Red?\n\nLa Capa de Red es el tercer nivel del modelo TCP/IP y forma el núcleo del sistema de comunicaciones de Internet\n\n\n\nFunción principal:\n\nProporcionar comunicación end-to-end entre dispositivos\nPotencialmente separados por múltiples redes intermedias\nIndependiente de la tecnología subyacente\n\n\n\n\n\n\n\n\nblock-beta\n    columns 1\n    \n    A[\"&lt;b&gt;Capa de Aplicación&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;HTTP, HTTPS, FTP, SMTP&lt;br/&gt;DNS, DHCP, Telnet, SSH\"]\n    \n    B[\"&lt;b&gt;Capa de Transporte&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;TCP, UDP&lt;br/&gt;Control de flujo y errores\"]\n    \n    C[\"&lt;b&gt;Capa de Internet&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;IP, ICMP, ARP&lt;br/&gt;Enrutamiento, Direccionamiento\"]\n    \n    D[\"&lt;b&gt;Capa de Acceso a la Red&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Ethernet, WiFi, PPP&lt;br/&gt;Frames, MAC Address&lt;br/&gt;Control de acceso al medio\"]\n    \n    classDef highlight fill:#ff9999,stroke:#cc0000,stroke-width:4px,color:#000\n    classDef normal fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#000\n    \n    class C highlight\n    class A,B, D normal\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nImportante\n\n\nLa comunicación funciona de igual forma independientemente del medio físico utilizado"
+    "text": "¿Qué es la Capa de Red?\n\nLa Capa de Red es el segundo nivel del modelo TCP/IP (capa 3 en el modelo OSI) y forma el núcleo del sistema de comunicaciones de Internet\n\n\n\nFunción principal:\n\nProporcionar comunicación end-to-end entre dispositivos\nPotencialmente separados por múltiples redes intermedias\nIndependiente de la tecnología subyacente\n\n\n\n\n\n\n\n\nblock-beta\n    columns 1\n    \n    A[\"&lt;b&gt;Capa de Aplicación&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;HTTP, HTTPS, FTP, SMTP&lt;br/&gt;DNS, DHCP, Telnet, SSH\"]\n    \n    B[\"&lt;b&gt;Capa de Transporte&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;TCP, UDP&lt;br/&gt;Control de flujo y errores\"]\n    \n    C[\"&lt;b&gt;Capa de Internet&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;IP, ICMP, ARP&lt;br/&gt;Enrutamiento, Direccionamiento\"]\n    \n    D[\"&lt;b&gt;Capa de Acceso a la Red&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Ethernet, WiFi, PPP&lt;br/&gt;Frames, MAC Address&lt;br/&gt;Control de acceso al medio\"]\n    \n    classDef highlight fill:#ff9999,stroke:#cc0000,stroke-width:4px,color:#000\n    classDef normal fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#000\n    \n    class C highlight\n    class A,B,D normal\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nImportante\n\n\nLa comunicación funciona de igual forma independientemente del medio físico utilizado"
   },
   {
     "objectID": "ch1_p3_network.html#ejemplo-simplificado-host-a-servidor-google",
@@ -655,7 +676,7 @@
     "href": "ch1_p3_network.html#ipv4-estructura-básica",
     "title": "Capa de Red",
     "section": "IPv4: Estructura Básica",
-    "text": "IPv4: Estructura Básica\n\n\n\n\n\n---\nconfig:\n  packet:\n    showBits: true\n---\npacket-beta\n\ntitle IPv4 Header Format\n0-3: \"Version (4)\"\n4-7: \"IHL (4)\"\n8-15: \"Type of Service (8)\"\n16-31: \"Total Length (16)\"\n32-47: \"Identification (16)\"\n48-50: \"Flags (3)\"\n51-63: \"Fragment Offset (13)\"\n64-71: \"Time to Live (8)\"\n72-79: \"Protocol (8)\"\n80-95: \"Header Checksum (16)\"\n96-127: \"Source Address (32)\"\n128-159: \"Destination Address (32)\"\n160-191: \"Options (variable)\"\n\n\n\n\n\n\n\nSource address y Destination address para identificación de hosts\nProtocol para identificar el protocolo de la capa superior\nChecksum para integridad de datos."
+    "text": "IPv4: Estructura Básica\n\n\n\n\n\n---\nconfig:\n  packet:\n    showBits: true\n---\npacket-beta\n\ntitle IPv4 Header Format\n0-3: \"Version (4)\"\n4-7: \"IHL (4)\"\n8-15: \"Type of Service (8)\"\n16-31: \"Total Length (16)\"\n32-47: \"Identification (16)\"\n48-50: \"Flags (3)\"\n51-63: \"Fragment Offset (13)\"\n64-71: \"Time to Live (8)\"\n72-79: \"Protocol (8)\"\n80-95: \"Header Checksum (16)\"\n96-127: \"Source Address (32)\"\n128-159: \"Destination Address (32)\"\n160-191: \"Options (variable)\"\n\n\n\n\n\n\n\nSource address y Destination address para identificación de hosts\nProtocol para identificar el protocolo de la capa superior\nChecksum para integridad de la cabecera (no cubre los datos)."
   },
   {
     "objectID": "ch1_p3_network.html#ipv4-direccionamiento",
@@ -676,7 +697,7 @@
     "href": "ch1_p3_network.html#cidr-solución-moderna",
     "title": "Capa de Red",
     "section": "CIDR: Solución Moderna",
-    "text": "CIDR: Solución Moderna\nClassless Inter-Domain Routing\nNotación: 192.168.1.0/24 → 24 bits para red\nVentajas:\n\nAsignación flexible (cualquier potencia de 2)\nUtilización: 20-30% → 95-98%\nAgregación de rutas eficiente\n\nLongest Prefix Matching\nSeleccionamos en nuestra tabla de rutas aquella con la coincidencia mas grande.\nTabla con rutas:\n\n192.168.0.0/16\n192.168.1.0/24 ← Seleccionada\n192.168.1.128/25\n\nDestino 192.168.1.200 → Selecciona /24 (prefijo más largo)"
+    "text": "CIDR: Solución Moderna\nClassless Inter-Domain Routing\nNotación: 192.168.1.0/24 → 24 bits para red\nVentajas:\n\nAsignación flexible (cualquier potencia de 2)\nUtilización: 20-30% → 95-98%\nAgregación de rutas eficiente\n\nLongest Prefix Matching\nSeleccionamos en nuestra tabla de rutas aquella con la coincidencia más larga.\nTabla con rutas:\n\n192.168.0.0/16\n192.168.1.0/24 ← Seleccionada\n192.168.1.128/25\n\nDestino 192.168.1.100 → Selecciona /24 (prefijo más largo que coincide)"
   },
   {
     "objectID": "ch1_p3_network.html#direcciones-especiales",
@@ -704,7 +725,7 @@
     "href": "ch1_p3_network.html#ipv6-la-evolución",
     "title": "Capa de Red",
     "section": "IPv6: La Evolución",
-    "text": "IPv6: La Evolución\nMotivación\n\n\nLimitaciones IPv4:\n\nAgotamiento de direcciones (4.3×10^{9})\nFragmentación ineficiente en routers\nSin autoconfiguración\nSeguridad opcional (IPSec)\nQoS limitado\n\n\nCaracterísticas IPv6\n\nDirecciones: 128 bits (3.4×10^{38} direcciones)\nCabecera: Fija 40 bytes\nSin checksum en cabecera\nIPSec obligatorio\nAutoconfiguración SLAAC\nMejor QoS (Traffic Class, Flow Label)"
+    "text": "IPv6: La Evolución\nMotivación\n\n\nLimitaciones IPv4:\n\nAgotamiento de direcciones (4.3×10^{9})\nFragmentación ineficiente en routers\nSin autoconfiguración\nSeguridad opcional (IPSec)\nQoS limitado\n\n\nCaracterísticas IPv6\n\nDirecciones: 128 bits (3.4×10^{38} direcciones)\nCabecera: Fija 40 bytes\nSin checksum en cabecera\nIPSec recomendado (ya no obligatorio, RFC 8504)\nAutoconfiguración SLAAC\nMejor QoS (Traffic Class, Flow Label)"
   },
   {
     "objectID": "ch1_p3_network.html#cabecera-ipv6",
@@ -753,7 +774,7 @@
     "href": "ch1_p3_network.html#hole-punching",
     "title": "Capa de Red",
     "section": "Hole punching",
-    "text": "Hole punching\n\n\n\n\n\n\n\n\nsequenceDiagram\n    participant A as Alice\n    participant NA as NAT-A\n    participant S as STUN Server\n    participant NB as NAT-B\n    participant B as Bob\n\n    Note over A,B: 1. Discovery & Exchange\n    A-&gt;&gt;S: Register\n    S-&gt;&gt;A: Bob: 198.76.54.32:37000\n    B-&gt;&gt;S: Register\n    S-&gt;&gt;B: Alice: 203.45.67.89:42000\n    \n    Note over A,B: 2. Simultaneous Hole Punching\n    par Alice to Bob\n        A-&gt;&gt;NA: Send to Bob\n        Note over NA: Map: Allow from&lt;br/&gt;198.76.54.32:37000\n        NA-&gt;&gt;NB: Packet\n    and Bob to Alice\n        B-&gt;&gt;NB: Send to Alice\n        Note over NB: Map: Allow from&lt;br/&gt;203.45.67.89:42000\n        NB-&gt;&gt;NA: Packet\n    end\n    \n    Note over NA,NB: NAT holes ready when packets arrive\n    NA-&gt;&gt;A: Bob's packet passes\n    NB-&gt;&gt;B: Alice's packet passes\n\n\n\n\n\n\n\n\n\nDescubrimiento: servidor STUN para obtener sus IPs/puertos\nEnvío simultáneo: Envían paquetes UDP al mismo tiemp -&gt; mappings en sus NATs\nAgujeros listos: Los mappings NAT se crean ANTES de recibir"
+    "text": "Hole punching\n\n\n\n\n\n\n\n\nsequenceDiagram\n    participant A as Alice\n    participant NA as NAT-A\n    participant S as STUN Server\n    participant NB as NAT-B\n    participant B as Bob\n\n    Note over A,B: 1. Discovery & Exchange\n    A-&gt;&gt;S: Register\n    S-&gt;&gt;A: Bob: 198.76.54.32:37000\n    B-&gt;&gt;S: Register\n    S-&gt;&gt;B: Alice: 203.45.67.89:42000\n    \n    Note over A,B: 2. Simultaneous Hole Punching\n    par Alice to Bob\n        A-&gt;&gt;NA: Send to Bob\n        Note over NA: Map: Allow from&lt;br/&gt;198.76.54.32:37000\n        NA-&gt;&gt;NB: Packet\n    and Bob to Alice\n        B-&gt;&gt;NB: Send to Alice\n        Note over NB: Map: Allow from&lt;br/&gt;203.45.67.89:42000\n        NB-&gt;&gt;NA: Packet\n    end\n    \n    Note over NA,NB: NAT holes ready when packets arrive\n    NA-&gt;&gt;A: Bob's packet passes\n    NB-&gt;&gt;B: Alice's packet passes\n\n\n\n\n\n\n\n\n\nDescubrimiento: servidor STUN para obtener sus IPs/puertos\nEnvío simultáneo: Envían paquetes UDP al mismo tiempo -&gt; mappings en sus NATs\nAgujeros listos: Los mappings NAT se crean ANTES de recibir"
   },
   {
     "objectID": "ch1_p3_network.html#puntos-clave",
@@ -767,21 +788,21 @@
     "href": "sub_introduction.html#datos-de-la-asignatura",
     "title": "Presentación de Juegos en Red",
     "section": "Datos de la asignatura",
-    "text": "Datos de la asignatura\n\nTipo: Obligatoria.\nPeríodo de impartición: Primer cuatrimestre.\nNº de créditos: 6\n\nSesiones: 28 clases de 2h.\nHoras de trabajo: 180h (56h clase / 124h fuera).\n\nDepartamento: Departamento de Informática y Estadística.\nWeb: Aula Virtual (https://ww.aulavirtual.urjc.es)."
+    "text": "Datos de la asignatura\n\nTipo: Obligatoria.\nPeríodo de impartición: Primer cuatrimestre.\nNº de créditos: 6\n\nSesiones: 28 clases de 2h.\nHoras de trabajo: 180h (56h clase / 124h fuera).\n\nDepartamento: Departamento de Informática y Estadística.\nWeb: Aula Virtual (https://www.aulavirtual.urjc.es)."
   },
   {
     "objectID": "sub_introduction.html#prof.-rubén-rodríguez",
     "href": "sub_introduction.html#prof.-rubén-rodríguez",
     "title": "Presentación de Juegos en Red",
     "section": "Prof. Rubén Rodríguez",
-    "text": "Prof. Rubén Rodríguez\n\nE-mail: ruben.rodriguez@urjc.es. (Escribir por aula virtual).\nDespacho: 131, Ed. Departamental II (Campus de Móstoles).\nTutorias: Concertar por e-mail (aula virtual)."
+    "text": "Prof. Rubén Rodríguez\n\nE-mail: ruben.rodriguez@urjc.es. (Escribir por aula virtual).\nDespacho: 131, Ed. Departamental II (Campus de Móstoles).\nTutorías: Concertar por e-mail (aula virtual)."
   },
   {
     "objectID": "sub_introduction.html#prof.-natalia-madrueño",
     "href": "sub_introduction.html#prof.-natalia-madrueño",
     "title": "Presentación de Juegos en Red",
     "section": "Prof. Natalia Madrueño",
-    "text": "Prof. Natalia Madrueño\n\nEmail: natalia.madrueno@urjc.es (Escribir por aula virtual).\nDespacho: 044, Ed. Departamental II (Campus de Móstoles).\nTutorias: Concertar por e-mail (aula virtual)."
+    "text": "Prof. Natalia Madrueño\n\nE-mail: natalia.madrueno@urjc.es (Escribir por aula virtual).\nDespacho: 044, Ed. Departamental II (Campus de Móstoles).\nTutorías: Concertar por e-mail (aula virtual)."
   },
   {
     "objectID": "sub_introduction.html#aplicaciones-en-red",
@@ -809,7 +830,7 @@
     "href": "sub_introduction.html#tema-1-introducción-a-los-juegos-en-red-y-a-las-redes-de-comunicaciones",
     "title": "Presentación de Juegos en Red",
     "section": "Tema 1: Introducción a los juegos en red y a las redes de comunicaciones",
-    "text": "Tema 1: Introducción a los juegos en red y a las redes de comunicaciones\nSe presentan los retos de las aplicaciones en red y se introducen los principales conceptos necesarios para entender su funcionamiento:\n\nQué son y como funcionan las aplicaciones en red.\nProblemas propios de aplicaciones en red.\nConceptos fundamentales de comunicación en red entre aplicaciones.\nConsideraciones al desarrollar juegos en red."
+    "text": "Tema 1: Introducción a los juegos en red y a las redes de comunicaciones\nSe presentan los retos de las aplicaciones en red y se introducen los principales conceptos necesarios para entender su funcionamiento:\n\nQué son y cómo funcionan las aplicaciones en red.\nProblemas propios de aplicaciones en red.\nConceptos fundamentales de comunicación en red entre aplicaciones.\nConsideraciones al desarrollar juegos en red."
   },
   {
     "objectID": "sub_introduction.html#tema-2-desarrollo-en-el-lado-del-cliente.",
@@ -840,11 +861,11 @@
     "text": "Tema 5: Comunicación asíncrona cliente - servidor\nSe estudia el uso de WebSockets para comunicación asíncrona entre nodos:\n\nIntroducción a la comunicación asíncrona con WebSockets.\nCreación de protocolos de mensajes.\nDesarrollo de comunicación asíncrona entre cliente y servidor con WebSockets."
   },
   {
-    "objectID": "sub_introduction.html#metodologia",
-    "href": "sub_introduction.html#metodologia",
+    "objectID": "sub_introduction.html#metodología",
+    "href": "sub_introduction.html#metodología",
     "title": "Presentación de Juegos en Red",
-    "section": "Metodologia",
-    "text": "Metodologia\nEl curso estará conducido por una metodología basada en proyectos, en la que los alumnos deberán realizar un proyecto en grupo a lo largo de toda la asignatura.\nSe combinarán las lecciones magistrales síncronas con la metodología de clase invertida para temas concretos.\nSe incluirán diferentes gamificaciones a lo largo del curso.\nHabrá sesiones de prácticas que se utilizarán para realizar y corregir la práctica, donde el profesor podrá realizar un seguimiento de cada grupo de prácticas.\nEl profesor dejará el material necesario para el desempeño de la asignatura en el Aula Virtual, que incluirá vídeos, presentaciones, ejercicios propuestos y resueltos, etc., para que el alumno estudie de manera autónoma."
+    "section": "Metodología",
+    "text": "Metodología\nEl curso estará conducido por una metodología basada en proyectos, en la que los alumnos deberán realizar un proyecto en grupo a lo largo de toda la asignatura.\nSe combinarán las lecciones magistrales síncronas con la metodología de clase invertida para temas concretos.\nSe incluirán diferentes gamificaciones a lo largo del curso.\nHabrá sesiones de prácticas que se utilizarán para realizar y corregir la práctica, donde el profesor podrá realizar un seguimiento de cada grupo de prácticas.\nEl profesor dejará el material necesario para el desempeño de la asignatura en el Aula Virtual, que incluirá vídeos, presentaciones, ejercicios propuestos y resueltos, etc., para que el alumno estudie de manera autónoma."
   },
   {
     "objectID": "sub_introduction.html#material-teórico",
@@ -893,7 +914,7 @@
     "href": "sub_introduction.html#práctica-40",
     "title": "Presentación de Juegos en Red",
     "section": "Práctica (40 %)",
-    "text": "Práctica (40 %)\n\nSe realiza en grupos de 4 personas\nCada alumno será evaluado individualmente\nSe desarrolla en parte en las sesiones prácticas\nConsta de 4 entregas (fases) obligatorias coonderaciones 10%, 35%, 25%, 30%.\nNota mínima en cada fase: 5 puntos\nCada fase es revaluable en convocatoria extraordinaria"
+    "text": "Práctica (40 %)\n\nSe realiza en grupos de 4 personas\nCada alumno será evaluado individualmente\nSe desarrolla en parte en las sesiones prácticas\nConsta de 4 entregas (fases) obligatorias con ponderaciones 10%, 35%, 25%, 30%.\nNota mínima en cada fase: 5 puntos\nCada fase es revaluable en convocatoria extraordinaria"
   },
   {
     "objectID": "sub_introduction.html#resolución-de-problemas-15",
@@ -921,7 +942,7 @@
     "href": "sub_introduction.html#dispensa-académica",
     "title": "Presentación de Juegos en Red",
     "section": "Dispensa académica",
-    "text": "Dispensa académica\nUn alumno con dispensa académica debe realizar los exámenes teóricos-prácticos.\nEstá obligado a hacer las 4 entregas presenciales de la parte práctica ya que son como exámenes.\nLas fechas de las pruebas serán anunciadas con anterioridad."
+    "text": "Dispensa académica\nUn alumno con dispensa académica debe realizar los exámenes teórico-prácticos.\nEstá obligado a hacer las 4 entregas presenciales de la parte práctica ya que son como exámenes.\nLas fechas de las pruebas serán anunciadas con anterioridad."
   },
   {
     "objectID": "sub_introduction.html#no-presentado",
@@ -977,7 +998,7 @@
     "href": "ch1_p4_transport.html#multiplexación-y-demultiplexación",
     "title": "Capa de Transporte",
     "section": "1. Multiplexación y Demultiplexación",
-    "text": "1. Multiplexación y Demultiplexación\nMultiplexación: Recoger información de diferentes sockets y enviarla por un único medio.\nDemultiplexación: Recibir segmentos y enviarlos a los sockets correspondientes.\n\n\nIdentificación de sockets:\n\nTCP: (IP y Puerto origen, IP y puerto destino)\nUDP: (IP y puerto origen, IP y puerto destino)\n\n\nPuertos: Identificadores numéricos (1-65535)\n\nServidores: asignación manual y fija\nClientes: asignación aleatoria\n\n\n\n\n\n\n\ngraph LR\n    subgraph \"MULTIPLEXACIÓN\"\n        A1[Socket 1&lt;br/&gt;App A] --&gt; M[Multiplexor&lt;br/&gt;Capa de Transporte]\n        A2[Socket 2&lt;br/&gt;App B] --&gt; M\n        A3[Socket 3&lt;br/&gt;App C] --&gt; M\n        M --&gt; N[Red&lt;br/&gt;Medio único]\n    end\n    \n    subgraph \"DEMULTIPLEXACIÓN\"\n        N2[Red&lt;br/&gt;Segmentos entrantes] --&gt; D[Demultiplexor&lt;br/&gt;Capa de Transporte]\n        D --&gt; B1[Socket 1&lt;br/&gt;App A]\n        D --&gt; B2[Socket 2&lt;br/&gt;App B]\n        D --&gt; B3[Socket 3&lt;br/&gt;App C]\n    end\n    \n    N -.-&gt;|Transmisión| N2\n    \n    classDef appClass fill:#e1f5fe,stroke:#0277bd,stroke-width:2px\n    classDef muxClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px\n    classDef netClass fill:#fff3e0,stroke:#f57c00,stroke-width:2px\n    \n    class A1,A2,A3,B1,B2,B3 appClass\n    class M,D muxClass\n    class N,N2 netClass"
+    "text": "1. Multiplexación y Demultiplexación\nMultiplexación: Recoger información de diferentes sockets y enviarla por un único medio.\nDemultiplexación: Recibir segmentos y enviarlos a los sockets correspondientes.\n\n\nIdentificación de sockets:\n\nTCP: (IP y Puerto origen, IP y puerto destino)\nUDP: (IP y puerto destino únicamente)\n\n\nPuertos: Identificadores numéricos (1-65535)\n\nServidores: asignación manual y fija\nClientes: asignación aleatoria\n\n\n\n\n\n\n\ngraph LR\n    subgraph \"MULTIPLEXACIÓN\"\n        A1[Socket 1&lt;br/&gt;App A] --&gt; M[Multiplexor&lt;br/&gt;Capa de Transporte]\n        A2[Socket 2&lt;br/&gt;App B] --&gt; M\n        A3[Socket 3&lt;br/&gt;App C] --&gt; M\n        M --&gt; N[Red&lt;br/&gt;Medio único]\n    end\n    \n    subgraph \"DEMULTIPLEXACIÓN\"\n        N2[Red&lt;br/&gt;Segmentos entrantes] --&gt; D[Demultiplexor&lt;br/&gt;Capa de Transporte]\n        D --&gt; B1[Socket 1&lt;br/&gt;App A]\n        D --&gt; B2[Socket 2&lt;br/&gt;App B]\n        D --&gt; B3[Socket 3&lt;br/&gt;App C]\n    end\n    \n    N -.-&gt;|Transmisión| N2\n    \n    classDef appClass fill:#e1f5fe,stroke:#0277bd,stroke-width:2px\n    classDef muxClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px\n    classDef netClass fill:#fff3e0,stroke:#f57c00,stroke-width:2px\n    \n    class A1,A2,A3,B1,B2,B3 appClass\n    class M,D muxClass\n    class N,N2 netClass"
   },
   {
     "objectID": "ch1_p4_transport.html#transferencia-fiable",
@@ -991,7 +1012,7 @@
     "href": "ch1_p4_transport.html#otros-conceptos",
     "title": "Capa de Transporte",
     "section": "Otros conceptos",
-    "text": "Otros conceptos\n\nControl de flujo: Evita que el emisor sature al receptor limitando la velocidad de envío según la capacidad del destinatario\nControl de congestión: Ajusta la velocidad de transmisión para evitar saturar la red cuando detecta congestión\nTemporización: Proporciona el tiempo mínimo de entrega de datos entre emisor y receptor a través de la red\nTasa de transferencia mínima: Garantiza una velocidad mínima de transmisión de datos para aplicaciones que requieren ancho de banda constante"
+    "text": "Otros conceptos\n\nControl de flujo: Evita que el emisor sature al receptor limitando la velocidad de envío según la capacidad del destinatario\nControl de congestión: Ajusta la velocidad de transmisión para evitar saturar la red cuando detecta congestión\nTemporización: Garantiza un tiempo máximo de entrega de datos entre emisor y receptor a través de la red\nTasa de transferencia mínima: Garantiza una velocidad mínima de transmisión de datos para aplicaciones que requieren ancho de banda constante"
   },
   {
     "objectID": "ch1_p4_transport.html#características-de-udp",
@@ -1005,7 +1026,7 @@
     "href": "ch1_p4_transport.html#estructura-del-paquete-udp",
     "title": "Capa de Transporte",
     "section": "Estructura del Paquete UDP",
-    "text": "Estructura del Paquete UDP\n\n\n\n\n\npacket-beta\n\n    0-15: \"Source Port\"\n    16-31: \"Destination Port\"\n    32-47: \"Length\"\n    48-63: \"Checksum\"\n\n\n\n\n\n\n\nLongitud: Hasta 65535 bytes (limitado por MTU)\nChecksum: Verificación de integridad\nEstructura simple comparada con otros protocolos\n8 bytes de cabecera fijos."
+    "text": "Estructura del Paquete UDP\n\n\n\n\n\npacket-beta\n\n    0-15: \"Source Port\"\n    16-31: \"Destination Port\"\n    32-47: \"Length\"\n    48-63: \"Checksum\"\n\n\n\n\n\n\n\nLongitud: Cabecera (8 bytes) + datos, hasta 65535 bytes\nChecksum: Verificación de integridad\nEstructura simple comparada con otros protocolos\n8 bytes de cabecera fijos."
   },
   {
     "objectID": "ch1_p4_transport.html#checksum-udp",
@@ -1026,7 +1047,7 @@
     "href": "ch1_p4_transport.html#características-de-tcp",
     "title": "Capa de Transporte",
     "section": "Características de TCP",
-    "text": "Características de TCP\n\n\nProtocolo confiable [RFC 793]:\n\nOrientado a conexión\nEntrega fiable y ordenada (confiabilidad)\nControl de flujo\nControl de congestión\nMultiplexación y demultiplexación\n\n\nLo que NO proporciona:\n\nTemporización específica\nTasa mínima garantizada\nSeguridad nativa (necesita TLS/SSL)\n\n\nTrade-off: Confiabilidad y orden sobre velocidad pura"
+    "text": "Características de TCP\n\n\nProtocolo confiable [RFC 9293]:\n\nOrientado a conexión\nEntrega fiable y ordenada (confiabilidad)\nControl de flujo\nControl de congestión\nMultiplexación y demultiplexación\n\n\nLo que NO proporciona:\n\nTemporización específica\nTasa mínima garantizada\nSeguridad nativa (necesita TLS/SSL)\n\n\nTrade-off: Confiabilidad y orden sobre velocidad pura"
   },
   {
     "objectID": "ch1_p4_transport.html#estructura-del-paquete-tcp",
@@ -1040,14 +1061,14 @@
     "href": "ch1_p4_transport.html#mecanismos-de-confiabilidad",
     "title": "Capa de Transporte",
     "section": "Mecanismos de Confiabilidad",
-    "text": "Mecanismos de Confiabilidad\n\nLos mecanismos de confiabilidad en TCP garantizan que los datos lleguen correctamente y en orden.\n\n\n\nNúmeros de secuencia y ACKs:\n\nCada byte tiene número único\nCuando enviamos información, está identificada por un número de secuencia (SEQ)\nAdemás, esperamos confirmación de que se ha recibido correctamente (ACK)\nACKs acumulativos (ACK para byte N confirma hasta N-1)\nLos ACKs y SEQs permite detectar datos perdidos, duplicados o desordenados\n\n\n\n\n\n\n\n\nsequenceDiagram\n    participant E as Emisor\n    participant R as Receptor\n    \n    Note over E,R: Conexión ya establecida, seq inicial=100\n    \n    E-&gt;&gt;R: seq=100, data=\"Hola\" (4 bytes)\n    Note over R: Recibe\n    R-&gt;&gt;E: ACK=104 (\"Espero byte 104\")\n    Note over R: Confirma\n    \n    E-&gt;&gt;R: seq=104, data=\" mundo!\" (7 bytes)  \n    R-&gt;&gt;E: ACK=111 (\"Espero byte 111\")\n    \n    E-&gt;&gt;R: seq=111, data=\" TCP\" (4 bytes)\n    E-&gt;&gt;R: seq=115, data=\" rocks\" (6 bytes)\n    Note over R: Recibe ambos correctamente\n    Note over R: ACK acumulativo confirma todo\n    R-&gt;&gt;E: ACK=121 (\"Recibí todo hasta byte 120\")"
+    "text": "Mecanismos de Confiabilidad\n\nLos mecanismos de confiabilidad en TCP garantizan que los datos lleguen correctamente y en orden.\n\n\n\nNúmeros de secuencia y ACKs:\n\nCada byte tiene número único\nCuando enviamos información, está identificada por un número de secuencia (SEQ)\nAdemás, esperamos confirmación de que se ha recibido correctamente (ACK)\nACKs acumulativos (ACK para byte N confirma hasta N-1)\nLos ACKs y SEQs permiten detectar datos perdidos, duplicados o desordenados\n\n\n\n\n\n\n\n\nsequenceDiagram\n    participant E as Emisor\n    participant R as Receptor\n    \n    Note over E,R: Conexión ya establecida, seq inicial=100\n    \n    E-&gt;&gt;R: seq=100, data=\"Hola\" (4 bytes)\n    Note over R: Recibe\n    R-&gt;&gt;E: ACK=104 (\"Espero byte 104\")\n    Note over R: Confirma\n    \n    E-&gt;&gt;R: seq=104, data=\" mundo!\" (7 bytes)  \n    R-&gt;&gt;E: ACK=111 (\"Espero byte 111\")\n    \n    E-&gt;&gt;R: seq=111, data=\" TCP\" (4 bytes)\n    E-&gt;&gt;R: seq=115, data=\" rocks\" (6 bytes)\n    Note over R: Recibe ambos correctamente\n    Note over R: ACK acumulativo confirma todo\n    R-&gt;&gt;E: ACK=121 (\"Recibí todo hasta byte 120\")"
   },
   {
     "objectID": "ch1_p4_transport.html#detección-de-pérdidas",
     "href": "ch1_p4_transport.html#detección-de-pérdidas",
     "title": "Capa de Transporte",
     "section": "Detección de pérdidas",
-    "text": "Detección de pérdidas\n\n\nPérdidas por timeout\n\n\n\n\n\n\nsequenceDiagram\n    participant E as Emisor\n    participant R as Receptor\n    E -&gt;&gt; X: seq=100, data=\"A\", Paquete perdido\n    Note over E: Timeout de seq:100, reenvio\n    E -&gt;&gt; R: seq=100, data=\"A\",\n\n\n\n\n\n\n\n\nSi no recibe ACK en tiempo determinado → asume pérdida y retransmite\n\n\nPérdidas por ACKs duplicados\n\n\n\n\n\n\nsequenceDiagram\n    participant E as Emisor\n    participant R as Receptor\n    E -&gt;&gt; X: seq=100, data=\"A\", Paquete perdido\n    E -&gt;&gt; R: seq=101, data=\"B\"\n    E -&gt;&gt; R: seq=102, data=\"C\"\n    E -&gt;&gt; R: seq=103, data=\"D\"\n    R -&gt;&gt; E: ACK=100\n    R -&gt;&gt; E: ACK=100\n    R -&gt;&gt; E: ACK=100\n    Note over E,R: Retransmisión rápida\n    E -&gt;&gt; R: seq=100, data=\"A\"\n\n\n\n\n\n\n\n\n3 ACKs duplicados → Fast Retransmit inmediato"
+    "text": "Detección de pérdidas\n\n\nPérdidas por timeout\n\n\n\n\n\n\nsequenceDiagram\n    participant E as Emisor\n    participant R as Receptor\n    E -&gt;&gt; X: seq=100, data=\"A\", Paquete perdido\n    Note over E: Timeout de seq:100, reenvío\n    E -&gt;&gt; R: seq=100, data=\"A\",\n\n\n\n\n\n\n\n\nSi no recibe ACK en tiempo determinado → asume pérdida y retransmite\n\n\nPérdidas por ACKs duplicados\n\n\n\n\n\n\nsequenceDiagram\n    participant E as Emisor\n    participant R as Receptor\n    E -&gt;&gt; X: seq=100, data=\"A\", Paquete perdido\n    E -&gt;&gt; R: seq=101, data=\"B\"\n    E -&gt;&gt; R: seq=102, data=\"C\"\n    E -&gt;&gt; R: seq=103, data=\"D\"\n    R -&gt;&gt; E: ACK=100\n    R -&gt;&gt; E: ACK=100\n    R -&gt;&gt; E: ACK=100\n    Note over E,R: Retransmisión rápida\n    E -&gt;&gt; R: seq=100, data=\"A\"\n\n\n\n\n\n\n\n\n3 ACKs duplicados → Fast Retransmit inmediato"
   },
   {
     "objectID": "ch1_p4_transport.html#control-de-flujo",
@@ -1096,14 +1117,14 @@
     "href": "ch1_p4_transport.html#cuándo-usar",
     "title": "Capa de Transporte",
     "section": "Cuándo usar…",
-    "text": "Cuándo usar…\n\n\nUDP\nRequisitos para UDP:\n\nLatencias &lt; 50ms\nActualizaciones frecuentes\nInformación nueva más valiosa que la vieja\n\nVentajas:\n\nCabeceras pequeñas\nSin tráfico de control\nServidor necesita menos recursos\nNo mantiene estado\n\nEjemplos: Shooters (Counter Strike), juegos de lucha\n\nTCP\nRequisitos para TCP:\n\nTolerancia 100-200ms latencia\nEntrega ordenada garantizada\nDetección y corrección de errores\n\n Consideraciones:\n\nBloqueo cabeza de línea\nLatencias variables por retransmisiones\nMayor tráfico de red\n\n Ejemplos: MMORPGs (World of Warcraft), juegos por turnos"
+    "text": "Cuándo usar…\n\n\nUDP\nRequisitos para UDP:\n\nLatencias &lt; 50ms\nActualizaciones frecuentes\nInformación nueva más valiosa que la vieja\n\nVentajas:\n\nCabeceras pequeñas\nSin tráfico de control\nServidor necesita menos recursos\nNo mantiene estado\n\nEjemplos: Shooters (Counter-Strike), juegos de lucha\n\nTCP\nRequisitos para TCP:\n\nTolerancia 100-200ms latencia\nEntrega ordenada garantizada\nDetección y corrección de errores\n\n Consideraciones:\n\nBloqueo cabeza de línea\nLatencias variables por retransmisiones\nMayor tráfico de red\n\n Ejemplos: MMORPGs (World of Warcraft), juegos por turnos"
   },
   {
     "objectID": "ch1_p4_transport.html#ejemplos-concretos",
     "href": "ch1_p4_transport.html#ejemplos-concretos",
     "title": "Capa de Transporte",
     "section": "Ejemplos Concretos",
-    "text": "Ejemplos Concretos\n\n\nWorld of Warcraft (TCP):\n\nHechizos necesitan entrega garantizada\nActualizaciones de inventario críticas\nEstado de misiones consistente\nMMORPGs toleran 100-200ms\n\n\nCounter Strike (UDP):\n\nRetroalimentación inmediata crítica\nActualizaciones posición/disparos\nTécnicas de interpolación en cliente\nMitiga efecto paquetes perdidos"
+    "text": "Ejemplos Concretos\n\n\nWorld of Warcraft (TCP):\n\nHechizos necesitan entrega garantizada\nActualizaciones de inventario críticas\nEstado de misiones consistente\nMMORPGs toleran 100-200ms\n\n\nCounter-Strike (UDP):\n\nRetroalimentación inmediata crítica\nActualizaciones posición/disparos\nTécnicas de interpolación en cliente\nMitiga efecto paquetes perdidos"
   },
   {
     "objectID": "ch1_p4_transport.html#puntos-clave",
@@ -1152,7 +1173,7 @@
     "href": "ch2_p2_js_classes.html#herencia-con-prototipos---extensión",
     "title": "Desarrollo en el cliente",
     "section": "Herencia con Prototipos - Extensión",
-    "text": "Herencia con Prototipos - Extensión\nCreando un prototipo intermedio\nconst prototipoJugador = Object.create(personajeBase);\nprototipoJugador.atacar = function(objetivo) {\n    return `${this.nombre} ataca a ${objetivo.nombre}`;\n};\nprototipoJugador.nombre = \"Sin nombre\"\n\nHereda de personajeBase\nAñade funcionalidad específica\nAñade un nombre por defecto.\nForma el segundo eslabón de la cadena"
+    "text": "Herencia con Prototipos - Extensión\nCreando un prototipo intermedio\nconst prototipoJugador = Object.create(personajeBase);\nprototipoJugador.atacar = function(objetivo) {\n    return `${this.nombre} ataca a ${objetivo.nombre}`;\n};\nprototipoJugador.nombre = \"Sin nombre\";\n\nHereda de personajeBase\nAñade funcionalidad específica\nAñade un nombre por defecto.\nForma el segundo eslabón de la cadena"
   },
   {
     "objectID": "ch2_p2_js_classes.html#herencia-con-prototipos---instancia",
@@ -1162,11 +1183,11 @@
     "text": "Herencia con Prototipos - Instancia\nCreando la instancia final\nconst jugador = Object.create(prototipoJugador);\njugador.nombre = \"Aragorn\";\njugador.x = 10;\njugador.y = 10;\njugador.puntuacion = 3;\n\nTiene acceso a mover() y atacar()\nDefine sus propias propiedades\nPropiedades que ocultan las del prototipo (locales) y nuevas.\nCompleta la cadena de herencia"
   },
   {
-    "objectID": "ch2_p2_js_classes.html#vision-completa",
-    "href": "ch2_p2_js_classes.html#vision-completa",
+    "objectID": "ch2_p2_js_classes.html#visión-completa",
+    "href": "ch2_p2_js_classes.html#visión-completa",
     "title": "Desarrollo en el cliente",
-    "section": "Vision Completa",
-    "text": "Vision Completa\n\n\nBase\nlet personajeBase = {\n    mover(x, y) {\n        this.x += x;\n        this.y += y;\n    },\n    x:  0,\n    y: 0\n};\n\nPrototipo\nlet prototipoJugador = Object.create(personajeBase);\nprototipoJugador.atacar = function(objetivo) {\n    return `${this.nombre} ataca a ${objetivo.nombre}`;\n};\nprototipoJugador.nombre = \"Sin nombre\"\n\nInstancia\nlet jugador = Object.create(prototipoJugador);\n\nAcceder a prototipoJugador.nombre y a jugador.nombre\nañadir los cambios a nivel de instancia y ejecutar de nuevo.\nComprobar las propiedades con Object.keys(INSTANCIA) antes y después.\n\njugador.nombre = \"Aragorn\";\njugador.x = 10;\njugador.y = 10;\njugador.puntuacion = 3;"
+    "section": "Visión Completa",
+    "text": "Visión Completa\n\n\nBase\nlet personajeBase = {\n    mover(x, y) {\n        this.x += x;\n        this.y += y;\n    },\n    x:  0,\n    y: 0\n};\n\nPrototipo\nlet prototipoJugador = Object.create(personajeBase);\nprototipoJugador.atacar = function(objetivo) {\n    return `${this.nombre} ataca a ${objetivo.nombre}`;\n};\nprototipoJugador.nombre = \"Sin nombre\";\n\nInstancia\nlet jugador = Object.create(prototipoJugador);\n\nAcceder a prototipoJugador.nombre y a jugador.nombre\nañadir los cambios a nivel de instancia y ejecutar de nuevo.\nComprobar las propiedades con Object.keys(INSTANCIA) antes y después.\n\njugador.nombre = \"Aragorn\";\njugador.x = 10;\njugador.y = 10;\njugador.puntuacion = 3;"
   },
   {
     "objectID": "ch2_p2_js_classes.html#acceso-a-propiedades",
@@ -1278,7 +1299,7 @@
     "href": "ch2_p2_js_classes.html#herencia-con-clases---extends",
     "title": "Desarrollo en el cliente",
     "section": "Herencia con Clases - Extends",
-    "text": "Herencia con Clases - Extends\nCreando subclases\nclass Enemigo extends GameObject {\n    constructor(x, y, tipo) {\n        super(x, y);  // Llamada al constructor padre\n        this.tipo = tipo;\n        this.vida = 50;\n        this.velocidad = 2;\n    }\n}\n\nextends establece la herencia\nsuper() llama al constructor de la clase padre\nDebe ser la primera línea del constructor hijo"
+    "text": "Herencia con Clases - Extends\nCreando subclases\nclass Enemigo extends GameObject {\n    constructor(x, y, tipo) {\n        super(x, y);  // Llamada al constructor padre\n        this.tipo = tipo;\n        this.vida = 50;\n        this.velocidad = 2;\n    }\n}\n\nextends establece la herencia\nsuper() llama al constructor de la clase padre\nDebe llamarse antes de usar this en el constructor hijo"
   },
   {
     "objectID": "ch2_p2_js_classes.html#herencia-con-clases---sobrescritura",
@@ -1544,7 +1565,7 @@
     "href": "ch4_rest.html#xx---respuestas-exitosas",
     "title": "APIs REST",
     "section": "2xx - Respuestas Exitosas",
-    "text": "2xx - Respuestas Exitosas\nLa petición fue procesada correctamente\n\n200 OK\n\nÉxito general en GET, PUT\nRespuesta con contenido\n\n201 Created\n\nRecurso creado tras POST\nDebe incluir header Location\n\n204 No Content\n\nÉxito sin contenido\nTípico en DELETE"
+    "text": "2xx - Respuestas Exitosas\nLa petición fue procesada correctamente\n\n200 OK\n\nÉxito general en GET, PUT\nRespuesta con contenido\n\n201 Created\n\nRecurso creado tras POST\nDebería incluir header Location\n\n204 No Content\n\nÉxito sin contenido\nTípico en DELETE"
   },
   {
     "objectID": "ch4_rest.html#xx---redirecciones",
@@ -1558,7 +1579,7 @@
     "href": "ch4_rest.html#xx---errores-del-cliente",
     "title": "APIs REST",
     "section": "4xx - Errores del Cliente",
-    "text": "4xx - Errores del Cliente\nError en la petición del cliente\n\n400 Bad Request: Petición mal formada\n401 Unauthorized: Autenticación requerida\n403 Forbidden: Sin permisos (aunque esté autenticado)\n404 Not Found: Recurso no existe\n409 Conflict: Conflicto con estado actual (ej: usuario ya existe)\n422 Unprocessable Entity: Formato correcto pero errores de validación"
+    "text": "4xx - Errores del Cliente\nError en la petición del cliente\n\n400 Bad Request: Petición mal formada\n401 Unauthorized: Autenticación requerida\n403 Forbidden: Sin permisos (aunque esté autenticado)\n404 Not Found: Recurso no existe\n409 Conflict: Conflicto con estado actual (ej: usuario ya existe)\n422 Unprocessable Content: Formato correcto pero errores de validación"
   },
   {
     "objectID": "ch4_rest.html#xx---errores-del-servidor",
@@ -1572,7 +1593,7 @@
     "href": "ch4_rest.html#express.js",
     "title": "APIs REST",
     "section": "Express.js",
-    "text": "Express.js\nFramework web minimalista para Node.js\nCaracterísticas:\n\nSistema de enrutamiento robusto\nSoporte para middlewares\nManejo de errores integrado\nCompatibilidad con todos los métodos HTTP\nEstándar de la industria\n\nInstalación:\nnpm init -y\nnpm install express"
+    "text": "Express.js\nFramework web minimalista para Node.js\nCaracterísticas:\n\nSistema de enrutamiento robusto\nSoporte para middlewares\nManejo de errores integrado\nCompatibilidad con todos los métodos HTTP\nEstándar de la industria\n\nInstalación:\nnpm init -y\nnpm install express@4"
   },
   {
     "objectID": "ch4_rest.html#configuración-de-proyecto",
@@ -1614,7 +1635,7 @@
     "href": "ch4_rest.html#invocar-con-fetch",
     "title": "APIs REST",
     "section": "Invocar con fetch()",
-    "text": "Invocar con fetch()\nCliente JavaScript usando POST:\nasync function createMessage() {\n  const response = await fetch('http://localhost:8080/messages', {\n    method: 'POST',\n    headers: {\n      'Content-Type': 'application/json'\n    },\n    body: JSON.stringify({\n      text: 'Hola desde el cliente',\n      author: 'Alice'\n    })\n  });\n\n  const newMessage = await response.json();\n  console.log('Mensaje creado:', newMessage);\n}\n\ncreateMessage();\nObtener los mensajes\nconst response = await fetch('http://localhost:8080/messages');\nconst message = await response.json();"
+    "text": "Invocar con fetch()\nCliente JavaScript usando POST:\nasync function createMessage() {\n  const response = await fetch('http://localhost:8080/messages', {\n    method: 'POST',\n    headers: {\n      'Content-Type': 'application/json'\n    },\n    body: JSON.stringify({\n      text: 'Hola desde el cliente',\n      author: 'Alice'\n    })\n  });\n\n  const newMessage = await response.json();\n  console.log('Mensaje creado:', newMessage);\n}\n\ncreateMessage();\nObtener los mensajes\nconst response = await fetch('http://localhost:8080/messages');\nconst messages = await response.json();"
   },
   {
     "objectID": "ch4_rest.html#controladores",
@@ -1712,21 +1733,21 @@
     "href": "ch4_rest.html#get---obtener-datos",
     "title": "APIs REST",
     "section": "GET - Obtener Datos",
-    "text": "GET - Obtener Datos\nMétodo por defecto de fetch()\n// Obtener un jugador específico\nasync function getPlayer(id) {\n    const response = await fetch(`https://api.game.com/players/${id}`);\n    return await response.json();\n}\n\n// Uso\nconst player = await getPlayer('alice');\nconsole.log(player.name);\nconsole.log(player.level);\n\n\n\n\n\n\nNota\n\n\nTemplate literals (`) permiten insertar variables en strings"
+    "text": "GET - Obtener Datos\nMétodo por defecto de fetch()\n// Obtener un jugador específico\nasync function getPlayer(id) {\n    const response = await fetch(`https://api.game.com/players/${id}`);\n    if (!response.ok) {\n        throw new Error('HTTP error ' + response.status);\n    }\n    return await response.json();\n}\n\n// Uso\nconst player = await getPlayer('alice');\nconsole.log(player.name);\nconsole.log(player.level);\n\n\n\n\n\n\nNota\n\n\nTemplate literals (`) permiten insertar variables en strings"
   },
   {
     "objectID": "ch4_rest.html#post---crear-recurso",
     "href": "ch4_rest.html#post---crear-recurso",
     "title": "APIs REST",
     "section": "POST - Crear Recurso",
-    "text": "POST - Crear Recurso\nEspecificar método, headers y body\nasync function createPlayer(data) {\n    const response = await fetch('https://api.game.com/players', {\n        method: 'POST',\n        headers: {\n            'Content-Type': 'application/json'\n        },\n        body: JSON.stringify(data)\n    });\n\n    return await response.json();\n}\n\n// Uso\nconst newPlayer = await createPlayer({\n    username: 'charlie',\n    email: 'charlie@example.com'\n});\nconsole.log('Creado con ID:', newPlayer.id);"
+    "text": "POST - Crear Recurso\nEspecificar método, headers y body\nasync function createPlayer(data) {\n    const response = await fetch('https://api.game.com/players', {\n        method: 'POST',\n        headers: {\n            'Content-Type': 'application/json'\n        },\n        body: JSON.stringify(data)\n    });\n\n    if (!response.ok) {\n        throw new Error('HTTP error ' + response.status);\n    }\n    return await response.json();\n}\n\n// Uso\nconst newPlayer = await createPlayer({\n    username: 'charlie',\n    email: 'charlie@example.com'\n});\nconsole.log('Creado con ID:', newPlayer.id);"
   },
   {
     "objectID": "ch4_rest.html#put---actualizar-recurso",
     "href": "ch4_rest.html#put---actualizar-recurso",
     "title": "APIs REST",
     "section": "PUT - Actualizar Recurso",
-    "text": "PUT - Actualizar Recurso\nReemplazar completamente el recurso\nasync function updatePlayer(id, updates) {\n    const response = await fetch(`https://api.game.com/players/${id}`, {\n        method: 'PUT',\n        headers: {\n            'Content-Type': 'application/json'\n        },\n        body: JSON.stringify(updates)\n    });\n\n    return await response.json();\n}\n\n// Uso\nawait updatePlayer('charlie', {\n    email: 'newemail@example.com',\n    level: 5\n});\n\n\n\n\n\n\nNota\n\n\nPUT reemplaza todo el recurso; PATCH actualiza solo campos específicos"
+    "text": "PUT - Actualizar Recurso\nReemplazar completamente el recurso\nasync function updatePlayer(id, player) {\n    const response = await fetch(`https://api.game.com/players/${id}`, {\n        method: 'PUT',\n        headers: {\n            'Content-Type': 'application/json'\n        },\n        body: JSON.stringify(player)\n    });\n\n    if (!response.ok) {\n        throw new Error('HTTP error ' + response.status);\n    }\n    return await response.json();\n}\n\n// Uso: se envía el recurso completo\nawait updatePlayer('charlie', {\n    username: 'charlie',\n    email: 'newemail@example.com',\n    level: 5\n});\n\n\n\n\n\n\nNota\n\n\nPUT reemplaza todo el recurso; PATCH actualiza solo campos específicos"
   },
   {
     "objectID": "ch4_rest.html#delete---eliminar-recurso",
@@ -1740,7 +1761,7 @@
     "href": "ch4_rest.html#manejo-de-errores-y-códigos-de-estado",
     "title": "APIs REST",
     "section": "Manejo de Errores y Códigos de Estado",
-    "text": "Manejo de Errores y Códigos de Estado\nManejo robusto con switch\nasync function fetchWithErrorHandling(url) {\n    try {\n        const response = await fetch(url);\n\n        switch (response.status) {\n            case 200:\n                return await response.json();\n            case 401:\n                throw new Error('No autenticado');\n            case 403:\n                throw new Error('Sin permisos');\n            case 404:\n                throw new Error('Recurso no encontrado');\n            case 500:\n                throw new Error('Error del servidor');\n            default:\n                throw new Error(`Error: ${response.status}`);\n        }\n    } catch (error) {\n        console.error('Error en petición:', error);\n        throw error;\n    }\n}"
+    "text": "Manejo de Errores y Códigos de Estado\nManejo robusto con switch\nasync function fetchWithErrorHandling(url) {\n    try {\n        const response = await fetch(url);\n\n        if (response.ok) {\n            // 204 No Content no tiene body\n            return response.status === 204 ? null : await response.json();\n        }\n\n        switch (response.status) {\n            case 401:\n                throw new Error('No autenticado');\n            case 403:\n                throw new Error('Sin permisos');\n            case 404:\n                throw new Error('Recurso no encontrado');\n            case 500:\n                throw new Error('Error del servidor');\n            default:\n                throw new Error(`Error: ${response.status}`);\n        }\n    } catch (error) {\n        console.error('Error en petición:', error);\n        throw error;\n    }\n}"
   },
   {
     "objectID": "ch4_rest.html#separación-de-responsabilidades",
@@ -1789,7 +1810,7 @@
     "href": "ch1_p2_access_layer.html#qué-es-la-capa-de-acceso-a-la-red",
     "title": "Capa de Acceso a la Red",
     "section": "¿Qué es la Capa de Acceso a la Red?",
-    "text": "¿Qué es la Capa de Acceso a la Red?\n\nLa Capa de Acceso a la Red se encarga de la transmisión física de datos entre dispositivos directamente conectados en una red local\n\n\n\n¿Qué hace?\n\nManeja los aspectos físicos de la transmisión\nControla el acceso al medio compartido\nSe ejecuta en el host y en el nucleo de la red\nGarantiza transmisión confiable entre nodos adyacentes\n\n\nPosición en los modelos:\n\n\n\n\n\n\nblock-beta\n    columns 1\n    \n    A[\"&lt;b&gt;Capa de Aplicación&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;HTTP, HTTPS, FTP, SMTP&lt;br/&gt;DNS, DHCP, Telnet, SSH\"]\n    \n    B[\"&lt;b&gt;Capa de Transporte&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;TCP, UDP&lt;br/&gt;Control de flujo y errores\"]\n    \n    C[\"&lt;b&gt;Capa de Internet&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;IP, ICMP, ARP&lt;br/&gt;Enrutamiento, Direccionamiento\"]\n    \n    D[\"&lt;b&gt;Capa de Acceso a la Red&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Ethernet, WiFi, PPP&lt;br/&gt;Frames, MAC Address&lt;br/&gt;Control de acceso al medio\"]\n    \n    classDef highlight fill:#ff9999,stroke:#cc0000,stroke-width:4px,color:#000\n    classDef normal fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#000\n    \n    class D highlight\n    class A,B,C normal\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nImportante\n\n\nResponsabilidad principal: Garantizar que los datos puedan transmitirse de manera confiable entre nodos adyacentes en la red"
+    "text": "¿Qué es la Capa de Acceso a la Red?\n\nLa Capa de Acceso a la Red se encarga de la transmisión física de datos entre dispositivos directamente conectados en una red local\n\n\n\n¿Qué hace?\n\nManeja los aspectos físicos de la transmisión\nControla el acceso al medio compartido\nSe ejecuta en el host y en el núcleo de la red\nGarantiza transmisión confiable entre nodos adyacentes\n\n\nPosición en los modelos:\n\n\n\n\n\n\nblock-beta\n    columns 1\n    \n    A[\"&lt;b&gt;Capa de Aplicación&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;HTTP, HTTPS, FTP, SMTP&lt;br/&gt;DNS, DHCP, Telnet, SSH\"]\n    \n    B[\"&lt;b&gt;Capa de Transporte&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;TCP, UDP&lt;br/&gt;Control de flujo y errores\"]\n    \n    C[\"&lt;b&gt;Capa de Internet&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;IP, ICMP, ARP&lt;br/&gt;Enrutamiento, Direccionamiento\"]\n    \n    D[\"&lt;b&gt;Capa de Acceso a la Red&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Ethernet, WiFi, PPP&lt;br/&gt;Frames, MAC Address&lt;br/&gt;Control de acceso al medio\"]\n    \n    classDef highlight fill:#ff9999,stroke:#cc0000,stroke-width:4px,color:#000\n    classDef normal fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#000\n    \n    class D highlight\n    class A,B,C normal\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nImportante\n\n\nResponsabilidad principal: Garantizar que los datos puedan transmitirse de manera confiable entre nodos adyacentes en la red"
   },
   {
     "objectID": "ch1_p2_access_layer.html#ejemplo-comunicación-en-red-local",
@@ -1824,14 +1845,14 @@
     "href": "ch1_p2_access_layer.html#detección-y-corrección-de-errores-ejemplo",
     "title": "Capa de Acceso a la Red",
     "section": "3. Detección y Corrección de Errores (Ejemplo)",
-    "text": "3. Detección y Corrección de Errores (Ejemplo)\nIntroducir un mensaje de 4 bits (1011) y os saldrá a le derecha el mensaje codificado\n\n\n\n// Input: 4-bit message\nviewof msg4 = Inputs.text({label: \"Mensaje (4 bits)\", placeholder: \"e.g. 1011\"})\n\n\n\n\n\n\n\n\n\nfunction hamming74_encode(bits4) {\n  if (!/^[01]{4}$/.test(bits4)) return \"\";\n  const [d1, d2, d3, d4] = bits4.split(\"\").map(b =&gt; +b);\n  \n  // parity bits\n  const p1 = d1 ^ d2 ^ d4;\n  const p2 = d1 ^ d3 ^ d4;\n  const p3 = d2 ^ d3 ^ d4;\n  \n  // Codeword positions: p1 p2 d1 p3 d2 d3 d4\n  const code = [p1, p2, d1, p3, d2, d3, d4];\n  return code.join(\"\");\n}\n\nencoded = hamming74_encode(msg4)\nencoded\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAquí podréis meter el mensaje codificado y saber si ha habido cambios en un bit y corregirlos (Hamming).\n\n\n\n// Input: 7-bit codeword\nviewof code7 = Inputs.text({label: \"Codeword (7 bits)\", placeholder: \"e.g. 0110011\"})\n\n\n\n\n\n\n\n\n\nfunction hamming74_decode(code) {\n  if (!/^[01]{7}$/.test(code)) return \"Enter exactly 7 bits\";\n  const bits = code.split(\"\").map(b =&gt; +b);\n  const [p1, p2, d1, p3, d2, d3, d4] = bits;\n\n  // syndrome bits\n  const s1 = p1 ^ d1 ^ d2 ^ d4;\n  const s2 = p2 ^ d1 ^ d3 ^ d4;\n  const s3 = p3 ^ d2 ^ d3 ^ d4;\n  \n  const syndrome = (s3 &lt;&lt; 2) | (s2 &lt;&lt; 1) | s1; // binary → position (1-7)\n\n  let corrected = [...bits];\n  let msg = [d1, d2, d3, d4].join(\"\");\n  \n  if (syndrome === 0) {\n    return `✅ Valid codeword, message = ${msg}`;\n  } else {\n    // correct bit if single error\n    corrected[syndrome - 1] ^= 1; \n    const [cp1, cp2, cd1, cp3, cd2, cd3, cd4] = corrected;\n    const corrected_msg = [cd1, cd2, cd3, cd4].join(\"\");\n    return `❌ Error at position ${syndrome}. Corrected codeword = ${corrected.join(\"\")}, message = ${corrected_msg}`;\n  }\n}\n\nresult = hamming74_decode(code7)\nresult"
+    "text": "3. Detección y Corrección de Errores (Ejemplo)\nIntroducir un mensaje de 4 bits (1011) y os saldrá a la derecha el mensaje codificado\n\n\n\n// Input: 4-bit message\nviewof msg4 = Inputs.text({label: \"Mensaje (4 bits)\", placeholder: \"e.g. 1011\"})\n\n\n\n\n\n\n\n\n\nfunction hamming74_encode(bits4) {\n  if (!/^[01]{4}$/.test(bits4)) return \"\";\n  const [d1, d2, d3, d4] = bits4.split(\"\").map(b =&gt; +b);\n  \n  // parity bits\n  const p1 = d1 ^ d2 ^ d4;\n  const p2 = d1 ^ d3 ^ d4;\n  const p3 = d2 ^ d3 ^ d4;\n  \n  // Codeword positions: p1 p2 d1 p3 d2 d3 d4\n  const code = [p1, p2, d1, p3, d2, d3, d4];\n  return code.join(\"\");\n}\n\nencoded = hamming74_encode(msg4)\nencoded\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAquí podréis meter el mensaje codificado y saber si ha habido cambios en un bit y corregirlos (Hamming).\n\n\n\n// Input: 7-bit codeword\nviewof code7 = Inputs.text({label: \"Codeword (7 bits)\", placeholder: \"e.g. 0110011\"})\n\n\n\n\n\n\n\n\n\nfunction hamming74_decode(code) {\n  if (!/^[01]{7}$/.test(code)) return \"Enter exactly 7 bits\";\n  const bits = code.split(\"\").map(b =&gt; +b);\n  const [p1, p2, d1, p3, d2, d3, d4] = bits;\n\n  // syndrome bits\n  const s1 = p1 ^ d1 ^ d2 ^ d4;\n  const s2 = p2 ^ d1 ^ d3 ^ d4;\n  const s3 = p3 ^ d2 ^ d3 ^ d4;\n  \n  const syndrome = (s3 &lt;&lt; 2) | (s2 &lt;&lt; 1) | s1; // binary → position (1-7)\n\n  let corrected = [...bits];\n  let msg = [d1, d2, d3, d4].join(\"\");\n  \n  if (syndrome === 0) {\n    return `✅ Valid codeword, message = ${msg}`;\n  } else {\n    // correct bit if single error\n    corrected[syndrome - 1] ^= 1; \n    const [cp1, cp2, cd1, cp3, cd2, cd3, cd4] = corrected;\n    const corrected_msg = [cd1, cd2, cd3, cd4].join(\"\");\n    return `❌ Error at position ${syndrome}. Corrected codeword = ${corrected.join(\"\")}, message = ${corrected_msg}`;\n  }\n}\n\nresult = hamming74_decode(code7)\nresult"
   },
   {
     "objectID": "ch1_p2_access_layer.html#control-de-tamaño",
     "href": "ch1_p2_access_layer.html#control-de-tamaño",
     "title": "Capa de Acceso a la Red",
     "section": "4. Control de Tamaño",
-    "text": "4. Control de Tamaño\n\nManeja las limitaciones de tamaño impuestas por diferentes tecnologías de red\n\nMaximum Transmission Unit (MTU)\n\n\n\nTecnología\nMTU (bytes)\nCaracterísticas\n\n\n\n\nEthernet\n1500\nEstándar más común en LAN\n\n\nToken Ring\n4464\nTecnología legacy\n\n\nFDDI\n4352\nFiber Distributed Data Interface\n\n\nPPP\nVariable (~1500)\nPara compatibilidad con Ethernet\n\n\n\n\n\n\n\n\n\nAdvertencia\n\n\nSi datos &gt; MTU → La Capa de Acceso a la Red descarta automáticamente el paquete\n\n\n\n\nNota: El MTU determina el tamaño máximo de datos que puede transportar una sola trama"
+    "text": "4. Control de Tamaño\n\nManeja las limitaciones de tamaño impuestas por diferentes tecnologías de red\n\nMaximum Transmission Unit (MTU)\n\n\n\nTecnología\nMTU (bytes)\nCaracterísticas\n\n\n\n\nEthernet\n1500\nEstándar más común en LAN\n\n\nToken Ring\n4464\nTecnología legacy\n\n\nFDDI\n4352\nFiber Distributed Data Interface\n\n\nPPP\nVariable (~1500)\nPara compatibilidad con Ethernet\n\n\n\n\n\n\n\n\n\nAdvertencia\n\n\nSi datos &gt; MTU → el paquete se fragmenta en la capa de red (IPv4) o el emisor ajusta el tamaño con PMTUD; una trama nunca supera la MTU\n\n\n\n\nNota: El MTU determina el tamaño máximo de datos que puede transportar una sola trama"
   },
   {
     "objectID": "ch1_p2_access_layer.html#sincronización-y-temporización",
@@ -1943,21 +1964,21 @@
     "href": "ch3_p1_phaser.html#sistemas-de-renderizado",
     "title": "Introducción a Phaser 3",
     "section": "Sistemas de Renderizado",
-    "text": "Sistemas de Renderizado\nDos opciones disponibles:\n\nCanvas (por defecto): Mayor compatibilidad, menos exigente\nWebGL: Gráficos avanzados, mejor rendimiento, requiere soporte GPU\n\n¿Cuándo usar cada uno?\n\nCanvas: Juegos simples, máxima compatibilidad\nWebGL: Muchos objetos, efectos visuales complejos\n\n// Configurar tipo de renderizado\nconst config = {\n    type: Phaser.AUTO,  // Elige el mejor disponible\n    // type: Phaser.CANVAS,  // Forzar Canvas\n    // type: Phaser.WEBGL,   // Forzar WebGL\n};"
+    "text": "Sistemas de Renderizado\nDos opciones disponibles:\n\nCanvas: Mayor compatibilidad, menos exigente\nWebGL: Gráficos avanzados, mejor rendimiento, requiere soporte GPU (preferido por Phaser.AUTO)\n\n¿Cuándo usar cada uno?\n\nCanvas: Juegos simples, máxima compatibilidad\nWebGL: Muchos objetos, efectos visuales complejos\n\n// Configurar tipo de renderizado\nconst config = {\n    type: Phaser.AUTO,  // WebGL si está disponible; si no, Canvas\n    // type: Phaser.CANVAS,  // Forzar Canvas\n    // type: Phaser.WEBGL,   // Forzar WebGL\n};"
   },
   {
     "objectID": "ch3_p1_phaser.html#requisitos-para-empezar",
     "href": "ch3_p1_phaser.html#requisitos-para-empezar",
     "title": "Introducción a Phaser 3",
     "section": "Requisitos para Empezar",
-    "text": "Requisitos para Empezar\nNavegador moderno:\n\nChrome (recomendado - mejores DevTools)\nFirefox, Safari, Edge u Opera\n\nObtener Phaser 3:\n\nCDN (más rápido)\n\n&lt;script src=\"//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js\"&gt;&lt;/script&gt;\n\nDescarga directa phaser.io/download/stable\nGitHub github.com/photonstorm/phaser\nNode npm install phaser"
+    "text": "Requisitos para Empezar\nNavegador moderno:\n\nChrome (recomendado - mejores DevTools)\nFirefox, Safari, Edge u Opera\n\nObtener Phaser 3:\n\nCDN (más rápido)\n\n&lt;script src=\"https://cdn.jsdelivr.net/npm/phaser@3.88.2/dist/phaser.js\"&gt;&lt;/script&gt;\n\nDescarga directa phaser.io/download/stable\nGitHub github.com/phaserjs/phaser\nNode npm install phaser"
   },
   {
     "objectID": "ch3_p1_phaser.html#el-elemento-canvas",
     "href": "ch3_p1_phaser.html#el-elemento-canvas",
     "title": "Introducción a Phaser 3",
     "section": "El Elemento Canvas",
-    "text": "El Elemento Canvas\n¿Qué es el Canvas?\n\nEtiqueta HTML5 (&lt;canvas&gt;) para dibujar gráficos\nFunciona como un lienzo en blanco\nSe manipula mediante JavaScript\n\nSistema de coordenadas:\n\nOrigen (0,0) en esquina superior izquierda\nEje X positivo → derecha\nEje Y positivo → abajo (inverso a matemáticas)\nDimensiones por defecto: 300x300 píxeles\n\n&lt;canvas id=\"game\" width=\"800\" height=\"600\"&gt;&lt;/canvas&gt;"
+    "text": "El Elemento Canvas\n¿Qué es el Canvas?\n\nEtiqueta HTML5 (&lt;canvas&gt;) para dibujar gráficos\nFunciona como un lienzo en blanco\nSe manipula mediante JavaScript\n\nSistema de coordenadas:\n\nOrigen (0,0) en esquina superior izquierda\nEje X positivo → derecha\nEje Y positivo → abajo (inverso a matemáticas)\nDimensiones por defecto: 300x150 píxeles\n\n&lt;canvas id=\"game\" width=\"800\" height=\"600\"&gt;&lt;/canvas&gt;"
   },
   {
     "objectID": "ch3_p1_phaser.html#configuración-inicial",
@@ -1978,14 +1999,14 @@
     "href": "ch3_p1_phaser.html#las-tres-funciones-principales-2",
     "title": "Introducción a Phaser 3",
     "section": "Las Tres Funciones Principales (2)",
-    "text": "Las Tres Funciones Principales (2)\ncreate() - Crear objetos del juego\n\nCuándo: Se ejecuta después de preload()\nPara qué: Inicializar y posicionar elementos\nImportante: El orden de creación determina el orden de renderizado\n\nfunction create() {\n    // Añadir imagen de fondo centrada\n    this.add.image(400, 300, 'cielo');\n    \n    // Crear plataforma con físicas\n    this.plataforma = this.physics.add.image(400, 500, 'suelo');\n    this.plataforma.setImmovable(true);  // No se mueve\n}"
+    "text": "Las Tres Funciones Principales (2)\ncreate() - Crear objetos del juego\n\nCuándo: Se ejecuta después de preload()\nPara qué: Inicializar y posicionar elementos\nImportante: El orden de creación determina el orden de renderizado\n\nfunction create() {\n    // Añadir imagen de fondo centrada\n    this.add.image(400, 300, 'cielo');\n    \n    // Crear plataforma con físicas\n    this.plataforma = this.physics.add.image(400, 500, 'suelo');\n    this.plataforma.setImmovable(true);  // No se mueve\n    this.plataforma.body.setAllowGravity(false);  // No le afecta la gravedad\n}"
   },
   {
     "objectID": "ch3_p1_phaser.html#las-tres-funciones-principales-3",
     "href": "ch3_p1_phaser.html#las-tres-funciones-principales-3",
     "title": "Introducción a Phaser 3",
     "section": "Las Tres Funciones Principales (3)",
-    "text": "Las Tres Funciones Principales (3)\nupdate(time, delta) - Bucle del juego\n\nCuándo: Se ejecuta constantemente (~60 veces/segundo)\nPara qué: Lógica que debe actualizarse continuamente\nParámetros: time (tiempo total), delta (desde último frame)\n\nfunction update(time, delta) {\n    // Mover jugador con teclado\n    if (this.cursors.left.isDown) {\n        this.jugador.x -= 5;  // Mover izquierda\n    }\n    if (this.cursors.right.isDown) {\n        this.jugador.x += 5;  // Mover derecha\n    }\n}\n\n\n\n\n\n\nTip\n\n\nUsar delta para movimiento consistente en diferentes dispositivos"
+    "text": "Las Tres Funciones Principales (3)\nupdate(time, delta) - Bucle del juego\n\nCuándo: Se ejecuta una vez por refresco del monitor (normalmente ~60 veces/segundo)\nPara qué: Lógica que debe actualizarse continuamente\nParámetros: time (tiempo total), delta (desde último frame)\n\nfunction update(time, delta) {\n    // Mover jugador con teclado\n    if (this.cursors.left.isDown) {\n        this.jugador.x -= 5;  // Mover izquierda\n    }\n    if (this.cursors.right.isDown) {\n        this.jugador.x += 5;  // Mover derecha\n    }\n}\n\n\n\n\n\n\nTip\n\n\nUsar delta para movimiento consistente en diferentes dispositivos"
   },
   {
     "objectID": "ch3_p1_phaser.html#concepto-de-escena",
@@ -2048,7 +2069,7 @@
     "href": "ch3_p1_phaser.html#pasar-datos-entre-escenas",
     "title": "Introducción a Phaser 3",
     "section": "Pasar Datos Entre Escenas",
-    "text": "Pasar Datos Entre Escenas\nEnviar datos al cambiar de escena:\n// Pasar datos al iniciar una escena\nthis.scene.start('SiguienteEscena', {\n    puntuacion: 100,\n    nivel: 2,\n    nombre: 'Jugador1'\n});\nRecibir datos en la escena destino:\nclass SiguienteEscena extends Phaser.Scene {\n    create(datos) {\n        // Recibir los datos como parámetro\n        console.log(datos.puntuacion);  // 100\n        console.log(datos.nivel);       // 2\n        console.log(datos.nombre);      // 'Jugador1'\n        \n        this.add.text(100, 100, `Puntuación: ${datos.puntuacion}`);\n    }\n}"
+    "text": "Pasar Datos Entre Escenas\nEnviar datos al cambiar de escena:\n// Pasar datos al iniciar una escena\nthis.scene.start('SiguienteEscena', {\n    puntuacion: 100,\n    nivel: 2,\n    nombre: 'Jugador1'\n});\nRecibir datos en la escena destino:\nclass SiguienteEscena extends Phaser.Scene {\n    constructor() {\n        super('SiguienteEscena');\n    }\n\n    create(datos) {\n        // Recibir los datos como parámetro\n        console.log(datos.puntuacion);  // 100\n        console.log(datos.nivel);       // 2\n        console.log(datos.nombre);      // 'Jugador1'\n        \n        this.add.text(100, 100, `Puntuación: ${datos.puntuacion}`);\n    }\n}"
   },
   {
     "objectID": "ch3_p1_phaser.html#pasar-datos---otros-métodos",
@@ -2100,11 +2121,11 @@
     "text": "Profundidad y Capas\nControlar qué se dibuja encima:\n\nLa propiedad depth funciona como capas\nValores mayores se dibujan sobre valores menores\nPor defecto todas tienen depth = 0\n\nlet fondo = this.add.image(400, 300, 'cielo');\nfondo.depth = 0;  // Atrás\n\nlet jugador = this.add.image(400, 300, 'personaje');\njugador.depth = 10;  // Encima del fondo\n\nlet hud = this.add.image(400, 50, 'interfaz');\nhud.depth = 100;  // Encima de todo"
   },
   {
-    "objectID": "ch3_p1_phaser.html#tres-motores-disponibles",
-    "href": "ch3_p1_phaser.html#tres-motores-disponibles",
+    "objectID": "ch3_p1_phaser.html#dos-motores-disponibles",
+    "href": "ch3_p1_phaser.html#dos-motores-disponibles",
     "title": "Introducción a Phaser 3",
-    "section": "Tres Motores Disponibles",
-    "text": "Tres Motores Disponibles\nArcade Physics:\n\nMás simple y rápido\nSolo rectángulos y círculos\nIdeal para juegos arcade/plataformas\n\nImpact Physics:\n\nSoporta pendientes en tiles\nMás complejo que Arcade\nIdeal para plataformas con terreno inclinado\n\nMatter Physics:\n\nMás avanzado y realista\nFormas complejas y polígonos\nMayor costo de rendimiento\nIdeal para puzzles físicos"
+    "section": "Dos Motores Disponibles",
+    "text": "Dos Motores Disponibles\nArcade Physics:\n\nMás simple y rápido\nSolo rectángulos y círculos\nIdeal para juegos arcade/plataformas\n\nMatter Physics:\n\nMás avanzado y realista\nFormas complejas y polígonos\nMayor costo de rendimiento\nIdeal para puzzles físicos"
   },
   {
     "objectID": "ch3_p1_phaser.html#configurar-arcade-physics",
@@ -2174,7 +2195,7 @@
     "href": "ch3_p1_phaser.html#ejemplos-de-uso",
     "title": "Introducción a Phaser 3",
     "section": "Ejemplos de Uso",
-    "text": "Ejemplos de Uso\nCollider para plataformas:\nfunction create() {\n    let jugador = this.physics.add.image(100, 450, 'personaje');\n    \n    let plataforma = this.physics.add.image(400, 500, 'suelo');\n    plataforma.setImmovable(true);  // No se mueve al impacto\n    \n    // Colisión con resolución física\n    this.physics.add.collider(jugador, plataforma);\n}\nOverlap para coleccionables:\nlet estrella = this.physics.add.image(200, 200, 'estrella');\n\nthis.physics.add.overlap(jugador, estrella, (j, e) =&gt; {\n    e.destroy();  // Eliminar estrella\n    this.puntuacion += 10;\n});"
+    "text": "Ejemplos de Uso\nCollider para plataformas:\nfunction create() {\n    let jugador = this.physics.add.image(100, 450, 'personaje');\n    \n    let plataforma = this.physics.add.image(400, 500, 'suelo');\n    plataforma.setImmovable(true);  // No se mueve al impacto\n    plataforma.body.setAllowGravity(false);  // No le afecta la gravedad\n    \n    // Colisión con resolución física\n    this.physics.add.collider(jugador, plataforma);\n}\nOverlap para coleccionables:\nlet estrella = this.physics.add.image(200, 200, 'estrella');\n\nthis.physics.add.overlap(jugador, estrella, (j, e) =&gt; {\n    e.destroy();  // Eliminar estrella\n    this.puntuacion += 10;\n});"
   },
   {
     "objectID": "ch3_p1_phaser.html#grupos-estáticos",
@@ -2195,7 +2216,7 @@
     "href": "ch3_p1_phaser.html#callbacks-de-colisión",
     "title": "Introducción a Phaser 3",
     "section": "Callbacks de Colisión",
-    "text": "Callbacks de Colisión\nEjecutar código cuando ocurre colisión:\n// Callback básico\nthis.physics.add.collider(jugador, enemigo, (j, e) =&gt; {\n    // Se ejecuta cada vez que colisionan\n    j.setTint(0xff0000);      // Jugador en rojo\n    j.setVelocityX(-200);     // Retroceder\n});\nProcess callback (condición):\n\nDecide si procesar la colisión\nRetorna true para procesar, false para ignorar\n\nthis.physics.add.collider(\n    jugador, \n    enemigo,\n    this.dañar,              // Si procesa\n    this.puedeRecibirDaño,   // Condición\n    this\n);"
+    "text": "Callbacks de Colisión\nEjecutar código cuando ocurre colisión:\n// Callback básico\nthis.physics.add.collider(jugador, enemigo, (j, e) =&gt; {\n    // Se ejecuta cada vez que colisionan\n    j.setTint(0xff0000);      // Jugador en rojo\n    j.setVelocityX(-200);     // Retroceder\n});\nProcess callback (condición):\n\nDecide si procesar la colisión\nRetorna true para procesar, false para ignorar\n\nthis.physics.add.collider(\n    jugador, \n    enemigo,\n    dañar,                   // Si procesa\n    puedeRecibirDaño,        // Condición\n    this\n);"
   },
   {
     "objectID": "ch3_p1_phaser.html#sistema-de-invulnerabilidad",
@@ -2363,7 +2384,7 @@
     "href": "ch1_p5_application.html#qué-son-los-sockets",
     "title": "Capa de Aplicación",
     "section": "¿Qué son los Sockets?",
-    "text": "¿Qué son los Sockets?\n\nLos sockets son la interfaz de programación que permite a las aplicaciones comunicarse con la capa de transporte\n\n\n\nCaracterísticas:\n\nPunto de conexión bidireccional\nAbstracción de detalles de bajo nivel\nAPI introducida en BSD4.1 UNIX (1981)\nBasada en paradigma cliente/servidor\n\n\nIdentificación de procesos:\nPara identificar un proceso necesitamos:\n\nIP del host: Dirección única (32 bits IPv4)\nNúmero de puerto: Asociado al proceso\n\nEjemplos de puertos:\n\nHTTP: 80\nHTTPS: 443\nDNS: 53"
+    "text": "¿Qué son los Sockets?\n\nLos sockets son la interfaz de programación que permite a las aplicaciones comunicarse con la capa de transporte\n\n\n\nCaracterísticas:\n\nPunto de conexión bidireccional\nAbstracción de detalles de bajo nivel\nAPI introducida en BSD 4.2 UNIX (1983)\nBasada en paradigma cliente/servidor\n\n\nIdentificación de procesos:\nPara identificar un proceso necesitamos:\n\nIP del host: Dirección única (32 bits IPv4)\nNúmero de puerto: Asociado al proceso\n\nEjemplos de puertos:\n\nHTTP: 80\nHTTPS: 443\nDNS: 53"
   },
   {
     "objectID": "ch1_p5_application.html#sockets-tcp",
@@ -2384,7 +2405,7 @@
     "href": "ch1_p5_application.html#cliente-tcp",
     "title": "Capa de Aplicación",
     "section": "Cliente TCP",
-    "text": "Cliente TCP\nEstablecer conexión y comunicar\nconst net = require('net');\n\n// Crear socket TCP\nconst socket = new net.Socket();\n\n// Conectar al servidor\nsocket.connect(8888, 'localhost', () =&gt; {\n    console.log('Conectado al servidor TCP');\n});\n\n// Enviar datos\nsocket.write('Hola servidor');\n\n// Recibir respuesta\nsocket.on('data', (data) =&gt; {\n    console.log('Respuesta:', data.toString());\n});\n\n// Cerrar conexión\nsocket.close();"
+    "text": "Cliente TCP\nEstablecer conexión y comunicar\nconst net = require('net');\n\n// Crear socket TCP\nconst socket = new net.Socket();\n\n// Conectar al servidor\nsocket.connect(8888, 'localhost', () =&gt; {\n    console.log('Conectado al servidor TCP');\n});\n\n// Enviar datos\nsocket.write('Hola servidor');\n\n// Recibir respuesta\nsocket.on('data', (data) =&gt; {\n    console.log('Respuesta:', data.toString());\n});\n\n// Cerrar conexión\nsocket.end();"
   },
   {
     "objectID": "ch1_p5_application.html#sockets-udp",
@@ -2426,7 +2447,7 @@
     "href": "ch1_p5_application.html#cliente-servidor-en-videojuegos",
     "title": "Capa de Aplicación",
     "section": "Cliente-Servidor en Videojuegos",
-    "text": "Cliente-Servidor en Videojuegos\nImplementación en juegos multijugador\n\n\nArquitectura típica:\n\nServidor mantiene estado autoritativo\nClientes manejan presentación visual\nServidor valida todas las acciones\nPrevención de trampas centralizada\n\nEjemplos:\n\nWorld of Warcraft\nCounter-Strike: GO\nLeague of Legends\nFortnite Battle Royale\n\n\nProblemas comunes:\n\nLatencia/Lag: Tiempo de procesamiento\nSincronización: Orden de acciones\nServidores sobrecargados: Lanzamientos\nPérdida de conexión: Penalizaciones\nCostos de infraestructura: Millones en servidores\n\nSoluciones: Predicción cliente, interpolación, CDNs"
+    "text": "Cliente-Servidor en Videojuegos\nImplementación en juegos multijugador\n\n\nArquitectura típica:\n\nServidor mantiene estado autoritativo\nClientes manejan presentación visual\nServidor valida todas las acciones\nPrevención de trampas centralizada\n\nEjemplos:\n\nWorld of Warcraft\nCounter-Strike 2\nLeague of Legends\nFortnite Battle Royale\n\n\nProblemas comunes:\n\nLatencia/Lag: Tiempo de procesamiento\nSincronización: Orden de acciones\nServidores sobrecargados: Lanzamientos\nPérdida de conexión: Penalizaciones\nCostos de infraestructura: Millones en servidores\n\nSoluciones: Predicción cliente, interpolación, CDNs"
   },
   {
     "objectID": "ch1_p5_application.html#arquitectura-peer-to-peer",
@@ -2454,14 +2475,14 @@
     "href": "ch1_p5_application.html#evolución-de-http",
     "title": "Capa de Aplicación",
     "section": "Evolución de HTTP",
-    "text": "Evolución de HTTP\nConexiones persistentes vs no persistentes\n\n\n\n\n\n\n\nsequenceDiagram\n    participant C as Cliente (Navegador)\n    participant S as Servidor Web\n    Note over C,S: HTTP/1.0 - No persistente\n    C-&gt;&gt;S: 1. SYN - Establecer conexión TCP\n    S-&gt;&gt;C: 2. SYN-ACK - Confirmar conexión\n    C-&gt;&gt;S: 3. ACK - Conexión establecida\n    \n    C-&gt;&gt;S: 4. GET /index.html HTTP/1.0\n    S-&gt;&gt;C: 5. HTTP/1.0 200 OK + contenido HTML\n    \n    C-&gt;&gt;S: 6. FIN - Cerrar conexión TCP\n    S-&gt;&gt;C: 7. FIN-ACK - Confirmar cierre\n    C-&gt;&gt;S: 8. ACK - Conexión cerrada\n\n    Note over C,S: Nueva conexión para segundo recurso\n    C-&gt;&gt;S: 9. SYN - Nueva conexión TCP\n    S-&gt;&gt;C: 10. SYN-ACK\n    C-&gt;&gt;S: 11. ACK\n    \n    C-&gt;&gt;S: 12. GET /imagen.jpg HTTP/1.0\n    S-&gt;&gt;C: 13. HTTP/1.0 200 OK + imagen\n    \n    Note over C,S: Tiempo total: 4 RTT + transferencia\n\n\n\n\n\n\n\n\n\n\n\n\nsequenceDiagram\n    participant C as Cliente (Navegador)\n    participant S as Servidor Web\n    \n    Note over C,S: HTTP/1.1+ - Persistente\n    C-&gt;&gt;S: 1. SYN - Establecer conexión TCP\n    S-&gt;&gt;C: 2. SYN-ACK - Confirmar conexión\n    C-&gt;&gt;S: 3. ACK - Conexión establecida\n    \n    C-&gt;&gt;S: 4. GET /index.html HTTP/1.1&lt;br/&gt;Connection: keep-alive\n    S-&gt;&gt;C: 5. HTTP/1.1 200 OK&lt;br/&gt;+ contenido HTML\n        \n    C-&gt;&gt;S: 6. GET /imagen.jpg HTTP/1.1&lt;br/&gt;Connection: keep-alive\n    S-&gt;&gt;C: 7. HTTP/1.1 200 OK&lt;br/&gt;+ imagen\n    \n    Note over C,S: Más recursos pueden solicitarse...\n    \n    C-&gt;&gt;S: 8. Connection: close (cuando termine)    \n    Note over C,S: Tiempo total: 1 RTT + transferencia\n\n\n\n\n\n\n\n\nHTTP/1.0: 2 RTT por objeto, nueva conexión cada vez\nHTTP/1.1: 1 RTT por objeto, conexión persistente\nHTTP/2: Múltiples streams independientes\nHTTP/3: Sobre QUIC (UDP)"
+    "text": "Evolución de HTTP\nConexiones persistentes vs no persistentes\n\n\n\n\n\n\n\nsequenceDiagram\n    participant C as Cliente (Navegador)\n    participant S as Servidor Web\n    Note over C,S: HTTP/1.0 - No persistente\n    C-&gt;&gt;S: 1. SYN - Establecer conexión TCP\n    S-&gt;&gt;C: 2. SYN-ACK - Confirmar conexión\n    C-&gt;&gt;S: 3. ACK - Conexión establecida\n    \n    C-&gt;&gt;S: 4. GET /index.html HTTP/1.0\n    S-&gt;&gt;C: 5. HTTP/1.0 200 OK + contenido HTML\n    \n    C-&gt;&gt;S: 6. FIN - Cerrar conexión TCP\n    S-&gt;&gt;C: 7. FIN-ACK - Confirmar cierre\n    C-&gt;&gt;S: 8. ACK - Conexión cerrada\n\n    Note over C,S: Nueva conexión para segundo recurso\n    C-&gt;&gt;S: 9. SYN - Nueva conexión TCP\n    S-&gt;&gt;C: 10. SYN-ACK\n    C-&gt;&gt;S: 11. ACK\n    \n    C-&gt;&gt;S: 12. GET /imagen.jpg HTTP/1.0\n    S-&gt;&gt;C: 13. HTTP/1.0 200 OK + imagen\n    \n    Note over C,S: Tiempo total: 4 RTT + transferencia\n\n\n\n\n\n\n\n\n\n\n\n\nsequenceDiagram\n    participant C as Cliente (Navegador)\n    participant S as Servidor Web\n    \n    Note over C,S: HTTP/1.1+ - Persistente\n    C-&gt;&gt;S: 1. SYN - Establecer conexión TCP\n    S-&gt;&gt;C: 2. SYN-ACK - Confirmar conexión\n    C-&gt;&gt;S: 3. ACK - Conexión establecida\n    \n    C-&gt;&gt;S: 4. GET /index.html HTTP/1.1&lt;br/&gt;Connection: keep-alive\n    S-&gt;&gt;C: 5. HTTP/1.1 200 OK&lt;br/&gt;+ contenido HTML\n        \n    C-&gt;&gt;S: 6. GET /imagen.jpg HTTP/1.1&lt;br/&gt;Connection: keep-alive\n    S-&gt;&gt;C: 7. HTTP/1.1 200 OK&lt;br/&gt;+ imagen\n    \n    Note over C,S: Más recursos pueden solicitarse...\n    \n    C-&gt;&gt;S: 8. Connection: close (cuando termine)    \n    Note over C,S: Tiempo total: 3 RTT + transferencia\n\n\n\n\n\n\n\n\nHTTP/1.0: 2 RTT por objeto, nueva conexión cada vez\nHTTP/1.1: 1 RTT por objeto, conexión persistente\nHTTP/2: Múltiples streams independientes\nHTTP/3: Sobre QUIC (UDP)"
   },
   {
     "objectID": "ch1_p5_application.html#cookies-http",
     "href": "ch1_p5_application.html#cookies-http",
     "title": "Capa de Aplicación",
     "section": "Cookies HTTP",
-    "text": "Cookies HTTP\nMecanismo de estado en protocolo sin estado\n\n\nFuncionamiento:\n\nPares clave-valor en cliente\nSe configuran en respuesta HTTP\nFecha de expiración\nDominio del servidor\n\nTipos:\n\nPropias: De la web navegada\nTerceros: Servicios externos\nPermanentes: Sin expiración\nSesión: Expiran al cerrar\n\n\nUsos principales:\n\nMantener sesiones\nPersonalización\nAnálisis de uso\nPublicidad dirigida\n\nSeguridad:\n\nDominio específico\nEvitar suplantaciones\nHTTPS only cookies"
+    "text": "Cookies HTTP\nMecanismo de estado en protocolo sin estado\n\n\nFuncionamiento:\n\nPares clave-valor en cliente\nSe configuran en respuesta HTTP\nFecha de expiración\nDominio del servidor\n\nTipos:\n\nPropias: De la web navegada\nTerceros: Servicios externos\nPermanentes: Con fecha de expiración\nSesión: Expiran al cerrar\n\n\nUsos principales:\n\nMantener sesiones\nPersonalización\nAnálisis de uso\nPublicidad dirigida\n\nSeguridad:\n\nDominio específico\nEvitar suplantaciones\nHTTPS only cookies"
   },
   {
     "objectID": "ch1_p5_application.html#dns---domain-name-system",
@@ -2489,7 +2510,7 @@
     "href": "ch1_p5_application.html#quic",
     "title": "Capa de Aplicación",
     "section": "QUIC",
-    "text": "QUIC\nProtocolo moderno sobre UDP\n\n\nVentajas principales:\n\nMultiplexado sin head-of-line blocking\nEstablecimiento 0-RTT\nMigración de conexión transparente\nControl de congestión mejorado\nForward Error Correction\n\nDesarrollado por:\n\nGoogle (2012)\nEstandarizado IETF (2021)\nRFC 9000\n\n\nAdopción 2025:\n\n8.2% de sitios web usan QUIC\n31.1% usan HTTP/3\nYouTube reduce 30% tiempo de carga\n\nCasos de uso:\n\nStreaming\nVideoconferencia\nJuegos en línea\nPlataformas de contenido"
+    "text": "QUIC\nProtocolo moderno sobre UDP\n\n\nVentajas principales:\n\nMultiplexado sin head-of-line blocking\nEstablecimiento 0-RTT\nMigración de conexión transparente\nControl de congestión mejorado\nCifrado integrado (TLS 1.3)\n\nDesarrollado por:\n\nGoogle (2012)\nEstandarizado IETF (2021)\nRFC 9000\n\n\nAdopción 2025:\n\n8.2% de sitios web usan QUIC\n31.1% usan HTTP/3\nYouTube reduce 30% tiempo de carga\n\nCasos de uso:\n\nStreaming\nVideoconferencia\nJuegos en línea\nPlataformas de contenido"
   },
   {
     "objectID": "ch1_p5_application.html#cdns---content-delivery-networks",
@@ -2531,7 +2552,7 @@
     "href": "ch1_p1_net_introduction.html#ejemplo-mensaje-madrid-tokio",
     "title": "Introducción a las Redes de Ordenadores",
     "section": "Ejemplo: Mensaje Madrid → Tokio",
-    "text": "Ejemplo: Mensaje Madrid → Tokio\nSmartphone María (WiFI) en Madrid -&gt; Takeshi LAN en la Universidad de Tokyo\n\nOrigen LAN Madrid: Smartphone → Router WiFi\nRouter local → MAN: ISP local → MAN Madrid\nMAN → WAN nacional: MAN Madrid → WAN España\nWAN → Internet global: España → Backbone internacional\nLlegada a Japón: WAN Japón → MAN Tokio\nMAN → CAN: MAN Tokio → Universidad\nCAN → LAN: Campus → LAN específica\nDestino final: LAN → Dispositivo de Takeshi"
+    "text": "Ejemplo: Mensaje Madrid → Tokio\nSmartphone María (WiFi) en Madrid -&gt; Takeshi LAN en la Universidad de Tokio\n\nOrigen LAN Madrid: Smartphone → Router WiFi\nRouter local → MAN: ISP local → MAN Madrid\nMAN → WAN nacional: MAN Madrid → WAN España\nWAN → Internet global: España → Backbone internacional\nLlegada a Japón: WAN Japón → MAN Tokio\nMAN → CAN: MAN Tokio → Universidad\nCAN → LAN: Campus → LAN específica\nDestino final: LAN → Dispositivo de Takeshi"
   },
   {
     "objectID": "ch1_p1_net_introduction.html#un-caso-un-poco-más-real",
@@ -2566,7 +2587,7 @@
     "href": "ch1_p1_net_introduction.html#identificadores-en-red",
     "title": "Introducción a las Redes de Ordenadores",
     "section": "Identificadores en Red",
-    "text": "Identificadores en Red\n\n\nDirección IP\n\n“Dirección postal”\nLocaliza en la red\nEjemplo: 192.168.1.100\nPuede cambiar\n\n\nDirección MAC\n\n“DNI del dispositivo”\nÚnica y permanente\nAsignada por fabricante\nNo cambia nunca\n\n\nProtocolo ARP\n\n“Directorio telefónico”\nTraduce IP ↔︎ MAC\nPermite entrega final\nOpera localmente\n\n\n\n\n\n\n\n\nEjercicio\n\n\nPrueba a ejecutar ifconfig en tu terminal MacOS/Linux o ipconfig en Windows. ¿Qué ves?."
+    "text": "Identificadores en Red\n\n\nDirección IP\n\n“Dirección postal”\nLocaliza en la red\nEjemplo: 192.168.1.100\nPuede cambiar\n\n\nDirección MAC\n\n“DNI del dispositivo”\nÚnica y permanente\nAsignada por fabricante\nNo cambia nunca\n\n\nProtocolo ARP\n\n“Directorio telefónico”\nTraduce IP ↔︎ MAC\nPermite entrega final\nOpera localmente\n\n\n\n\n\n\n\n\nEjercicio\n\n\nPrueba a ejecutar ifconfig en tu terminal MacOS/Linux o ipconfig en Windows. ¿Qué ves?"
   },
   {
     "objectID": "ch1_p1_net_introduction.html#protocolos-de-red",
@@ -2576,11 +2597,11 @@
     "text": "Protocolos de Red\n\nProtocolo: Serie de pasos bien definidos que especifican cómo intercambiar información entre dispositivos\n\nAnalogía del tráfico urbano\n\nSin protocolos: Caos total, pérdida de información\nCon protocolos: Flujo ordenado, comunicación efectiva"
   },
   {
-    "objectID": "ch1_p1_net_introduction.html#linea-temporal-de-internet.",
-    "href": "ch1_p1_net_introduction.html#linea-temporal-de-internet.",
+    "objectID": "ch1_p1_net_introduction.html#línea-temporal-de-internet",
+    "href": "ch1_p1_net_introduction.html#línea-temporal-de-internet",
     "title": "Introducción a las Redes de Ordenadores",
-    "section": "Linea temporal de Internet.",
-    "text": "Linea temporal de Internet.\n\n\n\n\n\ntimeline\n    title Evolución de Internet: De ARPANET a la Era Digital\n    \n    section Era ARPANET (1969-1983)\n        1969 : Nace ARPANET\n             : 4 nodos iniciales (UCLA, Stanford, UC Santa Bárbara, Utah)\n             : Implementación de conmutación de paquetes\n        \n        1973 : Primera conexión internacional\n        \n        1983 : Adopción oficial de TCP/IP\n             : División de ARPANET (creación de MILNET)\n             : Nace el término \"Internet\"\n\n    section Nacimiento de la Web (1989-1995)\n        1989-1990 : Tim Berners-Lee inventa la World Wide Web\n                  : Desarrollo de HTTP, HTML y URLs\n        \n        1991 : Primer sitio web público\n\n    section Era Comercial (1995-2000)\n        1995 : Eliminación de restricciones comerciales\n             : Primeros ISPs comerciales (AOL)\n             : Aparecen Amazon y eBay\n        \n        1998 : Fundación de Google\n        \n        2000-2001 : Explosión de la burbuja punto-com\n\n    section Web 2.0 y Redes Sociales (2003-2010)\n        2003-2006 : Redes sociales\n        2007 : Lanzamiento del iPhone\n\n    section Era Moderna (2010-2025)\n        2010s : Computación en la nube, Internet de las cosas\n        \n        2020s : Inteligencia Artificial\n              : Tecnología 5G\n\n\n\n\n\n\n\n\nARPANET se creo con fines militares\nSe creo y publicó el primer sitio web (CERN)\nBurbuja punto com\nCreación de las Redes sociales.\nInteligencia Artificial Generativa.\nDe ~4 dispositivos (1969) a &gt;100.000 millones (2025) en 50 años."
+    "section": "Línea temporal de Internet",
+    "text": "Línea temporal de Internet\n\n\n\n\n\ntimeline\n    title Evolución de Internet: De ARPANET a la Era Digital\n    \n    section Era ARPANET (1969-1983)\n        1969 : Nace ARPANET\n             : 4 nodos iniciales (UCLA, Stanford, UC Santa Bárbara, Utah)\n             : Implementación de conmutación de paquetes\n        \n        1973 : Primera conexión internacional\n        \n        1983 : Adopción oficial de TCP/IP\n             : División de ARPANET (creación de MILNET)\n             : Nace el término \"Internet\"\n\n    section Nacimiento de la Web (1989-1995)\n        1989-1990 : Tim Berners-Lee inventa la World Wide Web\n                  : Desarrollo de HTTP, HTML y URLs\n        \n        1991 : Primer sitio web público\n\n    section Era Comercial (1995-2000)\n        1995 : Eliminación de restricciones comerciales\n             : Primeros ISPs comerciales (AOL)\n             : Aparecen Amazon y eBay\n        \n        1998 : Fundación de Google\n        \n        2000-2001 : Explosión de la burbuja punto-com\n\n    section Web 2.0 y Redes Sociales (2003-2010)\n        2003-2006 : Redes sociales\n        2007 : Lanzamiento del iPhone\n\n    section Era Moderna (2010-2025)\n        2010s : Computación en la nube, Internet de las cosas\n        \n        2020s : Inteligencia Artificial\n              : Tecnología 5G\n\n\n\n\n\n\n\n\nARPANET se creó con fines militares\nSe creó y publicó el primer sitio web (CERN)\nBurbuja punto com\nCreación de las Redes sociales.\nInteligencia Artificial Generativa.\nDe ~4 dispositivos (1969) a &gt;20.000 millones (2025) en más de 50 años."
   },
   {
     "objectID": "ch1_p1_net_introduction.html#sistemas-terminales-end-systems",
@@ -2608,7 +2629,7 @@
     "href": "ch1_p1_net_introduction.html#núcleo-de-la-red-isps",
     "title": "Introducción a las Redes de Ordenadores",
     "section": "Núcleo de la Red: ISPs",
-    "text": "Núcleo de la Red: ISPs\n\nISP (Internet Service Providers): Son los componentes del núcleo de la red y proporcionan interconexión entre diferentes redes.\n\n\n\n\n\n\n\ngraph LR\n    T1A[\"Tier 1&lt;br/&gt;🌍 Cogent\"]\n    T1B[\"Tier 1&lt;br/&gt;🌍 Level 3\"]\n    \n    T2A[\"Tier 2&lt;br/&gt;🇪🇸 Movistar\"]\n    T2B[\"Tier 2&lt;br/&gt;🇪🇸 Vodafone\"]\n    \n    T3A[\"Tier 3&lt;br/&gt;🏠 Lowi\"]\n    T3B[\"Tier 3&lt;br/&gt;🏠 Pepephone\"]\n    \n    \n    %% Tier 1 peering\n    T1A &lt;-.-&gt;|\"Peering Gratuito\"| T1B\n    \n    %% Tier 2 comprando de Tier 1\n    T1A --&gt;|\"Tránsito (€€€)\"| T2A\n    T1B --&gt;|\"Tránsito (€€€)\"| T2B\n    \n    %% Tier 3 comprando de Tier 2\n    T2A --&gt;|\"Tránsito (€€)\"| T3A\n    T2B --&gt;|\"Tránsito (€€)\"| T3B\n\n    T2A  &lt;-.-&gt;|\"Peering Gratuito\"| T2B\n    \n    %% Styling\n    classDef tier1 fill:#ff6b6b,stroke:#d63031,stroke-width:3px,color:#fff\n    classDef tier2 fill:#4ecdc4,stroke:#00b894,stroke-width:2px,color:#fff\n    classDef tier3 fill:#fdcb6e,stroke:#e17055,stroke-width:2px,color:#2d3436\n    classDef users fill:#a29bfe,stroke:#6c5ce7,stroke-width:2px,color:#fff\n    \n    class T1A,T1B tier1\n    class T2A,T2B tier2\n    class T3A,T3B tier3\n    class U1,U2 users\n\n\n\n\n\n\n\n\n\nTier 1\n\nCobertura global\nPeering gratuito\nAT&T, Telefónica\n10-100 Gb/s\n\n\nTier 2\n\nCobertura regional/nacional\nPagan tránsito a Tier 1\nPeering selectivo\n\n\nTier 3\n\nAcceso local\nÚltima milla\nUsuarios finales\nSin peering"
+    "text": "Núcleo de la Red: ISPs\n\nISP (Internet Service Providers): Son los componentes del núcleo de la red y proporcionan interconexión entre diferentes redes.\n\n\n\n\n\n\n\ngraph LR\n    T1A[\"Tier 1&lt;br/&gt;🌍 Cogent\"]\n    T1B[\"Tier 1&lt;br/&gt;🌍 Lumen\"]\n    \n    T2A[\"Tier 2&lt;br/&gt;🇪🇸 Movistar\"]\n    T2B[\"Tier 2&lt;br/&gt;🇪🇸 Vodafone\"]\n    \n    T3A[\"Tier 3&lt;br/&gt;🏠 Lowi\"]\n    T3B[\"Tier 3&lt;br/&gt;🏠 Pepephone\"]\n    \n    \n    %% Tier 1 peering\n    T1A &lt;-.-&gt;|\"Peering Gratuito\"| T1B\n    \n    %% Tier 2 comprando de Tier 1\n    T1A --&gt;|\"Tránsito (€€€)\"| T2A\n    T1B --&gt;|\"Tránsito (€€€)\"| T2B\n    \n    %% Tier 3 comprando de Tier 2\n    T2A --&gt;|\"Tránsito (€€)\"| T3A\n    T2B --&gt;|\"Tránsito (€€)\"| T3B\n\n    T2A  &lt;-.-&gt;|\"Peering Gratuito\"| T2B\n    \n    %% Styling\n    classDef tier1 fill:#ff6b6b,stroke:#d63031,stroke-width:3px,color:#fff\n    classDef tier2 fill:#4ecdc4,stroke:#00b894,stroke-width:2px,color:#fff\n    classDef tier3 fill:#fdcb6e,stroke:#e17055,stroke-width:2px,color:#2d3436\n    classDef users fill:#a29bfe,stroke:#6c5ce7,stroke-width:2px,color:#fff\n    \n    class T1A,T1B tier1\n    class T2A,T2B tier2\n    class T3A,T3B tier3\n    class U1,U2 users\n\n\n\n\n\n\n\n\n\nTier 1\n\nCobertura global\nPeering gratuito\nAT&T, Telefónica\n10-100 Gb/s\n\n\nTier 2\n\nCobertura regional/nacional\nPagan tránsito a Tier 1\nPeering selectivo\n\n\nTier 3\n\nAcceso local\nÚltima milla\nUsuarios finales\nSin peering"
   },
   {
     "objectID": "ch1_p1_net_introduction.html#arquitecturas-por-capas",
@@ -2636,7 +2657,7 @@
     "href": "ch1_p1_net_introduction.html#modelos-osi-vs-tcpip",
     "title": "Introducción a las Redes de Ordenadores",
     "section": "Modelos OSI vs TCP/IP",
-    "text": "Modelos OSI vs TCP/IP\n\n\n\n\n\n\n\nOSI: 7 capas, modelo teórico\nTCP/IP: 4 capas, usado en Internet\n\n\n\n⚠️ Nota: TCP/IP no es un protocolo, hace referencia a una pila de protocolos. Además, no tiene porque utilizar necesariamente TCP, podría ser UDP.\n\n\nTCP/IP es superior a OSI porque es simple, práctico y probado. Mientras OSI tiene 7 capas teóricas diseñadas en comités académicos, TCP/IP usa solo 4 capas que realmente se necesitan y ha funcionado en Internet durante más de 50 años. TCP/IP es más eficiente (menos overhead), más flexible (se adapta fácilmente), y tiene adopción masiva con ecosistemas completos de hardware y software. OSI llegó tarde al mercado cuando TCP/IP ya dominaba, y sus capas extra (como Sesión y Presentación) añaden complejidad innecesaria para la mayoría de aplicaciones reales. En resumen: OSI es el modelo perfecto para estudiar redes, pero TCP/IP es lo que realmente mueve Internet.\n\nRigid Foundation: X11’s network-based protocol became unchangeable due to backward compatibility, preventing modern optimizations\nPerformance Bottlenecks: Every graphics operation had to go through multiple layers (app → toolkit → X11 → server), creating unnecessary overhead for local applications\nHardware Evolution Mismatch: When GPUs emerged, X11’s software-rendering architecture couldn’t efficiently utilize new hardware acceleration\nExtension Hell: Adding modern features required bolt-on extensions (Composite, GLX, XRender) rather than clean integration, creating complexity\nLayer Lock-In: Applications built on X11 assumptions were hard to migrate to better architectures, requiring complete rewrites (hence Wayland’s slow adoption)"
+    "text": "Modelos OSI vs TCP/IP\n\n\n\n\n\n\n\nOSI: 7 capas, modelo teórico\nTCP/IP: 4 capas, usado en Internet\n\n\n\n⚠️ Nota: TCP/IP no es un protocolo, hace referencia a una pila de protocolos. Además, no tiene por qué utilizar necesariamente TCP, podría ser UDP.\n\n\nTCP/IP es superior a OSI porque es simple, práctico y probado. Mientras OSI tiene 7 capas teóricas diseñadas en comités académicos, TCP/IP usa solo 4 capas que realmente se necesitan y ha funcionado en Internet durante más de 50 años. TCP/IP es más eficiente (menos overhead), más flexible (se adapta fácilmente), y tiene adopción masiva con ecosistemas completos de hardware y software. OSI llegó tarde al mercado cuando TCP/IP ya dominaba, y sus capas extra (como Sesión y Presentación) añaden complejidad innecesaria para la mayoría de aplicaciones reales. En resumen: OSI es el modelo perfecto para estudiar redes, pero TCP/IP es lo que realmente mueve Internet.\n\nRigid Foundation: X11’s network-based protocol became unchangeable due to backward compatibility, preventing modern optimizations\nPerformance Bottlenecks: Every graphics operation had to go through multiple layers (app → toolkit → X11 → server), creating unnecessary overhead for local applications\nHardware Evolution Mismatch: When GPUs emerged, X11’s software-rendering architecture couldn’t efficiently utilize new hardware acceleration\nExtension Hell: Adding modern features required bolt-on extensions (Composite, GLX, XRender) rather than clean integration, creating complexity\nLayer Lock-In: Applications built on X11 assumptions were hard to migrate to better architectures, requiring complete rewrites (hence Wayland’s slow adoption)"
   },
   {
     "objectID": "ch1_p1_net_introduction.html#nivel-de-aplicación",
@@ -2657,7 +2678,7 @@
     "href": "ch1_p1_net_introduction.html#nivel-de-redinternet",
     "title": "Introducción a las Redes de Ordenadores",
     "section": "Nivel de Red/Internet",
-    "text": "Nivel de Red/Internet\n\nSe encarga de encontrar el mejor camino para enviar datos a través de múltiples redes. En otras palabras, se encarga del enrutamiento de paquetes.\n\nCapa 3 OSI / Capa Internet TCP/IP\nProtocolos:\n\nIP: Protocolo principal\nICMP: Control y errores\nARP: Resolución de direcciones\nOSPF, BGP: Protocolos de enrutamiento\n\n\n\n\n\n\n\nEjercicio\n\n\nPrueba a ejecutar ping www.google.es en tu terminal. ¿Qué ves?."
+    "text": "Nivel de Red/Internet\n\nSe encarga de encontrar el mejor camino para enviar datos a través de múltiples redes. En otras palabras, se encarga del enrutamiento de paquetes.\n\nCapa 3 OSI / Capa Internet TCP/IP\nProtocolos:\n\nIP: Protocolo principal\nICMP: Control y errores\nARP: Resolución de direcciones\nOSPF, BGP: Protocolos de enrutamiento\n\n\n\n\n\n\n\nEjercicio\n\n\nPrueba a ejecutar ping www.google.es en tu terminal. ¿Qué ves?"
   },
   {
     "objectID": "ch1_p1_net_introduction.html#nivel-de-acceso-físico",
@@ -2685,7 +2706,7 @@
     "href": "ch1_p1_net_introduction.html#latencia-vs-throughput",
     "title": "Introducción a las Redes de Ordenadores",
     "section": "Latencia vs Throughput",
-    "text": "Latencia vs Throughput\nComparativa del efecto de la latencia y throughput en el tiempo para enviar una cantidad de datos.\n\n\n\nviewof settings = Inputs.form({\n  \"Tamaño total\": Inputs.range([50, 5000], {value: 200, step: 10, label: \"Tamaño total\"},),\n  \"Latencia A\": Inputs.range([1, 50], {value: 1, step: 0.1, label: \"Latencia (A)\"}),\n  \"Throughput A\": Inputs.range([1, 50], {value: 10, step: 1, label:\"Throughput (A)\"}),\n  \"Latencia B\": Inputs.range([1, 50], {value: 2, step: 0.1, label:\"Latencia (B)\"}),\n  \"Throughput B\": Inputs.range([1, 50], {value: 20, step: 1, label:\"Throughput B\"})\n})\n\n// Extraemos variables del formulario\ntotalData = settings[\"Tamaño total\"]\nlatencyA = settings[\"Latencia A\"]\nthroughputA = settings[\"Throughput A\"]\nlatencyB = settings[\"Latencia B\"]\nthroughputB = settings[\"Throughput B\"]\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nfunction progress(t, latency, throughput, total) {\n  if (t &lt; latency) return 0;\n  return Math.min(100, ((t - latency) * throughput / total) * 100);\n}\n\n// Reloj animado\ntime = {\n  let t0 = Date.now();\n  while (true) {\n    yield (Date.now() - t0) / 100; // en decimas de segundo\n    await Promises.tick(50);\n  }\n}\n\n// Tiempo máximo\nmaxTime = Math.max(latencyA + totalData/throughputA, latencyB + totalData/throughputB)\n\n// Progresos\nprogA = progress(time % maxTime, latencyA, throughputA, totalData)\nprogB = progress(time % maxTime, latencyB, throughputB, totalData)\n\n// Gráfico con Plot\nPlot.plot({\n  y: {domain: [0, 100], label: \"% completado\"},\n  x: {label: \"Tiempo (s)\"},\n  color: {legend: true, domain: [\"A\", \"B\"], range: [\"blue\", \"red\"]},\n  marks: [\n    Plot.line(d3.range(0, maxTime, 0.1).map(t =&gt; ({t, y: progress(t, latencyA, throughputA, totalData), series: \"A\"})), {x: \"t\", y: \"y\", stroke: \"series\"}),\n    Plot.line(d3.range(0, maxTime, 0.1).map(t =&gt; ({t, y: progress(t, latencyB, throughputB, totalData), series: \"B\"})), {x: \"t\", y: \"y\", stroke: \"series\"}),\n    Plot.dot([{t: time % maxTime, y: progA, series: \"A\"}], {x: \"t\", y: \"y\", fill: \"series\", r: 5}),\n    Plot.dot([{t: time % maxTime, y: progB, series: \"B\"}], {x: \"t\", y: \"y\", fill: \"series\", r: 5})\n  ]\n})"
+    "text": "Latencia vs Throughput\nComparativa del efecto de la latencia y throughput en el tiempo para enviar una cantidad de datos.\n\n\n\nviewof settings = Inputs.form({\n  \"Tamaño total\": Inputs.range([50, 5000], {value: 200, step: 10, label: \"Tamaño total\"},),\n  \"Latencia A\": Inputs.range([1, 50], {value: 1, step: 0.1, label: \"Latencia (A)\"}),\n  \"Throughput A\": Inputs.range([1, 50], {value: 10, step: 1, label:\"Throughput (A)\"}),\n  \"Latencia B\": Inputs.range([1, 50], {value: 2, step: 0.1, label:\"Latencia (B)\"}),\n  \"Throughput B\": Inputs.range([1, 50], {value: 20, step: 1, label:\"Throughput B\"})\n})\n\n// Extraemos variables del formulario\ntotalData = settings[\"Tamaño total\"]\nlatencyA = settings[\"Latencia A\"]\nthroughputA = settings[\"Throughput A\"]\nlatencyB = settings[\"Latencia B\"]\nthroughputB = settings[\"Throughput B\"]\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nfunction progress(t, latency, throughput, total) {\n  if (t &lt; latency) return 0;\n  return Math.min(100, ((t - latency) * throughput / total) * 100);\n}\n\n// Reloj animado\ntime = {\n  let t0 = Date.now();\n  while (true) {\n    yield (Date.now() - t0) / 100; // en décimas de segundo\n    await Promises.tick(50);\n  }\n}\n\n// Tiempo máximo\nmaxTime = Math.max(latencyA + totalData/throughputA, latencyB + totalData/throughputB)\n\n// Progresos\nprogA = progress(time % maxTime, latencyA, throughputA, totalData)\nprogB = progress(time % maxTime, latencyB, throughputB, totalData)\n\n// Gráfico con Plot\nPlot.plot({\n  y: {domain: [0, 100], label: \"% completado\"},\n  x: {label: \"Tiempo (s)\"},\n  color: {legend: true, domain: [\"A\", \"B\"], range: [\"blue\", \"red\"]},\n  marks: [\n    Plot.line(d3.range(0, maxTime, 0.1).map(t =&gt; ({t, y: progress(t, latencyA, throughputA, totalData), series: \"A\"})), {x: \"t\", y: \"y\", stroke: \"series\"}),\n    Plot.line(d3.range(0, maxTime, 0.1).map(t =&gt; ({t, y: progress(t, latencyB, throughputB, totalData), series: \"B\"})), {x: \"t\", y: \"y\", stroke: \"series\"}),\n    Plot.dot([{t: time % maxTime, y: progA, series: \"A\"}], {x: \"t\", y: \"y\", fill: \"series\", r: 5}),\n    Plot.dot([{t: time % maxTime, y: progB, series: \"B\"}], {x: \"t\", y: \"y\", fill: \"series\", r: 5})\n  ]\n})"
   },
   {
     "objectID": "ch1_p1_net_introduction.html#componentes-de-la-latencia",
@@ -2699,7 +2720,7 @@
     "href": "ch1_p1_net_introduction.html#rtt",
     "title": "Introducción a las Redes de Ordenadores",
     "section": "RTT",
-    "text": "RTT\n\nRTT (Round trip time): Tiempo total que tarda un paquete en ir desde el origen hasta el destino y volver de vuelta (ida + vuelta).\n\n\nLa latencia no tiene porque ser simétrica.\nGeneralmente la descarga es más rápida que la subida.\nPor lo tanto, el RTT es un valor muy importante en aplicaciones interactivas."
+    "text": "RTT\n\nRTT (Round trip time): Tiempo total que tarda un paquete en ir desde el origen hasta el destino y volver de vuelta (ida + vuelta).\n\n\nLa latencia no tiene por qué ser simétrica.\nGeneralmente la descarga es más rápida que la subida.\nPor lo tanto, el RTT es un valor muy importante en aplicaciones interactivas."
   },
   {
     "objectID": "ch1_p1_net_introduction.html#comparación-fibra-vs-5g",
@@ -2734,6 +2755,6 @@
     "href": "ch1_p1_net_introduction.html#resumen",
     "title": "Introducción a las Redes de Ordenadores",
     "section": "Resumen",
-    "text": "Resumen\n\nInternet es un sistema distribuido y descentralizado\nEvolución desde 4 hosts (1969) a &gt;100B dispositivos (2025)\nInfraestructura jerárquica: PAN → LAN → MAN → WAN → Internet\nModelos de capas: OSI (teórico) vs TCP/IP (práctico)\nRendimiento: Balance entre latencia y throughput\nAplicaciones críticas: Videojuegos requieren &lt;50ms para competitivo"
+    "text": "Resumen\n\nInternet es un sistema distribuido y descentralizado\nEvolución desde 4 hosts (1969) a &gt;20.000 millones de dispositivos (2025)\nInfraestructura jerárquica: PAN → LAN → MAN → WAN → Internet\nModelos de capas: OSI (teórico) vs TCP/IP (práctico)\nRendimiento: Balance entre latencia y throughput\nAplicaciones críticas: Videojuegos requieren &lt;50ms para competitivo"
   }
 ]

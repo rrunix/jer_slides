@@ -290,7 +290,7 @@
 <p><strong>Identificación de sockets:</strong></p>
 <ul>
 <li>TCP: (IP y Puerto origen, IP y puerto destino)</li>
-<li>UDP: (<span style="color:red;">IP y puerto origen</span>, IP y puerto destino)</li>
+<li>UDP: (<span style="color:red;">IP y puerto destino</span> únicamente)</li>
 </ul>
 </div><div class="column" style="width:50%;">
 <p><strong>Puertos:</strong> Identificadores numéricos (1-65535)</p>
@@ -389,7 +389,7 @@
 <ul>
 <li><strong>Control de flujo</strong>: Evita que el emisor sature al receptor limitando la velocidad de envío según la capacidad del destinatario</li>
 <li><strong>Control de congestión</strong>: Ajusta la velocidad de transmisión para evitar saturar la red cuando detecta congestión</li>
-<li><strong>Temporización</strong>: Proporciona el tiempo mínimo de entrega de datos entre emisor y receptor a través de la red</li>
+<li><strong>Temporización</strong>: Garantiza un tiempo máximo de entrega de datos entre emisor y receptor a través de la red</li>
 <li><strong>Tasa de transferencia mínima</strong>: Garantiza una velocidad mínima de transmisión de datos para aplicaciones que requieren ancho de banda constante</li>
 </ul>
 </section></section>
@@ -469,7 +469,7 @@
 </div>
 </div>
 <ul>
-<li><strong>Longitud:</strong> Hasta 65535 bytes (limitado por MTU)</li>
+<li><strong>Longitud:</strong> Cabecera (8 bytes) + datos, hasta 65535 bytes</li>
 <li><strong>Checksum:</strong> Verificación de integridad</li>
 <li>Estructura simple comparada con otros protocolos</li>
 <li>8 bytes de cabecera fijos.</li>
@@ -518,7 +518,7 @@
 <h2>Características de TCP</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<p><strong>Protocolo confiable [RFC 793]:</strong></p>
+<p><strong>Protocolo confiable [RFC 9293]:</strong></p>
 <ul>
 <li>Orientado a conexión</li>
 <li>Entrega fiable y ordenada (confiabilidad)</li>
@@ -589,7 +589,7 @@
 <li>Cuando enviamos información, está identificada por un número de secuencia (SEQ)</li>
 <li>Además, esperamos confirmación de que se ha recibido correctamente (ACK)</li>
 <li>ACKs acumulativos (ACK para byte N confirma hasta N-1)</li>
-<li>Los ACKs y SEQs permite detectar datos perdidos, duplicados o desordenados</li>
+<li>Los ACKs y SEQs permiten detectar datos perdidos, duplicados o desordenados</li>
 </ul>
 </div><div class="column" style="width:50%;">
 <div style="width: 30vw; text-align: center; margin: 0 auto;">
@@ -642,7 +642,7 @@
     participant E as Emisor
     participant R as Receptor
     E -&gt;&gt; X: seq=100, data="A", Paquete perdido
-    Note over E: Timeout de seq:100, reenvio
+    Note over E: Timeout de seq:100, reenvío
     E -&gt;&gt; R: seq=100, data="A",
 </pre>
 </div>
@@ -944,7 +944,7 @@
 <li>Servidor necesita menos recursos</li>
 <li>No mantiene estado</li>
 </ul>
-<p><strong>Ejemplos:</strong> Shooters (Counter Strike), juegos de lucha</p>
+<p><strong>Ejemplos:</strong> Shooters (Counter-Strike), juegos de lucha</p>
 </div><div class="column" style="width:50%;">
 <h3 id="tcp">TCP</h3>
 <p><strong>Requisitos para TCP:</strong></p>
@@ -974,7 +974,7 @@
 <li>MMORPGs toleran 100-200ms</li>
 </ul>
 </div><div class="column" style="width:50%;">
-<p><strong>Counter Strike (UDP):</strong></p>
+<p><strong>Counter-Strike (UDP):</strong></p>
 <ul>
 <li>Retroalimentación inmediata crítica</li>
 <li>Actualizaciones posición/disparos</li>

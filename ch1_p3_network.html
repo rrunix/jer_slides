@@ -274,7 +274,7 @@
 <section id="qué-es-la-capa-de-red" class="slide level2">
 <h2>¿Qué es la Capa de Red?</h2>
 <blockquote>
-<p>La Capa de Red es el <strong>tercer nivel del modelo TCP/IP</strong> y forma el núcleo del sistema de comunicaciones de Internet</p>
+<p>La Capa de Red es el <strong>segundo nivel del modelo TCP/IP</strong> (capa 3 en el modelo OSI) y forma el núcleo del sistema de comunicaciones de Internet</p>
 </blockquote>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -306,7 +306,7 @@
     classDef normal fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#000
     
     class C highlight
-    class A,B, D normal
+    class A,B,D normal
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -736,7 +736,7 @@ title IPv4 Header Format
 <ul>
 <li>Source address y Destination address para identificación de hosts</li>
 <li>Protocol para identificar el protocolo de la capa superior</li>
-<li>Checksum para integridad de datos.</li>
+<li>Checksum para integridad de la cabecera (no cubre los datos).</li>
 </ul>
 </section>
 <section id="ipv4-direccionamiento" class="slide level2">
@@ -846,14 +846,14 @@ title IPv4 Header Format
 <li>Agregación de rutas eficiente</li>
 </ul>
 <h3 id="longest-prefix-matching">Longest Prefix Matching</h3>
-<p>Seleccionamos en nuestra tabla de rutas aquella con la coincidencia <strong>mas grande</strong>.</p>
+<p>Seleccionamos en nuestra tabla de rutas aquella con la coincidencia <strong>más larga</strong>.</p>
 <p>Tabla con rutas:</p>
 <ul>
 <li>192.168.0.0/16</li>
 <li>192.168.1.0/24 ← <strong>Seleccionada</strong></li>
 <li>192.168.1.128/25</li>
 </ul>
-<p>Destino 192.168.1.200 → Selecciona /24 (prefijo más largo)</p>
+<p>Destino 192.168.1.100 → Selecciona /24 (prefijo más largo que coincide)</p>
 </section>
 <section id="direcciones-especiales" class="slide level2">
 <h2>Direcciones Especiales</h2>
@@ -987,7 +987,7 @@ title IPv4 Header Format
 <li><strong>Direcciones:</strong> 128 bits (<span class="math inline">3.4×10^{38}</span> direcciones)</li>
 <li><strong>Cabecera:</strong> Fija 40 bytes</li>
 <li><strong>Sin checksum</strong> en cabecera</li>
-<li><strong>IPSec obligatorio</strong></li>
+<li><strong>IPSec recomendado</strong> (ya no obligatorio, RFC 8504)</li>
 <li><strong>Autoconfiguración SLAAC</strong></li>
 <li><strong>Mejor QoS</strong> (Traffic Class, Flow Label)</li>
 </ul>
@@ -1212,7 +1212,7 @@ packet-beta
 </div><div class="column" style="width:50%;">
 <ul>
 <li>Descubrimiento: servidor STUN para obtener sus IPs/puertos</li>
-<li>Envío simultáneo: Envían paquetes UDP al <strong>mismo tiemp</strong> -&gt; mappings en sus NATs</li>
+<li>Envío simultáneo: Envían paquetes UDP al <strong>mismo tiempo</strong> -&gt; mappings en sus NATs</li>
 <li>Agujeros listos: Los mappings NAT se crean <strong>ANTES</strong> de recibir</li>
 </ul>
 </div></div>

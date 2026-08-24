@@ -278,7 +278,7 @@
 <h2>Versiones de ECMAScript</h2>
 <ul>
 <li>Primera versión en 10 días (1995).</li>
-<li><strong>ES5 (2011)</strong>: Base sólida que estableció JavaScript moderno en todos los navegadores</li>
+<li><strong>ES5 (2009)</strong>: Base sólida que estableció JavaScript moderno en todos los navegadores</li>
 <li><strong>ES6/ES2015</strong>: Revolución del lenguaje - introdujo sintaxis moderna que cambió cómo programamos</li>
 <li><strong>Actualizaciones anuales</strong>: Cada año se añaden mejoras sin romper código existente (compatibilidad hacia atrás)</li>
 <li><strong>ES2015 marcó un antes y después</strong>: La mayoría del código moderno usa características de ES6+</li>
@@ -294,7 +294,7 @@
 <tbody>
 <tr class="odd">
 <td>ES5</td>
-<td>2011</td>
+<td>2009</td>
 <td>Popularizó JavaScript</td>
 </tr>
 <tr class="even">
@@ -303,8 +303,8 @@
 <td>Clases, módulos, arrow functions, promises</td>
 </tr>
 <tr class="odd">
-<td>ES2016-2024</td>
-<td>2016-2024</td>
+<td>ES2016+</td>
+<td>2016-presente</td>
 <td>Actualizaciones anuales con compatibilidad</td>
 </tr>
 </tbody>
@@ -529,7 +529,7 @@
 <span id="cb7-10"><a></a>    <span class="dt">"start"</span><span class="fu">:</span> <span class="st">"node server.js"</span><span class="fu">,</span></span>
 <span id="cb7-11"><a></a></span>
 <span id="cb7-12"><a></a>    <span class="er">//</span> <span class="er">Observa</span> <span class="er">los</span> <span class="er">cambios</span> <span class="er">en</span> <span class="er">los</span> <span class="er">archivos</span> <span class="er">y</span> <span class="er">recompila</span> <span class="er">automáticamente</span> <span class="er">(sin</span> <span class="er">servidor)</span></span>
-<span id="cb7-13"><a></a>    <span class="dt">"watch"</span><span class="fu">:</span> <span class="st">"webpack --watch"</span><span class="fu">,</span></span>
+<span id="cb7-13"><a></a>    <span class="dt">"watch"</span><span class="fu">:</span> <span class="st">"webpack --watch"</span></span>
 <span id="cb7-14"><a></a>  <span class="fu">}</span></span>
 <span id="cb7-15"><a></a><span class="fu">}</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </section></section>
@@ -555,7 +555,7 @@
 <li><strong>Prohíbe sintaxis peligrosa</strong>: Variables sin declarar, duplicar parámetros, etc.</li>
 <li><strong>Mejor rendimiento</strong>: Permite optimizaciones del motor JavaScript</li>
 <li><strong>En módulos ES2015+ ya está activo</strong>: No necesitas añadirlo manualmente</li>
-<li>También se puede utiliziar <code>node --use_strict</code> en node.</li>
+<li>También se puede utilizar <code>node --use_strict</code> en node.</li>
 </ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a></a><span class="co">// Activar modo estricto (poner al inicio del archivo o función)</span></span>
 <span id="cb8-2"><a></a><span class="st">"use strict"</span><span class="op">;</span></span>
@@ -581,7 +581,7 @@
 <span id="cb9-8"><a></a>    <span class="co">&lt;!-- Scripts al final - mejor rendimiento (HTML ya cargado) --&gt;</span></span>
 <span id="cb9-9"><a></a>    <span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> src</span><span class="op">=</span><span class="st">"js/game.js"</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
 <span id="cb9-10"><a></a></span>
-<span id="cb9-11"><a></a>    <span class="co">&lt;!-- async: descarga paralela, ejecuta inmediatamente --&gt;</span></span>
+<span id="cb9-11"><a></a>    <span class="co">&lt;!-- async: descarga paralela, ejecuta en cuanto se descarga --&gt;</span></span>
 <span id="cb9-12"><a></a>    <span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> src</span><span class="op">=</span><span class="st">"js/game.js"</span><span class="ot"> async</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
 <span id="cb9-13"><a></a></span>
 <span id="cb9-14"><a></a>    <span class="co">&lt;!-- defer: descarga paralela, ejecuta después del HTML --&gt;</span></span>
@@ -891,7 +891,7 @@
 <span id="cb21-5"><a></a><span class="kw">let</span> orcIndex <span class="op">=</span> enemies<span class="op">.</span><span class="fu">findIndex</span>(enemy <span class="kw">=&gt;</span> enemy<span class="op">.</span><span class="at">type</span> <span class="op">===</span> <span class="st">"orc"</span>)<span class="op">;</span> <span class="co">// 0</span></span>
 <span id="cb21-6"><a></a></span>
 <span id="cb21-7"><a></a><span class="co">// every() - ¿TODOS cumplen la condición?</span></span>
-<span id="cb21-8"><a></a><span class="kw">let</span> allDead <span class="op">=</span> enemies<span class="op">.</span><span class="fu">every</span>(enemy <span class="kw">=&gt;</span> enemy<span class="op">.</span><span class="at">health</span> <span class="op">===</span> <span class="dv">0</span>)<span class="op">;</span> <span class="co">// false -&gt; no todos muerto</span></span>
+<span id="cb21-8"><a></a><span class="kw">let</span> allDead <span class="op">=</span> enemies<span class="op">.</span><span class="fu">every</span>(enemy <span class="kw">=&gt;</span> enemy<span class="op">.</span><span class="at">health</span> <span class="op">===</span> <span class="dv">0</span>)<span class="op">;</span> <span class="co">// false -&gt; no todos muertos</span></span>
 <span id="cb21-9"><a></a></span>
 <span id="cb21-10"><a></a><span class="co">// some() - ¿ALGUNO cumple la condición?</span></span>
 <span id="cb21-11"><a></a><span class="kw">let</span> someDead <span class="op">=</span> enemies<span class="op">.</span><span class="fu">some</span>(enemy <span class="kw">=&gt;</span> enemy<span class="op">.</span><span class="at">health</span> <span class="op">===</span> <span class="dv">0</span>)<span class="op">;</span> <span class="co">// true -&gt; al menos un muerto</span></span>
@@ -944,9 +944,9 @@
 <span id="cb23-6"><a></a><span class="kw">let</span> [first<span class="op">,</span> <span class="op">,</span> third] <span class="op">=</span> [<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span>]<span class="op">;</span> <span class="co">// first = 1, third = 3</span></span>
 <span id="cb23-7"><a></a></span>
 <span id="cb23-8"><a></a><span class="co">// Rest operator - captura el resto de elementos</span></span>
-<span id="cb23-9"><a></a><span class="kw">let</span> [first<span class="op">,</span> second<span class="op">,</span> <span class="op">...</span>rest] <span class="op">=</span> inventory<span class="op">;</span></span>
-<span id="cb23-10"><a></a><span class="co">// first = primer elemento</span></span>
-<span id="cb23-11"><a></a><span class="co">// second = segundo elemento</span></span>
+<span id="cb23-9"><a></a><span class="kw">let</span> [firstItem<span class="op">,</span> secondItem<span class="op">,</span> <span class="op">...</span>rest] <span class="op">=</span> inventory<span class="op">;</span></span>
+<span id="cb23-10"><a></a><span class="co">// firstItem = primer elemento</span></span>
+<span id="cb23-11"><a></a><span class="co">// secondItem = segundo elemento</span></span>
 <span id="cb23-12"><a></a><span class="co">// rest = array con todos los demás</span></span>
 <span id="cb23-13"><a></a></span>
 <span id="cb23-14"><a></a><span class="co">// En parámetros de función</span></span>
@@ -1115,7 +1115,7 @@
 <span id="cb30-9"><a></a><span class="co">// Equivalente a: function(entity) { return entity.health &gt; 0; }</span></span>
 <span id="cb30-10"><a></a></span>
 <span id="cb30-11"><a></a><span class="co">// Sin parámetros - paréntesis vacíos</span></span>
-<span id="cb30-12"><a></a><span class="kw">let</span> generateRandomID <span class="op">=</span> () <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">random</span>()<span class="op">.</span><span class="fu">toString</span>(<span class="dv">36</span>)<span class="op">;</span></span>
+<span id="cb30-12"><a></a><span class="kw">let</span> generateRandomID <span class="op">=</span> () <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">random</span>()<span class="op">.</span><span class="fu">toString</span>(<span class="dv">36</span>)<span class="op">.</span><span class="fu">slice</span>(<span class="dv">2</span>)<span class="op">;</span></span>
 <span id="cb30-13"><a></a></span>
 <span id="cb30-14"><a></a><span class="co">// Un parámetro - paréntesis opcionales</span></span>
 <span id="cb30-15"><a></a><span class="kw">let</span> double <span class="op">=</span> x <span class="kw">=&gt;</span> x <span class="op">*</span> <span class="dv">2</span><span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>

@@ -283,8 +283,8 @@
 <h2>Sistemas de Renderizado</h2>
 <p><strong>Dos opciones disponibles:</strong></p>
 <ul>
-<li><strong>Canvas (por defecto)</strong>: Mayor compatibilidad, menos exigente</li>
-<li><strong>WebGL</strong>: Gráficos avanzados, mejor rendimiento, requiere soporte GPU</li>
+<li><strong>Canvas</strong>: Mayor compatibilidad, menos exigente</li>
+<li><strong>WebGL</strong>: Gráficos avanzados, mejor rendimiento, requiere soporte GPU (preferido por <code>Phaser.AUTO</code>)</li>
 </ul>
 <p><strong>¿Cuándo usar cada uno?</strong></p>
 <ul>
@@ -293,7 +293,7 @@
 </ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb1-1"><a></a><span class="co">// Configurar tipo de renderizado</span></span>
 <span id="cb1-2"><a></a><span class="kw">const</span> config <span class="op">=</span> {</span>
-<span id="cb1-3"><a></a>    <span class="dt">type</span><span class="op">:</span> Phaser<span class="op">.</span><span class="at">AUTO</span><span class="op">,</span>  <span class="co">// Elige el mejor disponible</span></span>
+<span id="cb1-3"><a></a>    <span class="dt">type</span><span class="op">:</span> Phaser<span class="op">.</span><span class="at">AUTO</span><span class="op">,</span>  <span class="co">// WebGL si está disponible; si no, Canvas</span></span>
 <span id="cb1-4"><a></a>    <span class="co">// type: Phaser.CANVAS,  // Forzar Canvas</span></span>
 <span id="cb1-5"><a></a>    <span class="co">// type: Phaser.WEBGL,   // Forzar WebGL</span></span>
 <span id="cb1-6"><a></a>}<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
@@ -309,10 +309,10 @@
 <ul>
 <li><strong>CDN</strong> (más rápido)</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb2-1"><a></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> src</span><span class="op">=</span><span class="st">"//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb2-1"><a></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> src</span><span class="op">=</span><span class="st">"https://cdn.jsdelivr.net/npm/phaser@3.88.2/dist/phaser.js"</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><p><strong>Descarga directa</strong> <a href="https://phaser.io/download/stable">phaser.io/download/stable</a></p></li>
-<li><p><strong>GitHub</strong> <a href="https://github.com/photonstorm/phaser">github.com/photonstorm/phaser</a></p></li>
+<li><p><strong>GitHub</strong> <a href="https://github.com/phaserjs/phaser">github.com/phaserjs/phaser</a></p></li>
 <li><p><strong>Node</strong> <code>npm install phaser</code></p></li>
 </ul>
 </section></section>
@@ -334,7 +334,7 @@
 <li>Origen <strong>(0,0)</strong> en esquina superior izquierda</li>
 <li>Eje X positivo → derecha</li>
 <li>Eje Y positivo → abajo (inverso a matemáticas)</li>
-<li>Dimensiones por defecto: 300x300 píxeles</li>
+<li>Dimensiones por defecto: 300x150 píxeles</li>
 </ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb3-1"><a></a><span class="dt">&lt;</span><span class="kw">canvas</span><span class="ot"> id</span><span class="op">=</span><span class="st">"game"</span><span class="ot"> width</span><span class="op">=</span><span class="st">"800"</span><span class="ot"> height</span><span class="op">=</span><span class="st">"600"</span><span class="dt">&gt;&lt;/</span><span class="kw">canvas</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
@@ -409,13 +409,14 @@
 <span id="cb6-5"><a></a>    <span class="co">// Crear plataforma con físicas</span></span>
 <span id="cb6-6"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">plataforma</span> <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">physics</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">image</span>(<span class="dv">400</span><span class="op">,</span> <span class="dv">500</span><span class="op">,</span> <span class="st">'suelo'</span>)<span class="op">;</span></span>
 <span id="cb6-7"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">plataforma</span><span class="op">.</span><span class="fu">setImmovable</span>(<span class="kw">true</span>)<span class="op">;</span>  <span class="co">// No se mueve</span></span>
-<span id="cb6-8"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-8"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">plataforma</span><span class="op">.</span><span class="at">body</span><span class="op">.</span><span class="fu">setAllowGravity</span>(<span class="kw">false</span>)<span class="op">;</span>  <span class="co">// No le afecta la gravedad</span></span>
+<span id="cb6-9"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="las-tres-funciones-principales-3" class="slide level2">
 <h2>Las Tres Funciones Principales (3)</h2>
 <p><strong>update(time, delta) - Bucle del juego</strong></p>
 <ul>
-<li><strong>Cuándo</strong>: Se ejecuta constantemente (~60 veces/segundo)</li>
+<li><strong>Cuándo</strong>: Se ejecuta una vez por refresco del monitor (normalmente ~60 veces/segundo)</li>
 <li><strong>Para qué</strong>: Lógica que debe actualizarse continuamente</li>
 <li><strong>Parámetros</strong>: <code>time</code> (tiempo total), <code>delta</code> (desde último frame)</li>
 </ul>
@@ -642,15 +643,19 @@
 <span id="cb17-6"><a></a>})<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Recibir datos en la escena destino:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb18-1"><a></a><span class="kw">class</span> SiguienteEscena <span class="kw">extends</span> Phaser<span class="op">.</span><span class="at">Scene</span> {</span>
-<span id="cb18-2"><a></a>    <span class="fu">create</span>(datos) {</span>
-<span id="cb18-3"><a></a>        <span class="co">// Recibir los datos como parámetro</span></span>
-<span id="cb18-4"><a></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(datos<span class="op">.</span><span class="at">puntuacion</span>)<span class="op">;</span>  <span class="co">// 100</span></span>
-<span id="cb18-5"><a></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(datos<span class="op">.</span><span class="at">nivel</span>)<span class="op">;</span>       <span class="co">// 2</span></span>
-<span id="cb18-6"><a></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(datos<span class="op">.</span><span class="at">nombre</span>)<span class="op">;</span>      <span class="co">// 'Jugador1'</span></span>
-<span id="cb18-7"><a></a>        </span>
-<span id="cb18-8"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">text</span>(<span class="dv">100</span><span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="vs">`Puntuación: </span><span class="sc">${</span>datos<span class="op">.</span><span class="at">puntuacion</span><span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></span>
-<span id="cb18-9"><a></a>    }</span>
-<span id="cb18-10"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb18-2"><a></a>    <span class="fu">constructor</span>() {</span>
+<span id="cb18-3"><a></a>        <span class="kw">super</span>(<span class="st">'SiguienteEscena'</span>)<span class="op">;</span></span>
+<span id="cb18-4"><a></a>    }</span>
+<span id="cb18-5"><a></a></span>
+<span id="cb18-6"><a></a>    <span class="fu">create</span>(datos) {</span>
+<span id="cb18-7"><a></a>        <span class="co">// Recibir los datos como parámetro</span></span>
+<span id="cb18-8"><a></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(datos<span class="op">.</span><span class="at">puntuacion</span>)<span class="op">;</span>  <span class="co">// 100</span></span>
+<span id="cb18-9"><a></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(datos<span class="op">.</span><span class="at">nivel</span>)<span class="op">;</span>       <span class="co">// 2</span></span>
+<span id="cb18-10"><a></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(datos<span class="op">.</span><span class="at">nombre</span>)<span class="op">;</span>      <span class="co">// 'Jugador1'</span></span>
+<span id="cb18-11"><a></a>        </span>
+<span id="cb18-12"><a></a>        <span class="kw">this</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">text</span>(<span class="dv">100</span><span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="vs">`Puntuación: </span><span class="sc">${</span>datos<span class="op">.</span><span class="at">puntuacion</span><span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></span>
+<span id="cb18-13"><a></a>    }</span>
+<span id="cb18-14"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="pasar-datos---otros-métodos" class="slide level2">
 <h2>Pasar Datos - Otros Métodos</h2>
@@ -832,19 +837,13 @@
 <h1>Motores de Físicas</h1>
 
 </section>
-<section id="tres-motores-disponibles" class="slide level2">
-<h2>Tres Motores Disponibles</h2>
+<section id="dos-motores-disponibles" class="slide level2">
+<h2>Dos Motores Disponibles</h2>
 <p><strong>Arcade Physics:</strong></p>
 <ul>
 <li>Más simple y rápido</li>
 <li>Solo rectángulos y círculos</li>
 <li>Ideal para juegos arcade/plataformas</li>
-</ul>
-<p><strong>Impact Physics:</strong></p>
-<ul>
-<li>Soporta pendientes en tiles</li>
-<li>Más complejo que Arcade</li>
-<li>Ideal para plataformas con terreno inclinado</li>
 </ul>
 <p><strong>Matter Physics:</strong></p>
 <ul>
@@ -1082,10 +1081,11 @@
 <span id="cb34-3"><a></a>    </span>
 <span id="cb34-4"><a></a>    <span class="kw">let</span> plataforma <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">physics</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">image</span>(<span class="dv">400</span><span class="op">,</span> <span class="dv">500</span><span class="op">,</span> <span class="st">'suelo'</span>)<span class="op">;</span></span>
 <span id="cb34-5"><a></a>    plataforma<span class="op">.</span><span class="fu">setImmovable</span>(<span class="kw">true</span>)<span class="op">;</span>  <span class="co">// No se mueve al impacto</span></span>
-<span id="cb34-6"><a></a>    </span>
-<span id="cb34-7"><a></a>    <span class="co">// Colisión con resolución física</span></span>
-<span id="cb34-8"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">physics</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">collider</span>(jugador<span class="op">,</span> plataforma)<span class="op">;</span></span>
-<span id="cb34-9"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb34-6"><a></a>    plataforma<span class="op">.</span><span class="at">body</span><span class="op">.</span><span class="fu">setAllowGravity</span>(<span class="kw">false</span>)<span class="op">;</span>  <span class="co">// No le afecta la gravedad</span></span>
+<span id="cb34-7"><a></a>    </span>
+<span id="cb34-8"><a></a>    <span class="co">// Colisión con resolución física</span></span>
+<span id="cb34-9"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">physics</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">collider</span>(jugador<span class="op">,</span> plataforma)<span class="op">;</span></span>
+<span id="cb34-10"><a></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Overlap para coleccionables:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb35-1"><a></a><span class="kw">let</span> estrella <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">physics</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">image</span>(<span class="dv">200</span><span class="op">,</span> <span class="dv">200</span><span class="op">,</span> <span class="st">'estrella'</span>)<span class="op">;</span></span>
 <span id="cb35-2"><a></a></span>
@@ -1161,8 +1161,8 @@
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb39-1"><a></a><span class="kw">this</span><span class="op">.</span><span class="at">physics</span><span class="op">.</span><span class="at">add</span><span class="op">.</span><span class="fu">collider</span>(</span>
 <span id="cb39-2"><a></a>    jugador<span class="op">,</span> </span>
 <span id="cb39-3"><a></a>    enemigo<span class="op">,</span></span>
-<span id="cb39-4"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">dañar</span><span class="op">,</span>              <span class="co">// Si procesa</span></span>
-<span id="cb39-5"><a></a>    <span class="kw">this</span><span class="op">.</span><span class="at">puedeRecibirDaño</span><span class="op">,</span>   <span class="co">// Condición</span></span>
+<span id="cb39-4"><a></a>    dañar<span class="op">,</span>                   <span class="co">// Si procesa</span></span>
+<span id="cb39-5"><a></a>    puedeRecibirDaño<span class="op">,</span>        <span class="co">// Condición</span></span>
 <span id="cb39-6"><a></a>    <span class="kw">this</span></span>
 <span id="cb39-7"><a></a>)<span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
