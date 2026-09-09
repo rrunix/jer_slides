@@ -1,33 +1,35 @@
 ---
 title: "Juegos en Red"
-format: 
+format:
   html:
     toc: true
 ---
 
 # Diapositivas de Juegos en Red
 
+Cada tema está disponible como presentación web y en PDF descargable.
+
 ## Introducción
 
-- [Introducción a la asignatura](sub_introduction.html)
+- [Introducción a la asignatura](sub_introduction.html) · [PDF](PDF/sub_introduction.pdf){download="sub_introduction.pdf"}
 
 ## Redes de computadores
 
-- [Introducción a las redes de computadores](ch1_p1.html) 
-- [Capa de acceso a la red](ch1_p2.html)
-- [Capa de red](ch1_p3.html)
-- [Capa de transporte](ch1_p4.html)
-- [Capa de aplicación](ch1_p5.html)
+- [Introducción a las redes de computadores](ch1_p1.html) · [PDF](PDF/ch1_p1_net_introduction.pdf){download="ch1_p1_net_introduction.pdf"}
+- [Capa de acceso a la red](ch1_p2.html) · [PDF](PDF/ch1_p2_access_layer.pdf){download="ch1_p2_access_layer.pdf"}
+- [Capa de red](ch1_p3.html) · [PDF](PDF/ch1_p3_network.pdf){download="ch1_p3_network.pdf"}
+- [Capa de transporte](ch1_p4.html) · [PDF](PDF/ch1_p4_transport.pdf){download="ch1_p4_transport.pdf"}
+- [Capa de aplicación](ch1_p5.html) · [PDF](PDF/ch1_p5_application.pdf){download="ch1_p5_application.pdf"}
 
 ## Programación en el cliente
 
 ## JavaScript
-- [Introducción a JS](ch2_p1.html)
-- [Introducción a POO en JS](ch2_p2.html)
+- [Introducción a JS](ch2_p1.html) · [PDF](PDF/ch2_p1_js.pdf){download="ch2_p1_js.pdf"}
+- [Introducción a POO en JS](ch2_p2.html) · [PDF](PDF/ch2_p2_js_classes.pdf){download="ch2_p2_js_classes.pdf"}
 
 ## Phaser
-- [Introducción a Phaser](ch3_p1.html)
+- [Introducción a Phaser](ch3_p1.html) · [PDF](PDF/ch3_p1_phaser.pdf){download="ch3_p1_phaser.pdf"}
 
 ## Comunicación cliente-servidor
-- [API REST](ch4.html)
-- [WebSockets](ch5.html)
+- [API REST](ch4.html) · [PDF](PDF/ch4_rest.pdf){download="ch4_rest.pdf"}
+- [WebSockets](ch5.html) · [PDF](PDF/ch5_websockets.pdf){download="ch5_websockets.pdf"}

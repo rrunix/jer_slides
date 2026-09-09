@@ -3,6 +3,7 @@ project:
   output-dir: slides
   resources:
     - images/
+    - PDF/
 
 
 author:
