@@ -283,12 +283,12 @@ El alumnado con discapacidad o necesidades educativas especiales debe **contacta
 | Semana | Actividad |
 |--------|-----------|
 | 1-2 | Registro de grupos de prácticas |
-| 3 | Prueba 1 (Tema 1) y entrega fase 1 |
-| 6 | Entrega fase 2 |
-| 9 | Entrega fase 3 |
-| 12 | Entrega fase 4 |
+| 3 | Entrega fase 1 |
+| 8 | Prueba 1 |
+| 10 | Entrega fase 2 |
 | 15 | Prueba 2 (Temas 2, 3, 4 y 5) |
-| Convocatoria ordinaria | Fase 5: presentación en el aula |
+| 15 | Entrega fase 3 |
+| Convocatoria ordinaria | Fase 4, 5: presentación en el aula |
 
 Las fechas concretas se anunciarán con antelación en el Aula Virtual.
 
