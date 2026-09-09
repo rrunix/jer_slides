@@ -12,7 +12,10 @@ author:
     - name: "Natalia Madrueño"
       email: "natalia.madrueno@urjc.es"
       affiliation: "URJC"
-date: 09/09/2025
+    - name: "Mario Manzano"
+      email: "mario.manzano@urjc.es"
+      affiliation: "URJC"
+date: 09/09/2026
 
 format:
   revealjs:

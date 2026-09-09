@@ -1,6 +1,6 @@
 ---
 title: "Capa de Acceso a la Red"
-subtitle: "Juegos en Red - Grado en Desarrollo de Videojuegos"
+subtitle: "Juegos en Red - Grado en Diseño y Desarrollo de Videojuegos"
 
 aliases:
   - ch1_p2.html

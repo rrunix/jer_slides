@@ -1,6 +1,6 @@
 ---
 title: "APIs REST"
-subtitle: "Juegos en Red - Grado en Desarrollo de Videojuegos"
+subtitle: "Juegos en Red - Grado en Diseño y Desarrollo de Videojuegos"
 
 aliases:
   - ch4.html

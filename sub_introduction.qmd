@@ -1,6 +1,6 @@
 ---
 title: Presentación de Juegos en Red
-subtitle: "Juegos en Red - Grado en Desarrollo de Videojuegos"
+subtitle: "Juegos en Red - Grado en Diseño y Desarrollo de Videojuegos"
 
 ---
 
@@ -9,14 +9,15 @@ subtitle: "Juegos en Red - Grado en Desarrollo de Videojuegos"
 ## Datos de la asignatura
 
 - Tipo: Obligatoria.
-- Período de impartición: Primer cuatrimestre.
-- Nº de créditos: 6
-  - Sesiones: 28 clases de 2h.
-  - Horas de trabajo: 180h (56h clase / 124h fuera).
+- Período de impartición: 3er curso, primer cuatrimestre (1Q).
+- Idioma en el que se imparte: Castellano.
+- Nº de créditos: 6 (180h de trabajo del alumno).
+  - 62h presenciales: 24h teoría, 12h problemas, 18h prácticas de laboratorio, 6h pruebas, 2h otras actividades.
+  - 118h de trabajo autónomo: preparación de teoría, prácticas y pruebas, y tutorías.
 - Departamento: Departamento de Informática y Estadística.
 - Web: Aula Virtual (https://www.aulavirtual.urjc.es).
 
-## Prof. Rubén Rodríguez
+## Prof. Rubén Rodríguez (responsable)
 
 - E-mail: `ruben.rodriguez@urjc.es`. (Escribir por aula virtual).
 - Despacho: 131, Ed. Departamental II (Campus de Móstoles).
@@ -27,6 +28,12 @@ subtitle: "Juegos en Red - Grado en Desarrollo de Videojuegos"
 
 - E-mail: `natalia.madrueno@urjc.es` (Escribir por aula virtual).
 - Despacho: 044, Ed. Departamental II (Campus de Móstoles).
+- Tutorías: Concertar por e-mail (aula virtual).
+
+## Prof. Mario Manzano
+
+- E-mail: `mario.manzano@urjc.es` (Escribir por aula virtual).
+- Campus de impartición: Móstoles.
 - Tutorías: Concertar por e-mail (aula virtual).
 
 # Motivación y objetivos
@@ -51,11 +58,21 @@ La gran mayoría de las aplicaciones actuales son **aplicaciones basadas en red*
 - ...
 
 
+## Presentación de la asignatura
+
+La asignatura analiza los **juegos en red basados en web** y las tecnologías involucradas, desde diferentes puntos de vista: **protocolos, arquitecturas y herramientas de programación**.
+
+- Arquitectura **cliente/servidor** para el desarrollo de juegos en red.
+- Lenguajes **HTML, CSS y JavaScript** aplicados al desarrollo de juegos.
+- Programación de **sockets** en modo **síncrono y asíncrono**, y **diseño de protocolos**.
+- Aspectos de **servidores web y navegadores**, y de **seguridad** en juegos en red.
+
 ## Objetivos
 
 - Introducir al alumno a las **redes de computadores**.
 - Dar a conocer y permitir comprender el modelo de **arquitectura de red cliente-servidor**.
 - Ofrecer al alumno una visión general de los **problemas y soluciones** al **desarrollar juegos en red**.
+- Comprender los fundamentos de los **entornos distribuidos** y de los **sistemas multijugador masivos**.
 - Fomentar el **trabajo en equipo** para la creación de videojuegos.
 - Guiar al alumno en la creación de un **producto software**.
 
@@ -104,13 +121,13 @@ Se estudia el uso de WebSockets para comunicación asíncrona entre nodos:
 
 ## Metodología
 
-El curso estará conducido por una **metodología basada en proyectos**, en la que los alumnos deberán realizar un proyecto en grupo a lo largo de toda la asignatura.
+El curso estará conducido por una **metodología basada en proyectos (ABP)**: los alumnos desarrollan un juego en grupo a lo largo de toda la asignatura, simulando ser un pequeño **estudio de videojuegos**.
 
 Se combinarán las **lecciones magistrales síncronas** con la metodología de **clase invertida** para temas concretos.
 
-Se incluirán diferentes **gamificaciones** a lo largo del curso.
+Se incluirán diferentes **gamificaciones** a lo largo del curso: un sistema de **insignias** por la consecución de objetivos concretos del proyecto.
 
-Habrá **sesiones de prácticas** que se utilizarán para realizar y corregir la práctica, donde el profesor podrá realizar un seguimiento de cada grupo de prácticas.
+Habrá **sesiones de prácticas** (semanas 3 a 15) que se utilizarán para realizar y corregir la práctica, donde el profesor podrá realizar un seguimiento de cada grupo de prácticas.
 
 El profesor dejará el **material** necesario para el desempeño de la asignatura en el **Aula Virtual**, que incluirá vídeos, presentaciones, ejercicios propuestos y resueltos, etc., para que el alumno estudie de manera autónoma.
 
@@ -136,97 +153,159 @@ Utilizaremos varias **herramientas software y bibliotecas**:
 
 ## Inteligencia Artificial
 
-El uso de ChatGPT, Gemini, Claude o alternativas está permitido a excepción de los exámenes. La única condición que se impone es que seáis capaces de explicar vuestras prácticas, y en caso negativo, se considerarán suspensas.
+Según la guía docente, el uso de herramientas basadas en **inteligencia artificial** (ChatGPT, Gemini, Claude o alternativas) **está prohibido en cualquier ejercicio y prueba de evaluación**, salvo que el profesor lo indique **explícitamente** en el enunciado o en el material de la asignatura.
+
+Cuando su uso esté permitido, se darán **indicaciones precisas** de qué usos se admiten y cuáles no, y deberá hacerse de forma **ética, legal, honesta y transparente**.
+
+En todo caso, deberéis ser capaces de **explicar vuestras prácticas**; en caso negativo, se considerarán suspensas.
 
 # Evaluación
 
 ## Pruebas de evaluación:
 
-- **40% Pruebas teórico-prácticas**
+- **40% Pruebas escritas de respuesta abierta o tipo test** (SE.1)
   - Nota mínima: cada prueba >=5
-- **40% Práctica**
-  - Nota mínima: cada prueba >=5
-- **15% Resolución de problemas y casos prácticos**
+- **40% Resolución de problemas y casos prácticos: fases 1-4 del proyecto** (SE.2)
+  - Nota mínima: cada fase >=5 y media del bloque >=5
+- **15% Prácticas con ordenador: presentación en el aula (fase 5)** (SE.3)
+  - Nota mínima: 3
+- **5% Participación en clase y otras actividades** (SE.5)
   - No tiene nota mínima
-- **5% Participación en clase y otras actividades**
-  - No tiene nota mínima
 
-**Hay que obtener al menos un 5 de media**
+**Hay que cumplir las notas mínimas de cada bloque y obtener al menos un 5 de media**
 
-## Pruebas teórico-prácticas (40 %)
+## Pruebas escritas (40 %)
 
-- 3 exámenes:
-  - Examen 1 (Tema 1): 35%.
-  - Examen 2 (Tema 2 y 3): 32.5%.
-  - Examen 3 (Tema 4): 32.5%.
-- Ejercicios online tipo test / preguntas cortas / ejercicios
-- Nota mínima en cada prueba 5
-- Revaluable en convocatoria extraordinaria
+- 2 pruebas parciales individuales, teórico-prácticas:
+  - Prueba 1 (Tema 1): 20% de la nota final — semana 3.
+  - Prueba 2 (Temas 2, 3, 4 y 5): 20% de la nota final — semana 15.
+- Preguntas de respuesta abierta, tipo test, respuesta corta o ejercicios.
+- Nota mínima en cada prueba: 5
+- Revaluable en convocatoria extraordinaria (mismo formato que en la ordinaria)
 
-## Práctica (40 %)
+## Resolución de problemas y casos prácticos (40 %)
 
 - Se realiza en grupos de 4 personas
 - Cada alumno será evaluado individualmente
 - Se desarrolla en parte en las sesiones prácticas
-- Consta de 4 entregas (fases) obligatorias con ponderaciones 10%, 35%, 25%, 30%.
-- Nota mínima en cada fase: 5 puntos
+- Consta de 4 entregas (fases) obligatorias:
+
+| Fase | Semana | % nota final | % del bloque | Temas |
+|------|--------|--------------|--------------|-------|
+| Fase 1 | 3 | 4% | 10% | 1, 2 |
+| Fase 2 | 6 | 14% | 35% | 2, 3 |
+| Fase 3 | 9 | 10% | 25% | 2, 3, 4 |
+| Fase 4 | 12 | 12% | 30% | 2, 3, 4, 5 |
+
+- Nota mínima en cada fase: 5. Nota mínima de media: 5
 - Cada fase es revaluable en convocatoria extraordinaria
 
-## Resolución de problemas (15 %)
+## Prácticas con ordenador (15 %)
 
 - Consiste en una fase adicional al juego desarrollado (fase 5).
-- Consistirá en una mejora sobre la práctica entregada y la publicación de la misma en plataformas online.
+- Consistirá en una mejora sobre la práctica entregada, el diagnóstico y corrección de errores, y la publicación del juego en plataformas online.
+- Incluye la **presentación en el aula** y la participación de toda la clase.
+- Se evalúa en la **fecha de la convocatoria ordinaria**.
 - Nota mínima de 3.
 - Revaluable en convocatoria extraordinaria.
 
 ## Participación en clase (5 %)
 
 - Es opcional. No tiene nota mínima.
-- Consiste en una serie de actividades que se irán realizando a lo largo del cuatrimestre.
+- Consiste en una serie de actividades que se irán realizando a lo largo del cuatrimestre (semanas 1 a 15).
 - También se podrán obtener proponiendo mejoras o correcciones a los apuntes y diapositivas de la asignatura.
 - No es revaluable en convocatoria extraordinaria
 
+## Trabajo en grupo: otras consideraciones
+
+- Para las actividades evaluables realizadas en grupo, el profesor podrá requerir una **evaluación/entrevista oral individual** a cada miembro para verificar su contribución.
+- Será **obligatoria la entrega de una autoevaluación** en la que cada alumno justifique individualmente su contribución al trabajo entregado.
+- Si un alumno **abandona su grupo**, deberá realizar de forma individual una versión adaptada del trabajo a partir de ese momento.
+- Ninguna actividad de evaluación puede suponer por sí sola más del 60% de la calificación global.
 
 # Evaluación extraordinaria
 
 ## Evaluación extraordinaria
 
-Para aprobar la asignatura en la convocatoria extraordinaria se deberán realizar las pruebas no superadas durante la evaluación ordinaria.
+Para aprobar la asignatura en la convocatoria extraordinaria se deberán realizar las **pruebas revaluables no superadas** durante la evaluación ordinaria (bloques SE.1, SE.2 y SE.3).
 
-**Se guardan las notas de:**
+**Se guardan las notas de las pruebas superadas:**
 
-- La prueba teórico-práctica
-- Cada una de las fases por separado
-- La resolución de problemas (fase 5)
-- Las actividades de participación en clase
+- Las pruebas escritas
+- Cada una de las fases 1-4 por separado
+- Las prácticas con ordenador (fase 5)
+- Las actividades de participación en clase (no revaluables)
+
+Si los profesores lo consideran oportuno, las pruebas de la convocatoria extraordinaria podrán ser adaptadas.
+
+## Cálculo de la nota y partes suspensas
+
+- Hay que **cumplir las notas mínimas de cada bloque** y obtener un **5 sobre 10** en la nota final.
+- Si alguna parte obligatoria está suspensa, la calificación final será la **media aritmética de las partes suspensas**, contando como **0** las partes no entregadas.
+- Si se superan todas las notas mínimas pero la nota final es inferior a 5, se podrá **repetir la actividad SE.3** en la convocatoria extraordinaria para tratar de alcanzar una media >= 5.
 
 ## Dispensa académica
 
-Un alumno con dispensa académica debe realizar los exámenes teórico-prácticos.
+La Dispensa Académica de Asistencia a Clase (DAAC) **no exime** de participar en las actividades de evaluación continua ni en las actividades formativas presenciales obligatorias de la guía docente.
 
-Está obligado a hacer las 4 entregas presenciales de la parte práctica ya que son como exámenes.
+- Deben presentarse a **todos los bloques de evaluación**, asistiendo obligatoriamente a todas las pruebas igual que el resto de alumnos (incluidas las 4 entregas presenciales de la parte práctica, que son como exámenes).
+- El epígrafe de **participación en clase se suplirá mediante la realización de un trabajo**.
+- Una vez concedida la dispensa, el alumno debe **contactar con el docente**, que podrá proponerle adaptaciones y le informará de las fechas.
+- Las fechas de las pruebas serán anunciadas con anterioridad.
 
-Las fechas de las pruebas serán anunciadas con anterioridad.
+## Convocatoria adelantada
+
+El procedimiento y los criterios de evaluación para los estudiantes que soliciten la **convocatoria adelantada** son los mismos que en las convocatorias ordinaria y extraordinaria.
+
+Igual que en la dispensa académica, el epígrafe de participación se suple mediante la realización de un trabajo.
 
 ## No presentado
 
 Un alumno obtendrá la calificación de no presentado únicamente si no se presenta a ninguna prueba evaluable (ya sea de teoría o práctica).
+
+## Conducta académica e integridad
+
+La URJC está comprometida con la **integridad y honestidad académica**, recogidas en el [Código Ético](https://www.urjc.es) y en la [Normativa de Convivencia](https://www.urjc.es/images/Universidad/Presentacion/normativa/normativa%20convivencia%20universitaria.pdf).
+
+Según el **artículo 9.d)** de la Normativa de Convivencia, el **fraude académico** en una actividad de evaluación se considera **falta grave**. Las sanciones correspondientes (artículo 11.2) son la **expulsión temporal de la Universidad** y, en su caso, la **pérdida de los derechos de matrícula**.
+
+## Alumnado con discapacidad o necesidades educativas especiales
+
+Las adaptaciones curriculares serán pautadas por la **Unidad de Atención a Personas con Discapacidad**, que debe emitir un informe de adaptaciones curriculares.
+
+El alumnado con discapacidad o necesidades educativas especiales debe **contactar con este servicio** para analizar conjuntamente las distintas opciones.
 
 
 # Calendario aproximado de entregas
 
 ## Calendario aproximado de entregas
 
-- **Septiembre:** Registro grupos de prácticas
-- **Octubre:** Entrega fase 1 (mes de octubre)
-- **Noviembre:** Entrega fase 2 (mes de noviembre)
-- **Diciembre:** Entrega fase 3 (mes de diciembre)
-- **Enero:** Entrega fase 4 (mes de enero)
-- **Enero:** Entrega fase 5 (mes de enero)
+| Semana | Actividad |
+|--------|-----------|
+| 1-2 | Registro de grupos de prácticas |
+| 3 | Prueba 1 (Tema 1) y entrega fase 1 |
+| 6 | Entrega fase 2 |
+| 9 | Entrega fase 3 |
+| 12 | Entrega fase 4 |
+| 15 | Prueba 2 (Temas 2, 3, 4 y 5) |
+| Convocatoria ordinaria | Fase 5: presentación en el aula |
+
+Las fechas concretas se anunciarán con antelación en el Aula Virtual.
 
 # Bibliografía
 
-## Bibliografía
+## Bibliografía básica
+
+- Silveira, R. (2015). *Multiplayer Game Development with HTML5*. Packt Publishing.
+- Armitage, G., Claypool, M., Branch, P. (2006). *Networking and online games*. Wiley.
+
+## Bibliografía complementaria
+
+- Feronato, E. (2020). *HTML5 Cross Platform Game Development Using Phaser 3*.
+- Gose, S. (2020). *Phaser III Game Prototyping: Building 100s of games using HTML and Phaser3 JavaScript Gaming Framework*.
+- Burón, D., Manzano, M., Paredes, M. (2020). *Desarrollo de videojuegos para dispositivos móviles*. Síntesis.
+
+## Otros recursos
 
 - Material de la asignatura disponible en el **aula virtual**
 - **Biblioteca virtual** para alumnos

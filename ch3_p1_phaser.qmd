@@ -1,6 +1,6 @@
 ---
 title: "Introducción a Phaser 3"
-subtitle: "Juegos en Red - Grado en Desarrollo de Videojuegos"
+subtitle: "Juegos en Red - Grado en Diseño y Desarrollo de Videojuegos"
 
 aliases: 
   - ch3_p1.html

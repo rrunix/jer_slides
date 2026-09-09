@@ -1,6 +1,6 @@
 ---
 title: "Desarrollo en el cliente"
-subtitle: "Juegos en Red - Grado en Desarrollo de Videojuegos"
+subtitle: "Juegos en Red - Grado en Diseño y Desarrollo de Videojuegos"
 
 aliases: 
   - ch2_p2.html
