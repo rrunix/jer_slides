@@ -557,42 +557,42 @@
     "href": "index.html",
     "title": "Juegos en Red",
     "section": "",
-    "text": "Introducción a la asignatura\n\n\n\n\n\nIntroducción a las redes de computadores\nCapa de acceso a la red\nCapa de red\nCapa de transporte\nCapa de aplicación\n\n\n\n\n\n\n\n\nIntroducción a JS\nIntroducción a POO en JS\n\n\n\n\n\nIntroducción a Phaser\n\n\n\n\n\nAPI REST\nWebSockets"
+    "text": "Cada tema está disponible como presentación web y en PDF descargable.\n\n\n\nIntroducción a la asignatura · PDF\n\n\n\n\n\nIntroducción a las redes de computadores · PDF\nCapa de acceso a la red · PDF\nCapa de red · PDF\nCapa de transporte · PDF\nCapa de aplicación · PDF\n\n\n\n\n\n\n\n\nIntroducción a JS · PDF\nIntroducción a POO en JS · PDF\n\n\n\n\n\nIntroducción a Phaser · PDF\n\n\n\n\n\nAPI REST · PDF\nWebSockets · PDF"
   },
   {
     "objectID": "index.html#introducción",
     "href": "index.html#introducción",
     "title": "Juegos en Red",
     "section": "",
-    "text": "Introducción a la asignatura"
+    "text": "Introducción a la asignatura · PDF"
   },
   {
     "objectID": "index.html#redes-de-computadores",
     "href": "index.html#redes-de-computadores",
     "title": "Juegos en Red",
     "section": "",
-    "text": "Introducción a las redes de computadores\nCapa de acceso a la red\nCapa de red\nCapa de transporte\nCapa de aplicación"
+    "text": "Introducción a las redes de computadores · PDF\nCapa de acceso a la red · PDF\nCapa de red · PDF\nCapa de transporte · PDF\nCapa de aplicación · PDF"
   },
   {
     "objectID": "index.html#javascript",
     "href": "index.html#javascript",
     "title": "Juegos en Red",
     "section": "",
-    "text": "Introducción a JS\nIntroducción a POO en JS"
+    "text": "Introducción a JS · PDF\nIntroducción a POO en JS · PDF"
   },
   {
     "objectID": "index.html#phaser",
     "href": "index.html#phaser",
     "title": "Juegos en Red",
     "section": "",
-    "text": "Introducción a Phaser"
+    "text": "Introducción a Phaser · PDF"
   },
   {
     "objectID": "index.html#comunicación-cliente-servidor",
     "href": "index.html#comunicación-cliente-servidor",
     "title": "Juegos en Red",
     "section": "",
-    "text": "API REST\nWebSockets"
+    "text": "API REST · PDF\nWebSockets · PDF"
   },
   {
     "objectID": "ch1_p3_network.html#qué-es-la-capa-de-red",
