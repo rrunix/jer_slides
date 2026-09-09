@@ -788,14 +788,14 @@
     "href": "sub_introduction.html#datos-de-la-asignatura",
     "title": "Presentación de Juegos en Red",
     "section": "Datos de la asignatura",
-    "text": "Datos de la asignatura\n\nTipo: Obligatoria.\nPeríodo de impartición: Primer cuatrimestre.\nNº de créditos: 6\n\nSesiones: 28 clases de 2h.\nHoras de trabajo: 180h (56h clase / 124h fuera).\n\nDepartamento: Departamento de Informática y Estadística.\nWeb: Aula Virtual (https://www.aulavirtual.urjc.es)."
+    "text": "Datos de la asignatura\n\nTipo: Obligatoria.\nPeríodo de impartición: 3er curso, primer cuatrimestre (1Q).\nIdioma en el que se imparte: Castellano.\nNº de créditos: 6 (180h de trabajo del alumno).\n\n62h presenciales: 24h teoría, 12h problemas, 18h prácticas de laboratorio, 6h pruebas, 2h otras actividades.\n118h de trabajo autónomo: preparación de teoría, prácticas y pruebas, y tutorías.\n\nDepartamento: Departamento de Informática y Estadística.\nWeb: Aula Virtual (https://www.aulavirtual.urjc.es)."
   },
   {
-    "objectID": "sub_introduction.html#prof.-rubén-rodríguez",
-    "href": "sub_introduction.html#prof.-rubén-rodríguez",
+    "objectID": "sub_introduction.html#prof.-rubén-rodríguez-responsable",
+    "href": "sub_introduction.html#prof.-rubén-rodríguez-responsable",
     "title": "Presentación de Juegos en Red",
-    "section": "Prof. Rubén Rodríguez",
-    "text": "Prof. Rubén Rodríguez\n\nE-mail: ruben.rodriguez@urjc.es. (Escribir por aula virtual).\nDespacho: 131, Ed. Departamental II (Campus de Móstoles).\nTutorías: Concertar por e-mail (aula virtual)."
+    "section": "Prof. Rubén Rodríguez (responsable)",
+    "text": "Prof. Rubén Rodríguez (responsable)\n\nE-mail: ruben.rodriguez@urjc.es. (Escribir por aula virtual).\nDespacho: 131, Ed. Departamental II (Campus de Móstoles).\nTutorías: Concertar por e-mail (aula virtual)."
   },
   {
     "objectID": "sub_introduction.html#prof.-natalia-madrueño",
@@ -803,6 +803,13 @@
     "title": "Presentación de Juegos en Red",
     "section": "Prof. Natalia Madrueño",
     "text": "Prof. Natalia Madrueño\n\nE-mail: natalia.madrueno@urjc.es (Escribir por aula virtual).\nDespacho: 044, Ed. Departamental II (Campus de Móstoles).\nTutorías: Concertar por e-mail (aula virtual)."
+  },
+  {
+    "objectID": "sub_introduction.html#prof.-mario-manzano",
+    "href": "sub_introduction.html#prof.-mario-manzano",
+    "title": "Presentación de Juegos en Red",
+    "section": "Prof. Mario Manzano",
+    "text": "Prof. Mario Manzano\n\nE-mail: mario.manzano@urjc.es (Escribir por aula virtual).\nCampus de impartición: Móstoles.\nTutorías: Concertar por e-mail (aula virtual)."
   },
   {
     "objectID": "sub_introduction.html#aplicaciones-en-red",
@@ -819,11 +826,18 @@
     "text": "Muchos juegos también\n\nPlayerUnknown’s Battlegrounds (PUBG) / Fortnite / Destiny 2 / Overwatch / Quake Champions / Counter-Strike: Global Offensive (CS:GO) / League of Legends (LoL) / DOTA 2\nWorld of Warcraft\nFIFA / PES\nMario Kart / Project Cars / Rocket League\nJuegos de Facebook\n…"
   },
   {
+    "objectID": "sub_introduction.html#presentación-de-la-asignatura",
+    "href": "sub_introduction.html#presentación-de-la-asignatura",
+    "title": "Presentación de Juegos en Red",
+    "section": "Presentación de la asignatura",
+    "text": "Presentación de la asignatura\nLa asignatura analiza los juegos en red basados en web y las tecnologías involucradas, desde diferentes puntos de vista: protocolos, arquitecturas y herramientas de programación.\n\nArquitectura cliente/servidor para el desarrollo de juegos en red.\nLenguajes HTML, CSS y JavaScript aplicados al desarrollo de juegos.\nProgramación de sockets en modo síncrono y asíncrono, y diseño de protocolos.\nAspectos de servidores web y navegadores, y de seguridad en juegos en red."
+  },
+  {
     "objectID": "sub_introduction.html#objetivos",
     "href": "sub_introduction.html#objetivos",
     "title": "Presentación de Juegos en Red",
     "section": "Objetivos",
-    "text": "Objetivos\n\nIntroducir al alumno a las redes de computadores.\nDar a conocer y permitir comprender el modelo de arquitectura de red cliente-servidor.\nOfrecer al alumno una visión general de los problemas y soluciones al desarrollar juegos en red.\nFomentar el trabajo en equipo para la creación de videojuegos.\nGuiar al alumno en la creación de un producto software."
+    "text": "Objetivos\n\nIntroducir al alumno a las redes de computadores.\nDar a conocer y permitir comprender el modelo de arquitectura de red cliente-servidor.\nOfrecer al alumno una visión general de los problemas y soluciones al desarrollar juegos en red.\nComprender los fundamentos de los entornos distribuidos y de los sistemas multijugador masivos.\nFomentar el trabajo en equipo para la creación de videojuegos.\nGuiar al alumno en la creación de un producto software."
   },
   {
     "objectID": "sub_introduction.html#tema-1-introducción-a-los-juegos-en-red-y-a-las-redes-de-comunicaciones",
@@ -865,7 +879,7 @@
     "href": "sub_introduction.html#metodología",
     "title": "Presentación de Juegos en Red",
     "section": "Metodología",
-    "text": "Metodología\nEl curso estará conducido por una metodología basada en proyectos, en la que los alumnos deberán realizar un proyecto en grupo a lo largo de toda la asignatura.\nSe combinarán las lecciones magistrales síncronas con la metodología de clase invertida para temas concretos.\nSe incluirán diferentes gamificaciones a lo largo del curso.\nHabrá sesiones de prácticas que se utilizarán para realizar y corregir la práctica, donde el profesor podrá realizar un seguimiento de cada grupo de prácticas.\nEl profesor dejará el material necesario para el desempeño de la asignatura en el Aula Virtual, que incluirá vídeos, presentaciones, ejercicios propuestos y resueltos, etc., para que el alumno estudie de manera autónoma."
+    "text": "Metodología\nEl curso estará conducido por una metodología basada en proyectos (ABP): los alumnos desarrollan un juego en grupo a lo largo de toda la asignatura, simulando ser un pequeño estudio de videojuegos.\nSe combinarán las lecciones magistrales síncronas con la metodología de clase invertida para temas concretos.\nSe incluirán diferentes gamificaciones a lo largo del curso: un sistema de insignias por la consecución de objetivos concretos del proyecto.\nHabrá sesiones de prácticas (semanas 3 a 15) que se utilizarán para realizar y corregir la práctica, donde el profesor podrá realizar un seguimiento de cada grupo de prácticas.\nEl profesor dejará el material necesario para el desempeño de la asignatura en el Aula Virtual, que incluirá vídeos, presentaciones, ejercicios propuestos y resueltos, etc., para que el alumno estudie de manera autónoma."
   },
   {
     "objectID": "sub_introduction.html#material-teórico",
@@ -893,56 +907,77 @@
     "href": "sub_introduction.html#inteligencia-artificial",
     "title": "Presentación de Juegos en Red",
     "section": "Inteligencia Artificial",
-    "text": "Inteligencia Artificial\nEl uso de ChatGPT, Gemini, Claude o alternativas está permitido a excepción de los exámenes. La única condición que se impone es que seáis capaces de explicar vuestras prácticas, y en caso negativo, se considerarán suspensas."
+    "text": "Inteligencia Artificial\nSegún la guía docente, el uso de herramientas basadas en inteligencia artificial (ChatGPT, Gemini, Claude o alternativas) está prohibido en cualquier ejercicio y prueba de evaluación, salvo que el profesor lo indique explícitamente en el enunciado o en el material de la asignatura.\nCuando su uso esté permitido, se darán indicaciones precisas de qué usos se admiten y cuáles no, y deberá hacerse de forma ética, legal, honesta y transparente.\nEn todo caso, deberéis ser capaces de explicar vuestras prácticas; en caso negativo, se considerarán suspensas."
   },
   {
     "objectID": "sub_introduction.html#pruebas-de-evaluación",
     "href": "sub_introduction.html#pruebas-de-evaluación",
     "title": "Presentación de Juegos en Red",
     "section": "Pruebas de evaluación:",
-    "text": "Pruebas de evaluación:\n\n40% Pruebas teórico-prácticas\n\nNota mínima: cada prueba &gt;=5\n\n40% Práctica\n\nNota mínima: cada prueba &gt;=5\n\n15% Resolución de problemas y casos prácticos\n\nNo tiene nota mínima\n\n5% Participación en clase y otras actividades\n\nNo tiene nota mínima\n\n\nHay que obtener al menos un 5 de media"
+    "text": "Pruebas de evaluación:\n\n40% Pruebas escritas de respuesta abierta o tipo test (SE.1)\n\nNota mínima: cada prueba &gt;=5\n\n40% Resolución de problemas y casos prácticos: fases 1-4 del proyecto (SE.2)\n\nNota mínima: cada fase &gt;=5 y media del bloque &gt;=5\n\n15% Prácticas con ordenador: presentación en el aula (fase 5) (SE.3)\n\nNota mínima: 3\n\n5% Participación en clase y otras actividades (SE.5)\n\nNo tiene nota mínima\n\n\nHay que cumplir las notas mínimas de cada bloque y obtener al menos un 5 de media"
   },
   {
-    "objectID": "sub_introduction.html#pruebas-teórico-prácticas-40",
-    "href": "sub_introduction.html#pruebas-teórico-prácticas-40",
+    "objectID": "sub_introduction.html#pruebas-escritas-40",
+    "href": "sub_introduction.html#pruebas-escritas-40",
     "title": "Presentación de Juegos en Red",
-    "section": "Pruebas teórico-prácticas (40 %)",
-    "text": "Pruebas teórico-prácticas (40 %)\n\n3 exámenes:\n\nExamen 1 (Tema 1): 35%.\nExamen 2 (Tema 2 y 3): 32.5%.\nExamen 3 (Tema 4): 32.5%.\n\nEjercicios online tipo test / preguntas cortas / ejercicios\nNota mínima en cada prueba 5\nRevaluable en convocatoria extraordinaria"
+    "section": "Pruebas escritas (40 %)",
+    "text": "Pruebas escritas (40 %)\n\n2 pruebas parciales individuales, teórico-prácticas:\n\nPrueba 1 (Tema 1): 20% de la nota final.\nPrueba 2 (Temas 2, 3, 4 y 5): 20% de la nota final.\n\nPreguntas de respuesta abierta, tipo test, respuesta corta o ejercicios.\nNota mínima en cada prueba: 5\nRevaluable en convocatoria extraordinaria (mismo formato que en la ordinaria)"
   },
   {
-    "objectID": "sub_introduction.html#práctica-40",
-    "href": "sub_introduction.html#práctica-40",
+    "objectID": "sub_introduction.html#resolución-de-problemas-y-casos-prácticos-40",
+    "href": "sub_introduction.html#resolución-de-problemas-y-casos-prácticos-40",
     "title": "Presentación de Juegos en Red",
-    "section": "Práctica (40 %)",
-    "text": "Práctica (40 %)\n\nSe realiza en grupos de 4 personas\nCada alumno será evaluado individualmente\nSe desarrolla en parte en las sesiones prácticas\nConsta de 4 entregas (fases) obligatorias con ponderaciones 10%, 35%, 25%, 30%.\nNota mínima en cada fase: 5 puntos\nCada fase es revaluable en convocatoria extraordinaria"
+    "section": "Resolución de problemas y casos prácticos (40 %)",
+    "text": "Resolución de problemas y casos prácticos (40 %)\n\nSe realiza en grupos de 4 personas\nCada alumno será evaluado individualmente\nSe desarrolla en parte en las sesiones prácticas\nConsta de 4 entregas (fases) obligatorias:\n\n\n\n\nFase\n% nota final\n% del bloque\nTemas\n\n\n\n\nFase 1\n4%\n10%\n1, 2\n\n\nFase 2\n14%\n35%\n2, 3\n\n\nFase 3\n10%\n25%\n2, 3, 4\n\n\nFase 4\n12%\n30%\n2, 3, 4, 5\n\n\n\n\nNota mínima en cada fase: 5. Nota mínima de media: 5\nCada fase es revaluable en convocatoria extraordinaria"
   },
   {
-    "objectID": "sub_introduction.html#resolución-de-problemas-15",
-    "href": "sub_introduction.html#resolución-de-problemas-15",
+    "objectID": "sub_introduction.html#prácticas-con-ordenador-15",
+    "href": "sub_introduction.html#prácticas-con-ordenador-15",
     "title": "Presentación de Juegos en Red",
-    "section": "Resolución de problemas (15 %)",
-    "text": "Resolución de problemas (15 %)\n\nConsiste en una fase adicional al juego desarrollado (fase 5).\nConsistirá en una mejora sobre la práctica entregada y la publicación de la misma en plataformas online.\nNota mínima de 3.\nRevaluable en convocatoria extraordinaria."
+    "section": "Prácticas con ordenador (15 %)",
+    "text": "Prácticas con ordenador (15 %)\n\nConsiste en una fase adicional al juego desarrollado (fase 5).\nConsistirá en una mejora sobre la práctica entregada, el diagnóstico y corrección de errores, y la publicación del juego en plataformas online.\nIncluye la presentación en el aula y la participación de toda la clase.\nSe evalúa en la fecha de la convocatoria ordinaria.\nNota mínima de 3.\nRevaluable en convocatoria extraordinaria."
   },
   {
     "objectID": "sub_introduction.html#participación-en-clase-5",
     "href": "sub_introduction.html#participación-en-clase-5",
     "title": "Presentación de Juegos en Red",
     "section": "Participación en clase (5 %)",
-    "text": "Participación en clase (5 %)\n\nEs opcional. No tiene nota mínima.\nConsiste en una serie de actividades que se irán realizando a lo largo del cuatrimestre.\nTambién se podrán obtener proponiendo mejoras o correcciones a los apuntes y diapositivas de la asignatura.\nNo es revaluable en convocatoria extraordinaria"
+    "text": "Participación en clase (5 %)\n\nEs opcional. No tiene nota mínima.\nConsiste en una serie de actividades que se irán realizando a lo largo del cuatrimestre (semanas 1 a 15).\nTambién se podrán obtener proponiendo mejoras o correcciones a los apuntes y diapositivas de la asignatura.\nNo es revaluable en convocatoria extraordinaria"
+  },
+  {
+    "objectID": "sub_introduction.html#trabajo-en-grupo-otras-consideraciones",
+    "href": "sub_introduction.html#trabajo-en-grupo-otras-consideraciones",
+    "title": "Presentación de Juegos en Red",
+    "section": "Trabajo en grupo: otras consideraciones",
+    "text": "Trabajo en grupo: otras consideraciones\n\nPara las actividades evaluables realizadas en grupo, el profesor podrá requerir una evaluación/entrevista oral individual a cada miembro para verificar su contribución.\nSerá obligatoria la entrega de una autoevaluación en la que cada alumno justifique individualmente su contribución al trabajo entregado.\nSi un alumno abandona su grupo, deberá realizar de forma individual una versión adaptada del trabajo a partir de ese momento.\nNinguna actividad de evaluación puede suponer por sí sola más del 60% de la calificación global."
   },
   {
     "objectID": "sub_introduction.html#evaluación-extraordinaria-1",
     "href": "sub_introduction.html#evaluación-extraordinaria-1",
     "title": "Presentación de Juegos en Red",
     "section": "Evaluación extraordinaria",
-    "text": "Evaluación extraordinaria\nPara aprobar la asignatura en la convocatoria extraordinaria se deberán realizar las pruebas no superadas durante la evaluación ordinaria.\nSe guardan las notas de:\n\nLa prueba teórico-práctica\nCada una de las fases por separado\nLa resolución de problemas (fase 5)\nLas actividades de participación en clase"
+    "text": "Evaluación extraordinaria\nPara aprobar la asignatura en la convocatoria extraordinaria se deberán realizar las pruebas revaluables no superadas durante la evaluación ordinaria (bloques SE.1, SE.2 y SE.3).\nSe guardan las notas de las pruebas superadas:\n\nLas pruebas escritas\nCada una de las fases 1-4 por separado\nLas prácticas con ordenador (fase 5)\nLas actividades de participación en clase (no revaluables)\n\nSi los profesores lo consideran oportuno, las pruebas de la convocatoria extraordinaria podrán ser adaptadas."
+  },
+  {
+    "objectID": "sub_introduction.html#cálculo-de-la-nota-y-partes-suspensas",
+    "href": "sub_introduction.html#cálculo-de-la-nota-y-partes-suspensas",
+    "title": "Presentación de Juegos en Red",
+    "section": "Cálculo de la nota y partes suspensas",
+    "text": "Cálculo de la nota y partes suspensas\n\nHay que cumplir las notas mínimas de cada bloque y obtener un 5 sobre 10 en la nota final.\nSi alguna parte obligatoria está suspensa, la calificación final será la media aritmética de las partes suspensas, contando como 0 las partes no entregadas.\nSi se superan todas las notas mínimas pero la nota final es inferior a 5, se podrá repetir la actividad SE.3 en la convocatoria extraordinaria para tratar de alcanzar una media &gt;= 5."
   },
   {
     "objectID": "sub_introduction.html#dispensa-académica",
     "href": "sub_introduction.html#dispensa-académica",
     "title": "Presentación de Juegos en Red",
     "section": "Dispensa académica",
-    "text": "Dispensa académica\nUn alumno con dispensa académica debe realizar los exámenes teórico-prácticos.\nEstá obligado a hacer las 4 entregas presenciales de la parte práctica ya que son como exámenes.\nLas fechas de las pruebas serán anunciadas con anterioridad."
+    "text": "Dispensa académica\nLa Dispensa Académica de Asistencia a Clase (DAAC) no exime de participar en las actividades de evaluación continua ni en las actividades formativas presenciales obligatorias de la guía docente.\n\nDeben presentarse a todos los bloques de evaluación, asistiendo obligatoriamente a todas las pruebas igual que el resto de alumnos (incluidas las 4 entregas presenciales de la parte práctica, que son como exámenes).\nEl epígrafe de participación en clase se suplirá mediante la realización de un trabajo.\nUna vez concedida la dispensa, el alumno debe contactar con el docente, que podrá proponerle adaptaciones y le informará de las fechas.\nLas fechas de las pruebas serán anunciadas con anterioridad."
+  },
+  {
+    "objectID": "sub_introduction.html#convocatoria-adelantada",
+    "href": "sub_introduction.html#convocatoria-adelantada",
+    "title": "Presentación de Juegos en Red",
+    "section": "Convocatoria adelantada",
+    "text": "Convocatoria adelantada\nEl procedimiento y los criterios de evaluación para los estudiantes que soliciten la convocatoria adelantada son los mismos que en las convocatorias ordinaria y extraordinaria.\nIgual que en la dispensa académica, el epígrafe de participación se suple mediante la realización de un trabajo."
   },
   {
     "objectID": "sub_introduction.html#no-presentado",
@@ -952,18 +987,46 @@
     "text": "No presentado\nUn alumno obtendrá la calificación de no presentado únicamente si no se presenta a ninguna prueba evaluable (ya sea de teoría o práctica)."
   },
   {
+    "objectID": "sub_introduction.html#conducta-académica-e-integridad",
+    "href": "sub_introduction.html#conducta-académica-e-integridad",
+    "title": "Presentación de Juegos en Red",
+    "section": "Conducta académica e integridad",
+    "text": "Conducta académica e integridad\nLa URJC está comprometida con la integridad y honestidad académica, recogidas en el Código Ético y en la Normativa de Convivencia.\nSegún el artículo 9.d) de la Normativa de Convivencia, el fraude académico en una actividad de evaluación se considera falta grave. Las sanciones correspondientes (artículo 11.2) son la expulsión temporal de la Universidad y, en su caso, la pérdida de los derechos de matrícula."
+  },
+  {
+    "objectID": "sub_introduction.html#alumnado-con-discapacidad-o-necesidades-educativas-especiales",
+    "href": "sub_introduction.html#alumnado-con-discapacidad-o-necesidades-educativas-especiales",
+    "title": "Presentación de Juegos en Red",
+    "section": "Alumnado con discapacidad o necesidades educativas especiales",
+    "text": "Alumnado con discapacidad o necesidades educativas especiales\nLas adaptaciones curriculares serán pautadas por la Unidad de Atención a Personas con Discapacidad, que debe emitir un informe de adaptaciones curriculares.\nEl alumnado con discapacidad o necesidades educativas especiales debe contactar con este servicio para analizar conjuntamente las distintas opciones."
+  },
+  {
     "objectID": "sub_introduction.html#calendario-aproximado-de-entregas-1",
     "href": "sub_introduction.html#calendario-aproximado-de-entregas-1",
     "title": "Presentación de Juegos en Red",
     "section": "Calendario aproximado de entregas",
-    "text": "Calendario aproximado de entregas\n\nSeptiembre: Registro grupos de prácticas\nOctubre: Entrega fase 1 (mes de octubre)\nNoviembre: Entrega fase 2 (mes de noviembre)\nDiciembre: Entrega fase 3 (mes de diciembre)\nEnero: Entrega fase 4 (mes de enero)\nEnero: Entrega fase 5 (mes de enero)"
+    "text": "Calendario aproximado de entregas\n\n\n\nSemana\nActividad\n\n\n\n\n1-2\nRegistro de grupos de prácticas\n\n\n3\nEntrega fase 1\n\n\n8\nPrueba 1\n\n\n10\nEntrega fase 2\n\n\n15\nPrueba 2 (Temas 2, 3, 4 y 5)\n\n\n15\nEntrega fase 3\n\n\nConvocatoria ordinaria\nFase 4, 5: presentación en el aula\n\n\n\nLas fechas concretas se anunciarán con antelación en el Aula Virtual."
   },
   {
-    "objectID": "sub_introduction.html#bibliografía-1",
-    "href": "sub_introduction.html#bibliografía-1",
+    "objectID": "sub_introduction.html#bibliografía-básica",
+    "href": "sub_introduction.html#bibliografía-básica",
     "title": "Presentación de Juegos en Red",
-    "section": "Bibliografía",
-    "text": "Bibliografía\n\nMaterial de la asignatura disponible en el aula virtual\nBiblioteca virtual para alumnos"
+    "section": "Bibliografía básica",
+    "text": "Bibliografía básica\n\nSilveira, R. (2015). Multiplayer Game Development with HTML5. Packt Publishing.\nArmitage, G., Claypool, M., Branch, P. (2006). Networking and online games. Wiley."
+  },
+  {
+    "objectID": "sub_introduction.html#bibliografía-complementaria",
+    "href": "sub_introduction.html#bibliografía-complementaria",
+    "title": "Presentación de Juegos en Red",
+    "section": "Bibliografía complementaria",
+    "text": "Bibliografía complementaria\n\nFeronato, E. (2020). HTML5 Cross Platform Game Development Using Phaser 3.\nGose, S. (2020). Phaser III Game Prototyping: Building 100s of games using HTML and Phaser3 JavaScript Gaming Framework.\nBurón, D., Manzano, M., Paredes, M. (2020). Desarrollo de videojuegos para dispositivos móviles. Síntesis."
+  },
+  {
+    "objectID": "sub_introduction.html#otros-recursos",
+    "href": "sub_introduction.html#otros-recursos",
+    "title": "Presentación de Juegos en Red",
+    "section": "Otros recursos",
+    "text": "Otros recursos\n\nMaterial de la asignatura disponible en el aula virtual\nBiblioteca virtual para alumnos"
   },
   {
     "objectID": "sub_introduction.html#internet",
