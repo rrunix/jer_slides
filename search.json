@@ -2734,7 +2734,7 @@
     "href": "ch1_p1_net_introduction.html#nivel-de-transporte",
     "title": "Introducción a las Redes de Ordenadores",
     "section": "Nivel de Transporte",
-    "text": "Nivel de Transporte\n\nGestiona la comunicación extremo a extremo entre aplicaciones.\n\nCapa 4 (ambos modelos)\n\n\nTCP\n\nComunicación confiable\nControl de flujo\nEntrega ordenada\nCorrección de errores\n\n\nUDP\n\nComunicación rápida\nSin garantías\nIdeal para tiempo real\nMenor overhead"
+    "text": "Nivel de Transporte\n\nGestiona la comunicación extremo a extremo entre aplicaciones.\n\nCapa 4 (OSI) y 3 (TCP/IP)\n\n\nTCP\n\nComunicación confiable\nControl de flujo\nEntrega ordenada\nCorrección de errores\n\n\nUDP\n\nComunicación rápida\nSin garantías\nIdeal para tiempo real\nMenor overhead"
   },
   {
     "objectID": "ch1_p1_net_introduction.html#nivel-de-redinternet",
