@@ -681,7 +681,7 @@ TCP/IP es superior a OSI porque es simple, práctico y probado. Mientras OSI tie
 
 > Gestiona la comunicación extremo a extremo entre aplicaciones.
 
-### Capa 4 (ambos modelos)
+### Capa 4 (OSI) y 3 (TCP/IP)
 
 ::: {.columns}
 ::: {.column width="50%"}
